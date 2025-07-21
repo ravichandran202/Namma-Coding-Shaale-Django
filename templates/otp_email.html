@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Secure OTP | Namma Coding Shaale</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .email-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .email-title {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .email-body {
+            padding: 2rem;
+        }
+        
+        .greeting {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .otp-container {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+        
+        .otp-code {
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin: 1rem 0;
+            padding: 0 1rem;
+        }
+        
+        .instructions {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--primary);
+            color: white !important;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        
+        .email-footer {
+            padding: 1.5rem 2rem;
+            background: var(--light);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1.5rem 0;
+        }
+        
+        .security-note {
+            display: flex;
+            align-items: center;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin: 1.5rem 0;
+        }
+        
+        .security-note svg {
+            margin-right: 0.75rem;
+            min-width: 20px;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                border-radius: 0;
+            }
+            
+            .email-header, .email-body, .email-footer {
+                padding: 1.5rem;
+            }
+            
+            .otp-code {
+                font-size: 2rem;
+                letter-spacing: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="email-logo">ನಮ್ಮ CODING ಶಾಲೆ</div>
+            <h1 class="email-title">Your Secure Login Code</h1>
+        </div>
+        
+        <div class="email-body">
+            <p class="greeting">Hello <strong>{{ name }}</strong>,</p>
+            
+            <p>You're one step away from accessing your Namma Coding Shaale account. Here's your one-time verification code:</p>
+            
+            <div class="otp-container">
+                <p style="margin: 0; font-size: 0.9rem;">Enter this verification code</p>
+                <div class="otp-code">{{ otp }}</div>
+                <p style="margin: 0; font-size: 0.9rem;">The code expires in 2 minutes</p>
+            </div>
+            
+            <div class="security-note">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>For your security, never share this code with anyone. Namma Coding Shaale will never ask for it.</span>
+            </div>
+            
+            <p class="instructions">If you didn't request this code, please secure your account by changing your password immediately or contact our support team.</p>
+            
+            <div class="divider"></div>
+            
+            <p style="margin-bottom: 0.5rem;">Need help?</p>
+            <a href="mailto:support@nammacodingshaale.com" class="footer-link">Contact our support team</a>
+        </div>
+        
+        <div class="email-footer">
+            <p style="margin: 0;">© 2025 Namma Coding Shaale. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
