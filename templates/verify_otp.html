@@ -504,6 +504,30 @@
             animation: slideOut 0.3s ease-out forwards;
         }
 
+        /* Additional styles for OTP page */
+        .otp-input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .otp-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
+
+
         /* Responsive adjustments */
         @media (max-width: 991px) {
             .auth-container {
@@ -556,27 +580,6 @@
                 background-color: white;
             }
 
-            /* Emergency mobile fix */
-            @media (max-width: 991px) {
-                .auth-container {
-                    background: white !important;
-                    flex-direction: column-reverse;
-                    /* Puts form on top */
-                }
-
-                .auth-illustration {
-                    padding: 2rem 1rem !important;
-                    min-height: 30vh !important;
-                    background: var(--primary) !important;
-                    /* Simpler gradient */
-                }
-
-                .auth-content {
-                    padding: 3rem 1rem !important;
-                    min-height: 70vh !important;
-                }
-            }
-
             /* Nuclear option for stubborn black backgrounds */
             html,
             body,
@@ -585,58 +588,36 @@
                 background: white !important;
                 overflow-x: hidden !important;
             }
-        }
-    </style>
-    <style>
-        /* Additional styles for OTP page */
-        .otp-input-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
+
+            .otp-input {
+                width: 40px;
+                height: 50px;
+                text-align: center;
+                font-size: 1.2rem;
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                transition: var(--transition);
+            }
         }
 
-        .otp-input {
-            width: 50px;
-            height: 60px;
-            text-align: center;
-            font-size: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
+        @media (max-width: 991px) {
+            .auth-container {
+                background: white !important;
+                flex-direction: column-reverse;
+                /* Puts form on top */
+            }
 
-        .otp-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-            outline: none;
-        }
+            .auth-illustration {
+                padding: 2rem 1rem !important;
+                min-height: 30vh !important;
+                background: var(--primary) !important;
+                /* Simpler gradient */
+            }
 
-        .resend-otp {
-            color: var(--gray);
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .resend-otp a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .resend-otp a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-
-        .resend-otp a.disabled {
-            color: var(--gray);
-            pointer-events: none;
-            text-decoration: none;
-        }
-
-        .timer {
-            color: var(--primary);
-            font-weight: 600;
+            .auth-content {
+                padding: 3rem 1rem !important;
+                min-height: 70vh !important;
+            }
         }
     </style>
 </head>
@@ -770,7 +751,7 @@
             }
         }, 1000);
 
-       
+
         // Helper function to show alerts
         function showAlert(message, type) {
             const alertDiv = document.createElement('div');
