@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-=x60&gd05-y6awfc3lcqh2!lvlw(%y4tyu9g9pnna*&z9^%0bp
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ["https://nammacodingshaale.up.railway.app"]
 
 # Application definition
 
@@ -139,8 +139,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "https://namma-coding-shaale.onrender.com"
+    "https://namma-coding-shaale.onrender.com",
+    "https://nammacodingshaale.up.railway.app"
 ]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Allow cookies (if needed)
 CORS_ALLOW_CREDENTIALS = True
