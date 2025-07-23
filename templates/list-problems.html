@@ -2275,17 +2275,20 @@
           easy: {
             count: '#easy-count',
             total: '#easy-total',
-            bar: '#easy-progress-bar'
+            bar: '#easy-progress-bar',
+            percent: "#easy-percent"
           },
           medium: {
             count: '#medium-count',
             total: '#medium-total',
-            bar: '#medium-progress-bar'
+            bar: '#medium-progress-bar',
+            percent: "#medium-percent"
           },
           hard: {
             count: '#hard-count',
             total: '#hard-total',
-            bar: '#hard-progress-bar'
+            bar: '#hard-progress-bar',
+            percent: "#hard-percent"
           }
         },
 
@@ -2496,18 +2499,21 @@
         document.querySelector(easyElem.count).textContent = progress.easy.count;
         document.querySelector(easyElem.total).textContent = progress.easy.total;
         document.querySelector(easyElem.bar).style.width = `${progress.easy.percent}%`;
+        document.querySelector(easyElem.percent).textContent = `${progress.easy.percent}%`;
 
         // Update medium progress
         const mediumElem = DOMStrings.progressElements.medium;
         document.querySelector(mediumElem.count).textContent = progress.medium.count;
         document.querySelector(mediumElem.total).textContent = progress.medium.total;
         document.querySelector(mediumElem.bar).style.width = `${progress.medium.percent}%`;
+        document.querySelector(mediumElem.percent).textContent = `${progress.medium.percent}%`;
 
         // Update hard progress
         const hardElem = DOMStrings.progressElements.hard;
         document.querySelector(hardElem.count).textContent = progress.hard.count;
         document.querySelector(hardElem.total).textContent = progress.hard.total;
         document.querySelector(hardElem.bar).style.width = `${progress.hard.percent}%`;
+        document.querySelector(hardElem.percent).textContent = `${progress.hard.percent}%`;
       };
       const updateActiveFilter = (activeFilter) => {
         document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
