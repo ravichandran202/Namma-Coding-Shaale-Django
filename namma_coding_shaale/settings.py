@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMP_DIR = os.path.join(BASE_DIR,'templates')
@@ -25,10 +29,10 @@ STATIC_DIR = os.path.join(BASE_DIR,'static')
 SECRET_KEY = 'django-insecure-=x60&gd05-y6awfc3lcqh2!lvlw(%y4tyu9g9pnna*&z9^%0bp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://nammacodingshaale.up.railway.app"]
+
 
 # Application definition
 
@@ -85,10 +89,28 @@ WSGI_APPLICATION = 'namma_coding_shaale.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'namma_coding_shaale',
+        'USER': '2b4WtQ8uMn5quzm.root',
+        'PASSWORD': 'UVMKw52Z4aqIBPLU',
+        'HOST': 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
+        'PORT': '4000',
+        'OPTIONS': {
+            'ssl': {
+                'ca': BASE_DIR / 'certs/ca.pem',  # Make sure this path is correct
+            }
+        }
     }
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -139,12 +161,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "https://namma-coding-shaale.onrender.com",
-    "https://nammacodingshaale.up.railway.app"
+    "https://namma-coding-shaale.onrender.com"
 ]
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 # Allow cookies (if needed)
 CORS_ALLOW_CREDENTIALS = True
@@ -155,3 +173,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ravichandrants202@gmail.com'
 EMAIL_HOST_PASSWORD = 'siijkggaaxqikyzv'
+
+
