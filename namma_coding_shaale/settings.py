@@ -157,6 +157,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://nammacodingshaale.up.railway.app"
+]
+
 # Allow requests from your frontend origin
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
