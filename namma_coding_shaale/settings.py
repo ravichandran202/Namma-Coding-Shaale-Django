@@ -29,7 +29,7 @@ STATIC_DIR = os.path.join(BASE_DIR,'static')
 SECRET_KEY = 'django-insecure-=x60&gd05-y6awfc3lcqh2!lvlw(%y4tyu9g9pnna*&z9^%0bp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
