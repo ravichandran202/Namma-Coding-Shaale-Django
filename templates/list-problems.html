@@ -753,9 +753,9 @@
       stroke: var(--primary);
       stroke-width: 2.5;
       stroke-linecap: round;
-      animation: circle-fill-animation 1.5s ease-in-out forwards;
       transform-origin: center;
       transform: rotate(-90deg);
+      transition: stroke-dasharray 0.5s ease;
     }
 
     @keyframes circle-fill-animation {
@@ -2483,28 +2483,32 @@
         document.querySelector(totalElem.count).textContent = progress.total.count;
         document.querySelector(totalElem.total).textContent = progress.total.total;
 
+        // Update radial progress
+        const radialFill = document.querySelector('.circle-fill');
+        if (radialFill) {
+          const circumference = 2 * Math.PI * 15.9155; // 2πr where r = 15.9155 (from the SVG path)
+          const dashValue = (progress.total.percent / 100) * circumference;
+          radialFill.style.strokeDasharray = `${dashValue} ${circumference}`;
+        }
+
         // Update easy progress
         const easyElem = DOMStrings.progressElements.easy;
         document.querySelector(easyElem.count).textContent = progress.easy.count;
         document.querySelector(easyElem.total).textContent = progress.easy.total;
         document.querySelector(easyElem.bar).style.width = `${progress.easy.percent}%`;
-        document.querySelector('#easy-percent').textContent = `${progress.easy.percent}%`;
 
         // Update medium progress
         const mediumElem = DOMStrings.progressElements.medium;
         document.querySelector(mediumElem.count).textContent = progress.medium.count;
         document.querySelector(mediumElem.total).textContent = progress.medium.total;
         document.querySelector(mediumElem.bar).style.width = `${progress.medium.percent}%`;
-        document.querySelector('#medium-percent').textContent = `${progress.medium.percent}%`;
 
         // Update hard progress
         const hardElem = DOMStrings.progressElements.hard;
         document.querySelector(hardElem.count).textContent = progress.hard.count;
         document.querySelector(hardElem.total).textContent = progress.hard.total;
         document.querySelector(hardElem.bar).style.width = `${progress.hard.percent}%`;
-        document.querySelector('#hard-percent').textContent = `${progress.hard.percent}%`;
       };
-
       const updateActiveFilter = (activeFilter) => {
         document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
           btn.classList.remove('btn-primary', 'active');
