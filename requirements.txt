@@ -1,10 +1,13 @@
 asgiref==3.9.1
+dj-user-login-history==1.0.6
 Django==5.2.4
 django-cors-headers==4.7.0
 django-tidb==5.2.0
 djangorestframework==3.16.0
+Faker==37.4.2
 gunicorn==23.0.0
 packaging==25.0
 PyMySQL==1.1.1
 sqlparse==0.5.3
+tzdata==2025.2
 whitenoise==6.9.0
