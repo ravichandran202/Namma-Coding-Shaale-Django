@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "namma_coding_shaale_app",
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'login_history'
 ]
 
 MIDDLEWARE = [
@@ -178,5 +179,4 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ravichandrants202@gmail.com'
 EMAIL_HOST_PASSWORD = 'siijkggaaxqikyzv'
-
 
