@@ -15,8 +15,11 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-from .models import OTP  # Your custom OTP model
+from .models import OTP
+import logging
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
@@ -130,6 +133,16 @@ def logout(request):
     return redirect('login')
 
 def home(request):
+    username = "Test User"
+    if request.user.is_authenticated:
+        username = request.user.username
+    
+    logger.debug('This is a debug message')
+    logger.info('This is an info message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
+    logger.critical('This is a critical message')
+
     return render(request,"index.html")
 
 @login_required(login_url="login")
