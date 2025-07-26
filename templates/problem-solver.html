@@ -5,6 +5,7 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sum of Two Numbers</title>
     <style>
@@ -1458,25 +1459,66 @@ Output: 4</pre>
         window.addEventListener('resize', showMobileBlocker);
 
 
-        //Test code
+        // Test code
+        // async function submitCodeToBackend(code, failedCount) {
+        //     const problemId = urlParams.get('id');
+        //     console.log("POST API CALLED .....", code, failedCount, problemId);
+
+        //     const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
+
+        //     // Encode form data
+        //     const formData = new URLSearchParams();
+        //     formData.append('problem_id', problemId);
+        //     formData.append('code', code);
+        //     formData.append('failed_count', failedCount);
+
+        //     try {
+        //         const response = await fetch(url, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/x-www-form-urlencoded'
+        //             },
+        //             credentials: 'include',  // Optional: for cookies/session auth
+        //             body: formData.toString()
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //         }
+
+        //         const responseData = await response.json();
+        //         console.log('Success:', responseData);
+        //         return responseData;
+        //     } catch (error) {
+        //         console.error('Error posting data:', error);
+        //         throw error;
+        //     }
+        // }
+
+        // Get CSRF token from meta tag
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        // Send form-style data with CSRF
         async function submitCodeToBackend(code, failedCount) {
             const problemId = urlParams.get('id');
-            console.log("POST API CALLED .....", code, failedCount, problemId);
             const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
-            const data = {
-                problem_id: problemId,
-                code: code,
-                failed_count: failedCount
-            };
+
+            const formData = new URLSearchParams();
+            formData.append('problem_id', problemId);
+            formData.append('code', code);
+            formData.append('failed_count', failedCount);
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCSRFToken()
                     },
                     credentials: 'include',
-                    body: JSON.stringify(data)
+                    body: formData.toString()
                 });
 
                 if (!response.ok) {
@@ -1491,6 +1533,8 @@ Output: 4</pre>
                 throw error;
             }
         }
+
+
     </script>
 
 </body>
