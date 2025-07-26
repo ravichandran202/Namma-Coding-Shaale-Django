@@ -1,0 +1,841 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python DSA Mastery Course - Learn with LeetCode-style Problems</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <!-- Custom CSS -->
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --primary-light: #93c5fd;
+      --secondary: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      --border: rgba(0, 0, 0, 0.08);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 12px;
+      --section-padding: 8rem 0;
+      --container-max-width: 1200px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, .display-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .text-serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .text-sans {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .text-uppercase {
+      letter-spacing: 0.1em;
+    }
+
+    /* Navigation */
+    .navbar {
+      padding: 1rem 0;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 0.75rem 0;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: white !important;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .brand-text {
+      font-family: 'Playfair Display', serif;
+      margin: 0 0.5rem;
+    }
+
+    .brand-highlight {
+      color: var(--primary-light);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8) !important;
+      margin: 0 0.25rem;
+      padding: 0.75rem 1.25rem !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link:hover {
+      color: white !important;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+      color: white !important;
+      background: rgba(37, 99, 235, 0.15);
+    }
+
+    .nav-link.active:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Premium Button */
+    .btn-premium {
+      background: linear-gradient(135deg, var(--primary), #7c3aed);
+      color: white !important;
+      border: none;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+      background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
+      color: white;
+    }
+
+    /* Navbar Toggler */
+    .navbar-toggler {
+      border: none;
+      padding: 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* Section Styling */
+    .section {
+      padding: var(--section-padding);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      margin: 1.5rem auto;
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* Courses Section */
+    .courses-scroller {
+      overflow-x: auto;
+      padding-bottom: 2rem;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .courses-container {
+      display: flex;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      width: max-content;
+    }
+
+    .course-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      width: 320px;
+      flex-shrink: 0;
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      position: relative;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .course-img-container {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .course-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .course-card:hover .course-img {
+      transform: scale(1.05);
+    }
+
+    .course-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.1) 100%);
+    }
+
+    .course-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .course-level {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 2;
+    }
+
+    .level-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      border: 1px solid white;
+    }
+
+    .level-dot.active {
+      background-color: white;
+    }
+
+    .course-content {
+      padding: 1.5rem;
+    }
+
+    .course-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .premium-course-title {
+      color: var(--light);
+      font-size: 1.3rem;
+    }
+
+    .course-desc {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      min-height: 60px;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .course-progress {
+      height: 6px;
+      background-color: var(--gray-light);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+    }
+
+    /* Premium Course Card Styles */
+    .premium-edition {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      transition: all 0.4s ease;
+      color: #fff;
+    }
+
+    .premium-edition:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .bg-gold {
+      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+      color: #1a1a2e;
+    }
+
+    .text-gold {
+      color: #FFD700;
+    }
+
+    .course-badge.bg-gold {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .exclusive-ribbon {
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      width: 120px;
+      padding: 3px 0;
+      background: #e63946;
+      color: white;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-premium-gold {
+      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+      color: #1a1a2e !important;
+      border: none;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .btn-premium-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Glow Effects */
+    .premium-glow-1,
+    .premium-glow-2 {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .premium-glow-1 {
+      width: 100px;
+      height: 100px;
+      background: #FFD700;
+      top: -30px;
+      right: -30px;
+    }
+
+    .premium-glow-2 {
+      width: 150px;
+      height: 150px;
+      background: #4cc9f0;
+      bottom: -50px;
+      left: -50px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 5rem 0 2rem;
+      position: relative;
+    }
+
+    .footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-about {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .footer-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-heading:after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .footer-input {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+
+    .footer-input:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      margin-top: 3rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 991px) {
+      .navbar-collapse {
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-link {
+        margin: 0.25rem 0;
+        padding: 0.75rem !important;
+      }
+
+      .btn-premium {
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .course-card {
+        width: 280px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" aria-current="page">
+              <i class="fas fa-home me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'list-problems' %}">
+              <i class="fas fa-list-ol me-1"></i> Problem List
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'code-editor' %}">
+              <i class="fas fa-laptop-code me-1"></i> Code Editor
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-premium" href="#course-section">
+              <i class="fas fa-gem me-1"></i> Enroll Now
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Premium Courses Section -->
+  <section class="section" id="course-section">
+    <div class="container">
+      <div class="text-center mb-6">
+        <span class="text-uppercase text-primary fw-bold letter-spacing-3">My Courses</span>
+        <h2 class="section-title mt-3">My <span class="text-gradient">Learning Path</span></h2>
+      </div>
+
+      <div class="courses-scroller">
+        <div class="courses-container">
+          {% for course in courses %}
+            <div class="course-card animate {% if course.is_premium %}premium-edition{% endif %}">
+              <div class="course-img-container">
+                <img src="{% if course.is_premium %}https://c4.wallpaperflare.com/wallpaper/544/77/284/programming-programming-language-python-programming-logo-hd-wallpaper-preview.jpg{% else %}https://c4.wallpaperflare.com/wallpaper/978/36/954/blue-green-python-programming-wallpaper-preview.jpg{% endif %}" 
+                     alt="{{ course.course.name }}" class="course-img">
+                <div class="course-overlay"></div>
+                <div class="course-badge {% if course.is_premium %}bg-gold{% else %}bg-primary{% endif %}">
+                  {% if course.is_premium %}Premium{% else %}{{ course.course.get_language_display }}{% endif %}
+                </div>
+                {% if course.is_premium %}
+                  <div class="exclusive-ribbon">Exclusive</div>
+                {% endif %}
+                <div class="course-level">
+                  <span class="level-dot {% if course.course.language == 'PYTHON' %}active{% endif %}"></span>
+                  <span class="level-dot {% if course.course.language == 'JAVASCRIPT' %}active{% endif %}"></span>
+                  <span class="level-dot {% if course.course.language == 'JAVA' %}active{% endif %}"></span>
+                </div>
+              </div>
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <span class="text-uppercase small {% if course.is_premium %}text-gold{% else %}text-muted{% endif %} tracking-wide">
+                      {% if course.is_premium %}Master Class{% else %}Foundation Course{% endif %}
+                    </span>
+                    <h3 class="{% if course.is_premium %}premium-course-title text-w{% else %}course-title{% endif %}">
+                      {{ course.course.name }}
+                    </h3>
+                  </div>
+                  {% if not course.is_premium %}
+                    <div class="course-rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.9</span>
+                    </div>
+                  {% endif %}
+                </div>
+      
+                <div class="course-meta {% if course.is_premium %}text-light{% endif %} mt-3">
+                  <span><i class="far fa-file-alt me-1"></i> {{ course.solved_problems }} / {{ course.total_problems }} Problems</span>
+                  <span>{{ course.problem_progress }} %</span>
+                </div>
+                <div class="course-progress">
+                  <div class="progress-bar {% if course.is_premium %}bg-gold{% endif %}" style="width: {{ course.problem_progress }}%"></div>
+                </div>
+      
+                <div class="course-meta {% if course.is_premium %}text-light{% endif %} mt-3">
+                  <span><i class="far fa-file-alt me-1"></i> {{ course.completed_modules }} / {{ course.total_modules }} Modules</span>
+                  <span>{{ course.module_progress }} %</span>
+                </div>
+                <div class="course-progress">
+                  <div class="progress-bar {% if course.is_premium %}bg-gold{% endif %}" style="width: {{ course.module_progress }}%"></div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                  {% if course.is_premium %}
+                    <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-premium-gold">
+                      <i class="fas fa-crown me-1"></i> Continue Learning
+                    </a>
+                  {% else %}
+                    <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-sm btn-premium px-4">
+                      <i class="fas fa-file-alt me-2"></i> Review
+                    </a>
+                  {% endif %}
+                </div>
+                
+              </div>
+      
+              {% if course.is_premium %}
+                <!-- Glow Effects -->
+                <div class="premium-glow-1"></div>
+                <div class="premium-glow-2"></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="footer-logo">
+            <span>
+              &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+            </span>
+          </div>
+          <p class="footer-about">Master Coding through practical problem-solving and interview preparation.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+          <h5 class="footer-heading">Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="{% url 'list-problems' %}">Problem List</a></li>
+            <li><a href="{% url 'code-editor' %}">Code Editor</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+          <h5 class="footer-heading">Resources</h5>
+          <ul class="footer-links">
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Interview Tips</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5 class="footer-heading">Newsletter</h5>
+          <p class="footer-newsletter">Subscribe to get updates on new problems and coding tips.</p>
+          <form>
+            <input type="email" class="footer-input" placeholder="Your email" aria-label="Email for newsletter">
+            <button class="btn btn-primary footer-btn" type="button">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 ನಮ್ಮ Coding ಶಾಲೆ. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Initialize animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial state for animated elements
+      document.querySelectorAll('.animate').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      });
+
+      // Run animation check
+      animateOnScroll();
+    });
+
+    // Animation on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.animate');
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+  </script>
+</body>
+</html>

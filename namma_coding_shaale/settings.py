@@ -92,8 +92,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'namma_coding_shaale',
-        'USER': '2b4WtQ8uMn5quzm.root',
-        'PASSWORD': 'UVMKw52Z4aqIBPLU',
+        'USER': '3NX72gCWzf96vzw.root',
+        'PASSWORD': 'jqhOS753anJR7Q8e',
         'HOST': 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
         'PORT': '4000',
         'OPTIONS': {

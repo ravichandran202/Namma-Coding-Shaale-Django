@@ -60,7 +60,8 @@ class Problem(models.Model):
     video_link = models.URLField(blank=True, null=True)
     language = models.CharField(max_length=20, choices=Course.CONTENT_LANGUAGE_CHOICES)
     starter_code = models.TextField(blank=True, null=True)
-    test_cases = models.JSONField()
+    test_cases = models.JSONField(blank=True, null=True)
+    file_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -81,6 +82,7 @@ class Content(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.SET_NULL, blank=True, null=True)  # For PROBLEM type
     video_url = models.URLField(blank=True, null=True)  # For VIDEO type
     quiz_data = models.JSONField(blank=True, null=True)  # For QUIZ type
+    file_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -150,16 +152,18 @@ class ProblemSubmission(models.Model):
 
 class UserContentProgress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_progress')
-    content = models.ForeignKey(Content, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(blank=True, null=True)
     last_accessed = models.DateTimeField(auto_now=True)
     notes = models.TextField(blank=True, null=True)
+    is_locked = models.BooleanField(default=True)
     
     class Meta:
-        unique_together = ['user', 'content', 'course']
+        unique_together = ['user', 'course', 'content']
     
+
     def __str__(self):
         status = "Completed" if self.is_completed else "In Progress"
         return f"{self.user.username} - {self.content.title} ({status})"

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 Bad Request | Python DSA Mastery Course</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --section-padding: 8rem 0;
+            --container-max-width: 1200px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .display-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .error-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 4rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            z-index: 2;
+            border: 1px solid var(--border);
+        }
+
+        .error-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .error-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--dark);
+        }
+
+        .error-logo span {
+            color: var(--primary);
+        }
+
+        .error-title {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .error-subtitle {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .error-text {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-illustration {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            background: url('https://illustrations.popsy.co/amber/error.svg') center/contain no-repeat;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        }
+
+        .btn-error {
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem;
+        }
+
+        .btn-error::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn-error:hover::after {
+            opacity: 1;
+        }
+
+        .btn-error i {
+            margin-left: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-error:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Background animation */
+        .error-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-light), var(--light));
+            z-index: 0;
+        }
+
+        .error-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: cover;
+            opacity: 0.5;
+        }
+
+        /* Floating shapes */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float linear infinite;
+        }
+
+        .shape-circle {
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .shape-triangle {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid var(--secondary);
+        }
+
+        .shape-square {
+            background: var(--dark);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .error-content {
+                padding: 3rem 2rem;
+            }
+            
+            .error-title {
+                font-size: 4rem;
+            }
+            
+            .error-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .error-illustration {
+                width: 200px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-title {
+                font-size: 3rem;
+            }
+            
+            .error-subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .error-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="error-container">
+        <!-- Background elements -->
+        <div class="error-bg"></div>
+        <div class="floating-shapes" id="floatingShapes"></div>
+        
+        <!-- Main content -->
+        <div class="error-content animate__animated animate__fadeIn">
+            <div class="error-logo">
+                <span class="text-serif">ನಮ್ಮ</span> <span class="text-primary">CODING</span> <span
+                    class="text-serif">ಶಾಲೆ</span>
+            </div>
+            
+            <h1 class="error-title">400</h1>
+            <h2 class="error-subtitle">Bad Request</h2>
+            
+            <p class="error-text">
+                The server couldn't understand your request. Please check the information you're sending and try again.
+            </p>
+            
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="/" class="btn btn-primary btn-error">
+                    <span>Go to Homepage</span>
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="javascript:history.back()" class="btn btn-outline-primary btn-error">
+                    <span>Go Back</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Create floating shapes
+        function createFloatingShapes() {
+            const container = document.getElementById('floatingShapes');
+            if (!container) return;
+
+            // Clear existing shapes
+            container.innerHTML = '';
+
+            const shapeCount = 12;
+
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                const shapeType = Math.floor(Math.random() * 3); // 0=circle, 1=triangle, 2=square
+                
+                if (shapeType === 0) {
+                    shape.classList.add('shape', 'shape-circle');
+                    const size = Math.random() * 100 + 50;
+                    shape.style.width = `${size}px`;
+                    shape.style.height = `${size}px`;
+                } else if (shapeType === 1) {
+                    shape.classList.add('shape', 'shape-triangle');
+                } else {
+                    shape.classList.add('shape', 'shape-square');
+                    const size = Math.random() * 80 + 40;
+                    shape.style.width = `${size}px`;
+                    shape.style.height = `${size}px`;
+                }
+
+                // Random position
+                shape.style.left = `${Math.random() * 100}%`;
+                shape.style.top = `${Math.random() * 100}%`;
+
+                // Random animation duration between 20s and 40s
+                const duration = Math.random() * 20 + 20;
+                shape.style.animationDuration = `${duration}s`;
+
+                // Random delay
+                shape.style.animationDelay = `${Math.random() * 10}s`;
+
+                container.appendChild(shape);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingShapes();
+        });
+    </script>
+</body>
+
+</html>

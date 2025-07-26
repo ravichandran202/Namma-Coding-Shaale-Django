@@ -12,5 +12,9 @@ urlpatterns = [
     path("code-editor",views.code_editor,name="code-editor"),
     path("list-problems",views.list_problems,name="list-problems"),
     path("problem-solver",views.problem_solver,name="problem-solver"),
-    path("api/save-code",views.save_code,name="save-code")
+
+    path("api/save-code",views.save_code,name="save-code"),
+    path('my-courses/', views.my_courses, name='my-courses'),
+    path('course/<int:course_id>/', views.continue_course, name='continue-course'),
+    path('content/<int:course_id>/<str:content_file_id>/', views.view_content, name='content'),
 ]

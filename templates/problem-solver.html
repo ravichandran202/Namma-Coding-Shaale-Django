@@ -536,6 +536,19 @@
             overflow: hidden;
         }
 
+        .output-pre {
+            white-space: pre-wrap;
+            background: #f8fafc;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            border-left: 2px solid var(--border);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 768px) {
             body {
@@ -806,10 +819,10 @@ Output: 4</pre>
       </div>
       ${problem.followUp ? `<h2>Follow-up</h2><p>${problem.followUp}</p>` : ''}
     `;
-            
+
             //get Saved code from Backend, if not set default
             const savedCode = `{{ saved_code|escapejs }}`;
-            console.log("SAVED CODE : ",savedCode )
+            console.log("SAVED CODE : ", savedCode)
             editor.setValue(savedCode || problem.templates[language] || '');
 
             monaco.editor.setModelLanguage(editor.getModel(), language);
@@ -1103,7 +1116,10 @@ Output: 4</pre>
                     if (match) parsedOutput = match[0];
                 }
 
-                const passed = parsedOutput === testCase.expected.toString();
+                const passed = problem.compareOutput
+                    ? problem.compareOutput(output, testCase.expected)
+                    : parsedOutput === testCase.expected.toString();
+
 
                 return {
                     output: parsedOutput || 'No output',
@@ -1183,8 +1199,8 @@ Output: 4</pre>
           <div class="test-case-details">
             <div class="test-case-input"><b>Input:</b> ${tc.input.map((v, i) =>
                     `${String.fromCharCode(97 + i)} = ${v}`).join(', ')}</div>
-            <div class="test-case-output"><b>Output:</b> ${result.output || 'No output'}</div>
-            <div class="test-case-expected"><b>Expected:</b> ${tc.expected}</div>
+            <div class="test-case-output"><b>Output:</b> <pre class="output-pre">${result.output || 'No output'}</pre></div>
+            <div class="test-case-expected"><b>Expected:</b> <pre class="output-pre">${tc.expected}</pre></div>
             ${result.error ? `<div class="test-case-error"><b>Error:</b> <span class="console-error">${result.error}</span></div>` : ''}
           </div>
         </div>
@@ -1207,9 +1223,8 @@ Output: 4</pre>
                 updateBadge('test-results-badge', failedCount);
             }
 
-            return failedCount
+            return failedCount;
         }
-
         // Switch between tabs
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => {
