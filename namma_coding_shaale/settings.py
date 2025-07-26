@@ -177,41 +177,7 @@ CORS_ALLOWED_ORIGINS = [
 # Allow cookies (if needed)
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in debug only
 CORS_ALLOW_CREDENTIALS = True
-SESSION_COOKIE_SAMESITE = 'None' if DEBUG else 'Lax'
-CSRF_COOKIE_SAMESITE = 'None' if DEBUG else 'Lax'
-SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SECURE = not DEBUG
 
-CSRF_USE_SESSIONS = False
-CSRF_COOKIE_HTTPONLY = False
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-SECURE_SSL_REDIRECT = True
-USE_X_FORWARDED_HOST = True
-PORT = int(os.environ.get('PORT', 8080))  # Match Railway's exposed port
-
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
-
-
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
