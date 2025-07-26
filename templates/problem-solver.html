@@ -1460,13 +1460,51 @@ Output: 4</pre>
 
 
         // Test code
+        // async function submitCodeToBackend(code, failedCount) {
+        //     const problemId = urlParams.get('id');
+        //     console.log("POST API CALLED .....", code, failedCount, problemId);
+
+        //     const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
+
+        //     // Encode form data
+        //     const formData = new URLSearchParams();
+        //     formData.append('problem_id', problemId);
+        //     formData.append('code', code);
+        //     formData.append('failed_count', failedCount);
+
+        //     try {
+        //         const response = await fetch(url, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/x-www-form-urlencoded'
+        //             },
+        //             credentials: 'include',  // Optional: for cookies/session auth
+        //             body: formData.toString()
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //         }
+
+        //         const responseData = await response.json();
+        //         console.log('Success:', responseData);
+        //         return responseData;
+        //     } catch (error) {
+        //         console.error('Error posting data:', error);
+        //         throw error;
+        //     }
+        // }
+
+        // Get CSRF token from meta tag
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        // Send form-style data with CSRF
         async function submitCodeToBackend(code, failedCount) {
             const problemId = urlParams.get('id');
-            console.log("POST API CALLED .....", code, failedCount, problemId);
-
             const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
 
-            // Encode form data
             const formData = new URLSearchParams();
             formData.append('problem_id', problemId);
             formData.append('code', code);
@@ -1476,9 +1514,10 @@ Output: 4</pre>
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCSRFToken()
                     },
-                    credentials: 'include',  // Optional: for cookies/session auth
+                    credentials: 'include',
                     body: formData.toString()
                 });
 
