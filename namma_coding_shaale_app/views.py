@@ -527,35 +527,27 @@ def get_user_roadmap(user_id, course_id):
 @csrf_exempt
 @api_view(['POST', 'OPTIONS'])
 def save_code(request):
-    print("REQUESET REVIEVED IN Save_Code", request.data)
-    try:
-        data = request.data
-        
-        # Basic validation
-        # if not data.get('code') or not data.get('failed_count'):
-        #     return Response(
-        #         {"error": "Both name and email are required"},
-        #         status=status.HTTP_400_BAD_REQUEST
-        #     )
-        
-        # Process data (in a real app, you'd save to database here)
-        response_data = {
-            "message": "Data received successfully",
-            "your_data": {
-                "code": data['code'],
-                "failed_count": data['failed_count'],
-                "problem_id" : data['problem_id']
+    if request.method == 'OPTIONS':
+        response = Response()
+    else:
+        try:
+            data = request.data
+            response_data = {
+                "message": "Data received successfully",
+                "your_data": {
+                    "code": data['code'],
+                    "failed_count": data['failed_count'],
+                    "problem_id": data['problem_id']
+                }
             }
-        }
-        
-        return Response(response_data, status=status.HTTP_201_CREATED)
-    
-    except Exception as e:
-        return Response(
-            {"error": str(e)},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
-    
+            response = Response(response_data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            response = Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+            
+    return response
 
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
