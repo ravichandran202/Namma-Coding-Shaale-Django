@@ -178,6 +178,16 @@ CSRF_COOKIE_SAMESITE = 'None' if DEBUG else 'Lax'
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+SECURE_SSL_REDIRECT = True
+USE_X_FORWARDED_HOST = True
+PORT = int(os.environ.get('PORT', 8080))  # Match Railway's exposed port
+
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
