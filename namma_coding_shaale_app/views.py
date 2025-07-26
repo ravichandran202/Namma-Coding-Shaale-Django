@@ -527,7 +527,7 @@ def get_user_roadmap(user_id, course_id):
 @csrf_exempt
 @api_view(['POST', 'OPTIONS'])
 def save_code(request):
-    print("REQUESET REVIEVED......")
+    print("REQUESET REVIEVED IN Save_Code", request.data)
     try:
         data = request.data
         
