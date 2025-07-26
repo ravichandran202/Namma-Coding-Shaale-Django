@@ -1462,7 +1462,7 @@ Output: 4</pre>
         async function submitCodeToBackend(code, failedCount) {
             const problemId = urlParams.get('id');
             console.log("POST API CALLED .....", code, failedCount, problemId);
-            const url = 'http://localhost:8000/api/save-code';
+            const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
             const data = {
                 problem_id: problemId,
                 code: code,
