@@ -1,10 +1,14 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from django.views.decorators.http import require_http_methods
+
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, update_session_auth_hash
 from django.contrib.auth.models import User, auth
@@ -21,6 +25,7 @@ import string
 import secrets
 from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course
 import logging
+import json
 
 
 from django.db import transaction
@@ -28,6 +33,7 @@ import django.db.models as models
 from django.db.models import Case, When, Value, BooleanField, Count, Q
 from django.db.models.functions import Concat
 from django.db.models import F
+
 
 
 # Get an instance of a logger
@@ -524,30 +530,79 @@ def get_user_roadmap(user_id, course_id):
 '''
    INTERNAL APIS
 '''
+# @csrf_exempt
+# @api_view(['POST', 'OPTIONS'])
+# @permission_classes([AllowAny])
+# def save_code(request):
+#     if request.method == 'OPTIONS':
+#         response = Response()
+#     else:
+#         try:
+#             data = request.data
+#             response_data = {
+#                 "message": "Data received successfully",
+#                 "your_data": {
+#                     "code": data['code'],
+#                     "failed_count": data['failed_count'],
+#                     "problem_id": data['problem_id']
+#                 }
+#             }
+#             response = Response(response_data, status=status.HTTP_201_CREATED)
+#         except Exception as e:
+#             response = Response(
+#                 {"error": str(e)},
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
+
+#     return response
+
 @csrf_exempt
-@api_view(['POST', 'OPTIONS'])
+@require_http_methods(["POST", "OPTIONS"])
 def save_code(request):
     if request.method == 'OPTIONS':
-        response = Response()
-    else:
-        try:
-            data = request.data
-            response_data = {
-                "message": "Data received successfully",
-                "your_data": {
-                    "code": data['code'],
-                    "failed_count": data['failed_count'],
-                    "problem_id": data['problem_id']
-                }
-            }
-            response = Response(response_data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            response = Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        # Handle CORS preflight request
+        response = HttpResponse()
+        response["Access-Control-Allow-Origin"] = "*"  # Adjust this in production
+        response["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type"
+        return response
+
+    try:
+        # Parse JSON from request body
+        data = json.loads(request.body.decode('utf-8'))
+
+        print("SAVE CODE REQUEST : ", data)
+
+        code = data.get('code')
+        failed_count = data.get('failed_count')
+        problem_id = data.get('problem_id')
+
+        if not all([code, failed_count is not None, problem_id]):
+            return JsonResponse(
+                {"error": "Missing one or more required fields"},
+                status=400
             )
-            
+
+        response_data = {
+            "message": "Data received successfully",
+            "your_data": {
+                "code": code,
+                "failed_count": failed_count,
+                "problem_id": problem_id
+            }
+        }
+
+        response = JsonResponse(response_data, status=201)
+
+    except json.JSONDecodeError:
+        response = JsonResponse({"error": "Invalid JSON"}, status=400)
+    except Exception as e:
+        response = JsonResponse({"error": str(e)}, status=500)
+
+    # Add CORS headers
+    response["Access-Control-Allow-Origin"] = "*"  # Adjust in production!
     return response
+
 
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
