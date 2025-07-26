@@ -171,7 +171,12 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Allow cookies (if needed)
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all in debug only
 CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = 'None' if DEBUG else 'Lax'
+CSRF_COOKIE_SAMESITE = 'None' if DEBUG else 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 CORS_ALLOW_HEADERS = [
     'accept',
