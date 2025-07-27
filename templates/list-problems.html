@@ -938,6 +938,7 @@
 
     <div class="sidebar-content">
 
+      {% if not is_freemium %}
       {% for section in roadmap %}
       <div class="sidebar-section">
           <p class="sidebar-section-title">{{ section.title }}</p>
@@ -970,7 +971,8 @@
           </ul>
       </div>
       {% endfor %}
-      
+      {% endif %}
+
       <div class="sidebar-section">
         <p class="sidebar-section-title">Main Menu</p>
         <ul class="sidebar-menu">
@@ -2364,7 +2366,7 @@
                     </a>
                   </td>
                   <td>
-                    <a href="problem-solver?id=${problem.id}" class="btn btn-success btn-sm">
+                    <a href="{% url 'problem-solver' %}?id=${problem.id}" class="btn btn-success btn-sm">
                       <i class="fas fa-terminal me-1"></i> Solve
                     </a>
                   </td>
