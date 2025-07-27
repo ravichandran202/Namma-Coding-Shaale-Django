@@ -173,13 +173,19 @@ def code_editor(request):
     return render(request, "code-editor.html")
 
 @login_required(login_url="login")
-def list_problems(request):
-    roadmap = get_user_roadmap_html(user_id=1, course_id=1)
-    print(roadmap)
+def list_problems(request, course_id):
+
+    roadmap = None
+    is_enrolled_user = False
+    if UserCourse.objects.filter(user=request.user).exists():
+            is_enrolled_user = True
+            roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
+
     context = {
-        "is_freemium" : False if request.user.is_authenticated else True,
+        "is_freemium" : not is_enrolled_user,
         "roadmap" : roadmap
     }
+
     return render(request, "list-problems.html", context)
 
 @login_required(login_url="login")
@@ -283,13 +289,17 @@ from django.utils import timezone
 from .models import UserContentProgress, Content, Course, UserCourse
 
 @login_required
-
 def view_content(request, course_id, content_file_id):
     with transaction.atomic():
         # Get course and content objects
-        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
         course = get_object_or_404(Course, id=course_id)
         content = get_object_or_404(Content, file_name=content_file_id)
+
+        # Check if user is enrolled in the course
+        if not UserCourse.objects.filter(user=request.user, course=course).exists():
+            return render(request, "index.html")
+
+        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
         
         # Verify content belongs to course
         course_content = get_object_or_404(
@@ -297,6 +307,7 @@ def view_content(request, course_id, content_file_id):
             course=course, 
             content=content
         )
+
         
         # Get or create user course progress
         user_course, _ = UserCourse.objects.get_or_create(
@@ -304,6 +315,10 @@ def view_content(request, course_id, content_file_id):
             course=course,
             defaults={'current_content': content}
         )
+
+        #update current content
+        user_course.current_content = content
+        user_course.save()
         
         # Get or create content progress
         progress, _ = UserContentProgress.objects.get_or_create(
