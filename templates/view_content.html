@@ -656,8 +656,17 @@
                   <ul class="sidebar-submenu">
                       {% for content in section.contents %}
                       <li>
-                          <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}">
-                              <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                          <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}" class=" {% if content.title == user_course.current_content.title %} active {% endif %}"">
+                              <i class="
+                              {% if content.status == 'completed' %}
+                                   fas fa-check-circle text-success
+                              {% elif content.status == 'pending' %}
+                                   far fa-circle 
+                              {% else %}
+                                    fas fa-lock
+                              {% endif %} 
+
+                              status-icon"></i>
                               {{ content.title }}
                           </a>
                       </li>
