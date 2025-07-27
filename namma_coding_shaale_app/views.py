@@ -1,4 +1,4 @@
-from django.http import Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -23,7 +23,7 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course
+from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem
 import logging
 import json
 
@@ -190,12 +190,54 @@ def list_problems(request, course_id):
 
 @login_required(login_url="login")
 def problem_solver(request):
-    code = """def add_numbers(a, b):\n    # write your code here\n    pass"""
-    code = ""
+    problem_file_id = request.GET.get('id')
+    content_id = request.GET.get('content_id')  # Optional
+    course_id = request.GET.get('course_id')    # Optional
+    
+    try:
+        problem = Problem.objects.get(file_name=problem_file_id)
+    except Problem.DoesNotExist:
+        return HttpResponseNotFound("Problem not found")
+
+    # Get or create user progress if content_id is provided
+    # content_progress = None
+    # if content_id and course_id:
+    #     try:
+    #         content = Content.objects.get(id=content_id)
+    #         course = Course.objects.get(id=course_id)
+    #         content_progress, _ = UserContentProgress.objects.get_or_create(
+    #             user=request.user,
+    #             course=course,
+    #             content=content,
+    #             defaults={'is_locked': not content.coursecontent_set.get(course=course).is_unlocked_by_default}
+    #         )
+    #     except (Content.DoesNotExist, Course.DoesNotExist, CourseContent.DoesNotExist):
+    #         pass
+
+    # Get or create the single submission record
+    submission, created = ProblemSubmission.objects.get_or_create(
+        user=request.user,
+        problem=problem,
+        defaults={
+            'submitted_code': problem.starter_code or "",
+            'status': 'UNSOLVED',
+            'course_id': course_id,
+            'content_id': content_id
+        }
+    )
+
     context = {
-        "saved_code" : code
+        "problem": problem,
+        "saved_code": submission.submitted_code,
+        # "content_id": content_id,
+        # "course_id": course_id,
+        "problem_id": problem.id,
+        "submission_id": submission.id  # Include submission ID for your API
     }
+    
     return render(request, "problem-solver.html", context)
+
+
 
 @login_required
 def my_courses(request):
@@ -553,28 +595,57 @@ def get_user_roadmap(user_id, course_id):
 @permission_classes([AllowAny])
 def save_code(request):
     if request.method == 'OPTIONS':
-        response = Response()
-    else:
-        try:
-            data = request.data
-            print(data)
-            response_data = {
-                "message": "Data received successfully",
-                "your_data": {
-                    "code": data['code'],
-                    "failed_count": data['failed_count'],
-                    "problem_id": data['problem_id']
-                }
+        return Response()
+    
+    try:
+        data = request.data
+        problem_file_id = data['problem_id']
+        code = data['code']
+        failed_count = int(data.get('failed_count', 0))
+        
+        problem = Problem.objects.filter(file_name=problem_file_id).first()
+        if not problem:
+            return Response({"error": "Problem not found"}, status=404)
+
+        # Determine status based on failed_count
+        status = 'SOLVED' if failed_count == 0 else 'ATTEMPTED'
+        print("\n\nSTATUS:", status, "Problem ID:", problem_file_id)
+        
+        # Get or create the submission
+        submission, created = ProblemSubmission.objects.update_or_create(
+            problem=problem,
+            defaults={
+                'submitted_code': code,
+                'status': status,
+                'execution_time': data.get('execution_time'),
+                'test_results': data.get('test_results')
             }
-            response = Response(response_data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            response = Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-    return response
-
+        )
+        
+        response_data = {
+            "message": "Data received successfully",
+            "your_data": {
+                "code": code,
+                "failed_count": failed_count,
+                "problem_id": problem_file_id,
+                "submission_id": submission.id,
+                "status": status
+            }
+        }
+        return Response(response_data, status=200)
+        
+    except KeyError as e:
+        print(f"Missing key in request data: {str(e)}")
+        return Response(
+            {"error": f"Missing required field: {str(e)}"},
+            status=400
+        )
+    except Exception as e:
+        print(f"Error in save_code: {str(e)}")
+        return Response(
+            {"error": str(e)},
+            status=500
+        )
 
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
