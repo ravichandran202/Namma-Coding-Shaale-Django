@@ -362,6 +362,9 @@ def view_content(request, course_id, content_file_id):
             'content_file_id': content.file_name,
             'roadmap':roadmap
         }
+
+        if content.type.lower() == "problem":
+            return render(request, "view_problem_content.html", context)
         
         return render(request, "view_content.html", context)
     
@@ -539,6 +542,7 @@ def save_code(request):
     else:
         try:
             data = request.data
+            print(data)
             response_data = {
                 "message": "Data received successfully",
                 "your_data": {
