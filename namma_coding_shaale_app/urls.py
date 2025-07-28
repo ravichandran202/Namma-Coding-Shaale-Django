@@ -10,8 +10,8 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
 
     path("code-editor",views.code_editor,name="code-editor"),
-    path("list-problems",views.list_problems,name="list-problems"),
-    path("problem-solver",views.problem_solver,name="problem-solver"),
+    path("list-problems/<int:course_id>",views.list_problems,name="list-problems"),
+    path("problem-solver/<int:course_id>",views.problem_solver,name="problem-solver"),
 
     path("api/save-code",views.save_code,name="save-code"),
     path('my-courses/', views.my_courses, name='my-courses'),
