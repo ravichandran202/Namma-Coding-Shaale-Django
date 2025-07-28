@@ -151,21 +151,8 @@ def logout(request):
     return redirect('login')
 
 def home(request):
-    username = "Test User"
     if request.user.is_authenticated:
-        username = request.user.username
-
-    roadmap = get_user_roadmap(user_id=1, course_id=1)
-    print(roadmap)
-
-    for section in roadmap:
-        print(f"{section['section_title']} ({section['status']})")
-        for content in section['contents']:
-            status = content['status'] if not content['is_locked'] else 'locked'
-            print(f"\t{content['title']} ({status})")
-    
-    print("-- INFO : ", f"UserName : {username}")
-
+        return redirect("my-courses")
     return render(request,"index.html")
 
 @login_required(login_url="login")
@@ -183,16 +170,17 @@ def list_problems(request, course_id):
 
     context = {
         "is_freemium" : not is_enrolled_user,
-        "roadmap" : roadmap
+        "roadmap" : roadmap,
+        "course_id" : course_id
     }
 
     return render(request, "list-problems.html", context)
 
 @login_required(login_url="login")
-def problem_solver(request):
+def problem_solver(request, course_id):
     problem_file_id = request.GET.get('id')
     content_id = request.GET.get('content_id')  # Optional
-    course_id = request.GET.get('course_id')    # Optional
+    course_id = course_id    # Optional
     
     try:
         problem = Problem.objects.get(file_name=problem_file_id)
@@ -230,7 +218,7 @@ def problem_solver(request):
         "problem": problem,
         "saved_code": submission.submitted_code,
         # "content_id": content_id,
-        # "course_id": course_id,
+        "course_id": course_id,
         "problem_id": problem.id,
         "submission_id": submission.id  # Include submission ID for your API
     }
@@ -262,11 +250,20 @@ def my_courses(request):
             type='PROBLEM'
         ).count()
         
+        # First get all problem contents in this course
+        problem_content_ids = Content.objects.filter(
+            coursecontent__course=course,
+            type='PROBLEM'
+        ).values_list('id', flat=True)
+        
+        # Then count distinct solved problems in these contents
         solved_problems = ProblemSubmission.objects.filter(
             user=request.user,
-            content__coursecontent__course=course,
+            content_id__in=problem_content_ids,
             status='SOLVED'
         ).values('problem').distinct().count()
+
+        print("SOLVED PROBLEMS", problem_content_ids, problem_contents, solved_problems)
         
         # Calculate progress percentages
         module_progress = (completed_contents / total_contents * 100) if total_contents > 0 else 0
