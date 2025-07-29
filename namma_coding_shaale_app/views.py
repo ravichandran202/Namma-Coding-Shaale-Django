@@ -206,6 +206,7 @@ def problem_solver(request, course_id):
     submission, created = ProblemSubmission.objects.get_or_create(
         user=request.user,
         problem=problem,
+        course_id = course_id,
         defaults={
             'submitted_code': problem.starter_code or "",
             'status': 'UNSOLVED',
@@ -245,25 +246,19 @@ def my_courses(request):
         ).count()
 
         
+        # Get all problems in this course (through content)
         problem_contents = Content.objects.filter(
             coursecontent__course=course,
             type='PROBLEM'
         ).count()
         
-        # First get all problem contents in this course
-        problem_content_ids = Content.objects.filter(
-            coursecontent__course=course,
-            type='PROBLEM'
-        ).values_list('id', flat=True)
-        
-        # Then count distinct solved problems in these contents
+        # Count distinct solved problems for this user in this course
         solved_problems = ProblemSubmission.objects.filter(
             user=request.user,
-            content_id__in=problem_content_ids,
+            course=course,
             status='SOLVED'
         ).values('problem').distinct().count()
 
-        print("SOLVED PROBLEMS", problem_content_ids, problem_contents, solved_problems)
         
         # Calculate progress percentages
         module_progress = (completed_contents / total_contents * 100) if total_contents > 0 else 0
@@ -414,7 +409,8 @@ def view_content(request, course_id, content_file_id):
             'progress': progress,
             'is_completed': progress.is_completed,
             'content_file_id': content.file_name,
-            'roadmap':roadmap
+            'roadmap':roadmap,
+            'course_id' : course_id
         }
 
         if content.type.lower() == "problem":
@@ -432,7 +428,7 @@ def get_user_roadmap_html(user_id, course_id):
         up.content_id: up 
         for up in UserContentProgress.objects.filter(
             user_id=user_id,
-            content__coursecontent__course_id=course_id
+            course_id=course_id
         ).select_related('content')
     }
 
@@ -598,6 +594,7 @@ def save_code(request):
         data = request.data
         problem_file_id = data['problem_id']
         code = data['code']
+        course_id  = int(data['course_id'])
         failed_count = int(data.get('failed_count', 0))
         
         problem = Problem.objects.filter(file_name=problem_file_id).first()
@@ -614,6 +611,8 @@ def save_code(request):
             defaults={
                 'submitted_code': code,
                 'status': status,
+                "course_id" : course_id,
+                # "content_id" : ,
                 'execution_time': data.get('execution_time'),
                 'test_results': data.get('test_results')
             }
