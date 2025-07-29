@@ -1507,6 +1507,7 @@ Output: 4</pre>
 
             const formData = new URLSearchParams();
             formData.append('problem_id', problemId);
+            formData.append('course_id', "{{ course_id|escapejs }}");
             formData.append('code', code);
             formData.append('failed_count', failedCount);
 
