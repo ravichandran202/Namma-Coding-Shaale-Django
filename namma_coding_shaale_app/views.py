@@ -600,6 +600,8 @@ def save_code(request):
         problem = Problem.objects.filter(file_name=problem_file_id).first()
         if not problem:
             return Response({"error": "Problem not found"}, status=404)
+        
+        course = Course.objects.get(id=course_id)
 
         # Determine status based on failed_count
         status = 'SOLVED' if failed_count == 0 else 'ATTEMPTED'
@@ -608,6 +610,7 @@ def save_code(request):
         # Get or create the submission
         submission, created = ProblemSubmission.objects.update_or_create(
             problem=problem,
+            course = course,
             defaults={
                 'submitted_code': code,
                 'status': status,
