@@ -159,122 +159,79 @@ def home(request):
 def code_editor(request):
     return render(request, "code-editor.html")
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import UserCourse, CourseContent, ProblemSubmission
+
 @login_required(login_url="login")
 def list_problems(request, course_id):
-    # Check enrollment
-    is_enrolled_user = UserCourse.objects.filter(
-        user=request.user, 
-        course_id=course_id
-    ).exists()
-    
-    # Get roadmap if enrolled
+    if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        return redirect("home")
+
     roadmap = None
-    if is_enrolled_user:
+    is_enrolled_user = False
+    if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        is_enrolled_user = True
         roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
 
-    # Get all problems associated with this course through CourseContent
+    # Gather all CourseContent for this course, ordered by sequence_number
     course_contents = CourseContent.objects.filter(
-        course_id=course_id,
+        course_id=course_id, 
         content__type='PROBLEM'
-    ).select_related('content', 'content__problem').order_by('sequence_number')
+    ).select_related('content__problem').order_by('sequence_number')
 
-    # Get all user progress records for this course
-    user_progress = UserContentProgress.objects.filter(
-        user=request.user,
-        course_id=course_id,
-        content__type='PROBLEM'
-    ).select_related('content')
-
-    # Create a dictionary for quick progress lookup
-    progress_dict = {
-        progress.content_id: progress 
-        for progress in user_progress
-    }
-
-    # Organize into sections structure
-    sections = []
-    current_section = None
-
-
-    for course_content in course_contents:
-        problem = course_content.content.problem
-        if not problem:
+    # Section grouping: section_title -> [problems]
+    sections_map = {}
+    for cc in course_contents:
+        if not cc.content.problem:  # Should always be linked since type=PROBLEM, but be safe
             continue
 
-        # Create section ID
-        section_id = "".join(
-            c if c.isalnum() or c in (' ', '-') else '' 
-            for c in course_content.section_title.lower()
-        ).replace(' ', '-').strip('-')
+        section_title = cc.section_title
+        if section_title not in sections_map:
+            sections_map[section_title] = {
+                "id": section_title.lower().replace(" ", "-"),
+                "title": section_title,
+                "type": "problems",
+                "problems": []
+                }
 
-        # Check if this is a new section
-        if not current_section or current_section['id'] != f"section-{section_id}":
-            current_section = {
-                'id': f"section-{section_id}",
-                'title': course_content.section_title,
-                'type': "problems",
-                'problems': []
-            }
-            sections.append(current_section)
-        
-        # Create problem ID
-        problem_id = "".join(
-            c if c.isalnum() or c in (' ', '-') else '' 
-            for c in problem.title.lower()
-        ).replace(' ', '-').strip('-')
-
-        # Determine problem status
-        progress = progress_dict.get(course_content.content_id)
-        if progress:
-            if progress.is_completed:
-                status = "solved"
-            elif progress.last_accessed:
-                status = "attempted"
-            else:
-                status = "unsolved"
-            is_locked = progress.is_locked
+        problem_obj = cc.content.problem
+        # Determine user problem status based on submissions (if available)
+        submission = ProblemSubmission.objects.filter(
+            user=request.user, problem=problem_obj
+        ).order_by('-submitted_at').first()
+        if submission:
+            status = submission.status.lower()
         else:
-            # If no progress record exists, consider it unsolved
             status = "unsolved"
-            is_locked = not course_content.is_unlocked_by_default
 
-        current_section['problems'].append({
-            'id': f"problem-{problem_id}",
-            'title': problem.title,
-            'difficulty': problem.difficulty.lower(),
-            'status': status,
-            'solution': problem.solution_link or "#",
-            'video': problem.video_link or "#",
-            'tags': [],  # You can populate this if you have tags
-            'is_locked': is_locked
+        sections_map[section_title]["problems"].append({
+            "id": problem_obj.file_name,
+            "title": problem_obj.title,
+            "difficulty": problem_obj.difficulty.lower(),
+            "status": status,
+            "solution": problem_obj.solution_link or "#",
+            "video": problem_obj.video_link or "#",
+            "tags": [],  # Optional: you can add custom tags field to Problem model later
         })
-
-    print(sections)
-
-    problem_data = {
-        'sections': sections
-    }
+    
+    # Convert sections_map to list and add section number as prefix (as in your sample)
+    sections = []
+    for idx, (sec_title, section) in enumerate(sections_map.items(), 1):
+        section = dict(section)  # Make a copy
+        section["title"] = f"{idx}. {section['title']}"
+        sections.append(section)
+    
+    print("SECTIONS : ",sections)
 
     context = {
         "is_freemium": not is_enrolled_user,
         "roadmap": roadmap,
         "course_id": course_id,
-        "problem_data_json": json.dumps(problem_data)
+        "sections_js_json": json.dumps(sections)
     }
-
     return render(request, "list-problems.html", context)
 
-
-def get_problem_status(self, user, problem):
-    """Helper method to get problem status for a user"""
-    submission = ProblemSubmission.objects.filter(
-        user=user,
-        problem=problem
-    ).first()
-    
-    if submission:
-        return submission.status.lower()
-    return "unsolved"
 
 @login_required(login_url="login")
 def problem_solver(request, course_id):
