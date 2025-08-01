@@ -1416,13 +1416,13 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     }
 
-    .premium-edition-modal{
+    .premium-edition-modal {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       color: #fff;
     }
 
-    .premium-edition-modal{
+    .premium-edition-modal {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       color: #fff;
@@ -1556,39 +1556,6 @@
       z-index: 1;
     }
 
-    .bg-gradient-light {
-  background: linear-gradient(to bottom, rgba(248, 250, 252, 0.9), rgba(248, 250, 252, 1));
-}
-
-.pricing-card {
-  transition: all 0.3s ease;
-}
-
-.pricing-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.pricing-card.featured {
-  position: relative;
-  z-index: 1;
-}
-
-.featured-badge {
-  position: absolute;
-  top: 1rem;
-  right: -2.5rem;
-  background-color: var(--primary);
-  color: white;
-  padding: 0.25rem 2.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  box-shadow: var(--shadow);
-  transform: rotate(45deg);
-  width: 150px;
-  text-align: center;
-}
-
 
     /* Navbar scroll effect
     window.addEventListener('scroll', function() {
@@ -1670,7 +1637,9 @@
             <!-- Course 1 -->
             <div class="course-card animate premium-edition">
               <div class="course-img-container">
-                <img src="https://c4.wallpaperflare.com/wallpaper/544/77/284/programming-programming-language-python-programming-logo-hd-wallpaper-preview.jpg" alt="Python Basics" class="course-img">
+                <img
+                  src="https://c4.wallpaperflare.com/wallpaper/544/77/284/programming-programming-language-python-programming-logo-hd-wallpaper-preview.jpg"
+                  alt="Python Basics" class="course-img">
                 <div class="course-overlay"></div>
                 <div class="course-badge bg-gold">Premium</div>
                 <div class="exclusive-ribbon">Exclusive</div>
@@ -1713,7 +1682,7 @@
                     <span class="text-light text-decoration-line-through ms-2">$499</span>
                   </div>
                   <button href="#" class="btn btn-premium-gold" data-bs-toggle="modal"
-                  data-bs-target="#python-syllabus-professional-modal">
+                    data-bs-target="#python-syllabus-professional-modal">
                     <i class="fas fa-crown me-1"></i> Enroll
                   </button>
                 </div>
@@ -1739,7 +1708,9 @@
             <!-- Course 2-->
             <div class="course-card animate">
               <div class="course-img-container">
-                <img src="https://c4.wallpaperflare.com/wallpaper/978/36/954/blue-green-python-programming-wallpaper-preview.jpg" alt="Python Basics" class="course-img">
+                <img
+                  src="https://c4.wallpaperflare.com/wallpaper/978/36/954/blue-green-python-programming-wallpaper-preview.jpg"
+                  alt="Python Basics" class="course-img">
                 <div class="course-overlay"></div>
                 <div class="course-badge bg-primary">Beginner</div>
                 <div class="course-level">
@@ -2070,7 +2041,8 @@
   </section>
 
   <!-- Modal 1: Python Professional -->
-  <div class="modal fade" id="python-syllabus-professional-modal" tabindex="-1" aria-labelledby="syllabusModal1Label" aria-hidden="true">
+  <div class="modal fade" id="python-syllabus-professional-modal" tabindex="-1" aria-labelledby="syllabusModal1Label"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content border-0 overflow-hidden" style="box-shadow: var(--shadow-xl);">
         <div class="modal-header position-relative p-0">
@@ -2950,11 +2922,108 @@
         </div>
       </div>
     </div>
-  </section>
 
   </section>
 
-  <!-- Certificate Section - Fixed Version -->
+    <!-- Course Comparison Section -->
+    <section class="section bg-gradient-light">
+      <div class="container">
+        <div class="text-center mb-6">
+          <span class="text-uppercase text-primary fw-bold letter-spacing-3">Choose Your Path</span>
+          <h2 class="section-title mt-3">Our <span class="text-gradient">Course Tiers</span></h2>
+          <p class="section-subtitle">Select the perfect learning experience for your goals and budget</p>
+        </div>
+  
+        <div class="row g-4">
+          <!-- Free Course -->
+          <div class="col-md-4">
+            <div class="pricing-card h-100">
+              <div class="text-center mb-4">
+                <span class="badge bg-secondary mb-3">FREE</span>
+                <h3 class="h4">Starter</h3>
+                <p class="text-muted">Perfect for beginners exploring coding</p>
+              </div>
+              <div class="text-center mb-4">
+                <span class="display-4 fw-bold">$0</span>
+                <span class="text-muted">/ forever</span>
+              </div>
+              <ul class="pricing-features">
+                <li><i class="fas fa-check text-secondary me-2"></i> Basic Python syntax</li>
+                <li><i class="fas fa-check text-secondary me-2"></i> 20+ coding exercises</li>
+                <li><i class="fas fa-check text-secondary me-2"></i> Community support</li>
+                <li class="text-muted"><i class="fas fa-times me-2"></i> No certificate</li>
+                <li class="text-muted"><i class="fas fa-times me-2"></i> Limited problems</li>
+                <li class="text-muted"><i class="fas fa-times me-2"></i> No mentorship</li>
+              </ul>
+              <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-secondary w-100">Get Started</a>
+              </div>
+            </div>
+          </div>
+  
+                  <!-- Professional Course -->
+                  <div class="col-md-4">
+                    <div class="pricing-card premium-edition h-100">
+                      <div class="exclusive-ribbon">PREMIUM</div>
+                      <div class="text-center mb-4">
+                        <span class="badge bg-gold mb-3">PROFESSIONAL</span>
+                        <h3 class="h4 text-light">Mastery</h3>
+                        <p class="text-light opacity-75">Become interview-ready</p>
+                      </div>
+                      <div class="text-center mb-4">
+                        <span class="display-4 fw-bold text-gold">$299</span>
+                        <span class="text-light opacity-75">/ one-time</span>
+                      </div>
+                      <ul class="pricing-features">
+                        <li><i class="fas fa-check text-gold me-2"></i> Advanced Python & DSA</li>
+                        <li><i class="fas fa-check text-gold me-2"></i> 200+ LeetCode-style problems</li>
+                        <li><i class="fas fa-check text-gold me-2"></i> Premium certificate</li>
+                        <li><i class="fas fa-check text-gold me-2"></i> 1-on-1 mentorship</li>
+                        <li><i class="fas fa-check text-gold me-2"></i> System design concepts</li>
+                        <li><i class="fas fa-check text-gold me-2"></i> Career coaching</li>
+                      </ul>
+                      <div class="text-center mt-4">
+                        <a href="#" class="btn btn-premium-gold w-100">
+                          <i class="fas fa-crown me-2"></i> Join Elite
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+  
+          <!-- Foundational Course -->
+          <div class="col-md-4">
+            <div class="pricing-card h-100 featured" style="border: 2px solid var(--primary);">
+              <div class="featured-badge">POPULAR</div>
+              <div class="text-center mb-4">
+                <span class="badge bg-primary mb-3">FOUNDATIONAL</span>
+                <h3 class="h4">Developer</h3>
+                <p class="text-muted">Build solid coding fundamentals</p>
+              </div>
+              <div class="text-center mb-4">
+                <span class="display-4 fw-bold">$99</span>
+                <span class="text-muted">/ one-time</span>
+              </div>
+              <ul class="pricing-features">
+                <li><i class="fas fa-check text-primary me-2"></i> Complete Python mastery</li>
+                <li><i class="fas fa-check text-primary me-2"></i> 100+ coding exercises</li>
+                <li><i class="fas fa-check text-primary me-2"></i> Verified certificate</li>
+                <li><i class="fas fa-check text-primary me-2"></i> Basic DSA concepts</li>
+                <li><i class="fas fa-check text-primary me-2"></i> Email support</li>
+                <li class="text-muted"><i class="fas fa-times me-2"></i> Limited mentorship</li>
+              </ul>
+              <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary w-100">Enroll Now</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+    </section>
+  
+
+  <!-- Certificate Section -->
   <section class="section bg-light text-dark position-relative">
     <div class="container position-relative z-index-1">
       <div class="row align-items-center">
@@ -2962,7 +3031,8 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
           <div class="position-relative certificate-container">
             <!-- Actual image with fallback -->
-            <img src="https://templates.mediamodifier.com/5df0dfca4076b80ad157515c/school-certificate-online-design-template.jpg"
+            <img
+              src="https://templates.mediamodifier.com/5df0dfca4076b80ad157515c/school-certificate-online-design-template.jpg"
               class="img-fluid rounded-3 shadow-sm certificate-img" alt="Certificate Sample">
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10 rounded-3"></div>
             <div class="position-absolute bottom-0 end-0 m-4">
@@ -3031,103 +3101,6 @@
     </div>
 
   </section>
-
-    <!-- Course Comparison Section -->
-<section class="section bg-gradient-light">
-  <div class="container">
-    <div class="text-center mb-6">
-      <span class="text-uppercase text-primary fw-bold letter-spacing-3">Choose Your Path</span>
-      <h2 class="section-title mt-3">Our <span class="text-gradient">Course Tiers</span></h2>
-      <p class="section-subtitle">Select the perfect learning experience for your goals and budget</p>
-    </div>
-
-    <div class="row g-4">
-      <!-- Free Course -->
-      <div class="col-md-4">
-        <div class="pricing-card h-100">
-          <div class="text-center mb-4">
-            <span class="badge bg-secondary mb-3">FREE</span>
-            <h3 class="h4">Starter</h3>
-            <p class="text-muted">Perfect for beginners exploring coding</p>
-          </div>
-          <div class="text-center mb-4">
-            <span class="display-4 fw-bold">$0</span>
-            <span class="text-muted">/ forever</span>
-          </div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check text-secondary me-2"></i> Basic Python syntax</li>
-            <li><i class="fas fa-check text-secondary me-2"></i> 20+ coding exercises</li>
-            <li><i class="fas fa-check text-secondary me-2"></i> Community support</li>
-            <li class="text-muted"><i class="fas fa-times me-2"></i> No certificate</li>
-            <li class="text-muted"><i class="fas fa-times me-2"></i> Limited problems</li>
-            <li class="text-muted"><i class="fas fa-times me-2"></i> No mentorship</li>
-          </ul>
-          <div class="text-center mt-4">
-            <a href="#" class="btn btn-outline-secondary w-100">Get Started</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Foundational Course -->
-      <div class="col-md-4">
-        <div class="pricing-card h-100 featured" style="border: 2px solid var(--primary);">
-          <div class="featured-badge">POPULAR</div>
-          <div class="text-center mb-4">
-            <span class="badge bg-primary mb-3">FOUNDATIONAL</span>
-            <h3 class="h4">Developer</h3>
-            <p class="text-muted">Build solid coding fundamentals</p>
-          </div>
-          <div class="text-center mb-4">
-            <span class="display-4 fw-bold">$99</span>
-            <span class="text-muted">/ one-time</span>
-          </div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check text-primary me-2"></i> Complete Python mastery</li>
-            <li><i class="fas fa-check text-primary me-2"></i> 100+ coding exercises</li>
-            <li><i class="fas fa-check text-primary me-2"></i> Verified certificate</li>
-            <li><i class="fas fa-check text-primary me-2"></i> Basic DSA concepts</li>
-            <li><i class="fas fa-check text-primary me-2"></i> Email support</li>
-            <li class="text-muted"><i class="fas fa-times me-2"></i> Limited mentorship</li>
-          </ul>
-          <div class="text-center mt-4">
-            <a href="#" class="btn btn-primary w-100">Enroll Now</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Professional Course -->
-      <div class="col-md-4">
-        <div class="pricing-card premium-edition h-100">
-          <div class="exclusive-ribbon">PREMIUM</div>
-          <div class="text-center mb-4">
-            <span class="badge bg-gold mb-3">PROFESSIONAL</span>
-            <h3 class="h4 text-light">Mastery</h3>
-            <p class="text-light opacity-75">Become interview-ready</p>
-          </div>
-          <div class="text-center mb-4">
-            <span class="display-4 fw-bold text-gold">$299</span>
-            <span class="text-light opacity-75">/ one-time</span>
-          </div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check text-gold me-2"></i> Advanced Python & DSA</li>
-            <li><i class="fas fa-check text-gold me-2"></i> 200+ LeetCode-style problems</li>
-            <li><i class="fas fa-check text-gold me-2"></i> Premium certificate</li>
-            <li><i class="fas fa-check text-gold me-2"></i> 1-on-1 mentorship</li>
-            <li><i class="fas fa-check text-gold me-2"></i> System design concepts</li>
-            <li><i class="fas fa-check text-gold me-2"></i> Career coaching</li>
-          </ul>
-          <div class="text-center mt-4">
-            <a href="#" class="btn btn-premium-gold w-100">
-              <i class="fas fa-crown me-2"></i> Join Elite
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 
 
   <!-- Footer -->

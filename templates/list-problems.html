@@ -1166,974 +1166,980 @@
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script type="application/json" id="sections-data">
+    {{ sections_js_json|safe }}
+</script>
 
   <!-- Problem Data and Application Script -->
   <script>
     // Problem data module
     const ProblemData = (() => {
-      const sections = [
-        {
-          id: "basic-problems",
-          title: "1. Basic Python Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "hello-world",
-              title: "Print 'Hello, World!'",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["print", "basic"]
-            },
-            {
-              id: "add-numbers",
-              title: "Add Two Numbers",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["arithmetic", "input"]
-            },
-            {
-              id: "swap-vars",
-              title: "Swap Two Variables",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["variables"]
-            },
-            {
-              id: "convert-celsius",
-              title: "Convert Celsius to Fahrenheit",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["conversion"]
-            },
-            {
-              id: "quadratic-roots",
-              title: "Find Quadratic Roots",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["math", "quadratic"]
-            },
-            {
-              id: "km-to-miles",
-              title: "Convert Kilometers to Miles",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["conversion"]
-            },
-            {
-              id: "check-even",
-              title: "Check Even or Odd",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["modulus"]
-            },
-            {
-              id: "leap-year",
-              title: "Check Leap Year",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["conditions"]
-            },
-            {
-              id: "largest-three",
-              title: "Find Largest Among Three Numbers",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["comparison"]
-            }
-          ]
-        },
-        {
-          id: "string-problems",
-          title: "2. String Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "reverse-string",
-              title: "Reverse a String",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "reverse"]
-            },
-            {
-              id: "palindrome",
-              title: "Check Palindrome",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "palindrome"]
-            },
-            {
-              id: "count-vowels",
-              title: "Count Vowels in String",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "count"]
-            },
-            {
-              id: "anagram",
-              title: "Check if Two Strings are Anagrams",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "anagram"]
-            },
-            {
-              id: "remove-duplicates",
-              title: "Remove Duplicate Characters",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "duplicates"]
-            },
-            {
-              id: "word-count",
-              title: "Count Words in String",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "count"]
-            },
-            {
-              id: "first-char-capital",
-              title: "Capitalize First Character",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "capitalize"]
-            },
-            {
-              id: "string-rotation",
-              title: "Check String Rotation",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "rotation"]
-            },
-            {
-              id: "longest-substring",
-              title: "Longest Substring Without Repeating",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "substring"]
-            },
-            {
-              id: "string-compression",
-              title: "String Compression",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["string", "compression"]
-            }
-          ]
-        },
-        {
-          id: "list-problems",
-          title: "3. List Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "sum-list",
-              title: "Sum of List Elements",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "sum"]
-            },
-            {
-              id: "largest-list",
-              title: "Find Largest in List",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "max"]
-            },
-            {
-              id: "rotate-list",
-              title: "Rotate List by N Positions",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "rotation"]
-            },
-            {
-              id: "remove-duplicates-list",
-              title: "Remove Duplicates from List",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "duplicates"]
-            },
-            {
-              id: "list-comprehension",
-              title: "List Comprehension Exercises",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "comprehension"]
-            },
-            {
-              id: "merge-sorted",
-              title: "Merge Two Sorted Lists",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "merge"]
-            },
-            {
-              id: "flatten-list",
-              title: "Flatten Nested List",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "recursion"]
-            },
-            {
-              id: "list-chunks",
-              title: "Split List into Chunks",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "chunks"]
-            },
-            {
-              id: "second-largest",
-              title: "Find Second Largest Number",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "sorting"]
-            },
-            {
-              id: "common-elements",
-              title: "Find Common Elements in Lists",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["list", "intersection"]
-            }
-          ]
-        },
-        {
-          id: "dictionary-problems",
-          title: "4. Dictionary Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "merge-dicts",
-              title: "Merge Two Dictionaries",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "merge"]
-            },
-            {
-              id: "key-exists",
-              title: "Check if Key Exists",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "key"]
-            },
-            {
-              id: "sum-values",
-              title: "Sum All Values in Dictionary",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "sum"]
-            },
-            {
-              id: "word-frequency",
-              title: "Word Frequency Counter",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "frequency"]
-            },
-            {
-              id: "sort-dict",
-              title: "Sort Dictionary by Value",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "sort"]
-            },
-            {
-              id: "max-value",
-              title: "Find Key with Maximum Value",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "max"]
-            },
-            {
-              id: "nested-dict",
-              title: "Access Nested Dictionary Items",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "nested"]
-            },
-            {
-              id: "dict-comprehension",
-              title: "Dictionary Comprehension",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "comprehension"]
-            },
-            {
-              id: "invert-dict",
-              title: "Invert a Dictionary",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "invert"]
-            },
-            {
-              id: "two-sum",
-              title: "Two Sum Problem",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dictionary", "hash"]
-            }
-          ]
-        },
-        {
-          id: "function-problems",
-          title: "5. Function Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "factorial",
-              title: "Factorial Using Recursion",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "recursion"]
-            },
-            {
-              id: "fibonacci",
-              title: "Fibonacci Sequence",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "recursion"]
-            },
-            {
-              id: "prime-check",
-              title: "Check Prime Number",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "prime"]
-            },
-            {
-              id: "gcd",
-              title: "Find GCD of Two Numbers",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "gcd"]
-            },
-            {
-              id: "lcm",
-              title: "Find LCM of Two Numbers",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "lcm"]
-            },
-            {
-              id: "power-function",
-              title: "Implement Power Function",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "power"]
-            },
-            {
-              id: "decorator-example",
-              title: "Create a Timer Decorator",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "decorator"]
-            },
-            {
-              id: "closure-example",
-              title: "Create a Closure Function",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "closure"]
-            },
-            {
-              id: "memoization",
-              title: "Implement Memoization",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "memoization"]
-            },
-            {
-              id: "generator-fib",
-              title: "Fibonacci with Generator",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["function", "generator"]
-            }
-          ]
-        },
-        {
-          id: "file-io-problems",
-          title: "6. File I/O Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "read-file",
-              title: "Read File Contents",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "read"]
-            },
-            {
-              id: "write-file",
-              title: "Write to File",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "write"]
-            },
-            {
-              id: "copy-file",
-              title: "Copy File Contents",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "copy"]
-            },
-            {
-              id: "word-count-file",
-              title: "Word Count in File",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "count"]
-            },
-            {
-              id: "merge-files",
-              title: "Merge Two Files",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "merge"]
-            },
-            {
-              id: "csv-read",
-              title: "Read CSV File",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "csv"]
-            },
-            {
-              id: "json-read",
-              title: "Read JSON File",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "json"]
-            },
-            {
-              id: "log-analysis",
-              title: "Analyze Log File",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "log"]
-            },
-            {
-              id: "file-encryption",
-              title: "Simple File Encryption",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "encryption"]
-            },
-            {
-              id: "directory-listing",
-              title: "List Files in Directory",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["file", "directory"]
-            }
-          ]
-        },
-        {
-          id: "oop-problems",
-          title: "7. OOP Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "class-circle",
-              title: "Circle Class",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["class", "oop"]
-            },
-            {
-              id: "bank-account",
-              title: "Bank Account Class",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["class", "oop"]
-            },
-            {
-              id: "inheritance-shapes",
-              title: "Shape Inheritance",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["inheritance", "oop"]
-            },
-            {
-              id: "polymorphism-animals",
-              title: "Animal Polymorphism",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["polymorphism", "oop"]
-            },
-            {
-              id: "magic-methods",
-              title: "Implement Magic Methods",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["magic-methods", "oop"]
-            },
-            {
-              id: "class-student",
-              title: "Student Management System",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["class", "oop"]
-            },
-            {
-              id: "singleton-pattern",
-              title: "Implement Singleton Pattern",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["design-pattern", "oop"]
-            },
-            {
-              id: "decorator-class",
-              title: "Class Decorator",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["decorator", "oop"]
-            },
-            {
-              id: "property-decorator",
-              title: "Use Property Decorator",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["property", "oop"]
-            },
-            {
-              id: "abstract-class",
-              title: "Create Abstract Class",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["abstract", "oop"]
-            }
-          ]
-        },
-        {
-          id: "algorithm-problems",
-          title: "8. Algorithm Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "bubble-sort",
-              title: "Implement Bubble Sort",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["sorting", "algorithm"]
-            },
-            {
-              id: "binary-search",
-              title: "Implement Binary Search",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["search", "algorithm"]
-            },
-            {
-              id: "linear-search",
-              title: "Implement Linear Search",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["search", "algorithm"]
-            },
-            {
-              id: "merge-sort",
-              title: "Implement Merge Sort",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["sorting", "algorithm"]
-            },
-            {
-              id: "quick-sort",
-              title: "Implement Quick Sort",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["sorting", "algorithm"]
-            },
-            {
-              id: "linked-list",
-              title: "Implement Linked List",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["data-structure", "algorithm"]
-            },
-            {
-              id: "binary-tree",
-              title: "Implement Binary Tree",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["data-structure", "algorithm"]
-            },
-            {
-              id: "graph-traversal",
-              title: "Graph Traversal",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["graph", "algorithm"]
-            },
-            {
-              id: "dijkstra",
-              title: "Dijkstra's Algorithm",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["graph", "algorithm"]
-            },
-            {
-              id: "knapsack",
-              title: "0/1 Knapsack Problem",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["dynamic-programming", "algorithm"]
-            }
-          ]
-        },
-        {
-          id: "datetime-problems",
-          title: "9. Date/Time Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "current-date",
-              title: "Get Current Date/Time",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "date-diff",
-              title: "Calculate Date Difference",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "format-date",
-              title: "Format Date String",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "add-days",
-              title: "Add Days to Date",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "day-of-week",
-              title: "Find Day of Week",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "timezone-convert",
-              title: "Convert Between Timezones",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "age-calculator",
-              title: "Age Calculator",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "business-days",
-              title: "Count Business Days",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "leap-year-check",
-              title: "Check Leap Year",
-              difficulty: "easy",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            },
-            {
-              id: "time-delta",
-              title: "Calculate Time Delta",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["datetime"]
-            }
-          ]
-        },
-        {
-          id: "regex-problems",
-          title: "10. Regular Expression Problems",
-          type: "problems",
-          problems: [
-            {
-              id: "email-validation",
-              title: "Validate Email Address",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "phone-validation",
-              title: "Validate Phone Number",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "password-strength",
-              title: "Check Password Strength",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "extract-numbers",
-              title: "Extract Numbers from String",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "find-urls",
-              title: "Find URLs in Text",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "replace-words",
-              title: "Replace Words in String",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "split-string",
-              title: "Split String by Multiple Delimiters",
-              difficulty: "medium",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "html-tags",
-              title: "Remove HTML Tags",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "date-extraction",
-              title: "Extract Dates from Text",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            },
-            {
-              id: "credit-card",
-              title: "Validate Credit Card Number",
-              difficulty: "hard",
-              status: "unsolved",
-              solution: "#",
-              video: "#",
-              tags: ["regex"]
-            }
-          ]
-        }
-      ];
+
+      const sections = JSON.parse(document.getElementById('sections-data').textContent);
+      // const sections = [
+      //   {
+      //     id: "basic-problems",
+      //     title: "1. Basic Python Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "hello-world",
+      //         title: "Print 'Hello, World!'",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["print", "basic"]
+      //       },
+      //       {
+      //         id: "add-numbers",
+      //         title: "Add Two Numbers",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["arithmetic", "input"]
+      //       },
+      //       {
+      //         id: "swap-vars",
+      //         title: "Swap Two Variables",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["variables"]
+      //       },
+      //       {
+      //         id: "convert-celsius",
+      //         title: "Convert Celsius to Fahrenheit",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["conversion"]
+      //       },
+      //       {
+      //         id: "quadratic-roots",
+      //         title: "Find Quadratic Roots",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["math", "quadratic"]
+      //       },
+      //       {
+      //         id: "km-to-miles",
+      //         title: "Convert Kilometers to Miles",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["conversion"]
+      //       },
+      //       {
+      //         id: "check-even",
+      //         title: "Check Even or Odd",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["modulus"]
+      //       },
+      //       {
+      //         id: "leap-year",
+      //         title: "Check Leap Year",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["conditions"]
+      //       },
+      //       {
+      //         id: "largest-three",
+      //         title: "Find Largest Among Three Numbers",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["comparison"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "string-problems",
+      //     title: "2. String Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "reverse-string",
+      //         title: "Reverse a String",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "reverse"]
+      //       },
+      //       {
+      //         id: "palindrome",
+      //         title: "Check Palindrome",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "palindrome"]
+      //       },
+      //       {
+      //         id: "count-vowels",
+      //         title: "Count Vowels in String",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "count"]
+      //       },
+      //       {
+      //         id: "anagram",
+      //         title: "Check if Two Strings are Anagrams",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "anagram"]
+      //       },
+      //       {
+      //         id: "remove-duplicates",
+      //         title: "Remove Duplicate Characters",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "duplicates"]
+      //       },
+      //       {
+      //         id: "word-count",
+      //         title: "Count Words in String",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "count"]
+      //       },
+      //       {
+      //         id: "first-char-capital",
+      //         title: "Capitalize First Character",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "capitalize"]
+      //       },
+      //       {
+      //         id: "string-rotation",
+      //         title: "Check String Rotation",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "rotation"]
+      //       },
+      //       {
+      //         id: "longest-substring",
+      //         title: "Longest Substring Without Repeating",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "substring"]
+      //       },
+      //       {
+      //         id: "string-compression",
+      //         title: "String Compression",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["string", "compression"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "list-problems",
+      //     title: "3. List Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "sum-list",
+      //         title: "Sum of List Elements",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "sum"]
+      //       },
+      //       {
+      //         id: "largest-list",
+      //         title: "Find Largest in List",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "max"]
+      //       },
+      //       {
+      //         id: "rotate-list",
+      //         title: "Rotate List by N Positions",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "rotation"]
+      //       },
+      //       {
+      //         id: "remove-duplicates-list",
+      //         title: "Remove Duplicates from List",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "duplicates"]
+      //       },
+      //       {
+      //         id: "list-comprehension",
+      //         title: "List Comprehension Exercises",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "comprehension"]
+      //       },
+      //       {
+      //         id: "merge-sorted",
+      //         title: "Merge Two Sorted Lists",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "merge"]
+      //       },
+      //       {
+      //         id: "flatten-list",
+      //         title: "Flatten Nested List",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "recursion"]
+      //       },
+      //       {
+      //         id: "list-chunks",
+      //         title: "Split List into Chunks",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "chunks"]
+      //       },
+      //       {
+      //         id: "second-largest",
+      //         title: "Find Second Largest Number",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "sorting"]
+      //       },
+      //       {
+      //         id: "common-elements",
+      //         title: "Find Common Elements in Lists",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["list", "intersection"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "dictionary-problems",
+      //     title: "4. Dictionary Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "merge-dicts",
+      //         title: "Merge Two Dictionaries",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "merge"]
+      //       },
+      //       {
+      //         id: "key-exists",
+      //         title: "Check if Key Exists",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "key"]
+      //       },
+      //       {
+      //         id: "sum-values",
+      //         title: "Sum All Values in Dictionary",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "sum"]
+      //       },
+      //       {
+      //         id: "word-frequency",
+      //         title: "Word Frequency Counter",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "frequency"]
+      //       },
+      //       {
+      //         id: "sort-dict",
+      //         title: "Sort Dictionary by Value",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "sort"]
+      //       },
+      //       {
+      //         id: "max-value",
+      //         title: "Find Key with Maximum Value",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "max"]
+      //       },
+      //       {
+      //         id: "nested-dict",
+      //         title: "Access Nested Dictionary Items",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "nested"]
+      //       },
+      //       {
+      //         id: "dict-comprehension",
+      //         title: "Dictionary Comprehension",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "comprehension"]
+      //       },
+      //       {
+      //         id: "invert-dict",
+      //         title: "Invert a Dictionary",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "invert"]
+      //       },
+      //       {
+      //         id: "two-sum",
+      //         title: "Two Sum Problem",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dictionary", "hash"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "function-problems",
+      //     title: "5. Function Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "factorial",
+      //         title: "Factorial Using Recursion",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "recursion"]
+      //       },
+      //       {
+      //         id: "fibonacci",
+      //         title: "Fibonacci Sequence",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "recursion"]
+      //       },
+      //       {
+      //         id: "prime-check",
+      //         title: "Check Prime Number",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "prime"]
+      //       },
+      //       {
+      //         id: "gcd",
+      //         title: "Find GCD of Two Numbers",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "gcd"]
+      //       },
+      //       {
+      //         id: "lcm",
+      //         title: "Find LCM of Two Numbers",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "lcm"]
+      //       },
+      //       {
+      //         id: "power-function",
+      //         title: "Implement Power Function",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "power"]
+      //       },
+      //       {
+      //         id: "decorator-example",
+      //         title: "Create a Timer Decorator",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "decorator"]
+      //       },
+      //       {
+      //         id: "closure-example",
+      //         title: "Create a Closure Function",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "closure"]
+      //       },
+      //       {
+      //         id: "memoization",
+      //         title: "Implement Memoization",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "memoization"]
+      //       },
+      //       {
+      //         id: "generator-fib",
+      //         title: "Fibonacci with Generator",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["function", "generator"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "file-io-problems",
+      //     title: "6. File I/O Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "read-file",
+      //         title: "Read File Contents",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "read"]
+      //       },
+      //       {
+      //         id: "write-file",
+      //         title: "Write to File",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "write"]
+      //       },
+      //       {
+      //         id: "copy-file",
+      //         title: "Copy File Contents",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "copy"]
+      //       },
+      //       {
+      //         id: "word-count-file",
+      //         title: "Word Count in File",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "count"]
+      //       },
+      //       {
+      //         id: "merge-files",
+      //         title: "Merge Two Files",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "merge"]
+      //       },
+      //       {
+      //         id: "csv-read",
+      //         title: "Read CSV File",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "csv"]
+      //       },
+      //       {
+      //         id: "json-read",
+      //         title: "Read JSON File",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "json"]
+      //       },
+      //       {
+      //         id: "log-analysis",
+      //         title: "Analyze Log File",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "log"]
+      //       },
+      //       {
+      //         id: "file-encryption",
+      //         title: "Simple File Encryption",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "encryption"]
+      //       },
+      //       {
+      //         id: "directory-listing",
+      //         title: "List Files in Directory",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["file", "directory"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "oop-problems",
+      //     title: "7. OOP Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "class-circle",
+      //         title: "Circle Class",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["class", "oop"]
+      //       },
+      //       {
+      //         id: "bank-account",
+      //         title: "Bank Account Class",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["class", "oop"]
+      //       },
+      //       {
+      //         id: "inheritance-shapes",
+      //         title: "Shape Inheritance",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["inheritance", "oop"]
+      //       },
+      //       {
+      //         id: "polymorphism-animals",
+      //         title: "Animal Polymorphism",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["polymorphism", "oop"]
+      //       },
+      //       {
+      //         id: "magic-methods",
+      //         title: "Implement Magic Methods",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["magic-methods", "oop"]
+      //       },
+      //       {
+      //         id: "class-student",
+      //         title: "Student Management System",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["class", "oop"]
+      //       },
+      //       {
+      //         id: "singleton-pattern",
+      //         title: "Implement Singleton Pattern",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["design-pattern", "oop"]
+      //       },
+      //       {
+      //         id: "decorator-class",
+      //         title: "Class Decorator",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["decorator", "oop"]
+      //       },
+      //       {
+      //         id: "property-decorator",
+      //         title: "Use Property Decorator",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["property", "oop"]
+      //       },
+      //       {
+      //         id: "abstract-class",
+      //         title: "Create Abstract Class",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["abstract", "oop"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "algorithm-problems",
+      //     title: "8. Algorithm Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "bubble-sort",
+      //         title: "Implement Bubble Sort",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["sorting", "algorithm"]
+      //       },
+      //       {
+      //         id: "binary-search",
+      //         title: "Implement Binary Search",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["search", "algorithm"]
+      //       },
+      //       {
+      //         id: "linear-search",
+      //         title: "Implement Linear Search",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["search", "algorithm"]
+      //       },
+      //       {
+      //         id: "merge-sort",
+      //         title: "Implement Merge Sort",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["sorting", "algorithm"]
+      //       },
+      //       {
+      //         id: "quick-sort",
+      //         title: "Implement Quick Sort",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["sorting", "algorithm"]
+      //       },
+      //       {
+      //         id: "linked-list",
+      //         title: "Implement Linked List",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["data-structure", "algorithm"]
+      //       },
+      //       {
+      //         id: "binary-tree",
+      //         title: "Implement Binary Tree",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["data-structure", "algorithm"]
+      //       },
+      //       {
+      //         id: "graph-traversal",
+      //         title: "Graph Traversal",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["graph", "algorithm"]
+      //       },
+      //       {
+      //         id: "dijkstra",
+      //         title: "Dijkstra's Algorithm",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["graph", "algorithm"]
+      //       },
+      //       {
+      //         id: "knapsack",
+      //         title: "0/1 Knapsack Problem",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["dynamic-programming", "algorithm"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "datetime-problems",
+      //     title: "9. Date/Time Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "current-date",
+      //         title: "Get Current Date/Time",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "date-diff",
+      //         title: "Calculate Date Difference",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "format-date",
+      //         title: "Format Date String",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "add-days",
+      //         title: "Add Days to Date",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "day-of-week",
+      //         title: "Find Day of Week",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "timezone-convert",
+      //         title: "Convert Between Timezones",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "age-calculator",
+      //         title: "Age Calculator",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "business-days",
+      //         title: "Count Business Days",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "leap-year-check",
+      //         title: "Check Leap Year",
+      //         difficulty: "easy",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       },
+      //       {
+      //         id: "time-delta",
+      //         title: "Calculate Time Delta",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["datetime"]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id: "regex-problems",
+      //     title: "10. Regular Expression Problems",
+      //     type: "problems",
+      //     problems: [
+      //       {
+      //         id: "email-validation",
+      //         title: "Validate Email Address",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "phone-validation",
+      //         title: "Validate Phone Number",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "password-strength",
+      //         title: "Check Password Strength",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "extract-numbers",
+      //         title: "Extract Numbers from String",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "find-urls",
+      //         title: "Find URLs in Text",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "replace-words",
+      //         title: "Replace Words in String",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "split-string",
+      //         title: "Split String by Multiple Delimiters",
+      //         difficulty: "medium",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "html-tags",
+      //         title: "Remove HTML Tags",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "date-extraction",
+      //         title: "Extract Dates from Text",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       },
+      //       {
+      //         id: "credit-card",
+      //         title: "Validate Credit Card Number",
+      //         difficulty: "hard",
+      //         status: "unsolved",
+      //         solution: "#",
+      //         video: "#",
+      //         tags: ["regex"]
+      //       }
+      //     ]
+      //   }
+      // ];
 
 
       const getAllProblems = () => {
