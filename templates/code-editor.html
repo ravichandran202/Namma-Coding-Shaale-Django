@@ -522,95 +522,58 @@
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <h3 class="sidebar-title">
-        <a style="font-style: normal; text-decoration: none; color: #e2e8f0;" href="{% url 'home' %}"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span></a>
+        <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span>
       </h3>
     </div>
 
     <div class="sidebar-content">
 
       <div class="sidebar-section">
-        <p class="sidebar-section-title">Python Basics</p>
-        <ul class="sidebar-menu">
-          <li>
-            <a href="./introduction.html" >
-              <i class="fas fa-check-circle text-success status-icon"></i>
-              Introduction
-            </a>
-          </li>
-          <li class="has-submenu">
-            <a href="#" >
-              <i class="far fa-circle status-icon"></i>
-              Variables & Types
-            </a>
-            <ul class="sidebar-submenu">
-              <li>
-                <a href="#">
-                  <i class="far fa-circle status-icon"></i>
-                  Numbers
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-check-circle text-success status-icon"></i>
-                  Strings
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="far fa-circle status-icon"></i>
-                  Lists
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="far fa-circle status-icon"></i>
-                  Dictionaries
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="has-submenu">
-            <a href="#" >
-              <i class="fas fa-lock status-icon"></i>
-              Control Flow
-            </a>
-            <ul class="sidebar-submenu">
-              <li>
-                <a href="#">
-                  <i class="fas fa-lock status-icon"></i>
-                  If-Else
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-lock status-icon"></i>
-                  Loops
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fas fa-lock status-icon"></i>
-                  Match-Case
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" >
-              <!-- <i class="fas fa-caret-right toggle-icon"></i> -->
-              <i class="fas fa-lock status-icon"></i>
-              Functions
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="sidebar-section">
         <p class="sidebar-section-title">Main Menu</p>
         <ul class="sidebar-menu">
+          <li><a href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
+          <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
           <li><a href="#" class="active"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
+      </ul>
+      </div>
+
+      {% if not is_freemium %}
+      {% for section in roadmap %}
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">{{ section.title }}</p>
+        <ul class="sidebar-menu">
+          {% if section.has_submenu %}
+          <li class="has-submenu">
+            <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
+              <i
+                class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              {{ section.title }}
+            </a>
+            <ul class="sidebar-submenu">
+              {% for content in section.contents %}
+              <li>
+                <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}">
+                  <i
+                    class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                  {{ content.title }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
+              <i
+                class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              {{ section.contents.0.title }}
+            </a>
+          </li>
+          {% endif %}
         </ul>
       </div>
+      {% endfor %}
+      {% endif %}
 
       <!-- <div class="sidebar-section">
               <p class="sidebar-section-title">Data Structures</p>

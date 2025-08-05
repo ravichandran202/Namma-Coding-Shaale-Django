@@ -641,7 +641,14 @@
         </div>
 
         <div class="sidebar-content">
-
+            <div class="sidebar-section">
+                <p class="sidebar-section-title">Main Menu</p>
+                <ul class="sidebar-menu">
+                    <li><a href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
+                    <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
+                    <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
+                </ul>
+            </div>
 
       {% for section in roadmap %}
       <div class="sidebar-section">
@@ -686,13 +693,7 @@
       {% endfor %}
       
 
-            <div class="sidebar-section">
-                <p class="sidebar-section-title">Main Menu</p>
-                <ul class="sidebar-menu">
-                    <li><a href="./problem-list.html"><i class="fas fa-list-check"></i> Problem List</a></li>
-                    <li><a href="./code-editor.html"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
-                </ul>
-            </div>
+            
         </div>
 
         <div class="sidebar-footer">
