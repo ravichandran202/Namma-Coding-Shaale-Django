@@ -156,8 +156,20 @@ def home(request):
     return render(request,"index.html")
 
 @login_required(login_url="login")
-def code_editor(request):
-    return render(request, "code-editor.html")
+def code_editor(request, course_id):
+    roadmap = None
+    is_enrolled_user = False
+    if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        is_enrolled_user = True
+        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
+    
+    context = {
+        "is_freemium": not is_enrolled_user,
+        "roadmap": roadmap,
+        "course_id": course_id
+    }
+    
+    return render(request, "code-editor.html", context)
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
