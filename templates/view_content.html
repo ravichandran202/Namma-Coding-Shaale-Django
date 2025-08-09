@@ -20,23 +20,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
     <!-- Custom CSS -->
     <style>
-        :root {
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --primary-light: #93c5fd;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --sidebar-width: 280px;
-            --sidebar-bg: #ffffff;
-            --sidebar-text: #1e293b;
-            --sidebar-active-bg: #f1f5f9;
-            --sidebar-hover-bg: #f8fafc;
-        }
+:root {
+    --primary: #4361ee;
+    --primary-hover: #3a56d4;
+    --primary-light: #93c5fd;
+    --success: #06d6a0;
+    --warning: #ffd166;
+    --danger: #ef476f;
+    --bg: #f8f9fa;
+    --text: #212529;
+    --text-light: #6c757d;
+    --border: #dee2e6;
+    --sidebar-width: 280px;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #212529;
+    --sidebar-active-bg: #f1f5f9;
+    --sidebar-hover-bg: #f8fafc;
+    --dark: #212529;
+    --card-bg: #ffffff;
+    --code-bg: #1a1a1a;
+    --code-text: #f8f8f2;
+}
+
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -554,7 +559,7 @@
             }
 
             .main-content {
-                padding: .5rem;
+                padding: 0;
                 padding-top: 72px;
                 /* Top bar height + some spacing */
             }
@@ -608,7 +613,6 @@
 
             .main-content {
                 margin-left: var(--sidebar-width);
-                padding-top: .5rem;
             }
 
             .problem-info {
@@ -705,7 +709,10 @@
     <div class="main-content" id="mainContent">
         <div class="container-fluid">
             <!-- problem-info   -->
-            <div id="problem-container"></div>
+
+            <div style="height: 100vh;">
+                <iframe id ="problem-container" src="" frameborder="0" width="100%" height="100%"></iframe>
+            </div>
 
             <!-- Completion Status Section -->
             <div class="completion-status-container mb-4">
@@ -1064,19 +1071,11 @@ Memory Usage: ${data.run.memory || 'N/A'}\n`;
             try {
                 const response = await fetch("{% static 'contents/' %}" + contentId + ".js");
                 if (!response.ok) throw new Error('Content not found');
-                
-                // Create a script element to execute the problem content
-                const script = document.createElement('script');
-                script.src = "{% static 'contents/' %}" + contentId + ".js";
-                script.onload = () => {
-                    // The problem content should set window.problemContent
-                    if (window.problemContent) {
-                        document.getElementById('problem-container').innerHTML = window.problemContent;
+
+                src = "{% static 'contents/' %}" + contentId + ".html";
+                        document.getElementById('problem-container').src = src;
                         // Initialize any problem-specific JS here if needed
                         initializeProblemSpecificJS();
-                    }
-                };
-                document.body.appendChild(script);
             } catch (error) {
                 console.error('Error loading content:', error);
                 document.getElementById('problem-container').innerHTML = `
@@ -1097,7 +1096,7 @@ Memory Usage: ${data.run.memory || 'N/A'}\n`;
 
         // Get content ID from URL (e.g., ?content=introduction)
         const contentId = "{{ content_file_id| default:'introduction' }}";
-        
+
         // Load the problem content
         loadProblemContent(contentId);
     </script>
