@@ -1583,20 +1583,26 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" href="#" aria-current="page">
               <i class="fas fa-home me-1"></i> Home
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'code-editor' %}">
-              <i class="fas fa-laptop-code me-1"></i> Code Editor
-            </a>
-          </li>
           <li class="nav-item ms-lg-3">
-            <a class="btn btn-premium" href="#course-section">
-              <i class="fas fa-gem me-1"></i> Enroll Now
+            <a class="nav-link" href="{% url 'my-courses' %}">
+              <i class="fas fa-graduation-cap me-1"></i> My Courses
             </a>
           </li>
+            {% else %}
+            <li class="nav-item ms-lg-3">
+            <a class="btn btn-premium" href="{% url 'login' %}">
+              <i class="fas fa-gem me-1"></i> Login Now
+            </a>
+          </li>
+            {% endif %}
+          
         </ul>
       </div>
     </div>
@@ -3124,10 +3130,6 @@
         </div>
         <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
           <h5 class="footer-heading">Quick Links</h5>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="{% url 'code-editor' %}">Code Editor</a></li>
-          </ul>
         </div>
         <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
           <h5 class="footer-heading">Resources</h5>
