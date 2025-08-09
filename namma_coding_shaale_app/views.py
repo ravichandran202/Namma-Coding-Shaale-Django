@@ -64,6 +64,17 @@ def send_otp_email(user, otp_code):
 
 def login(request):
     if request.method == HTTPMethod.POST:
+
+        #handle onboarding flow
+        if "first-name" and "last-name" in request.POST and request.user.is_authenticated:
+            first_name = request.POST.get('first-name')
+            last_name = request.POST.get('last-name')
+            user = request.user
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            return redirect("my-courses")
+
         # OTP verification step
         if 'otp' in request.POST:
             email = request.session.get('otp_email')
@@ -83,7 +94,11 @@ def login(request):
                     OTP.objects.filter(user=user).delete()
                     if 'otp_email' in request.session:
                         del request.session['otp_email']
-                    return redirect("home")
+                    
+                    #check if First and Last name exists
+                    if request.user.first_name == "" or request.user.last_name == "":
+                        return render(request, "onboarding_form.html")
+                    return redirect("my-courses")
                 else:
                     messages.error(request, 'OTP has expired. Please request a new one.')
                     return redirect('login')
@@ -151,8 +166,6 @@ def logout(request):
     return redirect('login')
 
 def home(request):
-    if request.user.is_authenticated:
-        return redirect("my-courses")
     return render(request,"index.html")
 
 @login_required(login_url="login")
@@ -461,13 +474,13 @@ def view_content(request, course_id, content_file_id):
                 
                 return redirect(reverse('content', kwargs={
                     'course_id': course.id,
-                    'content_file_id': next_content.content.file_name
+                    'content_file_id': next_content.content.file_name + ".html"
                 }))
             
             # If no next content, just stay on current page but mark as completed
             return redirect(reverse('content', kwargs={
                 'course_id': course.id,
-                'content_file_id': content.file_name
+                'content_file_id': content.file_name + ".html"
             }))
         
         # Prepare context
