@@ -737,109 +737,47 @@ public class Factorial {
                     </div>
                 </div>
                 
-                <div class="content-subsection mt-5">
-                    <h3 class="subsection-title text-center mb-4 font-weight-light text-uppercase letter-spacing-1" style="color: #2c3e50;">Language Comparison</h3>
-                    <div class="table-responsive rounded-lg shadow-sm">
-                        <table class="table comparison-table m-0">
-                            <thead>
-                                <tr class="bg-gradient-primary text-white">
-                                    <th class="border-0 py-3 px-4 font-weight-medium text-start rounded-tl-lg">Feature</th>
-                                    <th class="border-0 py-3 px-4 font-weight-medium text-center">Python</th>
-                                    <th class="border-0 py-3 px-4 font-weight-medium text-center">JavaScript</th>
-                                    <th class="border-0 py-3 px-4 font-weight-medium text-center rounded-tr-lg">Java</th>
+                <div class="content-subsection mt-4">
+                    <h3 class="subsection-title">Comparison Table</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered comparison-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Python</th>
+                                    <th>JavaScript</th>
+                                    <th>Java</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white">
-                                <tr class="hover-shadow">
-                                    <td class="py-3 px-4 font-weight-medium border-0">Typing</td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-info text-info px-3 py-1">Dynamic</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-info text-info px-3 py-1">Dynamic</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-purple text-purple px-3 py-1">Static</span>
-                                    </td>
+                            <tbody>
+                                <tr>
+                                    <td>Typing</td>
+                                    <td>Dynamic</td>
+                                    <td>Dynamic</td>
+                                    <td>Static</td>
                                 </tr>
-                                <tr class="hover-shadow">
-                                    <td class="py-3 px-4 font-weight-medium border-0">Paradigm</td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-primary text-primary px-3 py-1">Multi-paradigm</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-primary text-primary px-3 py-1">Multi-paradigm</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-warning text-warning px-3 py-1">OOP</span>
-                                    </td>
+                                <tr>
+                                    <td>Paradigm</td>
+                                    <td>Multi-paradigm</td>
+                                    <td>Multi-paradigm</td>
+                                    <td>OOP</td>
                                 </tr>
-                                <tr class="hover-shadow">
-                                    <td class="py-3 px-4 font-weight-medium border-0">Performance</td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-secondary text-secondary px-3 py-1">Moderate</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-success text-success px-3 py-1">Fast (JIT)</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-success text-success px-3 py-1">Fast</span>
-                                    </td>
+                                <tr>
+                                    <td>Performance</td>
+                                    <td>Moderate</td>
+                                    <td>Fast (JIT)</td>
+                                    <td>Fast</td>
                                 </tr>
-                                <tr class="hover-shadow">
-                                    <td class="py-3 px-4 font-weight-medium border-0 rounded-bl-lg">Learning Curve</td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-green text-green px-3 py-1">Easy</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0">
-                                        <span class="badge bg-soft-secondary text-secondary px-3 py-1">Moderate</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-center border-0 rounded-br-lg">
-                                        <span class="badge bg-soft-danger text-danger px-3 py-1">Steep</span>
-                                    </td>
+                                <tr>
+                                    <td>Learning Curve</td>
+                                    <td>Easy</td>
+                                    <td>Moderate</td>
+                                    <td>Steep</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
-                <style>
-                    .comparison-table {
-                        border-collapse: separate;
-                        border-spacing: 0;
-                        overflow: hidden;
-                    }
-                    
-                    .bg-gradient-primary {
-                        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-                    }
-                    
-                    .hover-shadow:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-                        transition: all 0.3s ease;
-                    }
-                    
-                    .rounded-lg {
-                        border-radius: 12px;
-                    }
-                    
-                    .letter-spacing-1 {
-                        letter-spacing: 1px;
-                    }
-                    
-                    .bg-soft-info { background-color: rgba(23, 162, 184, 0.1); }
-                    .bg-soft-primary { background-color: rgba(13, 110, 253, 0.1); }
-                    .bg-soft-warning { background-color: rgba(255, 193, 7, 0.1); }
-                    .bg-soft-secondary { background-color: rgba(108, 117, 125, 0.1); }
-                    .bg-soft-success { background-color: rgba(25, 135, 84, 0.1); }
-                    .bg-soft-green { background-color: rgba(40, 167, 69, 0.1); }
-                    .bg-soft-danger { background-color: rgba(220, 53, 69, 0.1); }
-                    .bg-soft-purple { background-color: rgba(111, 66, 193, 0.1); }
-                    
-                    .text-green { color: #28a745; }
-                    .text-purple { color: #6f42c1; }
-                </style>
             </div>
         </div>
 
@@ -971,7 +909,7 @@ print(x)</code></pre>
                         </div>
                     </div>
                     
-                    <div class="d-flex flex-column flex-sm-row justify-content-between mt-4">
+                     <div class="d-flex flex-column flex-sm-row justify-content-between mt-4">
                         <button class="btn btn-outline-primary mb-2 mb-sm-0" id="resetQuizBtn">
                             <i class="fas fa-undo me-1"></i> Reset Quiz
                         </button>
