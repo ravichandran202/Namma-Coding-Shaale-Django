@@ -59,6 +59,11 @@
         h5 { font-size: 1.1rem; }
         h6 { font-size: 1rem; }
 
+        #header-name{
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
         .section-title {
             position: relative;
             padding-bottom: 0.5rem;
@@ -501,11 +506,7 @@
         <div class="content-card mb-4">
             <div class="card-header">
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
-                    <h1 class="mb-0" >Complete Content Template</h1>
-                    <div class="d-flex gap-2">
-                        <span class="difficulty-label difficulty-easy">Beginner</span>
-                        <span class="badge badge-primary">Python</span>
-                    </div>
+                    <h1 class="mb-0" id="header-name" >Complete Content Template</h1>
                 </div>
             </div>
             <div class="card-body">
@@ -619,7 +620,7 @@ print(sum)</code></pre>
                                 <button class="nav-link" id="java-tab" data-bs-toggle="tab" data-bs-target="#java" type="button" role="tab">Java</button>
                             </li>
                         </ul>
-                        <div class="tab-content bg-white p-3 rounded-bottom">
+                        <div class="tab-content bg-white p-0 p-md-3 rounded-bottom">
                             <div class="tab-pane fade show active" id="python" role="tabpanel">
                                 <pre><code class="language-python"># Python solution
 def factorial(n):
@@ -738,15 +739,15 @@ public class Factorial {
                 </div>
                 
                 <div class="content-subsection mt-4">
-                    <h3 class="subsection-title">Comparison Table</h3>
-                    <div class="table-responsive">
-                        <table class="table table-bordered comparison-table">
-                            <thead class="table-light">
+                    <h3 class="subsection-title">Comparison</h3>
+                    <div class="table-responsive rounded-2">
+                        <table class="table table-stripped table-bordered table-hover comparison-table">
+                            <thead class="table-dark">
                                 <tr>
-                                    <th>Feature</th>
-                                    <th>Python</th>
-                                    <th>JavaScript</th>
-                                    <th>Java</th>
+                                    <td>Feature</td>
+                                    <td>Python</td>
+                                    <td>JavaScript</td>
+                                    <td>Java</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -789,7 +790,7 @@ public class Factorial {
                 <div class="content-subsection">
                     <div class="note-box note-tip">
                         <div class="note-header">
-                            <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Writing Clean Code
+                            <i class="fas fa-lightbulb"></i> <strong>Tip: </strong> Writing Clean Code
                         </div>
                         <div class="note-content">
                             <p>Always use meaningful variable names and include comments to explain complex logic. Follow the style guide for the language you're using (PEP 8 for Python). Consistent indentation and proper spacing make your code more readable.</p>
@@ -798,7 +799,7 @@ public class Factorial {
                     
                     <div class="note-box note-warning mt-4">
                         <div class="note-header">
-                            <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Common Pitfalls
+                            <i class="fas fa-exclamation-triangle"></i> <strong>Warning: </strong> Common Pitfalls
                         </div>
                         <div class="note-content">
                             <p>Avoid using global variables when possible. They can make your code harder to debug and maintain. Also be cautious with mutable default arguments in Python functions as they can lead to unexpected behavior.</p>
@@ -807,7 +808,7 @@ public class Factorial {
                     
                     <div class="note-box note-important mt-4">
                         <div class="note-header">
-                            <i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Key Concept
+                            <i class="fas fa-exclamation-circle"></i> <strong>Important: </strong> Key Concept
                         </div>
                         <div class="note-content">
                             <p>Understanding data structures is fundamental to writing efficient programs. Spend time mastering lists, dictionaries, and sets in Python. Know when to use each type for optimal performance.</p>
@@ -816,7 +817,7 @@ public class Factorial {
 
                     <div class="note-box note-danger mt-4">
                         <div class="note-header">
-                            <i class="fas fa-skull-crossbones"></i> <strong>Danger:</strong> Security Risks
+                            <i class="fas fa-skull-crossbones"></i> <strong>Danger: </strong> Security Risks
                         </div>
                         <div class="note-content">
                             <p>Never use <code>eval()</code> with untrusted input as it can execute arbitrary code. Always sanitize user input and use prepared statements for database queries to prevent SQL injection attacks.</p>
