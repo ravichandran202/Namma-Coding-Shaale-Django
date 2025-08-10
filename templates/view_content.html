@@ -710,7 +710,7 @@
         <div class="container-fluid p-0 p-lg-3">
 
             <div style="height: 100vh;">
-                <iframe id ="problem-container" src="" frameborder="0" width="100%" height="100%"></iframe>
+                <iframe id="problem-container" src="" frameborder="0" width="100%" height="100%" scrolling="auto"></iframe>
             </div>
 
             <!-- Completion Status Section -->
@@ -1068,7 +1068,7 @@ Memory Usage: ${data.run.memory || 'N/A'}\n`;
 
         async function loadProblemContent(contentId) {
             try {
-                const response = await fetch("{% static 'contents/' %}" + contentId + ".js");
+                const response = await fetch("{% static 'contents/' %}" + contentId + ".html");
                 if (!response.ok) throw new Error('Content not found');
 
                 src = "{% static 'contents/' %}" + contentId + ".html";
@@ -1098,6 +1098,14 @@ Memory Usage: ${data.run.memory || 'N/A'}\n`;
 
         // Load the problem content
         loadProblemContent(contentId);
+
+        document.getElementById('problem-container').addEventListener('mouseenter', function() {
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.getElementById('problem-container').addEventListener('mouseleave', function() {
+            document.body.style.overflow = '';
+        });
     </script>
 </body>
 
