@@ -150,6 +150,7 @@
       align-items: center;
       text-align: center;
       width: 100%;
+      justify-content: center;
     }
 
     .btn-premium:hover {
@@ -407,6 +408,7 @@
       position: relative;
       overflow: hidden;
       width: 100%;
+      text-align: center;
     }
 
     .btn-premium-gold:hover {
@@ -719,9 +721,9 @@
                       <i class="fas fa-crown me-1"></i> Continue Learning
                     </a>
                   {% else %}
-                    <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-sm btn-premium px-4">
-                      <i class="fas fa-file-alt me-2"></i> Review
-                    </a>
+                  <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-premium">
+                    <i class="fas fa-book me-1"></i> Continue Learning
+                  </a>
                   {% endif %}
                 </div>
                 
