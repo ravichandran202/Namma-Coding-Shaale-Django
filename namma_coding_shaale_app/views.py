@@ -495,9 +495,12 @@ def view_content(request, course_id, content_file_id):
             'course_id' : course_id
         }
 
+        if content.type.lower() == "quiz":
+            return render(request, "view_quiz_content.html", context)
+
         if content.type.lower() == "problem":
             return render(request, "view_problem_content.html", context)
-        
+    
         return render(request, "view_content.html", context)
     
 
