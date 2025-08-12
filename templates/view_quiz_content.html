@@ -713,6 +713,20 @@
             color: white;
         }
 
+        .completion-status-container {
+                padding: 0.75rem;
+        }
+
+        .completion-status-container h5 {
+                justify-content: center;
+                margin-bottom: 0.5rem;
+        }
+
+        #markCompletedBtn {
+                width: 100%;
+                max-width: 100vw;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 992px) {
             body {
@@ -751,6 +765,16 @@
                 max-width: 100%;
                 width: 100%;
             }
+
+            .completion-status-container .col-md-6 {
+                margin-bottom: 0.5rem;
+            }
+
+            #markCompletedBtn {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+
         }
 
         /* Desktop styles */
@@ -866,7 +890,47 @@
             <div id="quizContainer" class="quiz-container">
                 <!-- Content will be dynamically loaded here -->
             </div>
+
+                <!-- Completion Status Section -->
+                <div class="completion-status-container mb-4 mt-4 quiz-container">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <h5 class="mb-0" style="font-size: medium;">
+                                <i
+                                class="fas {% if progress.is_completed %}fa-check-circle text-success{% else %}fa-circle{% endif %} me-2"></i>
+                                {% if progress.is_completed %}
+                                You've completed this lesson!
+                                {% else %}
+                                Have you completed the lesson?
+                                {% endif %}
+                            </h5>
+                        </div>
+                        <div class="col-12 col-md-6 text-md-end">
+                            {% if not progress.is_completed %}
+                            <form method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" name="mark_completed" class="btn btn-success w-100 w-md-auto"
+                                    id="markCompletedBtn">
+                                    <i class="fas fa-check me-1"></i> Mark as Completed
+                                </button>
+                            </form>
+                            {% else %}
+                            <div class="d-flex align-items-center justify-content-end d-none d-md-block">
+                                <span class="badge bg-success p-2 me-2">
+                                    <i class="fas fa-check-circle me-1"></i> Completed
+                                </span>
+                                {% if user_course.completion_date %}
+                                <small class="text-muted">
+                                    Course completed!
+                                </small>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
         </div>
+
     </div>
 
     <!-- Bootstrap JS Bundle with Popper -->
