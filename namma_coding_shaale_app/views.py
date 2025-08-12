@@ -474,13 +474,13 @@ def view_content(request, course_id, content_file_id):
                 
                 return redirect(reverse('content', kwargs={
                     'course_id': course.id,
-                    'content_file_id': next_content.content.file_name + ".html"
+                    'content_file_id': next_content.content.file_name 
                 }))
             
             # If no next content, just stay on current page but mark as completed
             return redirect(reverse('content', kwargs={
                 'course_id': course.id,
-                'content_file_id': content.file_name + ".html"
+                'content_file_id': content.file_name 
             }))
         
         # Prepare context
