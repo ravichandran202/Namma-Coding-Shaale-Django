@@ -5,6 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Quiz | ನಮ್ಮ CODING ಶಾಲೆ</title>
     <!-- Bootstrap CSS -->
@@ -939,61 +940,14 @@
     <!-- Quiz Application Script -->
     <script>
         // Quiz data with code examples
-        const quizData = {
-            title: "Advanced Programming Concepts",
-            description: "Test your knowledge of advanced programming concepts with this comprehensive quiz.",
-            timePerQuestion: 45, // seconds
-            passingScore: 75, // percentage
-            questions: [
-                {
-                    id: 1,
-                    type: "multiple-choice",
-                    question: "Which design pattern ensures only one instance of a class exists?",
-                    options: ["Singleton", "Factory", "Observer", "Decorator"],
-                    correctAnswer: "Singleton"
-                },
-                {
-                    id: 2,
-                    type: "single-choice",
-                    question: "Which of these are JavaScript frameworks? (Select all that apply)",
-                    options: ["React", "Django", "Vue", "Laravel"],
-                    correctAnswers: ["React", "Vue"]
-                },
-                {
-                    id: 3,
-                    type: "text",
-                    question: "What does SOLID stand for in object-oriented design?",
-                    correctAnswer: "Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion"
-                },
-                {
-                    id: 4,
-                    type: "code",
-                    question: "What will this Python code output?",
-                    code: `numbers = [1, 2, 3, 4, 5]
-squared = [x ** 2 for x in numbers if x % 2 == 0]
-print(squared)`,
-                    language: "python",
-                    correctAnswer: "[4, 16]"
-                },
-                {
-                    id: 5,
-                    type: "text",
-                    question: "Name one advantage of using microservices architecture",
-                    correctAnswers: ["Scalability", "Independent Deployment", "Technology Diversity", "Resilience"]
-                }
-            ]
-        };
+        const quizDataString = `{{ quiz_data|escapejs }}`;
+        const quizData = JSON.parse(quizDataString.replace(/'/g, '"'));
 
         // Quiz state
         let quizState = {
-            currentQuestionIndex: 3, // Last question
-            answers: {
-                "1": "Singleton",
-                "2": ["React", "Vue"],
-                "3": "Single Responsibility...",
-            },
-            startTime: "2023-11-15T09:30:00.000Z",
-            endTime: "2023-11-15T09:42:30.000Z", // Quiz completed
+            currentQuestionIndex: 0, // Last question
+            answers: {},
+            startTime: "",
             timer: null // Cleared after completion
         };
 
@@ -1003,7 +957,9 @@ print(squared)`,
         // Initialize the quiz
         function initQuiz() {
             // Load saved state from localStorage
-            const savedState = localStorage.getItem('quizState');
+            // const savedState = localStorage.getItem('quizState');
+            const savedState = false;
+
             if (savedState) {
                 quizState = JSON.parse(savedState);
 
@@ -1023,8 +979,11 @@ print(squared)`,
 
         // Show welcome screen
         function showWelcomeScreen() {
-            const completedCount = Object.keys(quizState.answers).length;
-            const progressPercentage = Math.round((completedCount / quizData.questions.length) * 100);
+            // const completedCount = Object.keys(quizState.answers).length;
+            const completedCount = `{{ quiz_correct_answer_count | escapejs }}`;
+            const progressPercentage = `{{ quiz_score | escapejs }}`;
+
+            console.log("HELLO WORLD")
 
             const html = `
                 <div class="welcome-card">
@@ -1043,16 +1002,26 @@ print(squared)`,
                     </div>
                     
                     <div class="action-buttons">
+
+                        {% if quiz_passed %}
+
                         <button class="btn btn-primary" id="startQuizBtn">
-                            ${completedCount > 0 ? 'Continue Quiz' : 'Start Quiz'}
+                            ${completedCount > 0 ? 'Re-attempt' : 'Start Quiz'}
                             <i class="fas fa-arrow-right"></i>
                         </button>
-                        ${completedCount > 0 ? `
-                        <button class="btn btn-outline" id="restartQuizBtn">
-                            <i class="fas fa-redo"></i> Restart
+
+                        {% else %}
+
+                        <button class="btn btn-primary" id="startQuizBtn">
+                            ${completedCount > 0 ? 'Re Take' : 'Start Quiz'}
+                            <i class="fas fa-arrow-right"></i>
                         </button>
-                        ` : ''}
+
+                        {% endif %}
                     </div>
+
+                    <span class="badge badge-primary" style='color:black'>Attempt : {{quiz_attempt}}</span>
+
                 </div>
             `;
 
@@ -1062,14 +1031,14 @@ print(squared)`,
                 showQuestion(quizState.currentQuestionIndex);
             });
 
-            if (completedCount > 0) {
-                document.getElementById('restartQuizBtn').addEventListener('click', () => {
-                    if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
-                        resetQuiz();
-                        showWelcomeScreen();
-                    }
-                });
-            }
+            // if (completedCount > 0) {
+            //     document.getElementById('restartQuizBtn').addEventListener('click', () => {
+            //         if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
+            //             resetQuiz();
+            //             showWelcomeScreen();
+            //         }
+            //     });
+            // }
         }
 
         // Reset quiz state
@@ -1081,7 +1050,7 @@ print(squared)`,
                 endTime: null,
                 timer: null
             };
-            localStorage.removeItem('quizState');
+            // localStorage.removeItem('quizState');
         }
 
         // Show question
@@ -1090,6 +1059,8 @@ print(squared)`,
 
             const question = quizData.questions[index];
             const isLastQuestion = index === quizData.questions.length - 1;
+
+            console.log(question)
 
             // Clear any existing timer
             if (quizState.timer) {
@@ -1114,7 +1085,7 @@ print(squared)`,
             let optionsHtml = '';
             let codeHtml = '';
 
-            if (question.type === 'multiple-choice') {
+            if (question.type === 'single-choice') {
                 optionsHtml = question.options.map(option => `
                     <label class="option ${quizState.answers[question.id] === option ? 'selected' : ''}">
                         <input type="radio" name="answer" value="${option}" 
@@ -1123,7 +1094,7 @@ print(squared)`,
                     </label>
                 `).join('');
             }
-            else if (question.type === 'single-choice') {
+            else if (question.type === 'multiple-choice') {
                 optionsHtml = question.options.map(option => `
                     <label class="option ${(quizState.answers[question.id] || []).includes(option) ? 'selected' : ''}">
                         <input type="checkbox" name="answer" value="${option}" 
@@ -1209,7 +1180,7 @@ print(squared)`,
             });
 
             // Add option selection handlers
-            if (question.type === 'multiple-choice') {
+            if (question.type === 'single-choice') {
                 document.querySelectorAll('.option input[type="radio"]').forEach(radio => {
                     radio.addEventListener('change', function () {
                         document.querySelectorAll('.option').forEach(opt => {
@@ -1219,7 +1190,7 @@ print(squared)`,
                     });
                 });
             }
-            else if (question.type === 'single-choice') {
+            else if (question.type === 'multiple-choice') {
                 document.querySelectorAll('.option input[type="checkbox"]').forEach(checkbox => {
                     checkbox.addEventListener('change', function () {
                         this.closest('.option').classList.toggle('selected');
@@ -1247,13 +1218,13 @@ print(squared)`,
         function saveAnswer() {
             const currentQuestion = quizData.questions[quizState.currentQuestionIndex];
 
-            if (currentQuestion.type === 'multiple-choice') {
+            if (currentQuestion.type === 'single-choice') {
                 const selectedOption = document.querySelector('.option input[type="radio"]:checked');
                 if (selectedOption) {
                     quizState.answers[currentQuestion.id] = selectedOption.value;
                 }
             }
-            else if (currentQuestion.type === 'single-choice') {
+            else if (currentQuestion.type === 'multiple-choice') {
                 const selectedOptions = Array.from(document.querySelectorAll('.option input[type="checkbox"]:checked'))
                     .map(checkbox => checkbox.value);
                 if (selectedOptions.length > 0) {
@@ -1268,7 +1239,7 @@ print(squared)`,
             }
 
             // Save state to localStorage
-            localStorage.setItem('quizState', JSON.stringify(quizState));
+            // localStorage.setItem('quizState', JSON.stringify(quizState));
             return true;
         }
 
@@ -1282,10 +1253,10 @@ print(squared)`,
                 const userAnswer = quizState.answers[question.id];
                 let isCorrect = false;
 
-                if (question.type === 'multiple-choice') {
+                if (question.type === 'single-choice') {
                     isCorrect = userAnswer === question.correctAnswer;
                 }
-                else if (question.type === 'single-choice') {
+                else if (question.type === 'multiple-choice') {
                     // Check if all correct answers are selected and no incorrect ones
                     const userAnswers = new Set(userAnswer || []);
                     const correctAnswers = new Set(question.correctAnswers);
@@ -1307,8 +1278,11 @@ print(squared)`,
                 results.push({
                     question: question.question,
                     userAnswer: Array.isArray(userAnswer) ? userAnswer.join(', ') : (userAnswer || 'No answer provided'),
-                    correctAnswer: Array.isArray(question.correctAnswer) ?
-                        question.correctAnswer.join(', ') : question.correctAnswer,
+                    correctAnswer: Array.isArray(question.correctAnswers)
+                    ? question.correctAnswers.join(', ')
+                    : (Array.isArray(question.correctAnswer)
+                        ? question.correctAnswer.join(', ')
+                        : question.correctAnswer || ""),
                     isCorrect,
                     code: question.code,
                     language: question.language,
@@ -1426,6 +1400,11 @@ print(squared)`,
                 resetQuiz();
                 showWelcomeScreen();
             });
+
+            console.log("Result : ", quizData.questions)
+            console.log("Final Result : ", results)
+
+            submitQuizDataToBackend(results, isPassed)
         }
 
         // Format time in MM:SS format
@@ -1464,6 +1443,46 @@ print(squared)`,
 
         // Initialize the quiz when page loads
         document.addEventListener('DOMContentLoaded', initQuiz);
+        // APIs to save the data
+
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+    // Send JSON data with CSRF
+    async function submitQuizDataToBackend(quizData, isPassed) {
+        const url = 'https://nammacodingshaale.up.railway.app//api/save-quiz-data';
+    
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    quiz_data: quizData,
+                    content_id: `{{content.pk | escapejs}}`,  // Keep it JSON, not .toString()
+                    is_passed: isPassed
+                })
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+    
+            const responseData = await response.json();
+            console.log('Submission successful:', responseData);
+    
+            return responseData;
+        } catch (error) {
+            console.error('Error posting data:', error);
+            throw error;
+        }
+    }
+
     </script>
 </body>
 

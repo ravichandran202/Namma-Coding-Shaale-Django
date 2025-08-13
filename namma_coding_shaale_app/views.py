@@ -23,9 +23,10 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem
+from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission
 import logging
 import json
+import ast
 
 
 from django.db import transaction
@@ -483,6 +484,75 @@ def view_content(request, course_id, content_file_id):
                 'content_file_id': content.file_name 
             }))
         
+        # Handle quiz submission
+        # elif 'quiz_submission' in request.POST:
+        #     try:
+        #         quiz_data = json.loads(request.POST.get('quiz_data'))
+        #         user_answers = json.loads(request.POST.get('user_answers'))
+        #         start_time = request.POST.get('start_time')
+                
+        #         # Calculate time taken
+        #         start_datetime = timezone.datetime.fromisoformat(start_time)
+        #         time_taken = (timezone.now() - start_datetime).seconds
+                
+        #         # Calculate score
+        #         correct_count = 0
+        #         for question in quiz_data['questions']:
+        #             user_answer = user_answers.get(str(question['id']))
+                    
+        #             if question['type'] == 'multiple-choice':
+        #                 correct = user_answer == question['correctAnswer']
+        #             elif question['type'] == 'single-choice':
+        #                 correct = set(user_answer or []) == set(question['correctAnswers'])
+        #             else:  # text or code questions
+        #                 correct_answers = question.get('correctAnswers', [question['correctAnswer']])
+        #                 correct = any(user_answer.lower() == ans.lower() for ans in correct_answers)
+                    
+        #             if correct:
+        #                 correct_count += 1
+                
+        #         total_questions = len(quiz_data['questions'])
+        #         score = round((correct_count / total_questions) * 100, 2)
+        #         passed = score >= quiz_data.get('passingScore', 70)
+                
+        #         # Get attempt number
+        #         attempt_number = QuizSubmission.objects.filter(
+        #             user=request.user,
+        #             content=content
+        #         ).count() + 1
+                
+        #         # Save quiz submission
+        #         QuizSubmission.objects.create(
+        #             user=request.user,
+        #             content=content,
+        #             course=course,
+        #             quiz_data=quiz_data,
+        #             user_answers=user_answers,
+        #             score=score,
+        #             passed=passed,
+        #             correct_answers=correct_count,
+        #             total_questions=total_questions,
+        #             started_at=start_datetime,
+        #             completed_at=timezone.now(),
+        #             time_taken=time_taken,
+        #             attempt_number=attempt_number
+        #         )
+                
+        #         # Mark content as completed if passed
+        #         if passed:
+        #             progress.is_completed = True
+        #             progress.completed_at = timezone.now()
+        #             progress.save()
+                
+            
+            # except Exception as e:
+            #     logger.error(f"Error saving quiz submission: {str(e)}")
+            #     messages.error(request, "Error saving quiz results. Please try again.")
+            #     return redirect(reverse('content', kwargs={
+            #         'course_id': course.id,
+            #         'content_file_id': content.file_name 
+            #     }))
+        
         # Prepare context
         context = {
             'course': course,
@@ -491,11 +561,37 @@ def view_content(request, course_id, content_file_id):
             'progress': progress,
             'is_completed': progress.is_completed,
             'content_file_id': content.file_name,
-            'roadmap':roadmap,
-            'course_id' : course_id
+            'roadmap': roadmap,
+            'course_id': course_id
         }
 
         if content.type.lower() == "quiz":
+            # Add previous quiz attempts to context if any exist
+            quiz_submission = QuizSubmission.objects.get_or_create(
+                user=request.user,
+                content=content,
+                defaults={
+                    "course":course,
+                    "quiz_data":content.quiz_data,
+                    "correct_answers": 0
+                }
+            )[0]
+            
+            
+            context['quiz_submission'] = quiz_submission
+            context['quiz_data'] = json.dumps(quiz_submission.quiz_data)
+            context['quiz_score'] = quiz_submission.score
+            context['quiz_passed'] =  quiz_submission.passed
+            context['quiz_correct_answer_count'] =  quiz_submission.correct_answers
+            context['quiz_attempt'] =  quiz_submission.attempt_number
+
+            print(context['quiz_submission'] )
+            print(context['quiz_data'])
+            print(context['quiz_score'] )
+            print(context['quiz_passed'])
+            print(context['quiz_correct_answer_count'])
+            print(context['quiz_attempt'])
+
             return render(request, "view_quiz_content.html", context)
 
         if content.type.lower() == "problem":
@@ -730,6 +826,55 @@ def save_code(request):
             {"error": str(e)},
             status=500
         )
+
+
+@csrf_exempt
+@api_view(['POST', 'OPTIONS'])
+@permission_classes([AllowAny])
+def save_quiz_data(request):
+    if request.method == "POST":
+        try:
+            #read from API
+            quiz_data = request.data.get('quiz_data')
+            content_id = request.data.get('content_id')
+            is_passed = bool(request.data.get('is_passed'))
+
+            #make data to save
+            total_quetions = len(quiz_data)
+            correct_answer_count = 0
+
+            for record in quiz_data:
+                print(type(record))
+                if record.get("isCorrect") == True:
+                    correct_answer_count += 1
+            
+            print("Extra details", total_quetions, is_passed)
+
+            content = Content.objects.get(pk=content_id)
+            existing_record = QuizSubmission.objects.filter(content = content, user = request.user).first()
+            score = (correct_answer_count/total_quetions)*100
+
+            if int(existing_record.score) < 100:
+                existing_record.total_questions = total_quetions
+                existing_record.correct_answers = max(existing_record.correct_answers, correct_answer_count)
+                existing_record.score = max(existing_record.score, score)
+                existing_record.user_answers = json.dumps(quiz_data)
+                if not existing_record.passed:
+                    existing_record.passed = is_passed 
+                    existing_record.attempt_number += 1
+                
+                existing_record.started_at = timezone.now()
+                # existing_record.time_taken = timezone.now()
+                
+            existing_record.save()
+
+            # Process your quiz_data here...
+            print("Received:", quiz_data)
+
+            return JsonResponse({"status": "success", "message": "Quiz data saved successfully"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+    return JsonResponse({"error": "Only POST method allowed"}, status=405)
 
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
