@@ -570,6 +570,7 @@ def view_content(request, course_id, content_file_id):
             quiz_submission = QuizSubmission.objects.get_or_create(
                 user=request.user,
                 content=content,
+                course=course,
                 defaults={
                     "course":course,
                     "quiz_data":content.quiz_data,
@@ -837,6 +838,7 @@ def save_quiz_data(request):
             #read from API
             quiz_data = request.data.get('quiz_data')
             content_id = request.data.get('content_id')
+            course_id = request.data.get('course_id')
             is_passed = bool(request.data.get('is_passed'))
 
             #make data to save
@@ -848,11 +850,69 @@ def save_quiz_data(request):
                 if record.get("isCorrect") == True:
                     correct_answer_count += 1
             
-            print("Extra details", total_quetions, is_passed)
+            print("Extra details", total_quetions, is_passed, content_id, course_id)
 
             content = Content.objects.get(pk=content_id)
-            existing_record = QuizSubmission.objects.filter(content = content, user = request.user).first()
+            course = Course.objects.get(pk=course_id)
+            existing_record = QuizSubmission.objects.filter(content = content, course = course, user = request.user).first()
             score = (correct_answer_count/total_quetions)*100
+
+            # # if passed - handle content completion update
+            # if is_passed:
+            #     # Get or create content progress
+            #     course_content = get_object_or_404(
+            #         CourseContent, 
+            #         course=course, 
+            #         content=content
+            #     )
+
+            #     print("course_content", course_content)
+
+            #     progress = get_object_or_404(
+            #         UserContentProgress,
+            #         user=request.user,
+            #         course=course,
+            #         content=content
+            #     )
+                
+            #     print("progress", progress)
+
+            #     # Handle POST request to mark as completed
+            #     if course_content and progress:
+            #         progress.is_completed = True
+            #         progress.completed_at = timezone.now()
+            #         progress.save()
+                    
+            #         # Get next content in sequence
+            #         next_content = CourseContent.objects.filter(
+            #             course=course,
+            #             sequence_number__gt=course_content.sequence_number
+            #         ).order_by('sequence_number').first()
+                    
+            #         print("next content", next_content)
+            #         if next_content:
+            #             user_course = get_object_or_404(
+            #                 UserCourse,
+            #                 user=request.user,
+            #                 course=course
+            #             )
+                            
+            #             # Update user's current content
+            #             user_course.current_content = next_content.content
+            #             user_course.save()
+                        
+            #             # Unlock the next content
+            #             user_content_progress = get_object_or_404(
+            #                 UserContentProgress,
+            #                 user = request.user,
+            #                 course = course,
+            #                 content = next_content.content
+            #             )
+            #             user_content_progress.is_locked = False
+            #             user_content_progress.save()
+
+            #             print("marked as completed and unloack next content")
+                    
 
             if int(existing_record.score) < 100:
                 existing_record.total_questions = total_quetions

@@ -199,8 +199,8 @@ class QuizSubmission(models.Model):
     attempt_number = models.PositiveIntegerField(default=0)
     
     class Meta:
-        ordering = ['-completed_at']
-        unique_together = ['user', 'content', 'attempt_number']
+        # ordering = ['-completed_at']
+        unique_together = ['user', 'course', 'content']
     
     def __str__(self):
         return f"{self.user.username}'s quiz attempt #{self.attempt_number} ({self.score}%)"
