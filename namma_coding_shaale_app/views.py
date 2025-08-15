@@ -27,6 +27,7 @@ from .models import OTP, CourseContent, UserContentProgress, UserCourse, Problem
 import logging
 import json
 import ast
+from datetime import datetime
 
 
 from django.db import transaction
@@ -61,7 +62,28 @@ def send_otp_email(user, otp_code):
         print(f"Failed to send OTP email: {str(e)}")
         return False
 
-
+def send_course_enrollment_email(user, course, user_course, request):
+    """Helper function to send course enrollment success email"""
+    subject = f"Successfully Enrolled in {course.name} | Namma Coding Shaale"
+    
+    context = {
+        'name': user.get_full_name() or user.username,
+        'course_name': course.name,
+        'purchase_date': datetime.now().strftime("%B %d, %Y at %I:%M %p"),
+        'order_id': f"NCS-{user_course.id}-{datetime.now().strftime('%Y%m%d')}",
+        'my_courses_link': request.build_absolute_uri('/my-courses/')
+    }
+    
+    html_message = render_to_string('course_enrollment_email.html', context)
+    
+    send_mail(
+        subject=subject,
+        message=strip_tags(html_message),
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[user.email],
+        html_message=html_message,
+        fail_silently=False
+    )
 
 def login(request):
     if request.method == HTTPMethod.POST:
@@ -316,6 +338,14 @@ def my_courses(request):
     # Get all enrolled courses with progress annotations
     enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
     
+    #if a user is new or not having any course - enroll it to fremium course and send a Mail
+    if len(enrolled_courses) == 0:
+        FREEMUIUM_COURSE_ID = 1
+        enroll_course(request, FREEMUIUM_COURSE_ID)
+
+        # since newly created, get course data
+        enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
+
     courses_data = []
     for user_course in enrolled_courses:
         course = user_course.course
@@ -939,3 +969,59 @@ def save_quiz_data(request):
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
     return ''.join(secrets.choice(alphabet) for _ in range(length))
+
+
+def enroll_course(request, course_id):
+    # Get the course or return 404 if not found
+    course = get_object_or_404(Course, id=course_id)
+    user = request.user
+    
+    # Check if user is already enrolled
+    if UserCourse.objects.filter(user=user, course=course).exists():
+        messages.warning(request, 'You are already enrolled in this course!')
+        return 
+    
+    try:
+        # Create the UserCourse record
+        user_course = UserCourse.objects.create(
+            user=user,
+            course=course,
+            fees_paid=0 if not course.is_premium else course.base_price,
+            payment_status='PAID' if not course.is_premium else 'PENDING'
+        )
+        
+        # Get all course contents ordered by sequence number
+        course_contents = CourseContent.objects.filter(course=course).order_by('sequence_number')
+        
+        # Create UserContentProgress records for each content
+        for index, course_content in enumerate(course_contents):
+            UserContentProgress.objects.create(
+                user=user,
+                course=course,
+                content=course_content.content,
+                is_locked=not (index == 0 and course_content.is_unlocked_by_default)
+            )
+        
+        # Set the first content as current if available
+        if course_contents.exists():
+            first_content = course_contents.first().content
+            user_course.current_content = first_content
+            user_course.save()
+            
+            # Unlock the first content if it's locked (override the default)
+            UserContentProgress.objects.filter(
+                user=user,
+                course=course,
+                content=first_content
+            ).update(is_locked=False)
+        
+        messages.success(request, f'Successfully enrolled in {course.name}!')
+
+        # Send enrollment email
+        send_course_enrollment_email(user, course, user_course, request)
+
+        return 
+    
+    except Exception as e:
+        messages.error(request, f'Error enrolling in course: {str(e)}')
+        return 
