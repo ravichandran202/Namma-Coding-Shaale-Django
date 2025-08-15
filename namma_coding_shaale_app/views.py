@@ -823,6 +823,7 @@ def save_code(request):
         submission, created = ProblemSubmission.objects.update_or_create(
             problem=problem,
             course = course,
+            user=request.user,
             defaults={
                 'submitted_code': code,
                 'status': status,
