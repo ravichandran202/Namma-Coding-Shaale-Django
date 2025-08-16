@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,47 +16,70 @@
                 width: 100% !important;
                 border-radius: 0 !important;
             }
+
             .header-padding {
                 padding: 30px 15px !important;
             }
+
             .body-padding {
                 padding: 25px 20px !important;
             }
+
             .course-name {
                 font-size: 22px !important;
             }
+
             .purchase-info {
                 display: block !important;
             }
+
             .info-column {
                 display: block !important;
                 width: 100% !important;
                 margin-bottom: 15px !important;
             }
+
             .cta-button {
                 width: 100% !important;
                 max-width: none !important;
                 display: block !important;
+                text-align: center !important;
+                padding: 12px 10px !important;
+            }
+
+            /* Add this to ensure proper centering */
+            table[class="button-table"] {
+                width: 100% !important;
+            }
+
+            table[class="button-table"] tr td {
+                text-align: center !important;
             }
         }
     </style>
 </head>
+
 <body style="margin:0;padding:0;font-family:'Inter',Arial,sans-serif;color:#1e293b;background-color:#f5f7fa;">
     <!-- Outer wrapper -->
     <div style="background-color:#f5f7fa;padding:10px;">
         <!-- Main container -->
-        <table class="main-table" align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px;max-width:100%;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.05);border-collapse:separate;">
+        <table class="main-table" align="center" border="0" cellpadding="0" cellspacing="0" width="600"
+            style="width:600px;max-width:100%;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.05);border-collapse:separate;">
             <!-- Header -->
             <tr>
-                <td class="header-padding" align="center" style="padding:40px 20px;background:linear-gradient(135deg, #10b981, #059669);color:#ffffff;position:relative;">
+                <td class="header-padding" align="center"
+                    style="padding:40px 20px;background:linear-gradient(135deg, #10b981, #059669);color:#ffffff;position:relative;">
                     <!--[if gte mso 9]>
                     <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:120px;">
                         <v:fill type="gradient" angle="135" color="#10b981" color2="#059669"/>
                         <v:textbox inset="0,0,0,0">
                     <![endif]-->
                     <div style="position:relative;z-index:1;">
-                        <div style="font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:0.5px;">ನಮ್ಮ CODING ಶಾಲೆ</div>
-                        <h1 style="font-size:28px;margin:0;font-weight:700;letter-spacing:-0.5px;">Course Purchase Confirmation</h1>
+                        <div
+                            style="font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:0.5px;">
+                            ನಮ್ಮ CODING ಶಾಲೆ</div>
+                        <h1 style="font-size:28px;margin:0;font-weight:700;letter-spacing:-0.5px;">Course Purchase
+                            Confirmation</h1>
                     </div>
                     <!--[if gte mso 9]>
                         </v:textbox>
@@ -63,21 +87,27 @@
                     <![endif]-->
                 </td>
             </tr>
-            
+
             <!-- Body content -->
             <tr>
                 <td class="body-padding" style="padding:35px 30px;">
                     <p style="font-size:16px;margin-bottom:20px;line-height:1.5;">Hello <strong>{{ name }}</strong>,</p>
-                    
-                    <p style="font-size:16px;margin-bottom:20px;line-height:1.5;">Thank you for enrolling in our course! We're thrilled to welcome you to our learning community and can't wait to see what you'll achieve.</p>
-                    
+
+                    <p style="font-size:16px;margin-bottom:20px;line-height:1.5;">Thank you for enrolling in our course!
+                        We're thrilled to welcome you to our learning community and can't wait to see what you'll
+                        achieve.</p>
+
                     <!-- Purchase details box -->
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:25px 0;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                        style="margin:25px 0;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
                         <tr>
                             <td style="padding:25px;">
-                                <p style="margin:0 0 8px 0;font-size:14px;color:#64748b;font-weight:500;">You've successfully enrolled in:</p>
-                                <h2 class="course-name" style="font-size:24px;color:#10b981;font-weight:700;margin:12px 0 16px;line-height:1.3;">{{ course_name }}</h2>
-                                
+                                <p style="margin:0 0 8px 0;font-size:14px;color:#64748b;font-weight:500;">You've
+                                    successfully enrolled in:</p>
+                                <h2 class="course-name"
+                                    style="font-size:24px;color:#10b981;font-weight:700;margin:12px 0 16px;line-height:1.3;">
+                                    {{ course_name }}</h2>
+
                                 <!-- Purchase info columns -->
                                 <table class="purchase-info" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
@@ -86,74 +116,87 @@
                                             <p style="margin:0;font-size:16px;font-weight:600;color:#1e293b;">{{ purchase_date }}</p>
                                         </td>
                                         <td class="info-column" width="50%" valign="top">
-                                            <p style="margin:0 0 4px 0;font-size:14px;color:#64748b;">Access Duration</p>
-                                            <p style="margin:0;font-size:16px;font-weight:600;color:#1e293b;">Lifetime access</p>
+                                            <p style="margin:0 0 4px 0;font-size:14px;color:#64748b;">Access Duration
+                                            </p>
+                                            <p style="margin:0;font-size:16px;font-weight:600;color:#1e293b;">Lifetime
+                                                access</p>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                    
+
                     <!-- Welcome note -->
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:20px 0;background:#ecfdf5;border-radius:10px;border:1px solid #a7f3d0;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                        style="margin:20px 0;background:#ecfdf5;border-radius:10px;border:1px solid #a7f3d0;">
                         <tr>
                             <td style="padding:16px;color:#065f46;">
                                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
-                                        <td valign="top" width="20" style="padding-right:12px;">
-                                            <div style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                                </svg>
-                                            </div>
-                                        </td>
                                         <td>
-                                            <p style="margin:0;font-size:14px;line-height:1.5;">Your learning journey begins now! This course includes <strong>certification</strong>, <strong>projects</strong>, and <strong>community support</strong> to help you succeed.</p>
+                                            <p style="margin:0;font-size:14px;line-height:1.5;">Your learning journey
+                                                begins now! This course includes <strong>certification</strong>,
+                                                <strong>projects</strong>, and <strong>community support</strong> to
+                                                help you succeed.
+                                            </p>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                    
-                    <p style="font-size:16px;margin-bottom:20px;text-align:center;line-height:1.5;">You can access your course materials immediately through your personalized dashboard.</p>
-                    
+
+                    <p style="font-size:16px;margin-bottom:20px;text-align:center;line-height:1.5;">You can access your
+                        course materials immediately through your personalized dashboard.</p>
+
                     <!-- Button -->
-                    <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin:20px auto;">
+                    <!-- Button -->
+                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
+                        style="margin:20px auto;">
                         <tr>
-                            <td align="center" style="background:#10b981;border-radius:10px;">
-                                <a href="{{ my_courses_link }}" class="cta-button" style="display:inline-block;padding:14px 32px;color:#ffffff;font-weight:600;text-decoration:none;font-size:16px;">Access My Course</a>
+                            <td align="center">
+                                <table border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                                    <tr>
+                                        <td align="center" style="background:#10b981;border-radius:10px;">
+                                            <a href="{{ my_courses_link }}" class="cta-button"
+                                                style="display:inline-block;padding:14px 32px;color:#ffffff;font-weight:600;text-decoration:none;font-size:16px;text-align:center;">My Course</a>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
-                    
+
                     <!-- Divider -->
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin:25px 0;">
                         <tr>
                             <td style="border-top:1px solid #e2e8f0;"></td>
                         </tr>
                     </table>
-                    
-                    <p style="font-size:15px;color:#64748b;margin-bottom:12px;line-height:1.6;">Here's what to do next:</p>
+
+                    <p style="font-size:15px;color:#64748b;margin-bottom:12px;line-height:1.6;">Here's what to do next:
+                    </p>
                     <ol style="color:#64748b;padding-left:20px;margin-top:0;margin-bottom:20px;">
                         <li style="margin-bottom:6px;">Explore the course curriculum and introduction materials</li>
                         <li style="margin-bottom:6px;">Complete your first lesson within 48 hours to build momentum</li>
                         <li>Join our student community for peer support</li>
                     </ol>
-                    
+
                     <p style="margin:0 0 6px 0;font-size:15px;">Need help getting started?</p>
                     <p style="margin:0;font-size:15px;">
-                        <a href="mailto:support@nammacodingshaale.com" style="color:#10b981;text-decoration:none;font-weight:500;">Contact our support team</a> or 
-                        <a href="{{ help_center_link }}" style="color:#10b981;text-decoration:none;font-weight:500;">visit our Help Center</a>
+                        <a href="mailto:support@nammacodingshaale.com"
+                            style="color:#10b981;text-decoration:none;font-weight:500;">Contact our support team</a> or
+                        <a href="{{ help_center_link }}"
+                            style="color:#10b981;text-decoration:none;font-weight:500;">visit our Help Center</a>
                     </p>
                 </td>
             </tr>
-            
+
             <!-- Footer -->
             <tr>
-                <td style="padding:20px 30px;background:#f8fafc;text-align:center;font-size:13px;color:#64748b;border-top:1px solid #e2e8f0;">
+                <td
+                    style="padding:20px 30px;background:#f8fafc;text-align:center;font-size:13px;color:#64748b;border-top:1px solid #e2e8f0;">
                     <p style="margin:0 0 6px 0;">© 2025 Namma Coding Shaale. All rights reserved.</p>
                     <p style="margin:0;font-size:12px;">No. 1 Coding School in Karnataka</p>
                 </td>
@@ -161,4 +204,5 @@
         </table>
     </div>
 </body>
+
 </html>
