@@ -811,6 +811,57 @@
                 otpInputs[0].focus();
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const submitBtn = document.getElementById('submitBtn');
+        const form = submitBtn.closest('form'); // Find the parent form
+    
+        form.addEventListener('submit', function(e) {
+            // Only prevent default if you're using AJAX
+            // e.preventDefault(); // Uncomment if using Fetch API
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.btn-text').classList.add('d-none');
+            submitBtn.querySelector('.btn-icon').classList.add('d-none');
+            submitBtn.querySelector('.btn-spinner').classList.remove('d-none');
+            
+            // For AJAX submission (uncomment this block if needed):
+            /*
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if(response.ok) {
+                    window.location.href = '/success-page'; // Redirect on success
+                } else {
+                    throw new Error('Login failed');
+                }
+            })
+            .catch(error => {
+                resetButton();
+                alert('Error: ' + error.message);
+            });
+            */
+        });
+    
+        // Reset button if form is invalid
+        form.addEventListener('invalid', function() {
+            resetButton();
+        }, true);
+    
+        function resetButton() {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').classList.remove('d-none');
+            submitBtn.querySelector('.btn-icon').classList.remove('d-none');
+            submitBtn.querySelector('.btn-spinner').classList.add('d-none');
+        }
+      });
+    
     </script>
 </body>
 
