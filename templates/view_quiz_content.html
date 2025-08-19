@@ -1057,6 +1057,9 @@
             document.getElementById('startQuizBtn').addEventListener('click', () => {
                 quizState.startTime = new Date();
                 showQuestion(quizState.currentQuestionIndex);
+
+                // start copy to clipboard and tab switch protection
+                startClipboardProtection()
             });
 
             // if (completedCount > 0) {
@@ -1201,6 +1204,7 @@
                     showQuestion(quizState.currentQuestionIndex);
                 } else {
                     // Quiz completed
+                    stopClipboardProtection();
                     quizState.endTime = new Date();
                     clearInterval(quizState.timer);
                     showResults();
@@ -1510,6 +1514,122 @@
         } catch (error) {
             console.error('Error posting data:', error);
             throw error;
+        }
+    }
+
+
+    let isProtectionActive = false;
+    let contextMenuHandler = null;
+    let keyDownHandler = null;
+    let visibilityChangeHandler = null;
+    let lastFocusedElement = null;
+    
+    function startClipboardProtection() {
+        if (isProtectionActive) return;
+        
+        // Prevent right-click context menu
+        contextMenuHandler = function(e) {
+            e.preventDefault();
+        };
+        document.addEventListener('contextmenu', contextMenuHandler);
+        
+        // Prevent copy, cut, select all shortcuts
+        keyDownHandler = function(e) {
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('keydown', keyDownHandler);
+        
+        // Handle tab switching with clipboard clearing
+        visibilityChangeHandler = async function() {
+            if (document.hidden) {
+                console.log('Tab switched - preparing to clear clipboard');
+                alert("Tab switched")
+                
+                // Store the currently focused element
+                lastFocusedElement = document.activeElement;
+                
+                // Create and focus a hidden input to regain focus
+                const focusKeeper = document.createElement('input');
+                focusKeeper.style.position = 'fixed';
+                focusKeeper.style.opacity = 0;
+                focusKeeper.style.pointerEvents = 'none';
+                document.body.appendChild(focusKeeper);
+                focusKeeper.focus();
+                
+                // Small delay to ensure focus is established
+                await new Promise(resolve => setTimeout(resolve, 50));
+                
+                try {
+                    // Now attempt clipboard operation
+                    await navigator.clipboard.writeText(' ');
+                    console.log('Clipboard cleared successfully');
+                } catch (error) {
+                    console.error('Clipboard clearing failed:', error);
+                    fallbackClearClipboard();
+                } finally {
+                    // Clean up
+                    document.body.removeChild(focusKeeper);
+                    if (lastFocusedElement) lastFocusedElement.focus();
+                }
+            }
+        };
+        document.addEventListener('visibilitychange', visibilityChangeHandler);
+        
+        isProtectionActive = true;
+        console.log('Clipboard protection started');
+    }
+    
+    function stopClipboardProtection() {
+        if (!isProtectionActive) return;
+        
+        // Remove all event listeners
+        if (contextMenuHandler) {
+            document.removeEventListener('contextmenu', contextMenuHandler);
+            contextMenuHandler = null;
+        }
+        
+        if (keyDownHandler) {
+            document.removeEventListener('keydown', keyDownHandler);
+            keyDownHandler = null;
+        }
+        
+        if (visibilityChangeHandler) {
+            document.removeEventListener('visibilitychange', visibilityChangeHandler);
+            visibilityChangeHandler = null;
+        }
+        
+        isProtectionActive = false;
+        console.log('Clipboard protection stopped');
+    }
+    
+    // Improved fallback method
+    function fallbackClearClipboard() {
+        try {
+            // Create hidden textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = ' ';
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = 0;
+            document.body.appendChild(textarea);
+            
+            // Select and copy
+            textarea.select();
+            if (navigator.userAgent.match(/ipad|iphone|android/i)) {
+                textarea.setSelectionRange(0, 9999);
+            }
+            document.execCommand('copy');
+            
+            // Immediate second attempt to ensure clearing
+            setTimeout(() => {
+                textarea.value = '';
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }, 100);
+        } catch (e) {
+            console.error('Fallback clipboard clearing failed:', e);
         }
     }
 

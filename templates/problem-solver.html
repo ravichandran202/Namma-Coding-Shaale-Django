@@ -46,6 +46,10 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         #main {
@@ -1538,7 +1542,84 @@ Output: 4</pre>
         }
 
 
-    </script>
+
+        document.addEventListener('contextmenu', function(e) {
+              e.preventDefault();
+        });
+            
+        document.addEventListener('keydown', function(e) {
+              // Ctrl+C, Ctrl+A, Ctrl+X, etc.
+              if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
+                e.preventDefault();
+              }
+        });
+
+        // Store the last focused element
+        let lastFocusedElement = null;
+        
+        document.addEventListener('visibilitychange', async function() {
+            if (document.hidden) {
+                console.log('Tab switched - preparing to clear clipboard');
+                alert("Tab switched")
+                // Store the currently focused element
+                lastFocusedElement = document.activeElement;
+                
+                // Create and focus a hidden input to regain focus
+                const focusKeeper = document.createElement('input');
+                focusKeeper.style.position = 'fixed';
+                focusKeeper.style.opacity = 0;
+                focusKeeper.style.pointerEvents = 'none';
+                document.body.appendChild(focusKeeper);
+                focusKeeper.focus();
+                
+                // Small delay to ensure focus is established
+                await new Promise(resolve => setTimeout(resolve, 50));
+                
+                try {
+                    // Now attempt clipboard operation
+                    await navigator.clipboard.writeText(' ');
+                    console.log('Clipboard cleared successfully');
+                } catch (error) {
+                    console.error('Clipboard clearing failed:', error);
+                    fallbackClearClipboard();
+                } finally {
+                    // Clean up
+                    document.body.removeChild(focusKeeper);
+                    if (lastFocusedElement) lastFocusedElement.focus();
+                }
+            }
+        });
+        
+        // Improved fallback method
+        function fallbackClearClipboard() {
+            try {
+                // Create hidden textarea
+                const textarea = document.createElement('textarea');
+                textarea.value = ' ';
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = 0;
+                document.body.appendChild(textarea);
+                
+                // Select and copy
+                textarea.select();
+                if (navigator.userAgent.match(/ipad|iphone|android/i)) {
+                    textarea.setSelectionRange(0, 9999);
+                }
+                document.execCommand('copy');
+                
+                // Immediate second attempt to ensure clearing
+                setTimeout(() => {
+                    textarea.value = '';
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }, 100);
+            } catch (e) {
+                console.error('Fallback clipboard clearing failed:', e);
+            }
+        }
+
+        </script>
 
 </body>
 

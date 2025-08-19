@@ -20,27 +20,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
     <!-- Custom CSS -->
     <style>
-:root {
-    --primary: #4361ee;
-    --primary-hover: #3a56d4;
-    --primary-light: #93c5fd;
-    --success: #06d6a0;
-    --warning: #ffd166;
-    --danger: #ef476f;
-    --bg: #f8f9fa;
-    --text: #212529;
-    --text-light: #6c757d;
-    --border: #dee2e6;
-    --sidebar-width: 280px;
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #212529;
-    --sidebar-active-bg: #f1f5f9;
-    --sidebar-hover-bg: #f8fafc;
-    --dark: #212529;
-    --card-bg: #ffffff;
-    --code-bg: #1a1a1a;
-    --code-text: #f8f8f2;
-}
+    :root {
+        --primary: #4361ee;
+        --primary-hover: #3a56d4;
+        --primary-light: #93c5fd;
+        --success: #06d6a0;
+        --warning: #ffd166;
+        --danger: #ef476f;
+        --bg: #f8f9fa;
+        --text: #212529;
+        --text-light: #6c757d;
+        --border: #dee2e6;
+        --sidebar-width: 280px;
+        --sidebar-bg: #ffffff;
+        --sidebar-text: #212529;
+        --sidebar-active-bg: #f1f5f9;
+        --sidebar-hover-bg: #f8fafc;
+        --dark: #212529;
+        --card-bg: #ffffff;
+        --code-bg: #1a1a1a;
+        --code-text: #f8f8f2;
+    }
 
 
         body {
@@ -1099,13 +1099,14 @@ Memory Usage: ${data.run.memory || 'N/A'}\n`;
         // Load the problem content
         loadProblemContent(contentId);
 
-        // document.getElementById('problem-container').addEventListener('mouseenter', function() {
-        //     document.body.style.overflow = 'hidden';
-        // });
+        document.getElementById('problem-container').addEventListener('mouseenter', function() {
+            document.body.style.overflow = 'hidden';
+        });
 
-        // document.getElementById('problem-container').addEventListener('mouseleave', function() {
-        //     document.body.style.overflow = '';
-        // });
+        document.getElementById('problem-container').addEventListener('mouseleave', function() {
+            document.body.style.overflow = '';
+        });
+
     </script>
 </body>
 
