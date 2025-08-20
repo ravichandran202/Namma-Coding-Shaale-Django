@@ -365,7 +365,7 @@
 
         .progress-label {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-top: 0.5rem;
         }
 
@@ -821,6 +821,389 @@
                 padding-top: .5rem;
             }
         }
+
+        /* Premium Welcome Screen Styles */
+        .premium-welcome-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .premium-welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--success), var(--warning));
+        }
+        
+        .premium-welcome-card.premium-passed::before {
+            background: linear-gradient(90deg, var(--success), var(--primary));
+        }
+        
+        .premium-welcome-card.premium-progress::before {
+            background: linear-gradient(90deg, var(--warning), var(--primary));
+        }
+        
+        .premium-welcome-card.premium-new::before {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+        
+        .premium-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .premium-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        
+        .premium-description {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .premium-content {
+            margin-bottom: 2rem;
+        }
+        
+        .premium-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .attempt-badge {
+            background: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .premium-progress-container {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+        
+        .progress-label {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .progress-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .progress-visual {
+                display: flex;
+                align-items: center;
+                gap: 2.5rem;
+                justify-content: space-between;
+                width: 100%;
+                gap: 2rem; /* Add consistent spacing */
+            }
+        
+        .progress-circle-premium {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0; 
+        }
+        
+        .progress-circle-bg-premium {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0%, 
+                        var(--primary) var(--progress-percent), 
+                        #e2e8f0 var(--progress-percent), 
+                        #e2e8f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .progress-circle-inner-premium {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 4px white;
+        }
+        
+        .progress-count-premium {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .progress-stats {
+            flex: 1;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 16px;
+                flex: 1;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                max-width: 280px;
+            }
+        
+            .stat-icon {
+                font-size: 1.75rem;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+        
+            .stat-icon.correct {
+                color: #10b981;
+                background: rgba(16, 185, 129, 0.1);
+            }
+            
+            .stat-icon.incorrect {
+                color: #ef4444;
+                background: rgba(239, 68, 68, 0.1);
+            }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        .premium-instructions {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .premium-instructions h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .premium-instructions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .premium-instructions li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .premium-instructions li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .premium-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn-premium {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            min-width: 160px;
+        }
+        
+        .btn-primary-premium {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary-premium {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-secondary-premium:hover {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .premium-welcome-card {
+                padding: 1.5rem;
+            }
+            
+            .premium-title {
+                font-size: 1.75rem;
+            }
+            
+            .progress-visual {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+            }
+            
+            .progress-stats {
+                flex: 1;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+            }
+        
+            
+            .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 16px;
+                flex: 1;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                max-width: 180px;
+            }
+            
+            .stat-icon {
+                font-size: 1.75rem;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            
+            .stat-icon.correct {
+                color: #10b981;
+                background: rgba(16, 185, 129, 0.1);
+            }
+            
+            .stat-icon.incorrect {
+                color: #ef4444;
+                background: rgba(239, 68, 68, 0.1);
+            }
+            
+            .stat-content {
+                flex: 1;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+                font-weight: 800;
+                color: #1e293b;
+                line-height: 1;
+                margin-bottom: 0.25rem;
+            }
+            
+            .stat-label {
+                color: #64748b;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            .premium-actions {
+                flex-direction: column;
+            }
+            
+            .btn-premium {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -1000,78 +1383,128 @@
 
         // Show welcome screen
         function showWelcomeScreen() {
-            // const completedCount = Object.keys(quizState.answers).length;
-            const completedCount = `{{ quiz_correct_answer_count | escapejs }}`;
-            const progressPercentage = `{{ quiz_score | escapejs }}`;
-
-            console.log("HELLO WORLD")
-
-            const html = `
-                <div class="welcome-card">
-                    <div class="welcome-icon">
-                        <i class="fas fa-trophy"></i>
+        const completedCount = `{{ quiz_correct_answer_count | escapejs }}`;
+        const progressPercentage = `{{ quiz_score | escapejs }}`;
+        const totalQuestions = quizData.questions.length;
+        const isPassed = `{{ quiz_passed|yesno:"true,false" }}` === "true";
+        const quizAttempt = `{{ quiz_attempt | escapejs }}`;
+    
+        // Determine status and colors
+        const statusInfo = isPassed ? {
+            text: "Quiz Passed",
+            color: "var(--success)",
+            icon: "fa-trophy",
+            bgClass: "premium-passed"
+        } : quizAttempt == 0 ? {
+            text: "New Quiz",
+            color: "var(--primary)",
+            icon: "fa-star",
+            bgClass: "premium-new"
+        } : {
+            text: "Quiz Failed",
+            color: "var(--danger)",
+            icon: "fa-star",
+            bgClass: "premium-new"
+        };
+    
+        const html = `
+            <div>
+                <div class="premium-header">
+                    <div class="premium-badge">PREMIUM QUIZ</div>
+                    <h2 class="premium-title">${quizData.title}</h2>
+                    <p class="premium-description">${quizData.description}</p>
+                </div>
+                
+                <div class="premium-content">
+                    <div class="premium-status">
+                        <div class="status-indicator">
+                            <i class="fas ${statusInfo.icon}" style="color: ${statusInfo.color}"></i>
+                            <span>${statusInfo.text}</span>
+                        </div>
+                        <div class="attempt-badge">Attempt #${quizAttempt}</div>
                     </div>
-                    <h2 class="welcome-title">${quizData.title}</h2>
-                    <p class="welcome-description">${quizData.description}</p>
                     
-
-                    <div class="progress-circle">
-                        
-                        {% if quiz_passed %}
-                            <div class="progress-circle-bg" style="--progress-percent: ${progressPercentage}%"></div>
-                        {% else %}
-                            <div class="progress-circle-bg-danger" style="--progress-percent: ${progressPercentage}%"></div>
-                        {% endif %}
-
-                        <div class="progress-circle-inner">
-                            <div class="progress-count">${completedCount}</div>
-                            <div class="progress-label">of ${quizData.questions.length}</div>
+                    <div class="premium-progress-container">
+                        <div class="progress-info">
+                            <span class="progress-label">Your Progress</span>
+                            <span class="progress-value">${completedCount}/${totalQuestions}</span>
+                        </div>
+                        <div class="progress-visual">
+                            <div class="progress-circle-premium">
+                                <div class="progress-circle-bg-premium" style="--progress-percent: ${progressPercentage}%">
+                                    <div class="progress-circle-inner-premium">
+                                        <div class="progress-count-premium">${progressPercentage}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="stat-item">
+                                    <div class="stat-icon correct">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">${completedCount}</div>
+                                        <div class="stat-label">Correct</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon incorrect">
+                                        <i class="fas fa-times-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">${totalQuestions - completedCount}</div>
+                                        <div class="stat-label">Incorrect</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="action-buttons">
-
-                        {% if quiz_passed %}
-
-                        <button class="btn btn-primary" id="startQuizBtn">
-                            ${completedCount > 0 ? 'Re-attempt' : 'Start Quiz'}
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-
-                        {% else %}
-
-                        <button class="btn btn-primary" id="startQuizBtn">
-                            ${completedCount > 0 ? 'Re Take' : 'Start Quiz'}
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-
-                        {% endif %}
+                    <div class="premium-instructions">
+                        <h4><i class="fas fa-info-circle"></i> Quiz Instructions</h4>
+                        <ul>
+                            <li>Each question has a time limit</li>
+                            <li>You need ${quizData.passingScore}% to pass this quiz</li>
+                            <li>Your progress is automatically saved</li>
+                            <li>No tab switching allowed during the quiz</li>
+                        </ul>
                     </div>
-
-                    <span class="badge badge-primary" style='color:black'>Attempt : {{quiz_attempt}}</span>
-
                 </div>
-            `;
-
-            quizContainer.innerHTML = html;
-            document.getElementById('startQuizBtn').addEventListener('click', () => {
-                quizState.startTime = new Date();
-                showQuestion(quizState.currentQuestionIndex);
-
-                // start copy to clipboard and tab switch protection
-                startClipboardProtection()
+                
+                <div class="premium-actions">
+                    <button class="btn-premium btn-primary-premium" id="startQuizBtn">
+                        <i class="fas fa-play"></i>
+                        ${completedCount > 0 ? 'Continue Quiz' : 'Start Quiz'}
+                    </button>
+                    
+                    ${completedCount > 0 ? `
+                    <button class="btn-premium btn-secondary-premium" id="restartQuizBtn">
+                        <i class="fas fa-redo"></i>
+                        Restart Quiz
+                    </button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    
+        quizContainer.innerHTML = html;
+        
+        // Add event listeners
+        document.getElementById('startQuizBtn').addEventListener('click', () => {
+            quizState.startTime = new Date();
+            showQuestion(quizState.currentQuestionIndex);
+            startClipboardProtection();
+        });
+    
+        if (completedCount > 0) {
+            document.getElementById('restartQuizBtn').addEventListener('click', () => {
+                if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
+                    resetQuiz();
+                    showWelcomeScreen();
+                }
             });
-
-            // if (completedCount > 0) {
-            //     document.getElementById('restartQuizBtn').addEventListener('click', () => {
-            //         if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
-            //             resetQuiz();
-            //             showWelcomeScreen();
-            //         }
-            //     });
-            // }
         }
-
+    }
         // Reset quiz state
         function resetQuiz() {
             quizState = {
