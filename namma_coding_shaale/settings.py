@@ -162,7 +162,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://nammacodingshaale.up.railway.app",
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "http://0.0.0.0:8080"
+    "http://0.0.0.0:8080",
 ]
 
 # Allow requests from your frontend origin
