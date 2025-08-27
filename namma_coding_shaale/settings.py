@@ -163,6 +163,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
     "http://0.0.0.0:8080",
+    "https://nammacodingshaale.in"
 ]
 
 # Allow requests from your frontend origin
@@ -171,7 +172,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://0.0.0.0:8080",
     "https://namma-coding-shaale.onrender.com",
-    "https://nammacodingshaale.up.railway.app"
+    "https://nammacodingshaale.up.railway.app",
+    "https://nammacodingshaale.in"
 ]
 
 # Allow cookies (if needed)
