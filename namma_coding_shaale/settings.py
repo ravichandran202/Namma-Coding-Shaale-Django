@@ -159,10 +159,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://nammacodingshaale.in",
     "https://nammacodingshaale.up.railway.app",
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "http://0.0.0.0:8080",
+    "http://0.0.0.0:8080"
 ]
 
 # Allow requests from your frontend origin
@@ -171,7 +172,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://0.0.0.0:8080",
     "https://namma-coding-shaale.onrender.com",
-    "https://nammacodingshaale.up.railway.app"
+    "https://nammacodingshaale.up.railway.app",
+    "https://nammacodingshaale.in"
 ]
 
 # Allow cookies (if needed)
@@ -184,7 +186,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ravichandrants202@gmail.com'
-EMAIL_HOST_PASSWORD = 'siijkggaaxqikyzv'
+EMAIL_HOST_PASSWORD = 'xixrklgwhqrfatxb'
 
 LOGGING = {
     'version': 1,
