@@ -189,6 +189,7 @@ def logout(request):
     return redirect('login')
 
 def home(request):
+    print("Home Page Called")
     return render(request,"index.html")
 
 @login_required(login_url="login")
