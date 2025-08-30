@@ -390,7 +390,7 @@ def my_courses(request):
             'is_premium': course.is_premium,
         })
     
-    return render(request, 'my_courses.html', {'courses': courses_data})
+    return render(request, 'my_courses_new.html', {'courses': courses_data})
 
 @login_required
 def continue_course(request, course_id):
