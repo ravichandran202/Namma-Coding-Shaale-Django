@@ -642,6 +642,7 @@
         .result-question {
             font-weight: 600;
             flex: 1;
+            word-break: break-word;
         }
 
         .result-status {
@@ -737,17 +738,40 @@
         }
 
         .completion-status-container {
-                padding: 0.75rem;
+            padding: 0.75rem;
         }
 
         .completion-status-container h5 {
-                justify-content: center;
-                margin-bottom: 0.5rem;
+            justify-content: center;
+            margin-bottom: 0.5rem;
         }
 
         #markCompletedBtn {
-                width: 100%;
-                max-width: 100vw;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Code in options styling */
+        .option-code {
+            background: #1e293b;
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .option-code pre {
+            margin: 0;
+        }
+
+        .option-code code {
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        .option.has-code {
+            padding: 0.75rem;
         }
 
         /* Mobile optimizations */
@@ -832,7 +856,7 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        
+
         .premium-welcome-card::before {
             content: '';
             position: absolute;
@@ -842,24 +866,24 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--success), var(--warning));
         }
-        
+
         .premium-welcome-card.premium-passed::before {
             background: linear-gradient(90deg, var(--success), var(--primary));
         }
-        
+
         .premium-welcome-card.premium-progress::before {
             background: linear-gradient(90deg, var(--warning), var(--primary));
         }
-        
+
         .premium-welcome-card.premium-new::before {
             background: linear-gradient(90deg, var(--primary), var(--primary-light));
         }
-        
+
         .premium-header {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         .premium-badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
@@ -872,14 +896,14 @@
             margin-bottom: 1rem;
             text-transform: uppercase;
         }
-        
+
         .premium-title {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             margin-bottom: 0.75rem;
             color: var(--text);
         }
-        
+
         .premium-description {
             color: var(--text-light);
             font-size: 1.05rem;
@@ -887,11 +911,11 @@
             margin: 0 auto;
             line-height: 1.5;
         }
-        
+
         .premium-content {
             margin-bottom: 2rem;
         }
-        
+
         .premium-status {
             display: flex;
             justify-content: space-between;
@@ -901,14 +925,14 @@
             background: rgba(59, 130, 246, 0.05);
             border-radius: 12px;
         }
-        
+
         .status-indicator {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
         }
-        
+
         .attempt-badge {
             background: white;
             padding: 0.4rem 0.8rem;
@@ -917,7 +941,7 @@
             font-weight: 600;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        
+
         .premium-progress-container {
             background: white;
             border-radius: 16px;
@@ -925,54 +949,55 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             margin-bottom: 1.5rem;
         }
-        
+
         .progress-info {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 2rem;
-            }
-        
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
         .progress-label {
             font-weight: 600;
             color: var(--text);
         }
-        
+
         .progress-value {
             font-weight: 700;
             color: var(--primary);
         }
-        
+
         .progress-visual {
-                display: flex;
-                align-items: center;
-                gap: 2.5rem;
-                justify-content: space-between;
-                width: 100%;
-                gap: 2rem; /* Add consistent spacing */
-            }
-        
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            justify-content: space-between;
+            width: 100%;
+            gap: 2rem;
+            /* Add consistent spacing */
+        }
+
         .progress-circle-premium {
             position: relative;
             width: 120px;
             height: 120px;
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
-        
+
         .progress-circle-bg-premium {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(var(--primary) 0%, 
-                        var(--primary) var(--progress-percent), 
-                        #e2e8f0 var(--progress-percent), 
-                        #e2e8f0 100%);
+            background: conic-gradient(var(--primary) 0%,
+                    var(--primary) var(--progress-percent),
+                    #e2e8f0 var(--progress-percent),
+                    #e2e8f0 100%);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .progress-circle-inner-premium {
             width: 90px;
             height: 90px;
@@ -983,53 +1008,53 @@
             justify-content: center;
             box-shadow: 0 0 0 4px white;
         }
-        
+
         .progress-count-premium {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--primary);
         }
-        
+
         .progress-stats {
             flex: 1;
             display: flex;
             gap: 1.5rem;
             justify-content: center;
         }
-        
-            .stat-item {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                padding: 1rem;
-                background: rgba(255, 255, 255, 0.8);
-                border-radius: 16px;
-                flex: 1;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.6);
-                max-width: 280px;
-            }
-        
-            .stat-icon {
-                font-size: 1.75rem;
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-            }
-        
-            .stat-icon.correct {
-                color: #10b981;
-                background: rgba(16, 185, 129, 0.1);
-            }
-            
-            .stat-icon.incorrect {
-                color: #ef4444;
-                background: rgba(239, 68, 68, 0.1);
-            }
-        
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            max-width: 280px;
+        }
+
+        .stat-icon {
+            font-size: 1.75rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .stat-icon.correct {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .stat-icon.incorrect {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
@@ -1037,19 +1062,19 @@
             line-height: 1;
             margin-bottom: 0.25rem;
         }
-        
+
         .stat-label {
             color: var(--text-light);
             font-size: 0.85rem;
         }
-        
+
         .premium-instructions {
             background: white;
             border-radius: 16px;
             padding: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        
+
         .premium-instructions h4 {
             display: flex;
             align-items: center;
@@ -1057,19 +1082,19 @@
             margin-bottom: 1rem;
             color: var(--text);
         }
-        
+
         .premium-instructions ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        
+
         .premium-instructions li {
             padding: 0.5rem 0;
             position: relative;
             padding-left: 1.5rem;
         }
-        
+
         .premium-instructions li::before {
             content: '•';
             color: var(--primary);
@@ -1077,13 +1102,13 @@
             position: absolute;
             left: 0;
         }
-        
+
         .premium-actions {
             display: flex;
             gap: 1rem;
             justify-content: center;
         }
-        
+
         .btn-premium {
             padding: 0.75rem 1.5rem;
             border-radius: 10px;
@@ -1098,53 +1123,53 @@
             font-size: 1rem;
             min-width: 160px;
         }
-        
+
         .btn-primary-premium {
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             color: white;
             box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
         }
-        
+
         .btn-primary-premium:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
         }
-        
+
         .btn-secondary-premium {
             background: white;
             color: var(--primary);
             border: 1px solid var(--primary);
         }
-        
+
         .btn-secondary-premium:hover {
             background: #f0f7ff;
             transform: translateY(-2px);
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .premium-welcome-card {
                 padding: 1.5rem;
             }
-            
+
             .premium-title {
                 font-size: 1.75rem;
             }
-            
+
             .progress-visual {
                 flex-direction: column;
                 gap: 1.5rem;
                 align-items: center;
             }
-            
+
             .progress-stats {
                 flex: 1;
                 display: flex;
                 gap: 1rem;
                 justify-content: center;
             }
-        
-            
+
+
             .stat-item {
                 display: flex;
                 align-items: center;
@@ -1157,7 +1182,7 @@
                 border: 1px solid rgba(255, 255, 255, 0.6);
                 max-width: 180px;
             }
-            
+
             .stat-icon {
                 font-size: 1.75rem;
                 width: 40px;
@@ -1167,21 +1192,21 @@
                 justify-content: center;
                 border-radius: 50%;
             }
-            
+
             .stat-icon.correct {
                 color: #10b981;
                 background: rgba(16, 185, 129, 0.1);
             }
-            
+
             .stat-icon.incorrect {
                 color: #ef4444;
                 background: rgba(239, 68, 68, 0.1);
             }
-            
+
             .stat-content {
                 flex: 1;
             }
-            
+
             .stat-value {
                 font-size: 1rem;
                 font-weight: 800;
@@ -1189,17 +1214,17 @@
                 line-height: 1;
                 margin-bottom: 0.25rem;
             }
-            
+
             .stat-label {
                 color: #64748b;
                 font-size: 0.9rem;
                 font-weight: 600;
             }
-            
+
             .premium-actions {
                 flex-direction: column;
             }
-            
+
             .btn-premium {
                 width: 100%;
             }
@@ -1297,43 +1322,45 @@
                 <!-- Content will be dynamically loaded here -->
             </div>
 
-                <!-- Completion Status Section -->
-                <div class="completion-status-container mb-4 mt-4 quiz-container">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <h5 class="mb-0" style="font-size: medium;">
-                                <i
+            <!-- Completion Status Section -->
+            <div class="completion-status-container mb-4 mt-4 quiz-container">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-6 mb-2 mb-md-0">
+                        <h5 class="mb-0" style="font-size: medium;">
+                            <i
                                 class="fas {% if progress.is_completed %}fa-check-circle text-success{% else %}fa-circle{% endif %} me-2"></i>
-                                {% if progress.is_completed %}
-                                You've completed this lesson!
-                                {% else %}
-                                Have you completed the lesson?
-                                {% endif %}
-                            </h5>
-                        </div>
-                        <div class="col-12 col-md-6 text-md-end">
-                            {% if not progress.is_completed %}
-                            <form method="post" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" name="mark_completed" class="btn btn-success w-100 w-md-auto {% if not quiz_passed %} disabled {% endif %}" id="markCompletedBtn">
-                                    <i class="fas fa-check me-1"></i> Mark as Completed
-                                </button>
-                            </form>
+                            {% if progress.is_completed %}
+                            You've completed this lesson!
                             {% else %}
-                            <div class="d-flex align-items-center justify-content-end d-none d-md-block">
-                                <span class="badge bg-success p-2 me-2">
-                                    <i class="fas fa-check-circle me-1"></i> Completed
-                                </span>
-                                {% if user_course.completion_date %}
-                                <small class="text-muted">
-                                    Course completed!
-                                </small>
-                                {% endif %}
-                            </div>
+                            Have you completed the lesson?
+                            {% endif %}
+                        </h5>
+                    </div>
+                    <div class="col-12 col-md-6 text-md-end">
+                        {% if not progress.is_completed %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" name="mark_completed"
+                                class="btn btn-success w-100 w-md-auto {% if not quiz_passed %} disabled {% endif %}"
+                                id="markCompletedBtn">
+                                <i class="fas fa-check me-1"></i> Mark as Completed
+                            </button>
+                        </form>
+                        {% else %}
+                        <div class="d-flex align-items-center justify-content-end d-none d-md-block">
+                            <span class="badge bg-success p-2 me-2">
+                                <i class="fas fa-check-circle me-1"></i> Completed
+                            </span>
+                            {% if user_course.completion_date %}
+                            <small class="text-muted">
+                                Course completed!
+                            </small>
                             {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
+            </div>
         </div>
 
     </div>
@@ -1349,10 +1376,11 @@
 
         // Quiz state
         let quizState = {
-            currentQuestionIndex: 0, // Last question
+            currentQuestionIndex: 0,
             answers: {},
             startTime: "",
-            timer: null // Cleared after completion
+            timer: null,
+            timeLeft: 0
         };
 
         // DOM elements
@@ -1360,151 +1388,145 @@
 
         // Initialize the quiz
         function initQuiz() {
-            // Load saved state from localStorage
-            // const savedState = localStorage.getItem('quizState');
-            const savedState = false;
+            const savedState = false; // localStorage disabled as per requirements
 
             if (savedState) {
                 quizState = JSON.parse(savedState);
 
-                // If all questions are answered, show results
                 if (Object.keys(quizState.answers).length === quizData.questions.length) {
                     showResults();
                     return;
                 }
 
-                // Otherwise continue where left off
                 showQuestion(quizState.currentQuestionIndex);
             } else {
-                // New quiz
                 showWelcomeScreen();
             }
         }
 
         // Show welcome screen
         function showWelcomeScreen() {
-        const completedCount = `{{ quiz_correct_answer_count | escapejs }}`;
-        const progressPercentage = `{{ quiz_score | escapejs }}`;
-        const totalQuestions = quizData.questions.length;
-        const isPassed = `{{ quiz_passed|yesno:"true,false" }}` === "true";
-        const quizAttempt = `{{ quiz_attempt | escapejs }}`;
-    
-        // Determine status and colors
-        const statusInfo = isPassed ? {
-            text: "Quiz Passed",
-            color: "var(--success)",
-            icon: "fa-trophy",
-            bgClass: "premium-passed"
-        } : quizAttempt == 0 ? {
-            text: "New Quiz",
-            color: "var(--primary)",
-            icon: "fa-star",
-            bgClass: "premium-new"
-        } : {
-            text: "Quiz Failed",
-            color: "var(--danger)",
-            icon: "fa-star",
-            bgClass: "premium-new"
-        };
-    
-        const html = `
-            <div>
-                <div class="premium-header">
-                    <div class="premium-badge">PREMIUM QUIZ</div>
-                    <h2 class="premium-title">${quizData.title}</h2>
-                    <p class="premium-description">${quizData.description}</p>
+            const completedCount = `{{ quiz_correct_answer_count | escapejs }}`;
+            const progressPercentage = `{{ quiz_score | escapejs }}`;
+            const totalQuestions = quizData.questions.length;
+            const isPassed = `{{ quiz_passed|yesno:"true,false" }}` === "true";
+            const quizAttempt = `{{ quiz_attempt | escapejs }}`;
+
+            const statusInfo = isPassed ? {
+                text: "Quiz Passed",
+                color: "var(--success)",
+                icon: "fa-trophy",
+                bgClass: "premium-passed"
+            } : quizAttempt == 0 ? {
+                text: "New Quiz",
+                color: "var(--primary)",
+                icon: "fa-star",
+                bgClass: "premium-new"
+            } : {
+                text: "Quiz Failed",
+                color: "var(--danger)",
+                icon: "fa-star",
+                bgClass: "premium-new"
+            };
+
+            const html = `
+        <div>
+            <div class="premium-header">
+                <div class="premium-badge">PREMIUM QUIZ</div>
+                <h2 class="premium-title">${quizData.title}</h2>
+                <p class="premium-description">${quizData.description}</p>
+            </div>
+            
+            <div class="premium-content">
+                <div class="premium-status">
+                    <div class="status-indicator">
+                        <i class="fas ${statusInfo.icon}" style="color: ${statusInfo.color}"></i>
+                        <span>${statusInfo.text}</span>
+                    </div>
+                    <div class="attempt-badge">Attempt #${quizAttempt}</div>
                 </div>
                 
-                <div class="premium-content">
-                    <div class="premium-status">
-                        <div class="status-indicator">
-                            <i class="fas ${statusInfo.icon}" style="color: ${statusInfo.color}"></i>
-                            <span>${statusInfo.text}</span>
-                        </div>
-                        <div class="attempt-badge">Attempt #${quizAttempt}</div>
+                <div class="premium-progress-container">
+                    <div class="progress-info">
+                        <span class="progress-label">Your Progress</span>
+                        <span class="progress-value">${completedCount}/${totalQuestions}</span>
                     </div>
-                    
-                    <div class="premium-progress-container">
-                        <div class="progress-info">
-                            <span class="progress-label">Your Progress</span>
-                            <span class="progress-value">${completedCount}/${totalQuestions}</span>
-                        </div>
-                        <div class="progress-visual">
-                            <div class="progress-circle-premium">
-                                <div class="progress-circle-bg-premium" style="--progress-percent: ${progressPercentage}%">
-                                    <div class="progress-circle-inner-premium">
-                                        <div class="progress-count-premium">${progressPercentage}%</div>
-                                    </div>
+                    <div class="progress-visual">
+                        <div class="progress-circle-premium">
+                            <div class="progress-circle-bg-premium" style="--progress-percent: ${progressPercentage}%">
+                                <div class="progress-circle-inner-premium">
+                                    <div class="progress-count-premium">${progressPercentage}%</div>
                                 </div>
                             </div>
-                            <div class="progress-stats">
-                                <div class="stat-item">
-                                    <div class="stat-icon correct">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-value">${completedCount}</div>
-                                        <div class="stat-label">Correct</div>
-                                    </div>
+                        </div>
+                        <div class="progress-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon correct">
+                                    <i class="fas fa-check-circle"></i>
                                 </div>
-                                <div class="stat-item">
-                                    <div class="stat-icon incorrect">
-                                        <i class="fas fa-times-circle"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-value">${totalQuestions - completedCount}</div>
-                                        <div class="stat-label">Incorrect</div>
-                                    </div>
+                                <div class="stat-content">
+                                    <div class="stat-value">${completedCount}</div>
+                                    <div class="stat-label">Correct</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon incorrect">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value">${totalQuestions - completedCount}</div>
+                                    <div class="stat-label">Incorrect</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="premium-instructions">
-                        <h4><i class="fas fa-info-circle"></i> Quiz Instructions</h4>
-                        <ul>
-                            <li>Each question has a time limit</li>
-                            <li>You need ${quizData.passingScore}% to pass this quiz</li>
-                            <li>Your progress is automatically saved</li>
-                            <li>No tab switching allowed during the quiz</li>
-                        </ul>
-                    </div>
                 </div>
                 
-                <div class="premium-actions">
-                    <button class="btn-premium btn-primary-premium" id="startQuizBtn">
-                        <i class="fas fa-play"></i>
-                        ${completedCount > 0 ? 'Continue Quiz' : 'Start Quiz'}
-                    </button>
-                    
-                    ${completedCount > 0 ? `
-                    <button class="btn-premium btn-secondary-premium" id="restartQuizBtn">
-                        <i class="fas fa-redo"></i>
-                        Restart Quiz
-                    </button>
-                    ` : ''}
+                <div class="premium-instructions">
+                    <h4><i class="fas fa-info-circle"></i> Quiz Instructions</h4>
+                    <ul>
+                        <li>Each question has a time limit of ${quizData.timePerQuestion} seconds</li>
+                        <li>You need ${quizData.passingScore}% to pass this quiz</li>
+                        <li>Timer will automatically move to next question when expired</li>
+                        <li>No tab switching allowed during the quiz</li>
+                    </ul>
                 </div>
             </div>
-        `;
-    
-        quizContainer.innerHTML = html;
-        
-        // Add event listeners
-        document.getElementById('startQuizBtn').addEventListener('click', () => {
-            quizState.startTime = new Date();
-            showQuestion(quizState.currentQuestionIndex);
-            startClipboardProtection();
-        });
-    
-        if (completedCount > 0) {
-            document.getElementById('restartQuizBtn').addEventListener('click', () => {
-                if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
-                    resetQuiz();
-                    showWelcomeScreen();
-                }
+            
+            <div class="premium-actions">
+                <button class="btn-premium btn-primary-premium" id="startQuizBtn">
+                    <i class="fas fa-play"></i>
+                    ${completedCount > 0 ? 'Continue Quiz' : 'Start Quiz'}
+                </button>
+                
+                ${completedCount > 0 ? `
+                <button class="btn-premium btn-secondary-premium" id="restartQuizBtn">
+                    <i class="fas fa-redo"></i>
+                    Restart Quiz
+                </button>
+                ` : ''}
+            </div>
+        </div>
+    `;
+
+            quizContainer.innerHTML = html;
+
+            document.getElementById('startQuizBtn').addEventListener('click', () => {
+                quizState.startTime = new Date();
+                showQuestion(quizState.currentQuestionIndex);
+                startClipboardProtection();
             });
+
+            if (completedCount > 0) {
+                document.getElementById('restartQuizBtn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to restart the quiz? This will erase your current progress.')) {
+                        resetQuiz();
+                        showWelcomeScreen();
+                    }
+                });
+            }
         }
-    }
+
         // Reset quiz state
         function resetQuiz() {
             quizState = {
@@ -1512,9 +1534,25 @@
                 answers: {},
                 startTime: null,
                 endTime: null,
-                timer: null
+                timer: null,
+                timeLeft: 0
             };
-            // localStorage.removeItem('quizState');
+        }
+
+        // Handle next question (called by timer expiry or user action)
+        function handleNextQuestion() {
+            saveAnswer();
+
+            if (quizState.currentQuestionIndex < quizData.questions.length - 1) {
+                quizState.currentQuestionIndex++;
+                showQuestion(quizState.currentQuestionIndex);
+            } else {
+                // Quiz completed
+                stopClipboardProtection();
+                quizState.endTime = new Date();
+                clearInterval(quizState.timer);
+                showResults();
+            }
         }
 
         // Show question
@@ -1524,24 +1562,22 @@
             const question = quizData.questions[index];
             const isLastQuestion = index === quizData.questions.length - 1;
 
-            console.log(question)
-
             // Clear any existing timer
             if (quizState.timer) {
                 clearInterval(quizState.timer);
             }
 
             // Start new timer
-            let timeLeft = quizData.timePerQuestion;
-            updateTimerDisplay(timeLeft);
+            quizState.timeLeft = quizData.timePerQuestion;
+            updateTimerDisplay(quizState.timeLeft);
 
             quizState.timer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay(timeLeft);
+                quizState.timeLeft--;
+                updateTimerDisplay(quizState.timeLeft);
 
-                if (timeLeft <= 0) {
+                if (quizState.timeLeft <= 0) {
                     clearInterval(quizState.timer);
-                    handleNextQuestion();
+                    handleNextQuestion(); // Auto-move to next question when timer expires
                 }
             }, 1000);
 
@@ -1549,102 +1585,118 @@
             let optionsHtml = '';
             let codeHtml = '';
 
+            // Show code for any question type if is_code is true or if it's a code type question
+            if (question.is_code === true || question.type === 'code') {
+                if (question.code) {
+                    codeHtml = `
+                <div class="code-display">
+                    <span class="code-language">${question.language || 'text'}</span>
+                    <pre><code class="language-${question.language || 'text'}">${question.code}</code></pre>
+                </div>
+            `;
+                }
+            }
+
+            // Build options based on question type
             if (question.type === 'single-choice') {
-                optionsHtml = question.options.map(option => `
-                    <label class="option ${quizState.answers[question.id] === option ? 'selected' : ''}">
-                        <input type="radio" name="answer" value="${option}" 
-                            ${quizState.answers[question.id] === option ? 'checked' : ''}>
-                        ${option}
-                    </label>
-                `).join('');
+                optionsHtml = question.options.map(option => {
+                    const isCodeOption = option.startsWith('`') && option.endsWith('`');
+                    const optionContent = isCodeOption ? option.slice(1, -1) : option;
+
+                    return `
+                <label class="option ${quizState.answers[question.id] === option ? 'selected' : ''} ${isCodeOption ? 'has-code' : ''}">
+                    <input type="radio" name="answer" value="${option}" 
+                        ${quizState.answers[question.id] === option ? 'checked' : ''}>
+                    ${isCodeOption ?
+                            `<div class="option-code"><pre><code class="language-${question.language || 'text'}">${optionContent}</code></pre></div>` :
+                            optionContent
+                        }
+                </label>
+            `;
+                }).join('');
             }
             else if (question.type === 'multiple-choice') {
-                optionsHtml = question.options.map(option => `
-                    <label class="option ${(quizState.answers[question.id] || []).includes(option) ? 'selected' : ''}">
-                        <input type="checkbox" name="answer" value="${option}" 
-                            ${(quizState.answers[question.id] || []).includes(option) ? 'checked' : ''}>
-                        ${option}
-                    </label>
-                `).join('');
+                optionsHtml = question.options.map(option => {
+                    const isCodeOption = option.startsWith('`') && option.endsWith('`');
+                    const optionContent = isCodeOption ? option.slice(1, -1) : option;
+
+                    return `
+                <label class="option ${(quizState.answers[question.id] || []).includes(option) ? 'selected' : ''} ${isCodeOption ? 'has-code' : ''}">
+                    <input type="checkbox" name="answer" value="${option}" 
+                        ${(quizState.answers[question.id] || []).includes(option) ? 'checked' : ''}>
+                    ${isCodeOption ?
+                            `<div class="option-code"><pre><code class="language-${question.language || 'text'}">${optionContent}</code></pre></div>` :
+                            optionContent
+                        }
+                </label>
+            `;
+                }).join('');
             }
-            else if (question.type === 'text') {
+            else if (question.type === 'text' || question.type === 'code') {
                 optionsHtml = `
-                    <input type="text" class="text-answer" id="textAnswer" 
-                        value="${quizState.answers[question.id] || ''}" 
-                        placeholder="Type your answer here...">
-                `;
-            }
-            else if (question.type === 'code') {
-                codeHtml = `
-                    <div class="code-display">
-                        <span class="code-language">${question.language}</span>
-                        <pre><code class="language-${question.language}">${question.code}</code></pre>
-                    </div>
-                `;
-                optionsHtml = `
-                    <input type="text" class="text-answer" id="textAnswer" 
-                        value="${quizState.answers[question.id] || ''}" 
-                        placeholder="Type your answer here...">
-                `;
+            <input type="text" class="text-answer" id="textAnswer" 
+                value="${quizState.answers[question.id] || ''}" 
+                placeholder="Type your answer here...">
+        `;
             }
 
             const html = `
-                <div class="quiz-header">
-                    <span class="question-counter">Question ${index + 1} of ${quizData.questions.length}</span>
-                    <div class="timer"> 
-                        <i class="fas fa-clock"></i>
-                        <span id="timeDisplay">${timeLeft}s</span>
-                    </div>
-                </div>
-                
-                <h3 class="question-text">${question.question}</h3>
-                
-                ${codeHtml}
-                
-                <div class="answer-options" id="answerOptions">
-                    ${optionsHtml}
-                </div>
-                
-                <div class="quiz-navigation">
-                    <button class="btn btn-outline" id="prevBtn" ${index === 0 ? 'disabled' : ''}>
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button class="btn btn-primary" id="nextBtn">
-                        ${isLastQuestion ? 'Submit Quiz' : 'Next Question'}
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            `;
+        <div class="quiz-header">
+            <span class="question-counter">Question ${index + 1} of ${quizData.questions.length}</span>
+            <div class="timer"> 
+                <i class="fas fa-clock"></i>
+                <span id="timeDisplay">${quizState.timeLeft}s</span>
+            </div>
+        </div>
+        
+        <h3 class="question-text">${question.question}</h3>
+        
+        ${codeHtml}
+        
+        <div class="answer-options" id="answerOptions">
+            ${optionsHtml}
+        </div>
+        
+        <div class="quiz-navigation">
+            <button class="btn btn-outline" id="prevBtn" ${index === 0 ? 'disabled' : ''}>
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn btn-primary" id="nextBtn">
+                ${isLastQuestion ? 'Submit Quiz' : 'Next Question'}
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    `;
 
             quizContainer.innerHTML = html;
 
             // Highlight code if present
-            if (question.type === 'code') {
-                hljs.highlightAll();
+            if (codeHtml || question.options?.some(opt => opt.startsWith('`') && opt.endsWith('`'))) {
+                // Small delay to ensure DOM is ready
+                setTimeout(() => {
+                    hljs.highlightAll();
+                }, 100);
             }
 
             // Add event listeners
             document.getElementById('prevBtn').addEventListener('click', () => {
+                clearInterval(quizState.timer); // Clear timer when navigating manually
                 saveAnswer();
                 quizState.currentQuestionIndex--;
                 showQuestion(quizState.currentQuestionIndex);
             });
 
             document.getElementById('nextBtn').addEventListener('click', () => {
-                saveAnswer();
-                if (quizState.currentQuestionIndex < quizData.questions.length - 1) {
-                    quizState.currentQuestionIndex++;
-                    showQuestion(quizState.currentQuestionIndex);
-                } else {
-                    // Quiz completed
-                    stopClipboardProtection();
-                    quizState.endTime = new Date();
-                    clearInterval(quizState.timer);
-                    showResults();
-                }
+                clearInterval(quizState.timer); // Clear timer when navigating manually
+                handleNextQuestion();
             });
 
             // Add option selection handlers
+            setupOptionHandlers(question);
+        }
+
+        // Setup option selection handlers based on question type
+        function setupOptionHandlers(question) {
             if (question.type === 'single-choice') {
                 document.querySelectorAll('.option input[type="radio"]').forEach(radio => {
                     radio.addEventListener('change', function () {
@@ -1654,11 +1706,35 @@
                         this.closest('.option').classList.add('selected');
                     });
                 });
+
+                document.querySelectorAll('.option').forEach(option => {
+                    option.addEventListener('click', function (e) {
+                        if (e.target.tagName !== 'INPUT') {
+                            const radio = this.querySelector('input[type="radio"]');
+                            if (radio) {
+                                radio.checked = true;
+                                radio.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
             }
             else if (question.type === 'multiple-choice') {
                 document.querySelectorAll('.option input[type="checkbox"]').forEach(checkbox => {
                     checkbox.addEventListener('change', function () {
                         this.closest('.option').classList.toggle('selected');
+                    });
+                });
+
+                document.querySelectorAll('.option').forEach(option => {
+                    option.addEventListener('click', function (e) {
+                        if (e.target.tagName !== 'INPUT') {
+                            const checkbox = this.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
                     });
                 });
             }
@@ -1671,15 +1747,21 @@
                 timeDisplay.textContent = `${seconds}s`;
 
                 // Change color when time is running low
+                const timerElement = timeDisplay.parentElement;
                 if (seconds <= 10) {
-                    timeDisplay.parentElement.style.color = 'var(--danger)';
+                    timerElement.style.color = 'var(--danger)';
+                    timerElement.style.background = 'rgba(239, 68, 68, 0.2)';
+                } else if (seconds <= 20) {
+                    timerElement.style.color = 'var(--warning)';
+                    timerElement.style.background = 'rgba(245, 158, 11, 0.1)';
                 } else {
-                    timeDisplay.parentElement.style.color = '';
+                    timerElement.style.color = '';
+                    timerElement.style.background = '';
                 }
             }
         }
 
-        // Save current answer (silently, no validation)
+        // Save current answer
         function saveAnswer() {
             const currentQuestion = quizData.questions[quizState.currentQuestionIndex];
 
@@ -1703,14 +1785,11 @@
                 }
             }
 
-            // Save state to localStorage
-            // localStorage.setItem('quizState', JSON.stringify(quizState));
             return true;
         }
 
         // Show results
         function showResults() {
-            // Calculate score
             let correctCount = 0;
             const results = [];
 
@@ -1722,7 +1801,6 @@
                     isCorrect = userAnswer === question.correctAnswer;
                 }
                 else if (question.type === 'multiple-choice') {
-                    // Check if all correct answers are selected and no incorrect ones
                     const userAnswers = new Set(userAnswer || []);
                     const correctAnswers = new Set(question.correctAnswers);
 
@@ -1730,7 +1808,6 @@
                         [...userAnswers].every(ans => correctAnswers.has(ans));
                 }
                 else if (question.type === 'text' || question.type === 'code') {
-                    // For text answers, check against all possible correct answers (case insensitive)
                     const correctAnswers = Array.isArray(question.correctAnswers) ?
                         question.correctAnswers : [question.correctAnswer];
 
@@ -1744,10 +1821,10 @@
                     question: question.question,
                     userAnswer: Array.isArray(userAnswer) ? userAnswer.join(', ') : (userAnswer || 'No answer provided'),
                     correctAnswer: Array.isArray(question.correctAnswers)
-                    ? question.correctAnswers.join(', ')
-                    : (Array.isArray(question.correctAnswer)
-                        ? question.correctAnswer.join(', ')
-                        : question.correctAnswer || ""),
+                        ? question.correctAnswers.join(', ')
+                        : (Array.isArray(question.correctAnswer)
+                            ? question.correctAnswer.join(', ')
+                            : question.correctAnswer || ""),
                     isCorrect,
                     code: question.code,
                     language: question.language,
@@ -1759,118 +1836,112 @@
             const timeTaken = Math.round((quizState.endTime - quizState.startTime) / 1000);
             const isPassed = scorePercentage >= quizData.passingScore;
 
-            // Generate results HTML
             let resultsHtml = results.map(result => `
-                <div class="result-item">
-                    <div class="result-item-header">
-                        <div>
-                            <span class="result-question-number">${result.questionNumber}</span>
-                            <span class="result-question">${result.question}</span>
-                        </div>
-                        <span class="result-status ${result.isCorrect ? 'status-correct' : 'status-incorrect'}">
-                            ${result.isCorrect ? 'Correct' : 'Incorrect'}
-                        </span>
-                    </div>
-                    <div class="result-body">
-                        ${result.code ? `
-                        <div class="code-display-result">
-                            <div class="code-display">
-                                <span class="code-language">${result.language}</span>
-                                <pre><code class="language-${result.language}">${result.code}</code></pre>
-                            </div>
-                        </div>
-                        ` : ''}
-                        
-                        <div class="result-answer">
-                            <span class="result-answer-label">Your answer:</span>
-                            ${result.userAnswer}
-                        </div>
-                        
-                        ${!result.isCorrect ? `
-                        <div class="result-answer">
-                            <span class="result-answer-label">Correct answer:</span>
-                            ${result.correctAnswer}
-                        </div>
-                        ` : ''}
+        <div class="result-item">
+            <div class="result-item-header">
+                <div>
+                    <span class="result-question-number">${result.questionNumber}</span>
+                    <span class="result-question">${result.question}</span>
+                </div>
+                <span class="result-status ${result.isCorrect ? 'status-correct' : 'status-incorrect'}">
+                    ${result.isCorrect ? 'Correct' : 'Incorrect'}
+                </span>
+            </div>
+            <div class="result-body">
+                ${result.code ? `
+                <div class="code-display-result">
+                    <div class="code-display">
+                        <span class="code-language">${result.language}</span>
+                        <pre><code class="language-${result.language}">${result.code}</code></pre>
                     </div>
                 </div>
-            `).join('');
+                ` : ''}
+                
+                <div class="result-answer">
+                    <span class="result-answer-label">Your answer:</span>
+                    ${result.userAnswer}
+                </div>
+                
+                ${!result.isCorrect ? `
+                <div class="result-answer">
+                    <span class="result-answer-label">Correct answer:</span>
+                    ${result.correctAnswer}
+                </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
 
             const html = `
-                <div class="score-card">
-                    <div class="score-circle">
-                        <div class="score-circle-bg" style="--score-percent: ${scorePercentage}%"></div>
-                        <div class="score-circle-inner">
-                            <div class="score-display">${correctCount}</div>
-                            <div class="score-percent">${scorePercentage}%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="result-badge ${isPassed ? 'badge-passed' : 'badge-failed'}">
-                        ${isPassed ? 'Passed' : 'Failed'} (Requires ${quizData.passingScore}%)
-                    </div>
-                    
-                    <div class="time-taken">
-                        <i class="fas fa-clock"></i>
-                        Time taken: ${formatTime(timeTaken)}
-                    </div>
+        <div class="score-card">
+            <div class="score-circle">
+                <div class="score-circle-bg" style="--score-percent: ${scorePercentage}%"></div>
+                <div class="score-circle-inner">
+                    <div class="score-display">${correctCount}</div>
+                    <div class="score-percent">${scorePercentage}%</div>
                 </div>
-                
-                <div class="stats-container">
-                    <div class="stat-card">
-                        <div class="stat-value correct">${correctCount}</div>
-                        <div class="stat-label">Correct Answers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value incorrect">${quizData.questions.length - correctCount}</div>
-                        <div class="stat-label">Incorrect Answers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${quizData.questions.length}</div>
-                        <div class="stat-label">Total Questions</div>
-                    </div>
-                </div>
-                
-                <div class="results-divider"></div>
-                
-                <h3 class="text-center mb-4">Detailed Results</h3>
-                
-                <div class="mb-4">
-                    ${resultsHtml}
-                </div>
-                
-                <div class="result-actions">
-                    <button class="btn btn-primary" id="homeBtn">
-                        <i class="fas fa-home"></i> Back to Dashboard
-                    </button>
-                    <button class="btn btn-outline" id="retakeQuizBtn">
-                        <i class="fas fa-redo"></i> Retake Quiz
-                    </button>
-                </div>
-            `;
+            </div>
+            
+            <div class="result-badge ${isPassed ? 'badge-passed' : 'badge-failed'}">
+                ${isPassed ? 'Passed' : 'Failed'} (Requires ${quizData.passingScore}%)
+            </div>
+            
+            <div class="time-taken">
+                <i class="fas fa-clock"></i>
+                Time taken: ${formatTime(timeTaken)}
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value correct">${correctCount}</div>
+                <div class="stat-label">Correct Answers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value incorrect">${quizData.questions.length - correctCount}</div>
+                <div class="stat-label">Incorrect Answers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${quizData.questions.length}</div>
+                <div class="stat-label">Total Questions</div>
+            </div>
+        </div>
+        
+        <div class="results-divider"></div>
+        
+        <h3 class="text-center mb-4">Detailed Results</h3>
+        
+        <div class="mb-4">
+            ${resultsHtml}
+        </div>
+        
+        <div class="result-actions">
+            <button class="btn btn-primary" id="homeBtn">
+                <i class="fas fa-home"></i> Back to Dashboard
+            </button>
+            <button class="btn btn-outline" id="retakeQuizBtn">
+                <i class="fas fa-redo"></i> Retake Quiz
+            </button>
+        </div>
+    `;
 
             quizContainer.innerHTML = html;
 
             // Highlight any code in results
-            hljs.highlightAll();
+            setTimeout(() => {
+                hljs.highlightAll();
+            }, 100);
 
-            // Add event listeners
             document.getElementById('retakeQuizBtn').addEventListener('click', () => {
                 resetQuiz();
                 showWelcomeScreen();
             });
 
             document.getElementById('homeBtn').addEventListener('click', () => {
-                // In a real app, you would redirect to the dashboard
-                // resetQuiz();
-                // showWelcomeScreen();
                 window.location.href = "{% url 'content' course_id content_file_id %}";
             });
 
-            console.log("Result : ", quizData.questions)
-            console.log("Final Result : ", results)
-
-            submitQuizDataToBackend(results, isPassed)
+            submitQuizDataToBackend(results, isPassed);
         }
 
         // Format time in MM:SS format
@@ -1915,156 +1986,190 @@
             return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         }
 
-    // Send JSON data with CSRF
-    async function submitQuizDataToBackend(quizData, isPassed) {
-        const url = 'https://nammacodingshaale.in/api/save-quiz-data';
-    
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken()
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    quiz_data: quizData,
-                    content_id: `{{content.pk | escapejs}}`,
-                    course_id: `{{course.pk | escapejs}}`,  
-                    is_passed: isPassed
-                })
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-            }
-    
-            const responseData = await response.json();
-            console.log('Submission successful:', responseData);
-    
-            return responseData;
-        } catch (error) {
-            console.error('Error posting data:', error);
-            throw error;
-        }
-    }
+        // Send JSON data with CSRF
+        async function submitQuizDataToBackend(quizData, isPassed) {
+            const url = 'https://nammacodingshaale.up.railway.app/api/save-quiz-data';
 
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        quiz_data: quizData,
+                        content_id: `{{content.pk | escapejs}}`,
+                        course_id: `{{course.pk | escapejs}}`,
+                        is_passed: isPassed
+                    })
+                });
 
-    let isProtectionActive = false;
-    let contextMenuHandler = null;
-    let keyDownHandler = null;
-    let visibilityChangeHandler = null;
-    let lastFocusedElement = null;
-    
-    function startClipboardProtection() {
-        if (isProtectionActive) return;
-        
-        // Prevent right-click context menu
-        contextMenuHandler = function(e) {
-            e.preventDefault();
-        };
-        document.addEventListener('contextmenu', contextMenuHandler);
-        
-        // Prevent copy, cut, select all shortcuts
-        keyDownHandler = function(e) {
-            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
-                e.preventDefault();
-            }
-        };
-        document.addEventListener('keydown', keyDownHandler);
-        
-        // Handle tab switching with clipboard clearing
-        visibilityChangeHandler = async function() {
-            if (document.hidden) {
-                console.log('Tab switched - preparing to clear clipboard');
-                alert("Tab switched")
-                
-                // Store the currently focused element
-                lastFocusedElement = document.activeElement;
-                
-                // Create and focus a hidden input to regain focus
-                const focusKeeper = document.createElement('input');
-                focusKeeper.style.position = 'fixed';
-                focusKeeper.style.opacity = 0;
-                focusKeeper.style.pointerEvents = 'none';
-                document.body.appendChild(focusKeeper);
-                focusKeeper.focus();
-                
-                // Small delay to ensure focus is established
-                await new Promise(resolve => setTimeout(resolve, 50));
-                
-                try {
-                    // Now attempt clipboard operation
-                    await navigator.clipboard.writeText(' ');
-                    console.log('Clipboard cleared successfully');
-                } catch (error) {
-                    console.error('Clipboard clearing failed:', error);
-                    fallbackClearClipboard();
-                } finally {
-                    // Clean up
-                    document.body.removeChild(focusKeeper);
-                    if (lastFocusedElement) lastFocusedElement.focus();
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
                 }
+
+                const responseData = await response.json();
+                console.log('Submission successful:', responseData);
+
+                return responseData;
+            } catch (error) {
+                console.error('Error posting data:', error);
+                throw error;
             }
-        };
-        document.addEventListener('visibilitychange', visibilityChangeHandler);
-        
-        isProtectionActive = true;
-        console.log('Clipboard protection started');
-    }
-    
-    function stopClipboardProtection() {
-        if (!isProtectionActive) return;
-        
-        // Remove all event listeners
-        if (contextMenuHandler) {
-            document.removeEventListener('contextmenu', contextMenuHandler);
-            contextMenuHandler = null;
         }
-        
-        if (keyDownHandler) {
-            document.removeEventListener('keydown', keyDownHandler);
-            keyDownHandler = null;
+
+
+        let isProtectionActive = false;
+        let contextMenuHandler = null;
+        let keyDownHandler = null;
+        let visibilityChangeHandler = null;
+        let lastFocusedElement = null;
+
+        function startClipboardProtection() {
+            if (isProtectionActive) return;
+
+            // Prevent right-click context menu
+            contextMenuHandler = function (e) {
+                e.preventDefault();
+            };
+            document.addEventListener('contextmenu', contextMenuHandler);
+
+            // Prevent copy, cut, select all shortcuts
+            keyDownHandler = function (e) {
+                if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
+                    e.preventDefault();
+                }
+            };
+            document.addEventListener('keydown', keyDownHandler);
+
+            // Handle tab switching with clipboard clearing
+            visibilityChangeHandler = async function () {
+                if (document.hidden) {
+                    console.log('Tab switched - preparing to clear clipboard');
+                    showNotification("Tab switched activity found")
+
+                    // Store the currently focused element
+                    lastFocusedElement = document.activeElement;
+
+                    // Create and focus a hidden input to regain focus
+                    const focusKeeper = document.createElement('input');
+                    focusKeeper.style.position = 'fixed';
+                    focusKeeper.style.opacity = 0;
+                    focusKeeper.style.pointerEvents = 'none';
+                    document.body.appendChild(focusKeeper);
+                    focusKeeper.focus();
+
+                    // Small delay to ensure focus is established
+                    await new Promise(resolve => setTimeout(resolve, 50));
+
+                    try {
+                        // Now attempt clipboard operation
+                        await navigator.clipboard.writeText(' ');
+                        console.log('Clipboard cleared successfully');
+                    } catch (error) {
+                        console.error('Clipboard clearing failed:', error);
+                        fallbackClearClipboard();
+                    } finally {
+                        // Clean up
+                        document.body.removeChild(focusKeeper);
+                        if (lastFocusedElement) lastFocusedElement.focus();
+                    }
+                }
+            };
+            document.addEventListener('visibilitychange', visibilityChangeHandler);
+
+            isProtectionActive = true;
+            console.log('Clipboard protection started');
         }
-        
-        if (visibilityChangeHandler) {
-            document.removeEventListener('visibilitychange', visibilityChangeHandler);
-            visibilityChangeHandler = null;
-        }
-        
-        isProtectionActive = false;
-        console.log('Clipboard protection stopped');
-    }
-    
-    // Improved fallback method
-    function fallbackClearClipboard() {
-        try {
-            // Create hidden textarea
-            const textarea = document.createElement('textarea');
-            textarea.value = ' ';
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = 0;
-            document.body.appendChild(textarea);
-            
-            // Select and copy
-            textarea.select();
-            if (navigator.userAgent.match(/ipad|iphone|android/i)) {
-                textarea.setSelectionRange(0, 9999);
+
+        function stopClipboardProtection() {
+            if (!isProtectionActive) return;
+
+            // Remove all event listeners
+            if (contextMenuHandler) {
+                document.removeEventListener('contextmenu', contextMenuHandler);
+                contextMenuHandler = null;
             }
-            document.execCommand('copy');
-            
-            // Immediate second attempt to ensure clearing
-            setTimeout(() => {
-                textarea.value = '';
+
+            if (keyDownHandler) {
+                document.removeEventListener('keydown', keyDownHandler);
+                keyDownHandler = null;
+            }
+
+            if (visibilityChangeHandler) {
+                document.removeEventListener('visibilitychange', visibilityChangeHandler);
+                visibilityChangeHandler = null;
+            }
+
+            isProtectionActive = false;
+            console.log('Clipboard protection stopped');
+        }
+
+        // Improved fallback method
+        function fallbackClearClipboard() {
+            try {
+                // Create hidden textarea
+                const textarea = document.createElement('textarea');
+                textarea.value = ' ';
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = 0;
+                document.body.appendChild(textarea);
+
+                // Select and copy
                 textarea.select();
+                if (navigator.userAgent.match(/ipad|iphone|android/i)) {
+                    textarea.setSelectionRange(0, 9999);
+                }
                 document.execCommand('copy');
-                document.body.removeChild(textarea);
-            }, 100);
-        } catch (e) {
-            console.error('Fallback clipboard clearing failed:', e);
+
+                // Immediate second attempt to ensure clearing
+                setTimeout(() => {
+                    textarea.value = '';
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }, 100);
+            } catch (e) {
+                console.error('Fallback clipboard clearing failed:', e);
+            }
         }
-    }
+
+        // Function to show user notifications
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNotification = document.getElementById('protection-notification');
+            if (existingNotification) {
+                document.body.removeChild(existingNotification);
+            }
+
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.id = 'protection-notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#e74c3c';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 15px';
+            notification.style.borrowRadius = '5px';
+            notification.style.zIndex = '10000';
+            notification.style.fontFamily = 'Arial, sans-serif';
+            notification.style.fontSize = '14px';
+            notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 5000);
+        }
 
     </script>
 </body>
