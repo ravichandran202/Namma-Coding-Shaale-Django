@@ -1099,7 +1099,7 @@ def enroll_course(request, course_id):
         messages.success(request, f'Successfully enrolled in {course.name}!')
 
         # Send enrollment email
-        send_course_enrollment_email(user, course, user_course, request)
+        # send_course_enrollment_email(user, course, user_course, request)
 
         return 
     
