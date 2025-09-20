@@ -3,6 +3,9 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from google.oauth2 import id_token
+from google.auth.transport import requests
+import os
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -84,6 +87,82 @@ def send_course_enrollment_email(user, course, user_course, request):
         html_message=html_message,
         fail_silently=False
     )
+
+@csrf_exempt
+def auth_receiver(request):
+    """
+    Google calls this URL after the user has signed in with their Google account.
+    """
+    if request.method != 'POST':
+        return HttpResponse('Method not allowed', status=405)
+    
+    token = request.POST.get('credential')
+    
+    if not token:
+        return HttpResponse('No credential provided', status=400)
+
+    try:
+        # Verify the Google token
+        user_data = id_token.verify_oauth2_token(
+            token, 
+            requests.Request(), 
+            os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+        )
+    except ValueError as e:
+        print(f"Token verification failed: {e}")
+        return HttpResponse('Invalid token', status=403)
+
+    # Extract user data
+    google_id = user_data['sub']
+    email = user_data['email']
+    first_name = user_data.get('given_name', '')
+    last_name = user_data.get('family_name', '')
+    email_verified = user_data.get('email_verified', False)
+
+    if not email_verified:
+        return HttpResponse('Email not verified', status=403)
+
+    try:
+        # SIMPLE APPROACH: Use email as the identifier
+        # Try to find user by email (Google ensures email is unique and verified)
+        try:
+            user = User.objects.get(email=email)
+            # Update user info if needed
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            
+        except User.DoesNotExist:
+            # Create a new user
+            # Use email as username (or generate a username from email)
+            username = email
+            
+            # Ensure username is unique
+            if User.objects.filter(username=username).exists():
+                username = email
+            
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password="1234567890"  # No password for Google auth
+            )
+            user.save()
+        
+        # Log the user in directly (no need for authenticate() since we verified Google token)
+        auth_login(request, user)
+        
+        # Store minimal user data in session if needed
+        request.session['user_email'] = email
+        request.session['user_name'] = f"{first_name} {last_name}".strip()
+        
+        return redirect('my-courses')  # Redirect to your courses page
+        
+    except Exception as e:
+        print(f"Error during authentication: {e}")
+        return HttpResponse('Authentication error', status=500)
+
 
 def login(request):
     if request.method == HTTPMethod.POST:

@@ -18,4 +18,6 @@ urlpatterns = [
     path('my-courses/', views.my_courses, name='my-courses'),
     path('course/<int:course_id>/', views.continue_course, name='continue-course'),
     path('content/<int:course_id>/<str:content_file_id>/', views.view_content, name='content'),
+
+    path('auth-receiver', views.auth_receiver, name='auth_receiver'),
 ]
