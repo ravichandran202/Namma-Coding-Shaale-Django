@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
 
     path("code-editor/<int:course_id>",views.code_editor,name="code-editor"),
+    path("code-editor",views.code_editor_freemium,name="code-editor-freemium"),
     path("list-problems/<int:course_id>",views.list_problems,name="list-problems"),
     path("problem-solver/<int:course_id>",views.problem_solver,name="problem-solver"),
 

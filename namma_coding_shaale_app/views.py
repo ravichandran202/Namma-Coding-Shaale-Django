@@ -271,6 +271,11 @@ def home(request):
     print("Home Page Called")
     return render(request,"index.html")
 
+def code_editor_freemium(request):
+    print("Code Editor Freemium Page Called")
+    return render(request,"code-editor-freemium.html")
+
+
 @login_required(login_url="login")
 def code_editor(request, course_id):
     roadmap = None
