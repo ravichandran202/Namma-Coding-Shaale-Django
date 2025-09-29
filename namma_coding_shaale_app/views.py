@@ -365,6 +365,17 @@ def list_problems(request, course_id):
     }
     return render(request, "list-problems.html", context)
 
+def terms_and_conditions(request):
+    return render(request, "terms-and-conditions.html")
+
+def privacy_policy(request):
+    return render(request, "privacy-policy.html")
+
+def refund_policy(request):
+    return render(request, "refund-policy.html")
+
+def contact_us(request):
+    return render(request, "contact-us.html")
 
 @login_required(login_url="login")
 def problem_solver(request, course_id):

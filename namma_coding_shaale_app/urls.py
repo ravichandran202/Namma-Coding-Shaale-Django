@@ -21,4 +21,9 @@ urlpatterns = [
     path('content/<int:course_id>/<str:content_file_id>/', views.view_content, name='content'),
 
     path('auth-receiver', views.auth_receiver, name='auth_receiver'),
+
+    path('terms-and-conditions', views.terms_and_conditions, name='terms_and_conditions'),
+    path('privacy-policy', views.privacy_policy, name='privacy_policy'),
+    path('refund-policy', views.refund_policy, name='refund_policy'),
+    path('contact-us', views.contact_us, name='contact_us'),
 ]
