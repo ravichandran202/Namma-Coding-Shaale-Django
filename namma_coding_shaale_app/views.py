@@ -31,6 +31,7 @@ import logging
 import json
 import ast
 from datetime import datetime
+import requests
 
 
 from django.db import transaction
@@ -364,6 +365,19 @@ def list_problems(request, course_id):
         "sections_js_json": json.dumps(sections)
     }
     return render(request, "list-problems.html", context)
+
+def checkout(request):
+    client_id = "TEST-M233XRFQNGJPC_25093"
+    client_secret = "MTgwNTQ0ZDItM2Y0Ni00ZWJjLWE0ZDUtZjYxNjhiMTQ0ODMz"
+    auth_token = get_phonepe_access_token(client_id, client_secret)
+    payment_response = make_phonepe_payment(auth_token)
+    print("\n\n", payment_response)
+
+    context = {
+        "payment_link" : payment_response.get("redirectUrl")
+    }
+
+    return render(request, "checkout.html", context=context)
 
 def terms_and_conditions(request):
     return render(request, "terms-and-conditions.html")
@@ -1122,3 +1136,114 @@ def enroll_course(request, course_id):
     except Exception as e:
         messages.error(request, f'Error enrolling in course: {str(e)}')
         return 
+
+# phone-pe checkout page
+def get_phonepe_access_token(client_id, client_secret):
+    """Get OAuth access token using client credentials"""
+    url = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token"
+    
+    payload = {
+        "client_id" : client_id,
+        "client_secret" : client_secret,
+        "grant_type": "client_credentials",
+        "client_version" : 1
+    }
+    
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+    
+    try:
+        response = requests.post(url, data=payload, headers=headers)
+        
+        print("=== Token Response ===")
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        if response.status_code == 200:
+            response_data = response.json()
+            access_token = response_data.get('access_token')
+            print(f"✅ Access Token received")
+            return access_token
+        else:
+            print(f"❌ Failed to get token: {response.status_code}")
+            return None
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Token request failed: {e}")
+        return None
+
+def make_phonepe_payment(access_token):
+    """Make payment request in the exact format shown in your curl"""
+    url = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay"
+    
+    payload = {
+        "merchantOrderId": "TX123rrty34432456",
+        "amount": 2548*100,
+        "expireAfter": 1200,
+        "metaInfo": {
+            "udf1": "additional-information-1",
+            "udf2": "additional-information-2", 
+            "udf3": "additional-information-3",
+            "udf4": "additional-information-4",
+            "udf5": "additional-information-5"
+        },
+        "paymentFlow": {
+            "type": "PG_CHECKOUT",
+            "message": "Payment message used for collect requests",
+            "merchantUrls": {
+                "redirectUrl": "https://www.xyz.com/PGIntegration/"
+            },
+            "paymentModeConfig": {
+                "enabledPaymentModes": [
+                    {"type": "UPI_INTENT"},
+                    {"type": "UPI_COLLECT"},
+                    {"type": "UPI_QR"},
+                    {"type": "NET_BANKING"},
+                    {
+                        "type": "CARD",
+                        "cardTypes": ["DEBIT_CARD", "CREDIT_CARD"]
+                    }
+                ],
+                "disabledPaymentModes": [
+                    {"type": "UPI_INTENT"},
+                    {"type": "UPI_COLLECT"}, 
+                    {"type": "UPI_QR"},
+                    {"type": "NET_BANKING"},
+                    {
+                        "type": "CARD", 
+                        "cardTypes": ["DEBIT_CARD", "CREDIT_CARD"]
+                    }
+                ]
+            }
+        }
+    }
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"O-Bearer {access_token}"  # Note the "O-Bearer" prefix
+    }
+    
+    try:
+        response = requests.post(url, json=payload, headers=headers)
+        
+        print("\n=== Payment Response ===")
+        print(f"Status Code: {response.status_code}")
+        print(f"Response Headers: {dict(response.headers)}")
+        print(f"Response Body: {response.text}")
+        
+        if response.status_code == 200:
+            response_data = response.json()
+            print("✅ Payment request successful!")
+            return response_data
+        else:
+            print(f"❌ Payment request failed: {response.status_code}")
+            return None
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Payment request failed: {e}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON response: {e}")
+        print(f"Raw response: {response.text}")
+        return None
