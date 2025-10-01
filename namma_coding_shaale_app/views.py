@@ -367,14 +367,8 @@ def list_problems(request, course_id):
     return render(request, "list-problems.html", context)
 
 def checkout(request):
-    client_id = "SU2510011140220612215584"
-    client_secret = "e814d644-8f08-496c-890c-da883e651e36"
-    auth_token = get_phonepe_access_token(client_id, client_secret)
-    payment_response = make_phonepe_payment(auth_token)
-    print("\n\n", payment_response)
-
     context = {
-        "payment_link" : payment_response.get("redirectUrl")
+        "payment_link" : get_checkout_page_url()
     }
 
     return render(request, "checkout.html", context=context)
@@ -1180,7 +1174,7 @@ def make_phonepe_payment(access_token):
     url = "https://api.phonepe.com/apis/pg/checkout/v2/pay"
     
     payload = {
-        "merchantOrderId": "TX123rrty34432456",
+        "merchantOrderId": generate_txn_id(),
         "amount": 5*100,
         "expireAfter": 1200,
         "metaInfo": {
@@ -1207,17 +1201,7 @@ def make_phonepe_payment(access_token):
                         "cardTypes": ["DEBIT_CARD", "CREDIT_CARD"]
                     }
                 ],
-                "disabledPaymentModes": [
-                    {"type": "UPI_INTENT"},
-                    {"type": "UPI_COLLECT"}, 
-                    {"type": "UPI_QR"},
-                    {"type": "NET_BANKING"},
-                    {
-                        "type": "CARD", 
-                        "cardTypes": ["DEBIT_CARD", "CREDIT_CARD"]
-                    }
-                ]
-            }
+            },
         }
     }
     
@@ -1249,3 +1233,43 @@ def make_phonepe_payment(access_token):
         print(f"Failed to parse JSON response: {e}")
         print(f"Raw response: {response.text}")
         return None
+
+def generate_txn_id(prefix="TXN"):
+    """
+    Generate a unique transaction ID
+    Format: TXN_YYYYMMDD_HHMMSS_XXXXXX
+    """
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    random_suffix = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    return f"{prefix}_{timestamp}_{random_suffix}"
+
+from uuid import uuid4
+from phonepe.sdk.pg.payments.v2.standard_checkout_client import StandardCheckoutClient
+from phonepe.sdk.pg.payments.v2.models.request.standard_checkout_pay_request import StandardCheckoutPayRequest
+from phonepe.sdk.pg.common.models.request.meta_info import MetaInfo
+from phonepe.sdk.pg.env import Env
+
+def get_checkout_page_url():
+    client_secret = "e814d644-8f08-496c-890c-da883e651e36"
+    client_id = "SU2510011140220612215584"
+    client_version = 1  # insert your client version
+    env = Env.PRODUCTION
+    should_publish_events = False
+    client = StandardCheckoutClient.get_instance(client_id=client_id,
+                                                        client_secret=client_secret,
+                                                        client_version=client_version,
+                                                        env=env,
+                                                        should_publish_events=should_publish_events)
+    
+    unique_order_id = str(generate_txn_id())
+    ui_redirect_url = "http://nammacodingshaale.in/order-status?txn_id="+unique_order_id
+    amount = 100
+    meta_info = MetaInfo(udf1="udf1", udf2="udf2", udf3="udf3") 
+    standard_pay_request = StandardCheckoutPayRequest.build_request(merchant_order_id=unique_order_id,
+                                                                    amount=amount,
+                                                                    redirect_url=ui_redirect_url,
+                                                                    meta_info=meta_info)
+    standard_pay_response = client.pay(standard_pay_request)
+    checkout_page_url = standard_pay_response.redirect_url
+    print("\n\n",checkout_page_url)
+    return checkout_page_url
