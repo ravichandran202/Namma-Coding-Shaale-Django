@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "namma_coding_shaale_app",
+    "django.contrib.humanize",
     'rest_framework',
     'corsheaders',
     'login_history'
