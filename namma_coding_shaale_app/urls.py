@@ -22,7 +22,9 @@ urlpatterns = [
 
     path('auth-receiver', views.auth_receiver, name='auth_receiver'),
 
-    path('checkout', views.checkout, name='checkout'),
+    path('checkout/<int:course_id>', views.checkout, name='checkout'),
+    path('order/status', views.payment_status, name='payment_status'),
+
 
     path('terms-and-conditions', views.terms_and_conditions, name='terms_and_conditions'),
     path('privacy-policy', views.privacy_policy, name='privacy_policy'),

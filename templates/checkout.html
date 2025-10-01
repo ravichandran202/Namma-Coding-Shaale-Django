@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -518,25 +519,25 @@
             
             <div class="order-item">
               <div>
-                <h6 class="mb-1 fw-bold">Python Professional Course</h6>
-                <p class="text-muted mb-0">Basic to Advanced Python with 100+ Coding problems and live classes</p>
+                <h6 class="mb-1 fw-bold">{{course.name}}</h6>
+                <p class="text-muted mb-0">{{course.description}}</p>
               </div>
               <div class="text-end">
-                <div class="fw-bold">₹2,499</div>
-                <small class="text-muted text-decoration-line-through">₹3,499</small>
+                <div class="fw-bold">₹{{course.base_price|intcomma}}</div>
+                <small class="text-muted text-decoration-line-through">₹{{selling_price|intcomma}}</small>
               </div>
             </div>
-            
+
             <div class="order-item">
               <div>
                 <h6 class="mb-1 fw-bold">Platform Fee</h6>
               </div>
-              <div class="fw-bold">₹49</div>
+              <div class="fw-bold">₹{{platform_fees|intcomma}}</div>
             </div>
             
             <div class="order-total">
               <div>Total Amount</div>
-              <div>₹2,548</div>
+              <div>₹{{total_price|intcomma}}</div>
             </div>
           </div>
           
@@ -559,7 +560,7 @@
           
           <!-- Payment Button -->
           <button id="pay-button" class="btn-premium">
-            <i class="fas fa-lock me-2"></i> Pay Securely ₹2,499
+            <i class="fas fa-lock me-2"></i> Pay Securely ₹{{total_price|intcomma}}
           </button>
           
           <!-- PhonePe IFrame Container -->
@@ -570,33 +571,6 @@
                 <h3>Processing Your Payment</h3>
                 <p>Please wait while we connect you to PhonePe...</p>
               </div>
-            </div>
-          </div>
-          
-          <!-- Payment Status Messages -->
-          <div id="payment-success" class="payment-status success">
-            <i class="fas fa-check-circle status-icon"></i>
-            <div class="status-content">
-              <h3>Payment Successful!</h3>
-              <p>Your payment has been processed successfully. You will receive an email confirmation shortly.</p>
-              <div class="bg-white p-3 rounded my-3">
-                <p class="mb-1"><strong>Order ID:</strong> ORD-789456</p>
-                <p class="mb-0"><strong>Transaction ID:</strong> TXN-987654321</p>
-              </div>
-              <a href="{% url 'my-courses' %}" class="btn btn-success mt-3">
-                <i class="fas fa-graduation-cap me-2"></i> Go to My Courses
-              </a>
-            </div>
-          </div>
-          
-          <div id="payment-cancelled" class="payment-status error">
-            <i class="fas fa-times-circle status-icon"></i>
-            <div class="status-content">
-              <h3>Payment Cancelled</h3>
-              <p>You cancelled the payment process. Please try again if you wish to complete your purchase.</p>
-              <button id="retry-button" class="btn-premium mt-3">
-                <i class="fas fa-redo me-2"></i> Retry Payment
-              </button>
             </div>
           </div>
         </div>
@@ -612,7 +586,6 @@
       const payButton = document.getElementById('pay-button');
       const iframeContainer = document.getElementById('phonepe-iframe-container');
       const paymentSuccess = document.getElementById('payment-success');
-      const paymentCancelled = document.getElementById('payment-cancelled');
       const retryButton = document.getElementById('retry-button');
       const processingMessage = document.getElementById('payment-processing');
       
@@ -641,21 +614,7 @@
         
         // Define the callback function for PhonePe response
         function callback(response) {
-          if (response === 'USER_CANCEL') {
-            // User cancelled the payment
-            iframeContainer.style.display = 'none';
-            paymentCancelled.style.display = 'block';
-          } else if (response === 'CONCLUDED') {
-            // Payment completed (success or failure)
-            // In a real implementation, you would check the payment status
-            // via your backend using the transaction ID
-            
-            // For demo purposes, we're showing success after a short delay
-            setTimeout(function() {
-              iframeContainer.style.display = 'none';
-              paymentCancelled.style.display = 'block';
-            }, 1500);
-          }
+          window.location.href = `{{ui_redirect_url}}`
         }
         
         // Check if PhonePeCheckout is available

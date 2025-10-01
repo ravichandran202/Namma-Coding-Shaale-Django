@@ -222,3 +222,11 @@ LOGGING = {
 # We need these lines below to allow the Google sign in popup to work.
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+CREDENTIALS = {
+    "GOOGLE_OAUTH_CLIENT_ID": os.environ.get('GOOGLE_OAUTH_CLIENT_ID', 'your-default-google-client-id'),
+    "PHONE_PAY_CLIENT_ID": os.environ.get('PHONE_PAY_CLIENT_ID', 'TEST-M233XRFQNGJPC_25093'),
+    "PHONE_PAY_CLIENT_SECRET": os.environ.get('PHONE_PAY_CLIENT_SECRET', 'MTgwNTQ0ZDItM2Y0Ni00ZWJjLWE0ZDUtZjYxNjhiMTQ0ODMz'),
+    "PHONE_PAY_CLIENT_VERSION": os.environ.get('PHONE_PAY_CLIENT_VERSION', '1'),
+    "PHONE_PAY_REDIRECTION_URI": os.environ.get('PHONE_PAY_REDIRECTION_URI', 'http://127.0.0.1:8000')
+}

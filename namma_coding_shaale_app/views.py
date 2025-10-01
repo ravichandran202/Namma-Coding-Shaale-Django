@@ -7,6 +7,8 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
 
+import requests.auth
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -33,15 +35,13 @@ import ast
 from datetime import datetime
 import requests
 
-
 from django.db import transaction
 import django.db.models as models
 from django.db.models import Case, When, Value, BooleanField, Count, Q
 from django.db.models.functions import Concat
 from django.db.models import F
 
-
-
+credentials = getattr(settings, 'CREDENTIALS', {})
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -366,12 +366,53 @@ def list_problems(request, course_id):
     }
     return render(request, "list-problems.html", context)
 
-def checkout(request):
+@login_required(login_url="login")
+def checkout(request, course_id):
+    if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+            return redirect("my-courses")
+    
+    course = get_object_or_404(Course, id=course_id)
+    phonepe_client = setup_phonepe_client()
+    payment_link, ui_redirect_url = get_checkout_page_url(request, phonepe_client, course)
+
     context = {
-        "payment_link" : get_checkout_page_url()
+        "payment_link" : payment_link,
+        "course" : course,
+        "selling_price" : int(course.base_price) + 1000,
+        "platform_fees" : 0,
+        "total_price" : int(course.base_price),
+        "ui_redirect_url" : ui_redirect_url
     }
 
     return render(request, "checkout.html", context=context)
+
+def payment_status(request):
+    merchant_order_id = request.GET.get('txn_id')
+
+    #TODO : verify the txn_id from DB
+
+    phonepe_client = setup_phonepe_client()
+    order_status = get_order_status(request, phonepe_client, merchant_order_id)
+
+    if order_status.state == "COMPLETED":
+        course_id = order_status.meta_info.udf2
+        if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+            enroll_course(request, course_id)
+
+
+    context = {
+        'status': order_status.state,
+        'course': {
+            'name': order_status.meta_info.udf3,
+            'id': order_status.meta_info.udf2,
+        },
+        'total_price': int(order_status.amount)//100,
+        'order_id': order_status.order_id,
+        'transaction_id': merchant_order_id,
+        'payment_date': '2024-01-20 14:30:00'
+    }
+    
+    return render(request, 'payment_status.html', context)
 
 def terms_and_conditions(request):
     return render(request, "terms-and-conditions.html")
@@ -1131,108 +1172,6 @@ def enroll_course(request, course_id):
         messages.error(request, f'Error enrolling in course: {str(e)}')
         return 
 
-# phone-pe checkout page
-def get_phonepe_access_token(client_id, client_secret):
-    """Get OAuth access token using client credentials"""
-    url = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token"
-    url = "https://api.phonepe.com/apis/identity-manager/v1/oauth/token"
-    
-    payload = {
-        "client_id" : client_id,
-        "client_secret" : client_secret,
-        "grant_type": "client_credentials",
-        "client_version" : 1
-    }
-    
-    headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
-    }
-    
-    try:
-        response = requests.post(url, data=payload, headers=headers)
-        
-        print("=== Token Response ===")
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
-        
-        if response.status_code == 200:
-            response_data = response.json()
-            access_token = response_data.get('access_token')
-            print(f"✅ Access Token received")
-            return access_token
-        else:
-            print(f"❌ Failed to get token: {response.status_code}")
-            return None
-            
-    except requests.exceptions.RequestException as e:
-        print(f"Token request failed: {e}")
-        return None
-
-def make_phonepe_payment(access_token):
-    """Make payment request in the exact format shown in your curl"""
-    url = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay"
-    url = "https://api.phonepe.com/apis/pg/checkout/v2/pay"
-    
-    payload = {
-        "merchantOrderId": generate_txn_id(),
-        "amount": 5*100,
-        "expireAfter": 1200,
-        "metaInfo": {
-            "udf1": "additional-information-1",
-            "udf2": "additional-information-2", 
-            "udf3": "additional-information-3",
-            "udf4": "additional-information-4",
-            "udf5": "additional-information-5"
-        },
-        "paymentFlow": {
-            "type": "PG_CHECKOUT",
-            "message": "Payment message used for collect requests",
-            "merchantUrls": {
-                "redirectUrl": "https://nammacodingshaale.in"
-            },
-            "paymentModeConfig": {
-                "enabledPaymentModes": [
-                    {"type": "UPI_INTENT"},
-                    {"type": "UPI_COLLECT"},
-                    {"type": "UPI_QR"},
-                    {"type": "NET_BANKING"},
-                    {
-                        "type": "CARD",
-                        "cardTypes": ["DEBIT_CARD", "CREDIT_CARD"]
-                    }
-                ],
-            },
-        }
-    }
-    
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"O-Bearer {access_token}"  # Note the "O-Bearer" prefix
-    }
-    
-    try:
-        response = requests.post(url, json=payload, headers=headers)
-        
-        print("\n=== Payment Response ===")
-        print(f"Status Code: {response.status_code}")
-        print(f"Response Headers: {dict(response.headers)}")
-        print(f"Response Body: {response.text}")
-        
-        if response.status_code == 200:
-            response_data = response.json()
-            print("✅ Payment request successful!")
-            return response_data
-        else:
-            print(f"❌ Payment request failed: {response.status_code}")
-            return None
-            
-    except requests.exceptions.RequestException as e:
-        print(f"Payment request failed: {e}")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"Failed to parse JSON response: {e}")
-        print(f"Raw response: {response.text}")
-        return None
 
 def generate_txn_id(prefix="TXN"):
     """
@@ -1243,28 +1182,36 @@ def generate_txn_id(prefix="TXN"):
     random_suffix = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     return f"{prefix}_{timestamp}_{random_suffix}"
 
-from uuid import uuid4
 from phonepe.sdk.pg.payments.v2.standard_checkout_client import StandardCheckoutClient
 from phonepe.sdk.pg.payments.v2.models.request.standard_checkout_pay_request import StandardCheckoutPayRequest
 from phonepe.sdk.pg.common.models.request.meta_info import MetaInfo
 from phonepe.sdk.pg.env import Env
 
-def get_checkout_page_url():
-    client_secret = "e814d644-8f08-496c-890c-da883e651e36"
-    client_id = "SU2510011140220612215584"
-    client_version = 1  # insert your client version
-    env = Env.PRODUCTION
-    should_publish_events = False
+def setup_phonepe_client():
+    client_secret = credentials.get('PHONE_PAY_CLIENT_SECRET')
+    client_id = credentials.get('PHONE_PAY_CLIENT_ID')
+    client_version = credentials.get('PHONE_PAY_CLIENT_VERSION')
+    env = Env.PRODUCTION if credentials.get('ENV') == "production" else Env.SANDBOX
+    should_publish_events = True
     client = StandardCheckoutClient.get_instance(client_id=client_id,
                                                         client_secret=client_secret,
                                                         client_version=client_version,
                                                         env=env,
                                                         should_publish_events=should_publish_events)
     
+    return client
+
+
+def get_checkout_page_url(request, client, course):
     unique_order_id = str(generate_txn_id())
-    ui_redirect_url = "http://nammacodingshaale.in/order-status?txn_id="+unique_order_id
-    amount = 100
-    meta_info = MetaInfo(udf1="udf1", udf2="udf2", udf3="udf3") 
+    redirection_uri = credentials.get('PHONE_PAY_REDIRECTION_URI')
+    ui_redirect_url = f"{redirection_uri}/order/status?txn_id={unique_order_id}"
+    amount = (int(course.base_price)) * 100 
+    meta_info = MetaInfo(
+        udf1= f"{request.user.id}", 
+        udf2= f"{course.id}", 
+        udf3= f"{course.name}") 
+    
     standard_pay_request = StandardCheckoutPayRequest.build_request(merchant_order_id=unique_order_id,
                                                                     amount=amount,
                                                                     redirect_url=ui_redirect_url,
@@ -1272,4 +1219,8 @@ def get_checkout_page_url():
     standard_pay_response = client.pay(standard_pay_request)
     checkout_page_url = standard_pay_response.redirect_url
     print("\n\n",checkout_page_url)
-    return checkout_page_url
+    return checkout_page_url, ui_redirect_url
+
+def get_order_status(request, client, merchant_order_id):
+    response = client.get_order_status(merchant_order_id, details=False)
+    return response
