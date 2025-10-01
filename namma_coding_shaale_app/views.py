@@ -1191,7 +1191,7 @@ def setup_phonepe_client():
     client_secret = credentials.get('PHONE_PAY_CLIENT_SECRET')
     client_id = credentials.get('PHONE_PAY_CLIENT_ID')
     client_version = credentials.get('PHONE_PAY_CLIENT_VERSION')
-    env = Env.PRODUCTION if credentials.get('ENV') == "production" else Env.SANDBOX
+    env = Env.PRODUCTION if os.environ.get('ENV') == "production" else Env.SANDBOX
 
     print("PHONE_PAY_CLIENT_SECRET", client_secret)
     print("PHONE_PAY_CLIENT_ID", client_id)
