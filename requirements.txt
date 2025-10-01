@@ -44,7 +44,6 @@ mypy_extensions==1.1.0
 numpy==2.3.2
 oauthlib==3.3.1
 packaging==25.0
-phonepe-sdk==2.1.5
 pillow==11.3.0
 propcache==0.3.2
 proto-plus==1.26.1
