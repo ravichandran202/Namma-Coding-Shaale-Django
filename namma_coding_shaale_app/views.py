@@ -1192,7 +1192,7 @@ def make_phonepe_payment(access_token):
             "type": "PG_CHECKOUT",
             "message": "Payment message used for collect requests",
             "merchantUrls": {
-                "redirectUrl": "https://www.xyz.com/PGIntegration/"
+                "redirectUrl": "https://nammacodingshaale.in"
             },
             "paymentModeConfig": {
                 "enabledPaymentModes": [
