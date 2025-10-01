@@ -1179,7 +1179,7 @@ def make_phonepe_payment(access_token):
     
     payload = {
         "merchantOrderId": "TX123rrty34432456",
-        "amount": 2548*100,
+        "amount": 5*100,
         "expireAfter": 1200,
         "metaInfo": {
             "udf1": "additional-information-1",
