@@ -1192,6 +1192,12 @@ def setup_phonepe_client():
     client_id = credentials.get('PHONE_PAY_CLIENT_ID')
     client_version = credentials.get('PHONE_PAY_CLIENT_VERSION')
     env = Env.PRODUCTION if credentials.get('ENV') == "production" else Env.SANDBOX
+
+    print("PHONE_PAY_CLIENT_SECRET", client_secret)
+    print("PHONE_PAY_CLIENT_ID", client_id)
+    print("PHONE_PAY_CLIENT_VERSION", client_version)
+    print("ENV", env)
+
     should_publish_events = True
     client = StandardCheckoutClient.get_instance(client_id=client_id,
                                                         client_secret=client_secret,
