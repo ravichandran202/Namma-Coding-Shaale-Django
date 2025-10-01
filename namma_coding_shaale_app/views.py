@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from google.oauth2 import id_token
-from google.auth.transport import requests
+from google.auth.transport import requests as google_requests
 import os
 
 from rest_framework.decorators import api_view, permission_classes
@@ -106,7 +106,7 @@ def auth_receiver(request):
         # Verify the Google token
         user_data = id_token.verify_oauth2_token(
             token, 
-            requests.Request(), 
+            google_requests.Request(), 
             os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
         )
     except ValueError as e:
