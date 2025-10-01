@@ -367,8 +367,8 @@ def list_problems(request, course_id):
     return render(request, "list-problems.html", context)
 
 def checkout(request):
-    client_id = "TEST-M233XRFQNGJPC_25093"
-    client_secret = "MTgwNTQ0ZDItM2Y0Ni00ZWJjLWE0ZDUtZjYxNjhiMTQ0ODMz"
+    client_id = "SU2510011140220612215584"
+    client_secret = "e814d644-8f08-496c-890c-da883e651e36"
     auth_token = get_phonepe_access_token(client_id, client_secret)
     payment_response = make_phonepe_payment(auth_token)
     print("\n\n", payment_response)
