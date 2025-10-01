@@ -1141,6 +1141,7 @@ def enroll_course(request, course_id):
 def get_phonepe_access_token(client_id, client_secret):
     """Get OAuth access token using client credentials"""
     url = "https://api-preprod.phonepe.com/apis/pg-sandbox/v1/oauth/token"
+    url = "https://api.phonepe.com/apis/identity-manager/v1/oauth/token"
     
     payload = {
         "client_id" : client_id,
@@ -1176,6 +1177,7 @@ def get_phonepe_access_token(client_id, client_secret):
 def make_phonepe_payment(access_token):
     """Make payment request in the exact format shown in your curl"""
     url = "https://api-preprod.phonepe.com/apis/pg-sandbox/checkout/v2/pay"
+    url = "https://api.phonepe.com/apis/pg/checkout/v2/pay"
     
     payload = {
         "merchantOrderId": "TX123rrty34432456",
