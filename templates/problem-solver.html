@@ -708,6 +708,189 @@
             background-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
         }
+
+        .test-case {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.test-case:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.test-case-passed {
+    border-left: 4px solid var(--success);
+}
+
+.test-case-failed {
+    border-left: 4px solid var(--danger);
+}
+
+.test-case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #f8fafc;
+    border-bottom: 1px solid var(--border);
+}
+
+.test-case-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.test-case-icon {
+    font-size: 1.2rem;
+}
+
+.test-case-title {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.test-case-status {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-passed {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.status-failed {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+.test-case-content {
+    padding: 1.5rem;
+}
+
+.test-case-section {
+    margin-bottom: 1.25rem;
+}
+
+.test-case-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.section-content {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.input-params {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.param-name {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.param-value {
+    color: var(--text);
+    background-color: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.expected-output,
+.actual-output {
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.actual-output.output-correct {
+    border-color: var(--success);
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+.actual-output.output-incorrect {
+    border-color: var(--danger);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.error-section .section-title {
+    color: var(--danger);
+}
+
+.error-message {
+    background-color: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+.comparison-hint {
+    color: var(--text);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.comparison-hint strong {
+    color: var(--danger);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .test-case-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+    }
+    
+    .test-case-content {
+        padding: 1rem;
+    }
+    
+    .input-params {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
         
 
         @keyframes pulse {
@@ -1503,27 +1686,69 @@ Output: 4</pre>
              // All test cases passed - show detailed results
     let html = '';
 
-        results.forEach((result, index) => {
-            const tc = problem.testCases[index];
-            html += `
-                <div class="test-case">
-                    <div class="test-case-header">
-                        <span class="test-case-title">Test Case #${tc.id}</span>
-                        <span class="test-case-result ${result.passed ? 'passed' : 'failed'}">
-                            ${result.passed ? '✓ Passed' : '✗ Failed'}
-                        </span>
+    results.forEach((result, index) => {
+    const tc = problem.testCases[index];
+    const inputParams = tc.input.map((v, i) => 
+        `<span class="param-name">${String.fromCharCode(97 + i)}</span> = <span class="param-value">${v}</span>`
+    ).join(', ');
+        
+        html += `
+            <div class="test-case ${result.passed ? 'test-case-passed' : 'test-case-failed'}">
+                <div class="test-case-header">
+                    <div class="test-case-info">
+                        <span class="test-case-icon">${result.passed ? '✅' : '❌'}</span>
+                        <span class="test-case-title">Test Case ${index + 1}</span>
                     </div>
-                    <div class="test-case-details">
-                        <div class="test-case-input"><b>Input:</b> ${tc.input.map((v, i) =>
-                            `${String.fromCharCode(97 + i)} = ${v}`).join(', ')}</div>
-                        <div class="test-case-output"><b>Output:</b> <pre class="output-pre">${result.output || 'No output'}</pre></div>
-                        <div class="test-case-expected"><b>Expected:</b> <pre class="output-pre">${tc.expected}</pre></div>
-                        ${result.error ? `<div class="test-case-error"><b>Error:</b> <span class="console-error">${result.error}</span></div>` : ''}
-                    </div>
+                    <span class="test-case-status ${result.passed ? 'status-passed' : 'status-failed'}">
+                        ${result.passed ? 'PASSED' : 'FAILED'}
+                    </span>
                 </div>
-            `;
-        });
-
+                
+                <div class="test-case-content">
+                    <div class="test-case-section">
+                        <div class="section-title">Input</div>
+                        <div class="section-content">
+                            <div class="input-params">${inputParams}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="test-case-section">
+                        <div class="section-title">Expected Output</div>
+                        <div class="section-content">
+                            <pre class="expected-output">${tc.expected}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="test-case-section">
+                        <div class="section-title">Your Output</div>
+                        <div class="section-content">
+                            <pre class="actual-output ${result.passed ? 'output-correct' : 'output-incorrect'}">${result.output || 'No output'}</pre>
+                        </div>
+                    </div>
+                    
+                    ${result.error ? `
+                    <div class="test-case-section error-section">
+                        <div class="section-title error-title">Error</div>
+                        <div class="section-content">
+                            <pre class="error-message">${result.error}</pre>
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${!result.passed && !result.error ? `
+                    <div class="test-case-section comparison-section">
+                        <div class="section-title">Comparison</div>
+                        <div class="section-content">
+                            <div class="comparison-hint">
+                                Expected: <strong>${tc.expected}</strong> | Got: <strong>${result.output || 'No output'}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
         const successRate = Math.round((passedCount / totalTestCases) * 100);
         html += `
             <div class="summary ${passedCount === totalTestCases ? 'passed' : 'failed'}">
