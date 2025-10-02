@@ -332,7 +332,7 @@ def list_problems(request, course_id):
         problem_obj = cc.content.problem
         # Determine user problem status based on submissions (if available)
         submission = ProblemSubmission.objects.filter(
-            user=request.user, problem=problem_obj
+            user=request.user, problem=problem_obj, course_id = course_id
         ).order_by('-submitted_at').first()
         if submission:
             status = submission.status.lower()
