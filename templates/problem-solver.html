@@ -335,6 +335,11 @@
         .summary.passed {
             background-color: rgba(16, 185, 129, 0.1);
             color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .summary.failed {
@@ -553,6 +558,163 @@
             max-height: 200px;
             overflow-y: auto;
         }
+    
+        .test-results-failure {
+            text-align: center;
+            padding: 2rem;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .failure-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .failure-icon {
+            font-size: 2rem;
+        }
+        
+        .failure-header h3 {
+            color: #dc2626;
+            margin: 0;
+        }
+        
+        .failure-summary {
+            margin-bottom: 1.5rem;
+        }
+        
+        .failure-summary p {
+            margin: 0.5rem 0;
+            color: #374151;
+        }
+        
+        .failure-message {
+            color: #dc2626 !important;
+            font-weight: 500;
+        }
+        
+        .failure-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .failure-actions button {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .failure-actions button.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .failure-actions button.primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .failure-actions button.secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .failure-actions button.secondary:hover {
+            background-color: var(--sidebar-hover-bg);
+        }
+        
+        .execution-time {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: var(--meter-background);
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .test-case-progress {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .test-case-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border);
+        }
+
+        .test-case-indicator.passed {
+            background-color: var(--success);
+        }
+
+        .test-case-indicator.failed {
+            background-color: var(--danger);
+        }
+
+        .test-case-indicator.running {
+            background-color: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        .check-solution-link {
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 8px;
+            padding: 4px 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            border-color: #10b981;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .check-solution-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
 
         /* Mobile optimizations */
         @media (max-width: 768px) {
@@ -707,7 +869,6 @@ Output: 4</pre>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-
         // Initialize Monaco Editor
         require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
         require(['vs/editor/editor.main'], async function () {
@@ -741,7 +902,6 @@ Output: 4</pre>
 
                 const response = await fetch("{% static 'problems/' %}" + problemId + ".js");
                 if (!response.ok) throw new Error('Problem not found');
-
 
                 var problemCode = await response.text();
 
@@ -807,23 +967,23 @@ Output: 4</pre>
             //   `${problem.title}`;
 
             document.getElementById('problem-section').innerHTML = `
-      <h1>${problem.title}</h1>
-      <div class="problem-meta">
-        <span class="difficulty ${problem.difficulty}">${problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}</span>
-        <span>Acceptance: ${problem.acceptance}</span>
-      </div>
-      <h2>Description</h2>
-      ${problem.description}
-      <h2>Function Signature</h2>
-      ${problem.signatures}
-      <h2>Examples</h2>
-      ${problem.examples}
-      <div class="constraints">
-        <h3>Constraints</h3>
-        ${problem.constraints}
-      </div>
-      ${problem.followUp ? `<h2>Follow-up</h2><p>${problem.followUp}</p>` : ''}
-    `;
+            <h1>${problem.title}</h1>
+            <div class="problem-meta">
+                <span class="difficulty ${problem.difficulty}">${problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}</span>
+                <span>Acceptance: ${problem.acceptance}</span>
+            </div>
+            <h2>Description</h2>
+            ${problem.description}
+            <h2>Function Signature</h2>
+            ${problem.signatures}
+            <h2>Examples</h2>
+            ${problem.examples}
+            <div class="constraints">
+                <h3>Constraints</h3>
+                ${problem.constraints}
+            </div>
+            ${problem.followUp ? `<h2>Follow-up</h2><p>${problem.followUp}</p>` : ''}
+            `;
 
             //get Saved code from Backend, if not set default
             const savedCode = `{{ saved_code|escapejs }}`;
@@ -900,7 +1060,7 @@ Output: 4</pre>
             runCode(true);
         }
 
-        // Main execution function
+        // Main execution function - modified to show progress bar
         async function runCode(isSubmission = false) {
             if (isRunning) {
                 addConsoleMessage("Already running code. Please wait...", "warning");
@@ -928,19 +1088,22 @@ Output: 4</pre>
                 });
                 updateSubmissionsTab();
                 switchTab('test-results');
+                
+                // Show progress bar for submission
+                showProgressBar(problem.testCases.length);
             } else {
                 switchTab('console');
             }
 
             try {
                 if (isSubmission) {
-                    const results = await executeAllTestCases(code, problem.testCases);
+                    const results = await executeAllTestCasesWithProgress(code, problem.testCases);
                     const endTime = performance.now();
                     const executionTime = (endTime - startTime).toFixed(2);
 
                     testResults = results;
                     const passedCount = results.filter(r => r.passed).length;
-                    updateTestResults(results, passedCount, executionTime);
+                    updateTestResults(code, results, passedCount, executionTime);
 
                     submissionHistory[0].results = {
                         passed: passedCount,
@@ -982,7 +1145,127 @@ Output: 4</pre>
                 console.error(error);
             } finally {
                 isRunning = false;
+                // Hide progress bar when done
+                hideProgressBar();
             }
+        }
+
+        // Show progress bar for test cases
+        function showProgressBar(totalTestCases) {
+            const testResultsDiv = document.getElementById('test-results');
+            testResultsDiv.innerHTML = `
+                <h3>Running Test Cases</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="progress-text" id="progress-text">0/${totalTestCases} test cases completed</div>
+                <div class="test-case-progress" id="test-case-indicators"></div>
+            `;
+
+            // Create indicators for each test case
+            const indicatorsDiv = document.getElementById('test-case-indicators');
+            for (let i = 0; i < totalTestCases; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'test-case-indicator';
+                indicator.id = `test-case-${i}`;
+                indicatorsDiv.appendChild(indicator);
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar(current, total, testCaseId, passed) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const percentage = (current / total) * 100;
+            
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${current}/${total} test cases completed`;
+            
+            // Update test case indicator
+            const indicator = document.getElementById(`test-case-${testCaseId}`);
+            if (indicator) {
+                indicator.classList.remove('running');
+                if (passed) {
+                    indicator.classList.add('passed');
+                } else {
+                    indicator.classList.add('failed');
+                }
+            }
+            
+            // Set next test case as running
+            if (current < total) {
+                const nextIndicator = document.getElementById(`test-case-${current}`);
+                if (nextIndicator) {
+                    nextIndicator.classList.add('running');
+                }
+            }
+        }
+
+        // Hide progress bar
+        function hideProgressBar() {
+            // Progress bar will be replaced by test results
+        }
+
+        // Execute all test cases with progress updates
+        async function executeAllTestCasesWithProgress(code, testCases) {
+            const results = [];
+            let passedCount = 0;
+
+            // Set first test case as running
+            const firstIndicator = document.getElementById('test-case-0');
+            if (firstIndicator) {
+                firstIndicator.classList.add('running');
+            }
+
+            for (let i = 0; i < testCases.length; i++) {
+                const tc = testCases[i];
+                let result;
+                let retries = 0;
+                let lastError = null;
+
+                while (retries <= MAX_RETRIES) {
+                    try {
+                        const now = Date.now();
+                        const timeSinceLast = now - lastExecutionTime;
+                        if (timeSinceLast < EXECUTION_DELAY) {
+                            const delay = EXECUTION_DELAY - timeSinceLast;
+                            addConsoleMessage(`Waiting ${delay}ms to avoid rate limiting...`, "info");
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        }
+
+                        lastExecutionTime = Date.now();
+                        result = await executeTestCase(code, tc, problems[currentProblem]);
+                        break;
+                    } catch (error) {
+                        lastError = error;
+                        retries++;
+                        if (retries <= MAX_RETRIES) {
+                            addConsoleMessage(`Retrying test case ${tc.id} (attempt ${retries}/${MAX_RETRIES})...`, "warning");
+                            await new Promise(resolve => setTimeout(resolve, EXECUTION_DELAY * retries));
+                        }
+                    }
+                }
+
+                if (retries > MAX_RETRIES && !result) {
+                    result = {
+                        output: null,
+                        passed: false,
+                        error: lastError?.message || "Max retries exceeded"
+                    };
+                    addConsoleMessage(`Test case ${tc.id} failed after ${MAX_RETRIES} retries`, "error");
+                }
+
+                results.push(result);
+                if (result.passed) passedCount++;
+                
+                // Update progress bar
+                updateProgressBar(i + 1, testCases.length, i, result.passed);
+                
+                // Small delay to make progress visible
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            return results;
         }
 
         // Execute all test cases with rate limiting
@@ -1033,7 +1316,7 @@ Output: 4</pre>
 
                 results.push(result);
                 if (result.passed) passedCount++;
-                var faliedCount = updateTestResults(results, passedCount);
+                var faliedCount = updateTestResults(code, results, passedCount, passedCount);
 
                 console.log("POST Response : ", submitCodeToBackend(code, faliedCount))
 
@@ -1141,13 +1424,13 @@ Output: 4</pre>
             try {
                 const funcName = problem.templates.javascript.match(/function (\w+)/)[1];
                 const func = new Function('a', 'b', 'c', `
-        try {
-          ${code}
-          return ${funcName}(a, b, c);
-        } catch (e) {
-          return { error: e.message };
-        }
-      `);
+                try {
+                ${code}
+                return ${funcName}(a, b, c);
+                } catch (e) {
+                return { error: e.message };
+                }
+            `);
 
                 const result = func(...input);
 
@@ -1185,51 +1468,79 @@ Output: 4</pre>
         }
 
         // Update test results display
-        function updateTestResults(results, passedCount, executionTime) {
-            const problem = problems[currentProblem];
-            if (!problem) return;
+    function updateTestResults(code, results, passedCount, executionTime) {
+         const problem = problems[currentProblem];
+         if (!problem) return;
+     
+         const totalTestCases = problem.testCases.length;
+         const failedCount = totalTestCases - passedCount;
 
-            let html = '';
+         console.log("POST Response : ", submitCodeToBackend(code, failedCount))
+         
+         // If any test case failed, show failure message
+         if (failedCount > 0) {
+             const successRate = Math.round((passedCount / totalTestCases) * 100);
+             const html = `
+                 <div class="test-results-failure">
+                     <div class="failure-header">
+                         <span class="failure-icon">❌</span>
+                         <h3>Test Cases Failed</h3>
+                     </div>
+                     <div class="failure-summary">
+                         <p>${passedCount} of ${totalTestCases} test cases passed (${successRate}%)</p>
+                         <p class="failure-message">Please review your code logic and try again.</p>
+                     </div>
+                     ${executionTime ? `<div class="execution-time">Execution time: ${executionTime} ms</div>` : ''}
+                     <div class="failure-actions">
+                         <button class="primary" onclick="switchTab('console')">View Console Output</button>
+                         <button class="secondary" onclick="showHint()">Get Hint</button>
+                     </div>
+                 </div>
+             `;
+             updateTestResultsTab(html);
+             updateBadge('test-results-badge', failedCount);
+         } else {
+             // All test cases passed - show detailed results
+    let html = '';
 
-            results.forEach((result, index) => {
-                const tc = problem.testCases[index];
-                html += `
-        <div class="test-case">
-          <div class="test-case-header">
-            <span class="test-case-title">Test Case #${tc.id}</span>
-            <span class="test-case-result ${result.passed ? 'passed' : 'failed'}">
-              ${result.passed ? '✓ Passed' : '✗ Failed'}
-            </span>
-          </div>
-          <div class="test-case-details">
-            <div class="test-case-input"><b>Input:</b> ${tc.input.map((v, i) =>
-                    `${String.fromCharCode(97 + i)} = ${v}`).join(', ')}</div>
-            <div class="test-case-output"><b>Output:</b> <pre class="output-pre">${result.output || 'No output'}</pre></div>
-            <div class="test-case-expected"><b>Expected:</b> <pre class="output-pre">${tc.expected}</pre></div>
-            ${result.error ? `<div class="test-case-error"><b>Error:</b> <span class="console-error">${result.error}</span></div>` : ''}
-          </div>
-        </div>
-      `;
-            });
-
-            const successRate = Math.round((passedCount / problem.testCases.length) * 100);
+        results.forEach((result, index) => {
+            const tc = problem.testCases[index];
             html += `
-      <div class="summary ${passedCount === problem.testCases.length ? 'passed' : 'failed'}">
-        ${passedCount === problem.testCases.length ? 'All test cases passed!' :
-                    `${passedCount} of ${problem.testCases.length} test cases passed (${successRate}%)`}
-      </div>
-      ${executionTime ? `<div class="execution-time">Execution time: ${executionTime} ms</div>` : ''}
-    `;
+                <div class="test-case">
+                    <div class="test-case-header">
+                        <span class="test-case-title">Test Case #${tc.id}</span>
+                        <span class="test-case-result ${result.passed ? 'passed' : 'failed'}">
+                            ${result.passed ? '✓ Passed' : '✗ Failed'}
+                        </span>
+                    </div>
+                    <div class="test-case-details">
+                        <div class="test-case-input"><b>Input:</b> ${tc.input.map((v, i) =>
+                            `${String.fromCharCode(97 + i)} = ${v}`).join(', ')}</div>
+                        <div class="test-case-output"><b>Output:</b> <pre class="output-pre">${result.output || 'No output'}</pre></div>
+                        <div class="test-case-expected"><b>Expected:</b> <pre class="output-pre">${tc.expected}</pre></div>
+                        ${result.error ? `<div class="test-case-error"><b>Error:</b> <span class="console-error">${result.error}</span></div>` : ''}
+                    </div>
+                </div>
+            `;
+        });
 
-            updateTestResultsTab(html);
+        const successRate = Math.round((passedCount / totalTestCases) * 100);
+        html += `
+            <div class="summary ${passedCount === totalTestCases ? 'passed' : 'failed'}">
+                ${passedCount === totalTestCases ? 
+                    '<a class="check-solution-link btnbtn-sm" href="#" ">Check Solution</a> All test cases passed!' :
+                    `${passedCount} of ${totalTestCases} test cases passed (${successRate}%)`
+                }
+            </div>
+            ${executionTime ? `<div class="execution-time">Execution time: ${executionTime} ms</div>` : ''}
+        `;
 
-            const failedCount = problem.testCases.length - passedCount;
-            if (failedCount > 0) {
-                updateBadge('test-results-badge', failedCount);
-            }
+        updateTestResultsTab(html);
+    }
 
-            return failedCount;
-        }
+    return failedCount;
+}
+        
         // Switch between tabs
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => {
@@ -1303,18 +1614,18 @@ Output: 4</pre>
                 const problemTitle = problems[sub.problem]?.title || sub.problem;
 
                 html += `
-        <div class="submission">
-          <div class="submission-header">
-            <div><strong>#${index + 1}</strong> - ${problemTitle} (${sub.language})</div>
-            <div class="submission-result ${resultClass}">${results}</div>
-          </div>
-          <div class="submission-meta">${date}</div>
-          <div class="submission-actions">
-            <button onclick="viewSubmission(${index})">View Code</button>
-            <button onclick="rerunSubmission(${index})">Run Again</button>
-          </div>
-        </div>
-      `;
+                <div class="submission">
+                <div class="submission-header">
+                    <div><strong>#${index + 1}</strong> - ${problemTitle} (${sub.language})</div>
+                    <div class="submission-result ${resultClass}">${results}</div>
+                </div>
+                <div class="submission-meta">${date}</div>
+                <div class="submission-actions">
+                    <button onclick="viewSubmission(${index})">View Code</button>
+                    <button onclick="rerunSubmission(${index})">Run Again</button>
+                </div>
+                </div>
+            `;
             });
 
             submissionsDiv.innerHTML = html;
@@ -1397,8 +1708,7 @@ Output: 4</pre>
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
         }
-    </script>
-    <script>
+
         function showMobileBlocker() {
             if (window.innerWidth > 768) return;
 
@@ -1406,47 +1716,47 @@ Output: 4</pre>
             const overlay = document.createElement('div');
             overlay.id = 'simple-mobile-overlay';
             overlay.innerHTML = `
-      <div class="simple-message">
-        <p>For the best experience, please use a desktop or tablet.</p>
-      </div>
-    `;
+            <div class="simple-message">
+                <p>For the best experience, please use a desktop or tablet.</p>
+            </div>
+            `;
 
             // Apply minimal styles
             const style = document.createElement('style');
             style.textContent = `
-      #simple-mobile-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      
-      .simple-message {
-        max-width: 400px;
-        padding: 24px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e0e0e0;
-      }
-      
-      .simple-message p {
-        margin: 0;
-        color: #333;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-    `;
+            #simple-mobile-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+            
+            .simple-message {
+                max-width: 400px;
+                padding: 24px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                border: 1px solid #e0e0e0;
+            }
+            
+            .simple-message p {
+                margin: 0;
+                color: #333;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            `;
 
             document.head.appendChild(style);
             document.body.appendChild(overlay);
@@ -1461,43 +1771,6 @@ Output: 4</pre>
 
         window.addEventListener('load', showMobileBlocker);
         window.addEventListener('resize', showMobileBlocker);
-
-
-        // Test code
-        // async function submitCodeToBackend(code, failedCount) {
-        //     const problemId = urlParams.get('id');
-        //     console.log("POST API CALLED .....", code, failedCount, problemId);
-
-        //     const url = 'https://nammacodingshaale.up.railway.app/api/save-code';
-
-        //     // Encode form data
-        //     const formData = new URLSearchParams();
-        //     formData.append('problem_id', problemId);
-        //     formData.append('code', code);
-        //     formData.append('failed_count', failedCount);
-
-        //     try {
-        //         const response = await fetch(url, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/x-www-form-urlencoded'
-        //             },
-        //             credentials: 'include',  // Optional: for cookies/session auth
-        //             body: formData.toString()
-        //         });
-
-        //         if (!response.ok) {
-        //             throw new Error(`HTTP error! status: ${response.status}`);
-        //         }
-
-        //         const responseData = await response.json();
-        //         console.log('Success:', responseData);
-        //         return responseData;
-        //     } catch (error) {
-        //         console.error('Error posting data:', error);
-        //         throw error;
-        //     }
-        // }
 
         // Get CSRF token from meta tag
         function getCSRFToken() {
@@ -1541,22 +1814,20 @@ Output: 4</pre>
             }
         }
 
-
-
         document.addEventListener('contextmenu', function(e) {
-              e.preventDefault();
+            e.preventDefault();
         });
             
         document.addEventListener('keydown', function(e) {
-              // Ctrl+C, Ctrl+A, Ctrl+X, etc.
-              if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
+            // Ctrl+C, Ctrl+A, Ctrl+X, etc.
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
                 e.preventDefault();
-              }
+            }
         });
 
         // Store the last focused element
         let lastFocusedElement = null;
-        
+
         document.addEventListener('visibilitychange', async function() {
             if (document.hidden) {
                 console.log('Tab switched - preparing to clear clipboard');
@@ -1589,7 +1860,7 @@ Output: 4</pre>
                 }
             }
         });
-        
+
         // Improved fallback method
         function fallbackClearClipboard() {
             try {
@@ -1618,8 +1889,7 @@ Output: 4</pre>
                 console.error('Fallback clipboard clearing failed:', e);
             }
         }
-
-        </script>
+    </script>
 
 </body>
 
