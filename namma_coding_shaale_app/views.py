@@ -45,6 +45,8 @@ credentials = getattr(settings, 'CREDENTIALS', {})
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+memorycache_sidebar = {}
+
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
 
@@ -625,6 +627,10 @@ def view_content(request, course_id, content_file_id):
         
         # Handle POST request to mark as completed
         if request.method == 'POST' and 'mark_completed' in request.POST:
+            #clear the cache 
+            memorycache_sidebar[request.user.id+course_id] = None
+            print(f"CACHE CLEARED : for id {request.user.id+course_id}")
+
             progress.is_completed = True
             progress.completed_at = timezone.now()
             progress.save()
@@ -781,6 +787,11 @@ def view_content(request, course_id, content_file_id):
 '''
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
+    cached_result = memorycache_sidebar.get(user_id+course_id)
+    if cached_result is not None:
+        print(f"CACHE FOUND : for id {user_id+course_id}")
+        return cached_result
+    
     user_progress = {
         up.content_id: up 
         for up in UserContentProgress.objects.filter(
@@ -843,6 +854,9 @@ def get_user_roadmap_html(user_id, course_id):
             'contents': data['contents'],
             'has_submenu': len(data['contents']) > 1
         })
+    
+    memorycache_sidebar[user_id+course_id] = result
+    print(f"CACHE SET : for id {user_id+course_id}")
     
     return result
 
