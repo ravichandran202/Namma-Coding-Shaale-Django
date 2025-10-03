@@ -416,6 +416,10 @@ def payment_status(request):
     
     return render(request, 'payment_status.html', context)
 
+def show_certificate(request):
+    return render(request, 'certificate.html')
+
+
 def terms_and_conditions(request):
     return render(request, "terms-and-conditions.html")
 

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion - ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gold: #d4af37;
+            --gold-dark: #b8941f;
+            --silver: #c0c0c0;
+            --premium-cream: #fefcf8;
+            --premium-gold-light: #f9f5e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 10px;
+        }
+
+        .certificate-wrapper {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .certificate-container {
+            background: var(--premium-cream);
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(212, 175, 55, 0.1),
+                inset 0 0 100px rgba(212, 175, 55, 0.05);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .certificate-border {
+            border: 15px solid transparent;
+            padding: 60px;
+            position: relative;
+            background:
+                linear-gradient(var(--premium-cream), var(--premium-cream)) padding-box,
+                repeating-linear-gradient(45deg, var(--gold) 0%, var(--gold) 25%, transparent 25%, transparent 50%) border-box;
+            background-size: 20px 20px;
+        }
+
+        .certificate-inner {
+            border: 2px solid var(--gold);
+            padding: 80px 60px;
+            position: relative;
+            background: var(--premium-cream);
+        }
+
+        .certificate-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 180px;
+            color: rgba(212, 175, 55, 0.03);
+            font-weight: 900;
+            z-index: 0;
+            white-space: nowrap;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 15px;
+        }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .certificate-badge {
+            width: 120px;
+            height: 120px;
+            background: var(--gold);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            border: 8px solid var(--premium-cream);
+            position: relative;
+        }
+
+        .certificate-badge i {
+            font-size: 50px;
+            color: white;
+        }
+
+        .certificate-title {
+            font-size: 42px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .certificate-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .certificate-body {
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .certificate-text {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--dark);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .user-name {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 20px 0;
+            line-height: 1.2;
+        }
+
+        .course-name {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 30px 0;
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+            padding: 15px 40px;
+            display: inline-block;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .course-name:before,
+        .course-name:after {
+            content: "•";
+            color: var(--gold);
+            margin: 0 20px;
+            font-size: 24px;
+        }
+
+        .completion-date {
+            font-size: 20px;
+            margin: 20px 0;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature {
+            text-align: center;
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background: var(--dark);
+            margin: 0 auto 15px;
+        }
+
+        .signature p {
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .signature p:first-of-type {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 18px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .certificate-id {
+            margin-top: 50px;
+            font-size: 16px;
+            color: var(--gray);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        .certificate-actions {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 2;
+        }
+
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-top: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-top: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .certificate-border {
+                padding: 40px;
+            }
+
+            .certificate-inner {
+                padding: 60px 40px;
+            }
+
+            .certificate-title {
+                font-size: 36px;
+            }
+
+            .user-name {
+                font-size: 42px;
+            }
+
+            .course-name {
+                font-size: 24px;
+            }
+
+            .certificate-watermark {
+                font-size: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .certificate-wrapper {
+                padding: 10px;
+            }
+
+            .certificate-border {
+                padding: 20px;
+                border-width: 10px;
+            }
+
+            .certificate-inner {
+                padding: 40px 20px;
+            }
+
+            .certificate-title {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .certificate-subtitle {
+                font-size: 16px;
+            }
+
+            .user-name {
+                font-size: 32px;
+                margin: 15px 0;
+                padding: 15px 0;
+            }
+
+            .course-name {
+                font-size: 20px;
+                margin: 20px 0;
+                padding: 10px 20px;
+            }
+
+            .course-name:before,
+            .course-name:after {
+                margin: 0 10px;
+            }
+
+            .certificate-text {
+                font-size: 18px;
+                line-height: 1.5;
+                margin-bottom: 15px;
+            }
+
+            .completion-date {
+                font-size: 18px;
+                margin: 15px 0;
+            }
+
+            .certificate-actions {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 30px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .certificate-watermark {
+                font-size: 100px;
+                letter-spacing: 8px;
+            }
+
+            .corner-ornament {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .certificate-border {
+                padding: 15px;
+                border-width: 8px;
+            }
+
+            .certificate-inner {
+                padding: 30px 15px;
+            }
+
+            .certificate-watermark {
+                font-size: 70px;
+                letter-spacing: 5px;
+            }
+
+            .certificate-title {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+
+            .certificate-subtitle {
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+
+            .certificate-text {
+                font-size: 16px;
+                line-height: 1.4;
+                margin-bottom: 12px;
+            }
+
+            .user-name {
+                font-size: 26px;
+                margin: 12px 0;
+                padding: 12px 0;
+            }
+
+            .course-name {
+                font-size: 18px;
+                margin: 15px 0;
+                padding: 8px 15px;
+            }
+
+            .course-name:before,
+            .course-name:after {
+                margin: 0 5px;
+                font-size: 18px;
+            }
+
+            .completion-date {
+                font-size: 16px;
+                margin: 12px 0;
+            }
+
+            .certificate-footer {
+                margin-top: 40px;
+                padding-top: 20px;
+            }
+
+            .signature {
+                padding: 0 10px;
+            }
+
+            .signature-line {
+                width: 150px;
+            }
+
+            .signature p {
+                font-size: 14px;
+            }
+
+            .signature p:first-of-type {
+                font-size: 16px;
+            }
+
+            .certificate-id {
+                margin-top: 30px;
+                font-size: 14px;
+            }
+
+            .corner-ornament {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .certificate-border {
+                padding: 10px;
+                border-width: 5px;
+            }
+
+            .certificate-inner {
+                padding: 20px 10px;
+            }
+
+            .certificate-watermark {
+                font-size: 50px;
+                letter-spacing: 3px;
+            }
+
+            .certificate-title {
+                margin-top: 10px;
+                font-size: 16px;
+            }
+
+            .certificate-subtitle {
+                font-size: 12px;
+            }
+
+            .certificate-text {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+
+            .certificate-body {
+                text-align: center;
+                margin: 10px 0;
+                position: relative;
+                z-index: 1;
+            }
+
+            .certificate-header {
+                text-align: center;
+                margin-bottom: 20px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .certificate-wrapper {
+                padding: 0px;
+            }
+
+            .user-name {
+                font-size: 22px;
+                margin: 10px 0;
+                padding: 10px 0;
+            }
+
+            .course-name {
+                font-size: 16px;
+                margin: 12px 0;
+                padding: 5px 10px;
+            }
+
+            .completion-date {
+                font-size: 12px;
+                margin: 10px 0;
+            }
+
+            .certificate-footer {
+
+                margin-top: 30px;
+                padding-top: 15px;
+            }
+
+            .signature-line {
+                width: 120px;
+            }
+
+            .certificate-id {
+                margin-top: 20px;
+                font-size: 10px;
+            }
+
+            .corner-ornament {
+                width: 20px;
+                height: 20px;
+                border-width: 1px !important;
+            }
+
+            .signature p {
+                font-size: 10px;
+            }
+
+            .signature p:first-of-type {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .certificate-watermark {
+                font-size: 40px;
+            }
+
+            .certificate-title {
+                font-size: 18px;
+            }
+
+            .user-name {
+                font-size: 20px;
+            }
+
+            .course-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate-wrapper">
+        <div class="certificate-container">
+            <div class="certificate-border">
+                <div class="certificate-inner">
+                    <!-- Watermark -->
+                    <div class="certificate-watermark">EXCELLENCE</div>
+
+                    <!-- Corner ornaments -->
+                    <div class="corner-ornament corner-tl"></div>
+                    <div class="corner-ornament corner-tr"></div>
+                    <div class="corner-ornament corner-bl"></div>
+                    <div class="corner-ornament corner-br"></div>
+
+                    <!-- Header -->
+                    <div class="certificate-header">
+                        <h1 class="certificate-title">Certificate of Completion</h1>
+                        <p class="certificate-subtitle">This is to certify that</p>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="certificate-body">
+                        <p class="certificate-text">has successfully completed the comprehensive course</p>
+                        <h2 class="user-name">RAVICHANDRAN T S</h2>
+                        <p class="certificate-text">in</p>
+                        <h3 class="course-name">Advanced Web Development & Full-Stack Engineering</h3>
+                        <p class="certificate-text">demonstrating exceptional proficiency and mastery in all required
+                            competencies.</p>
+                        <p class="completion-date">Completed on: August 23, 2025</p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="certificate-footer">
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            <p>Ravichandran</p>
+                            <p>Director of NCS</p>
+                        </div>
+
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            <p>ನಮ್ಮ CODING ಶಾಲೆ</p>
+                            <p>Official Institution</p>
+                        </div>
+                    </div>
+
+                    <!-- Certificate ID -->
+                    <div class="certificate-id">
+                        Certificate ID: NCS-2023-06-15-8472 <br> Verify at: nammacodingshaale.com/verify
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.btn-secondary')[1].addEventListener('click', function () {
+            window.print();
+        });
+    </script>
+</body>
+
+</html>

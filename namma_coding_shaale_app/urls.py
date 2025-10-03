@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('checkout/<int:course_id>', views.checkout, name='checkout'),
     path('order/status', views.payment_status, name='payment_status'),
+    path('verify/certificate', views.show_certificate, name='show_certificate'),
 
 
     path('terms-and-conditions', views.terms_and_conditions, name='terms_and_conditions'),
