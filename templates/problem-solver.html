@@ -7,6 +7,8 @@
     <meta charset="UTF-8" />
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <title>Sum of Two Numbers</title>
     <style>
         :root {
@@ -368,6 +370,14 @@
             font-weight: 600;
         }
 
+        h3 {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
         p {
             margin-bottom: 1rem;
             font-size: 0.95rem;
@@ -655,6 +665,8 @@
             border-radius: 10px;
             width: 0%;
             transition: width 0.3s ease;
+            color: #e2e8f0;
+            font-weight: 700;
         }
 
         .progress-text {
@@ -1339,7 +1351,7 @@ Output: 4</pre>
             testResultsDiv.innerHTML = `
                 <h3>Running Test Cases</h3>
                 <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" >  </div>
                 </div>
                 <div class="progress-text" id="progress-text">0/${totalTestCases} test cases completed</div>
                 <div class="test-case-progress" id="test-case-indicators"></div>
@@ -1362,6 +1374,7 @@ Output: 4</pre>
             const percentage = (current / total) * 100;
             
             progressBar.style.width = `${percentage}%`;
+            progressBar.textContent = `${percentage}%`;
             progressText.textContent = `${current}/${total} test cases completed`;
             
             // Update test case indicator
