@@ -1183,6 +1183,11 @@
       border-color: rgba(37, 99, 235, 0.3) !important;
     }
 
+    #msme-logo{
+      max-height: 400px;
+      opacity: 0.8;
+    }
+
     .certificate-container {
       background: transparent;
       overflow: hidden;
@@ -1346,6 +1351,11 @@
         font-size: 2rem;
       }
 
+      #msme-logo{
+        max-height: 300px;
+        opacity: 0.8;
+      }
+
       .footer {
         padding: 4rem 0 2rem;
       }
@@ -1375,6 +1385,12 @@
       .difference-header {
         display: none;
       }
+
+      #msme-logo{
+        max-height: 200px;
+        opacity: 0.8;
+      }
+
     }
 
     /* Animation */
@@ -2973,6 +2989,15 @@
 <section class="section bg-light">
   <div class="container">
       <div class="row align-items-center">
+          <!-- Right Column - MSME Logo Image Only -->
+          <div class="col-lg-6 text-center d-block d-lg-none">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg" 
+                   alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" 
+                   class="img-fluid" 
+                   id="msme-logo" >
+            <p class="fw-bold">UDYAM-KR-22-0128456</p>
+          </div>
+
           <!-- Left Column - Content -->
           <div class="col-lg-6 mb-5 mb-lg-0">
               <span class="text-uppercase text-primary fw-bold letter-spacing-3">Official Recognition</span>
@@ -3023,11 +3048,11 @@
           </div>
 
           <!-- Right Column - MSME Logo Image Only -->
-          <div class="col-lg-6 text-center">
+          <div class="col-lg-6 text-center d-none d-md-none d-lg-block">
               <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg" 
                    alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" 
                    class="img-fluid" 
-                   style="max-height: 400px; opacity: 0.8;">
+                   id="msme-logo">
             <p class="fw-bold">UDYAM-KR-22-0128456</p>
           </div>
       </div>

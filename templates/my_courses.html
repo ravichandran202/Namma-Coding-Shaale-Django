@@ -184,10 +184,11 @@
     /* Section Styling */
     .section {
       padding: var(--section-padding);
+      padding-bottom: 1rem;
     }
 
     .section-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       margin-bottom: 3rem;
       text-align: center;
       position: relative;
@@ -451,132 +452,6 @@
       left: -50px;
     }
 
-    /* Footer */
-    .footer {
-      background-color: var(--dark);
-      color: white;
-      padding: 5rem 0 2rem;
-      position: relative;
-    }
-
-    .footer:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
-
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-about {
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.7;
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-links {
-      list-style: none;
-      padding: 0;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.75rem;
-    }
-
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      transition: var(--transition);
-      font-size: 0.95rem;
-      display: inline-block;
-    }
-
-    .footer-links a:hover {
-      color: white;
-      transform: translateX(5px);
-    }
-
-    .footer-heading {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: white;
-      position: relative;
-      display: inline-block;
-    }
-
-    .footer-heading:after {
-      content: '';
-      position: absolute;
-      bottom: -0.5rem;
-      left: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--primary);
-    }
-
-    .footer-input {
-      background-color: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      width: 100%;
-      margin-bottom: 1rem;
-      transition: var(--transition);
-    }
-
-    .footer-input:focus {
-      outline: none;
-      background-color: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 0 2px var(--primary);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .social-links a {
-      color: white;
-      background-color: rgba(255, 255, 255, 0.1);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-    }
-
-    .social-links a:hover {
-      background-color: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    .copyright {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 2rem;
-      margin-top: 3rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.85rem;
-      text-align: center;
-    }
-
     .text-gradient {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
@@ -629,6 +504,13 @@
       .course-card {
         width: 280px;
       }
+
+      .section-title{
+        font-size: 1.75 rem;
+      }
+      .navbar-brand{
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -637,7 +519,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{% url 'home' %}">
         &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -677,7 +559,7 @@
         <span class="text-uppercase text-primary fw-bold letter-spacing-3"> 
           <span style="color: #1a1a2e;"> Hi </span>  {{ request.user.first_name | upper }} {{ request.user.last_name | upper }}
         </span>
-        <h2 class="section-title mt-3">Your <span class="text-gradient">Learning Path</span></h2>
+        <h2 class="section-title mt-3" id="header">Your <span class="text-gradient">Learning Path</span></h2>
       </div>
 
       <div class="courses-scroller">
@@ -768,55 +650,6 @@
 
     </div>
   </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 mb-5 mb-lg-0">
-          <div class="footer-logo">
-            <span>
-              &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
-            </span>
-          </div>
-          <p class="footer-about">Master Coding through practical problem-solving and interview preparation.</p>
-          <div class="social-links">
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <h5 class="footer-heading">Quick Links</h5>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-           
-          </ul>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <h5 class="footer-heading">Resources</h5>
-          <ul class="footer-links">
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Tutorials</a></li>
-            <li><a href="#">Interview Tips</a></li>
-            <li><a href="#">Community</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4">
-          <h5 class="footer-heading">Newsletter</h5>
-          <p class="footer-newsletter">Subscribe to get updates on new problems and coding tips.</p>
-          <form>
-            <input type="email" class="footer-input" placeholder="Your email" aria-label="Email for newsletter">
-            <button class="btn btn-primary footer-btn" type="button">Subscribe</button>
-          </form>
-        </div>
-      </div>
-      <div class="copyright">
-        <p>&copy; 2025 ನಮ್ಮ Coding ಶಾಲೆ. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
