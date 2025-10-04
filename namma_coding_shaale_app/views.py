@@ -428,12 +428,12 @@ def show_certificate(request):
         return render(request, 'certificate.html', context=context)
     
     user_course = get_object_or_404(UserCourse, certificate_id=certificate_id)
-    print(user_course)
+
     context = {
-        "name" : request.user.first_name + " " + request.user.last_name,
+        "name" : user_course.user.first_name + " " + user_course.user.last_name,
         "course_name" : user_course.course.name,
         "completion_date" : user_course.completion_date,
-        "certificate_id" : user_course.certificate_id
+        "certificate_id" : user_course.certificate_id,
     }
     return render(request, 'certificate.html', context=context)
 
@@ -552,6 +552,7 @@ def my_courses(request):
             if user_course.status != "COMPLETED":
                 user_course.status = "COMPLETED"
                 user_course.certificate_id = generate_certificate_id(request.user.id, user_course.course_id)
+                user_course.completion_date = datetime.now()
                 user_course.save()
 
         courses_data.append({
