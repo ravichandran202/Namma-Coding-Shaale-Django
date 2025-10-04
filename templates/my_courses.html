@@ -230,6 +230,8 @@
     }
 
     .course-card {
+      flex: 0 0 auto;      /* Prevent auto-stretch in flexbox */
+      align-self: flex-start; /* Align top instead of stretch */
       background-color: white;
       border-radius: var(--border-radius);
       overflow: hidden;
@@ -708,12 +710,6 @@
                       {{ course.course.name }}
                     </h3>
                   </div>
-                  {% if not course.is_premium %}
-                    <div class="course-rating">
-                      <i class="fas fa-star"></i>
-                      <span>4.9</span>
-                    </div>
-                  {% endif %}
                 </div>
       
                 <div class="course-meta {% if course.is_premium %}text-light{% endif %} mt-3">
@@ -743,6 +739,20 @@
                   </a>
                   {% endif %}
                 </div>
+
+                {% if course.is_course_completed %}
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                  {% if course.is_premium  %}
+                    <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium-gold">
+                      <i class="fas fas fa-certificate me-1"></i> Show Certificate
+                    </a>
+                  {% else %}
+                  <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium">
+                    <i class="fas fas fa-certificate me-1"></i> Show Certificate
+                  </a>
+                  {% endif %}
+                </div>
+                {% endif %}
                 
               </div>
       

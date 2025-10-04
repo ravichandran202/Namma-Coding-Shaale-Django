@@ -1,0 +1,1126 @@
+INFO 2025-10-04 00:19:05,047 autoreload 22141 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:32,582 autoreload 22141 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:33,028 autoreload 22191 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:37,301 autoreload 22191 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:37,603 autoreload 22206 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:42,894 autoreload 22206 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:43,212 autoreload 22217 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:45,386 autoreload 22217 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:45,708 autoreload 22227 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:48,917 autoreload 22227 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:49,260 autoreload 22251 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:19:57,733 autoreload 22251 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:19:58,058 autoreload 22275 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:22:18,185 autoreload 22275 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:22:18,659 autoreload 22492 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:22:21,884 autoreload 22492 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:22:22,207 autoreload 22503 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:22:44,576 autoreload 22503 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:22:44,990 autoreload 22547 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:29:58,261 autoreload 22547 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:29:58,698 autoreload 23251 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:30:00,094 autoreload 23251 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 00:30:00,434 autoreload 23263 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:37:46,803 autoreload 23263 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:37:47,307 autoreload 23988 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:42:37,557 autoreload 23988 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:42:38,018 autoreload 24426 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:42:40,454 autoreload 24426 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:42:40,802 autoreload 24440 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:42:52,671 autoreload 24440 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:42:53,129 autoreload 24468 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:43:13,478 autoreload 24468 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:43:13,916 autoreload 24500 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:43:18,447 autoreload 24500 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:43:18,772 autoreload 24514 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:43:22,178 autoreload 24514 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:43:22,530 autoreload 24523 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:43:44,913 autoreload 24523 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:43:45,352 autoreload 24567 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:44:15,192 autoreload 24567 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:44:15,608 autoreload 24611 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 00:49:00,132 log 24611 6232961024 Internal Server Error: /content/30001/basic-python-quiz/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 640, in view_content
+    progress.save()
+    ~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1023, in save_base
+    post_save.send(
+    ~~~~~~~~~~~~~~^
+        sender=origin,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        using=using,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/dispatch/dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py", line 225, in update_course_completion_status
+    stats = Content.objects.filter(course=course).aggregate(
+            ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1493, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1511, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1518, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1646, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1678, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1526, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1333, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'course' into field. Choices are: content_text, coursecontent, created_at, file_name, id, problem, problem_id, problemsubmission, quiz_data, quizsubmission, title, type, updated_at, usercontentprogress, usercourse, video_url
+ERROR 2025-10-04 00:50:17,542 log 24611 6199308288 Internal Server Error: /content/30001/basic-python-quiz/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 640, in view_content
+    progress.save()
+    ~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1023, in save_base
+    post_save.send(
+    ~~~~~~~~~~~~~~^
+        sender=origin,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        using=using,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/dispatch/dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py", line 225, in update_course_completion_status
+    stats = Content.objects.filter(course=course).aggregate(
+            ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1493, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1511, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1518, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1646, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1678, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<7 lines>...
+        update_join_types=update_join_types,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1526, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1333, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'course' into field. Choices are: content_text, coursecontent, created_at, file_name, id, problem, problem_id, problemsubmission, quiz_data, quizsubmission, title, type, updated_at, usercontentprogress, usercourse, video_url
+INFO 2025-10-04 00:53:04,489 autoreload 24611 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:53:04,926 autoreload 25605 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 00:53:17,141 log 25605 6123958272 Internal Server Error: /content/30001/basic-python-quiz/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/mysql/base.py", line 76, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.DataError: (1406, 'Data Too Long, field len 21, data len 22')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py", line 262, in update_course_completion_status
+    user_course.save()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1138, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1203, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1286, in _update
+    return query.get_compiler(self.db).execute_sql(ROW_COUNT)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 2060, in execute_sql
+    row_count = super().execute_sql(result_type)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/mysql/base.py", line 76, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+django.db.utils.DataError: (1406, 'Data Too Long, field len 21, data len 22')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 646, in view_content
+    ).order_by('sequence_number').first()
+                                  ~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1104, in first
+    for obj in queryset[:1]:
+               ~~~~~~~~^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 99, in _execute
+    self.db.validate_no_broken_transaction()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/base/base.py", line 521, in validate_no_broken_transaction
+    raise TransactionManagementError(
+    ...<2 lines>...
+    ) from self.rollback_exc
+django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You can't execute queries until the end of the 'atomic' block.
+ERROR 2025-10-04 00:53:27,354 log 25605 6140784640 Internal Server Error: /content/30001/basic-python-quiz/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/mysql/base.py", line 76, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.DataError: (1406, 'Data Too Long, field len 21, data len 22')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py", line 262, in update_course_completion_status
+    user_course.save()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1138, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1203, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1286, in _update
+    return query.get_compiler(self.db).execute_sql(ROW_COUNT)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 2060, in execute_sql
+    row_count = super().execute_sql(result_type)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/mysql/base.py", line 76, in execute
+    return self.cursor.execute(query, args)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+django.db.utils.DataError: (1406, 'Data Too Long, field len 21, data len 22')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 646, in view_content
+    ).order_by('sequence_number').first()
+                                  ~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1104, in first
+    for obj in queryset[:1]:
+               ~~~~~~~~^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 384, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 99, in _execute
+    self.db.validate_no_broken_transaction()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/backends/base/base.py", line 521, in validate_no_broken_transaction
+    raise TransactionManagementError(
+    ...<2 lines>...
+    ) from self.rollback_exc
+django.db.transaction.TransactionManagementError: An error occurred in the current transaction. You can't execute queries until the end of the 'atomic' block.
+INFO 2025-10-04 00:54:37,540 autoreload 25605 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:54:37,993 autoreload 25777 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 00:54:51,371 log 25777 6157201408 Internal Server Error: /content/30001/basic-python-quiz/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 640, in view_content
+    progress.save()
+    ~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/db/models/base.py", line 1023, in save_base
+    post_save.send(
+    ~~~~~~~~~~~~~~^
+        sender=origin,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        using=using,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/dispatch/dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py", line 284, in update_course_completion_status
+    transaction.on_commit(execute_after_commit)
+    ^^^^^^^^^^^
+NameError: name 'transaction' is not defined
+INFO 2025-10-04 00:55:19,568 autoreload 25777 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:55:20,069 autoreload 25857 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:56:18,631 autoreload 25857 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:56:19,059 autoreload 25950 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:57:23,743 autoreload 26136 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:58:44,495 autoreload 26136 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:58:44,973 autoreload 26273 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:58:50,169 autoreload 26273 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:58:50,467 autoreload 26290 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:58:52,911 autoreload 26290 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:58:53,258 autoreload 26295 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:02,968 autoreload 26295 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:03,303 autoreload 26333 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:26,602 autoreload 26333 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:27,033 autoreload 26379 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:30,508 autoreload 26379 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:30,839 autoreload 26390 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:33,165 autoreload 26390 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:33,515 autoreload 26397 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:34,821 autoreload 26397 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:35,141 autoreload 26404 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:41,676 autoreload 26404 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:41,994 autoreload 26418 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:46,172 autoreload 26418 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:46,474 autoreload 26430 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:47,795 autoreload 26430 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:48,096 autoreload 26445 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 00:59:50,235 autoreload 26445 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 00:59:50,523 autoreload 26457 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:29,769 autoreload 26457 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:30,183 autoreload 26521 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:32,334 autoreload 26521 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:32,636 autoreload 26530 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:39,855 autoreload 26530 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:40,164 autoreload 26548 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:45,740 autoreload 26548 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:46,033 autoreload 26566 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:47,177 autoreload 26566 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:47,496 autoreload 26577 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:54,065 autoreload 26577 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:54,387 autoreload 26593 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:56,773 autoreload 26593 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:57,083 autoreload 26605 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:00:58,226 autoreload 26605 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:00:58,522 autoreload 26612 8550561856 Watching for file changes with StatReloader
+WARNING 2025-10-04 01:12:06,900 log 26612 6164705280 Not Found: /verify/vertificarte
+INFO 2025-10-04 01:14:22,913 autoreload 26612 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:14:23,362 autoreload 27953 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:14:25,812 autoreload 27953 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:14:26,154 autoreload 27969 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:14:35,801 autoreload 27969 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:14:36,223 autoreload 27988 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:22:46,893 autoreload 27988 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:22:47,336 autoreload 28789 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:22:51,852 autoreload 28789 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:22:52,238 autoreload 28824 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:22:54,585 autoreload 28824 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:22:54,887 autoreload 28836 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:23:05,560 autoreload 28836 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:23:05,972 autoreload 28866 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:48,604 autoreload 28866 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:49,092 autoreload 29252 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:50,231 autoreload 29252 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:50,529 autoreload 29260 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:51,652 autoreload 29260 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:51,971 autoreload 29264 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:53,096 autoreload 29264 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:53,415 autoreload 29267 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:57,658 autoreload 29267 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:57,962 autoreload 29280 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:26:59,079 autoreload 29280 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:26:59,374 autoreload 29284 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:27:03,638 autoreload 29284 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:27:03,928 autoreload 29295 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:27:08,161 autoreload 29295 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:27:08,486 autoreload 29306 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:27:10,876 autoreload 29306 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:27:11,172 autoreload 29315 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:27:36,587 autoreload 29315 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:27:36,982 autoreload 29358 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:27:45,686 autoreload 29358 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:27:46,051 autoreload 29378 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:01,872 autoreload 29378 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:02,242 autoreload 29415 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:03,657 autoreload 29415 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:03,967 autoreload 29420 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:06,134 autoreload 29420 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:06,453 autoreload 29427 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:08,608 autoreload 29427 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:08,924 autoreload 29432 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:11,079 autoreload 29432 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:11,400 autoreload 29439 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:17,786 autoreload 29439 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:18,108 autoreload 29455 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:32,016 autoreload 29455 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:32,429 autoreload 29494 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:34,835 autoreload 29494 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:35,158 autoreload 29501 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:36,487 autoreload 29501 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:36,779 autoreload 29504 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:28:56,901 autoreload 29504 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:28:57,331 autoreload 29563 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:01,814 autoreload 29563 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:02,152 autoreload 29575 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:07,613 autoreload 29575 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:07,925 autoreload 29589 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:09,229 autoreload 29589 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:09,538 autoreload 29598 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:24,463 autoreload 29598 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:24,893 autoreload 29630 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:27,280 autoreload 29630 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:27,585 autoreload 29637 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:28,900 autoreload 29637 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:29,201 autoreload 29640 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:30,531 autoreload 29640 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:30,838 autoreload 29649 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:33,171 autoreload 29649 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:33,505 autoreload 29653 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:34,630 autoreload 29653 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:34,950 autoreload 29657 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:36,269 autoreload 29657 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:36,566 autoreload 29663 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:41,025 autoreload 29663 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:41,398 autoreload 29674 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:29:46,939 autoreload 29674 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:29:47,252 autoreload 29688 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:02,183 autoreload 29688 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:30:02,633 autoreload 29714 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:07,108 autoreload 29714 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:30:07,401 autoreload 29730 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:13,932 autoreload 29730 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:30:14,252 autoreload 29745 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:36,565 autoreload 29745 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:30:37,002 autoreload 29796 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:41,517 autoreload 29796 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:30:41,856 autoreload 29813 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:30:47,328 autoreload 29813 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/models.py changed, reloading.
+INFO 2025-10-04 01:30:47,645 autoreload 29832 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 01:33:29,262 log 29832 6325039104 Internal Server Error: /my-courses/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 535, in my_courses
+    user_course.certificate_id = generate_certificate_id(request.user_id, user_course.course_id)
+                                                         ^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'user_id'
+INFO 2025-10-04 01:33:36,735 autoreload 29832 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:33:37,190 autoreload 30133 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:34:29,481 autoreload 30133 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:34:29,911 autoreload 30214 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:34:42,843 autoreload 30214 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:34:43,266 autoreload 30237 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:34:46,718 autoreload 30237 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:34:47,040 autoreload 30249 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:34:48,363 autoreload 30249 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:34:48,662 autoreload 30252 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:34:55,014 autoreload 30252 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:34:55,360 autoreload 30278 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:35:00,651 autoreload 30278 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:35:00,970 autoreload 30296 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:37:00,019 autoreload 30296 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:37:00,507 autoreload 30511 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:37:02,957 autoreload 30511 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:37:03,266 autoreload 30519 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:39:43,790 autoreload 30823 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:16,135 autoreload 30823 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:16,596 autoreload 31005 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:20,865 autoreload 31005 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:21,175 autoreload 31020 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:24,650 autoreload 31020 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:24,974 autoreload 31031 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:26,291 autoreload 31031 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:26,596 autoreload 31034 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:32,949 autoreload 31034 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:33,268 autoreload 31055 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:37,718 autoreload 31055 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:38,027 autoreload 31069 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:41,436 autoreload 31069 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:41,791 autoreload 31076 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:41:56,868 autoreload 31076 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:41:57,312 autoreload 31107 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:00,808 autoreload 31107 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:01,154 autoreload 31116 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:03,506 autoreload 31116 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:03,832 autoreload 31123 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:05,136 autoreload 31123 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:05,444 autoreload 31128 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:38,391 autoreload 31128 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:38,821 autoreload 31210 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:43,283 autoreload 31210 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:43,659 autoreload 31222 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:45,009 autoreload 31222 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:45,295 autoreload 31228 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:48,690 autoreload 31228 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:49,014 autoreload 31237 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:51,353 autoreload 31237 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:51,684 autoreload 31244 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:55,936 autoreload 31244 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:56,251 autoreload 31256 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:57,369 autoreload 31256 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:42:57,651 autoreload 31262 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:42:59,803 autoreload 31262 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:43:00,113 autoreload 31268 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:43:01,224 autoreload 31268 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:43:01,528 autoreload 31271 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:43:03,877 autoreload 31271 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:43:04,210 autoreload 31277 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:43:53,097 autoreload 31277 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:43:53,579 autoreload 31357 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:44:11,987 autoreload 31357 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:44:12,412 autoreload 31408 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:44:35,816 autoreload 31408 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:44:36,349 autoreload 31463 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:44:44,354 autoreload 31490 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:45:40,056 autoreload 31605 8550561856 Watching for file changes with StatReloader
+WARNING 2025-10-04 01:47:23,472 log 31605 6125793280 Not Found: /accounts/login/
+WARNING 2025-10-04 01:47:24,994 log 31605 6125793280 Not Found: /accounts/login/
+INFO 2025-10-04 01:49:36,102 autoreload 31605 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:49:36,537 autoreload 32124 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:49:48,458 autoreload 32124 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:49:48,903 autoreload 32169 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:50:04,900 autoreload 32169 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:50:05,299 autoreload 32217 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:50:12,942 autoreload 32217 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:50:13,382 autoreload 32241 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:50:52,742 autoreload 32241 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:50:53,172 autoreload 32315 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:50:54,570 autoreload 32315 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:50:54,854 autoreload 32321 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:50:59,309 autoreload 32321 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:50:59,629 autoreload 32333 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:51:09,519 autoreload 32333 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:51:10,003 autoreload 32359 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 01:51:52,884 autoreload 32359 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 01:51:53,371 autoreload 32431 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 10:59:48,466 log 32431 6156726272 Internal Server Error: /my-courses/
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 552, in my_courses
+    return render(request, 'my_courses.html', {'courses': courses_data})
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 961, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/smartif.py", line 198, in parse
+    raise self.error_class(
+        "Unused '%s' at end of if expression." % self.current_token.display()
+    )
+django.template.exceptions.TemplateSyntaxError: Unused 'course.is_course_completed' at end of if expression.
+INFO 2025-10-04 11:00:33,175 autoreload 32431 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:00:33,662 autoreload 55888 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:00:36,886 autoreload 55888 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:00:37,190 autoreload 55901 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:01:00,304 autoreload 55901 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:01:00,637 autoreload 55956 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:01:54,790 autoreload 55956 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:01:55,123 autoreload 56068 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:05,848 autoreload 56068 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:06,174 autoreload 56093 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:11,460 autoreload 56093 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:11,765 autoreload 56106 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:13,927 autoreload 56106 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:14,233 autoreload 56115 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:18,506 autoreload 56115 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:18,813 autoreload 56129 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:30,629 autoreload 56129 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:30,970 autoreload 56149 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:35,425 autoreload 56149 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:35,770 autoreload 56163 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:40,222 autoreload 56163 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:40,561 autoreload 56176 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:46,052 autoreload 56176 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:46,368 autoreload 56191 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:49,592 autoreload 56191 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:49,909 autoreload 56203 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:02:53,096 autoreload 56203 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:02:53,371 autoreload 56210 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:32,448 autoreload 56210 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:32,751 autoreload 56271 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:34,922 autoreload 56271 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:35,233 autoreload 56282 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:39,453 autoreload 56282 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:39,752 autoreload 56295 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:40,865 autoreload 56295 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:41,157 autoreload 56296 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:48,527 autoreload 56296 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:48,809 autoreload 56319 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:54,081 autoreload 56319 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:54,376 autoreload 56334 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:03:58,846 autoreload 56334 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:03:59,171 autoreload 56345 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:07,885 autoreload 56345 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:08,213 autoreload 56367 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:09,526 autoreload 56367 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:09,811 autoreload 56373 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:12,149 autoreload 56373 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:12,480 autoreload 56380 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:16,901 autoreload 56380 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:17,184 autoreload 56391 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:18,505 autoreload 56391 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:18,803 autoreload 56395 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:27,435 autoreload 56395 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:27,766 autoreload 56413 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:30,128 autoreload 56413 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:30,445 autoreload 56419 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:31,555 autoreload 56419 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:31,877 autoreload 56422 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:35,310 autoreload 56422 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:35,629 autoreload 56436 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:44,351 autoreload 56436 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:44,687 autoreload 56468 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:04:46,003 autoreload 56468 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:04:46,286 autoreload 56473 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:01,274 autoreload 56473 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:01,596 autoreload 56508 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:02,910 autoreload 56508 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:03,201 autoreload 56513 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:06,393 autoreload 56513 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:06,686 autoreload 56522 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:14,108 autoreload 56522 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:14,390 autoreload 56540 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:15,509 autoreload 56540 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:15,840 autoreload 56543 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:30,591 autoreload 56543 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:30,901 autoreload 56570 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:33,058 autoreload 56570 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:33,353 autoreload 56578 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:37,793 autoreload 56578 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:38,127 autoreload 56590 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:43,625 autoreload 56590 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:43,939 autoreload 56603 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:46,267 autoreload 56603 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:46,589 autoreload 56607 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:57,368 autoreload 56607 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:05:57,703 autoreload 56639 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:05:59,865 autoreload 56639 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:06:00,161 autoreload 56650 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:09:21,881 autoreload 56650 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:09:22,273 autoreload 57024 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:09:31,800 autoreload 57024 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:09:32,098 autoreload 57052 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:09:38,672 autoreload 57052 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:09:38,987 autoreload 57067 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:09:56,218 autoreload 57067 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:09:56,533 autoreload 57106 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:32,826 autoreload 57106 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:33,159 autoreload 57159 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:36,549 autoreload 57159 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:36,869 autoreload 57171 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:39,215 autoreload 57171 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:39,537 autoreload 57178 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:40,858 autoreload 57178 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:41,162 autoreload 57182 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:44,561 autoreload 57182 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:44,900 autoreload 57193 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:50,195 autoreload 57193 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:50,511 autoreload 57206 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:51,826 autoreload 57206 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:52,124 autoreload 57209 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:53,443 autoreload 57209 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:53,740 autoreload 57220 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:56,094 autoreload 57220 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:56,414 autoreload 57229 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:10:57,725 autoreload 57229 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:10:58,024 autoreload 57241 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:11,916 autoreload 57241 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:12,219 autoreload 57273 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:15,430 autoreload 57273 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:15,742 autoreload 57283 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:17,068 autoreload 57283 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:17,384 autoreload 57286 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:41,870 autoreload 57286 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:42,180 autoreload 57340 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:48,714 autoreload 57340 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:49,039 autoreload 57356 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:53,292 autoreload 57356 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:53,583 autoreload 57369 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:11:55,925 autoreload 57369 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:11:56,251 autoreload 57380 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:03,673 autoreload 57380 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:03,978 autoreload 57398 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:05,284 autoreload 57398 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:05,635 autoreload 57404 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:10,926 autoreload 57404 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:11,235 autoreload 57416 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:14,438 autoreload 57416 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:14,735 autoreload 57425 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:15,849 autoreload 57425 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:16,142 autoreload 57430 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:18,283 autoreload 57430 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:18,590 autoreload 57437 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:19,700 autoreload 57437 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:20,016 autoreload 57442 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:23,431 autoreload 57442 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:23,749 autoreload 57451 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:28,190 autoreload 57451 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:28,527 autoreload 57462 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:33,802 autoreload 57462 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:34,113 autoreload 57475 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:49,097 autoreload 57475 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:49,430 autoreload 57508 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:50,750 autoreload 57508 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:51,049 autoreload 57513 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:55,508 autoreload 57513 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:55,836 autoreload 57530 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:12:59,228 autoreload 57530 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:12:59,553 autoreload 57539 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:01,703 autoreload 57539 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:02,015 autoreload 57544 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:04,156 autoreload 57544 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:04,454 autoreload 57551 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:08,906 autoreload 57551 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:09,251 autoreload 57561 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:10,548 autoreload 57561 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:10,838 autoreload 57567 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:16,358 autoreload 57567 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:16,671 autoreload 57580 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 11:13:28,180 log 57580 6165229568 Internal Server Error: /verify/certificate
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 430, in show_certificate
+    user_course = get_object_or_404(user_course, certificate_id=certificate_id)
+                                    ^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'user_course' where it is not associated with a value
+INFO 2025-10-04 11:13:50,998 autoreload 57580 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:51,412 autoreload 57640 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:13:52,761 autoreload 57640 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:13:53,065 autoreload 57645 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:14:22,018 autoreload 57645 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:14:22,418 autoreload 57711 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:14:57,475 autoreload 57711 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:14:57,825 autoreload 57775 8550561856 Watching for file changes with StatReloader
+WARNING 2025-10-04 11:16:09,356 log 57775 6124662784 Not Found: /verify/certificate
+INFO 2025-10-04 11:17:47,497 autoreload 57775 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:17:47,894 autoreload 58079 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:17:51,331 autoreload 58079 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:17:51,667 autoreload 58091 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:17:55,894 autoreload 58091 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:17:56,206 autoreload 58103 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:17:57,321 autoreload 58103 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:17:57,654 autoreload 58106 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 11:17:59,942 log 58106 6191034368 Internal Server Error: /verify/certificate
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 433, in show_certificate
+    "name" : request.user.full_name,
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/utils/functional.py", line 253, in inner
+    return func(_wrapped, *args)
+AttributeError: 'User' object has no attribute 'full_name'. Did you mean: 'get_full_name'?
+INFO 2025-10-04 11:18:10,685 autoreload 58106 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:18:11,021 autoreload 58138 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:18:15,480 autoreload 58138 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:18:15,818 autoreload 58149 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:18:19,196 autoreload 58149 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:18:19,509 autoreload 58161 8550561856 Watching for file changes with StatReloader
+INFO 2025-10-04 11:18:21,852 autoreload 58161 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:18:22,164 autoreload 58166 8550561856 Watching for file changes with StatReloader
+ERROR 2025-10-04 11:20:34,725 log 58166 6192590848 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: "'show_certificate'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py", line 275, in home
+    return render(request,"index.html")
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ravichandrant/Desktop/Python Practice/venv/lib/python3.13/site-packages/django/template/base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 3105: ''show_certificate''. Did you forget to register or load this tag?
+WARNING 2025-10-04 11:21:11,181 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:04,151 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:44,045 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:44,813 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:45,304 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:45,671 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:24:57,710 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-10-04 11:25:44,949 log 58166 6192590848 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-10-04 11:25:45,230 autoreload 58166 8550561856 /Users/ravichandrant/Desktop/Python Practice/Namma-Coding-Shaale-Django/namma_coding_shaale_app/views.py changed, reloading.
+INFO 2025-10-04 11:25:45,711 autoreload 58993 8550561856 Watching for file changes with StatReloader
+WARNING 2025-10-04 11:25:46,996 log 58993 6131019776 Not Found: /.well-known/appspecific/com.chrome.devtools.json

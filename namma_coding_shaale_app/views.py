@@ -417,7 +417,25 @@ def payment_status(request):
     return render(request, 'payment_status.html', context)
 
 def show_certificate(request):
-    return render(request, 'certificate.html')
+    certificate_id = request.GET.get('certificate_id')
+    if certificate_id == ""  or certificate_id == None:
+        #Default Values
+        context = {}
+        context["name"] = "Your Full Name"
+        context["course_name"] = "Advanced Web Development & Full-Stack Engineering"
+        context["completion_date"] = datetime.now()
+        context["certificate_id"] = "NCS-2023-06-15-8472"
+        return render(request, 'certificate.html', context=context)
+    
+    user_course = get_object_or_404(UserCourse, certificate_id=certificate_id)
+    print(user_course)
+    context = {
+        "name" : request.user.first_name + " " + request.user.last_name,
+        "course_name" : user_course.course.name,
+        "completion_date" : user_course.completion_date,
+        "certificate_id" : user_course.certificate_id
+    }
+    return render(request, 'certificate.html', context=context)
 
 
 def terms_and_conditions(request):
@@ -527,7 +545,15 @@ def my_courses(request):
         # Calculate progress percentages
         module_progress = (completed_contents / total_contents * 100) if total_contents > 0 else 0
         problem_progress = (solved_problems / problem_contents * 100) if problem_contents > 0 else 0
+        is_course_completed = ((int(module_progress) + int(problem_progress)) // 2) >= 100
         
+        #update course completion status
+        if is_course_completed:
+            if user_course.status != "COMPLETED":
+                user_course.status = "COMPLETED"
+                user_course.certificate_id = generate_certificate_id(request.user.id, user_course.course_id)
+                user_course.save()
+
         courses_data.append({
             'course': course,
             'user_course': user_course,
@@ -538,9 +564,18 @@ def my_courses(request):
             'total_problems': problem_contents,
             'solved_problems': solved_problems,
             'is_premium': course.is_premium,
+            'is_course_completed' : is_course_completed,
+            'certificate_id' : user_course.certificate_id
         })
     
     return render(request, 'my_courses.html', {'courses': courses_data})
+
+def generate_certificate_id(user_id, course_id):
+    """
+    Generate certificate ID in format: NCS-YYYY-MM-DD-{user_id}-{course_id}
+    """
+    today = timezone.now().date()
+    return f"NCS-{today.year}-{today.month:02d}-{today.day:02d}-{user_id}-{course_id}"
 
 @login_required
 def continue_course(request, course_id):
@@ -784,7 +819,6 @@ def view_content(request, course_id, content_file_id):
             return render(request, "view_problem_content.html", context)
     
         return render(request, "view_content.html", context)
-    
 
 '''
    HANDLERS

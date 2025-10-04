@@ -114,6 +114,11 @@ class UserCourse(models.Model):
         ('PAID', 'Paid'),
         ('REFUNDED', 'Refunded'),
     ]
+
+    COURSE_STATUS_CHOICES = [
+        ('COMPLETED', 'Completed'),
+        ('IN_PROGRESS', 'In Progress'),
+    ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrolled_courses')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
@@ -122,6 +127,9 @@ class UserCourse(models.Model):
     fees_paid = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
     current_content = models.ForeignKey(Content, on_delete=models.SET_NULL, blank=True, null=True)
+
+    certificate_id = models.CharField(max_length=36, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=COURSE_STATUS_CHOICES, default='IN_PROGRESS')
     
     class Meta:
         unique_together = ['user', 'course']
