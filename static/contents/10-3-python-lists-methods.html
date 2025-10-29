@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Complete List Methods</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>All built-in methods for working with lists in Python.</b></p>
+
+                <!-- append() -->
+                <div class="method-item mt-4">
+                    <h5><code>.append()</code></h5>
+                    <p class="text-muted">Adds one element to the end of the list</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2]
+nums.append(3)
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 2, 3]</code></pre>
+                    </div>
+                </div>
+
+                <!-- clear() -->
+                <div class="method-item mt-4">
+                    <h5><code>.clear()</code></h5>
+                    <p class="text-muted">Removes all elements from the list</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 3]
+nums.clear()
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[]</code></pre>
+                    </div>
+                </div>
+
+                <!-- copy() -->
+                <div class="method-item mt-4">
+                    <h5><code>.copy()</code></h5>
+                    <p class="text-muted">Creates a copy of the list</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 3]
+new_nums = nums.copy()
+print(new_nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 2, 3]</code></pre>
+                    </div>
+                </div>
+
+                <!-- count() -->
+                <div class="method-item mt-4">
+                    <h5><code>.count()</code></h5>
+                    <p class="text-muted">Counts how many times a value appears</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 2, 3]
+print(nums.count(2))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">2</code></pre>
+                    </div>
+                </div>
+
+                <!-- extend() -->
+                <div class="method-item mt-4">
+                    <h5><code>.extend()</code></h5>
+                    <p class="text-muted">Adds multiple elements to the end</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2]
+nums.extend([3, 4])
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 2, 3, 4]</code></pre>
+                    </div>
+                </div>
+
+                <!-- index() -->
+                <div class="method-item mt-4">
+                    <h5><code>.index()</code></h5>
+                    <p class="text-muted">Finds position of first occurrence</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [10, 20, 30]
+print(nums.index(20))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">1</code></pre>
+                    </div>
+                </div>
+
+                <!-- insert() -->
+                <div class="method-item mt-4">
+                    <h5><code>.insert()</code></h5>
+                    <p class="text-muted">Inserts element at specific position</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 3]
+nums.insert(1, 2)  # Insert at index 1
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 2, 3]</code></pre>
+                    </div>
+                </div>
+
+                <!-- pop() -->
+                <div class="method-item mt-4">
+                    <h5><code>.pop()</code></h5>
+                    <p class="text-muted">Removes and returns element at position</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 3]
+removed = nums.pop()  # Removes last element
+print("Removed:", removed)
+print("List:", nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Removed: 3
+List: [1, 2]</code></pre>
+                    </div>
+
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python"># Pop from specific position
+nums = [1, 2, 3, 4]
+removed = nums.pop(1)  # Remove element at index 1
+print("Removed:", removed)
+print("List:", nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Removed: 2
+List: [1, 3, 4]</code></pre>
+                    </div>
+                </div>
+
+                <!-- remove() -->
+                <div class="method-item mt-4">
+                    <h5><code>.remove()</code></h5>
+                    <p class="text-muted">Removes first occurrence of value</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 3, 2]
+nums.remove(2)  # Removes first '2'
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 3, 2]</code></pre>
+                    </div>
+                </div>
+
+                <!-- reverse() -->
+                <div class="method-item mt-4">
+                    <h5><code>.reverse()</code></h5>
+                    <p class="text-muted">Reverses the order of elements</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [1, 2, 3]
+nums.reverse()
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[3, 2, 1]</code></pre>
+                    </div>
+                </div>
+
+                <!-- sort() -->
+                <div class="method-item mt-4">
+                    <h5><code>.sort()</code></h5>
+                    <p class="text-muted">Sorts elements in order</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">nums = [3, 1, 2]
+nums.sort()
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[1, 2, 3]</code></pre>
+                    </div>
+
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python"># Sort in reverse order
+nums = [3, 1, 2]
+nums.sort(reverse=True)
+print(nums)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">[3, 2, 1]</code></pre>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="note-box note-info mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-book"></i>
+                        Complete Reference Table
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Description</th>
+                                    <th>Syntax</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>.append()</code></td>
+                                    <td>Adds one element to end</td>
+                                    <td><code>list.append(x)</code></td>
+                                    <td><code>[1,2].append(3) → [1,2,3]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.clear()</code></td>
+                                    <td>Removes all elements</td>
+                                    <td><code>list.clear()</code></td>
+                                    <td><code>[1,2,3].clear() → []</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.copy()</code></td>
+                                    <td>Creates a copy</td>
+                                    <td><code>new = list.copy()</code></td>
+                                    <td><code>new = [1,2,3].copy()</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.count()</code></td>
+                                    <td>Counts occurrences</td>
+                                    <td><code>list.count(x)</code></td>
+                                    <td><code>[1,2,2].count(2) → 2</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.extend()</code></td>
+                                    <td>Adds multiple elements</td>
+                                    <td><code>list.extend(iterable)</code></td>
+                                    <td><code>[1,2].extend([3,4]) → [1,2,3,4]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.index()</code></td>
+                                    <td>Finds first position</td>
+                                    <td><code>list.index(x)</code></td>
+                                    <td><code>[10,20].index(20) → 1</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.insert()</code></td>
+                                    <td>Inserts at position</td>
+                                    <td><code>list.insert(i,x)</code></td>
+                                    <td><code>[1,3].insert(1,2) → [1,2,3]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.pop()</code></td>
+                                    <td>Removes by position</td>
+                                    <td><code>list.pop(i)</code></td>
+                                    <td><code>[1,2,3].pop() → [1,2]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.remove()</code></td>
+                                    <td>Removes by value</td>
+                                    <td><code>list.remove(x)</code></td>
+                                    <td><code>[1,2,2].remove(2) → [1,2]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.reverse()</code></td>
+                                    <td>Reverses order</td>
+                                    <td><code>list.reverse()</code></td>
+                                    <td><code>[1,2,3].reverse() → [3,2,1]</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>.sort()</code></td>
+                                    <td>Sorts elements</td>
+                                    <td><code>list.sort()</code></td>
+                                    <td><code>[3,1,2].sort() → [1,2,3]</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h5 class="subsection-title">Try It Yourself</h5>
+                    <div class="exercise-problem">
+                        <p>Start with: <code>numbers = [5, 2, 8, 2, 1]</code></p>
+                        <p>Use list methods to:</p>
+                        <ol>
+                            <li>Add 9 to the end</li>
+                            <li>Insert 4 at position 2</li>
+                            <li>Remove the first 2</li>
+                            <li>Count how many 2's</li>
+                            <li>Sort the list</li>
+                            <li>Reverse the list</li>
+                            <li>Remove the last element</li>
+                            <li>Clear the list</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">numbers = [5, 2, 8, 2, 1]
+
+# 1. Add 9 to end
+numbers.append(9)
+print("1. After append:", numbers)
+
+# 2. Insert 4 at position 2
+numbers.insert(2, 4)
+print("2. After insert:", numbers)
+
+# 3. Remove first 2
+numbers.remove(2)
+print("3. After remove:", numbers)
+
+# 4. Count 2's
+count = numbers.count(2)
+print("4. Count of 2's:", count)
+
+# 5. Sort the list
+numbers.sort()
+print("5. After sort:", numbers)
+
+# 6. Reverse the list
+numbers.reverse()
+print("6. After reverse:", numbers)
+
+# 7. Remove last element
+numbers.pop()
+print("7. After pop:", numbers)
+
+# 8. Clear the list
+numbers.clear()
+print("8. After clear:", numbers)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">1. After append: [5, 2, 8, 2, 1, 9]
+2. After insert: [5, 2, 4, 8, 2, 1, 9]
+3. After remove: [5, 4, 8, 2, 1, 9]
+4. Count of 2's: 1
+5. After sort: [1, 2, 4, 5, 8, 9]
+6. After reverse: [9, 8, 5, 4, 2, 1]
+7. After pop: [9, 8, 5, 4, 2]
+8. After clear: []</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Key Points to Remember
+                    </div>
+                    <div class="note-content">
+                        <ul>
+                            <li><strong>Adding:</strong> Use <code>.append()</code> for one item, <code>.extend()</code> for multiple</li>
+                            <li><strong>Removing:</strong> Use <code>.remove()</code> by value, <code>.pop()</code> by position</li>
+                            <li><strong>Finding:</strong> Use <code>.index()</code> for position, <code>.count()</code> for occurrences</li>
+                            <li><strong>Ordering:</strong> Use <code>.sort()</code> to sort, <code>.reverse()</code> to reverse</li>
+                            <li><strong>Copying:</strong> Use <code>.copy()</code> to avoid modifying original list</li>
+                            <li><strong>Clearing:</strong> Use <code>.clear()</code> to empty the list</li>
+                            <li>Most list methods modify the original list directly</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

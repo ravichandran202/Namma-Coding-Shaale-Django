@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">String Methods</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>In Python, string methods are <b>built-in functions</b> that help you perform
+                        operations on strings such as changing case, searching, splitting, joining, or formatting
+                        text.</b></p>
+                <p class="lead"><b>You call them using dot notation: <code>"text".method()</code></b></p>
+
+
+
+                <!-- Case Conversion Methods -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Case Conversion</h5>
+
+                    <!-- upper() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.upper()</code></h6>
+                        <p class="text-muted">Converts text to UPPERCASE</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.upper())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">HELLO</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- lower() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.lower()</code></h6>
+                        <p class="text-muted">Converts text to lowercase</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "HELLO"
+print(text.lower())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">hello</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- title() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.title()</code></h6>
+                        <p class="text-muted">Capitalizes first letter of each word</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello world"
+print(text.title())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Hello World</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- capitalize() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.capitalize()</code></h6>
+                        <p class="text-muted">Capitalizes first letter of sentence</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "python programming"
+print(text.capitalize())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Python programming</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Whitespace Handling -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Whitespace Handling</h5>
+
+                    <!-- strip() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.strip()</code></h6>
+                        <p class="text-muted">Removes spaces from both ends</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "  hello  "
+print(f"'{text.strip()}'")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">'hello'</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- lstrip() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.lstrip()</code></h6>
+                        <p class="text-muted">Removes spaces from left side only</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "  hello  "
+print(f"'{text.lstrip()}'")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">'hello  '</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- rstrip() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.rstrip()</code></h6>
+                        <p class="text-muted">Removes spaces from right side only</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "  hello  "
+print(f"'{text.rstrip()}'")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">'  hello'</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Searching Methods -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Searching</h5>
+
+                    <!-- find() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.find()</code></h6>
+                        <p class="text-muted">Finds first position of text</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.find("l"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">2</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- count() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.count()</code></h6>
+                        <p class="text-muted">Counts how many times text appears</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.count("l"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">2</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- startswith() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.startswith()</code></h6>
+                        <p class="text-muted">Checks if string starts with text</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.startswith("he"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- endswith() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.endswith()</code></h6>
+                        <p class="text-muted">Checks if string ends with text</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.endswith("lo"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Replacing & Splitting -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Replacing & Splitting</h5>
+
+                    <!-- replace() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.replace()</code></h6>
+                        <p class="text-muted">Replaces text with other text</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(text.replace("l", "x"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">hexxo</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- split() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.split()</code></h6>
+                        <p class="text-muted">Breaks text into list of words</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello world"
+print(text.split())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">['hello', 'world']</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- join() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.join()</code></h6>
+                        <p class="text-muted">Joins list into string with separator</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">words = ["a", "b", "c"]
+print(",".join(words))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">a,b,c</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validation Methods -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Validation</h5>
+
+                    <!-- isalpha() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.isalpha()</code></h6>
+                        <p class="text-muted">True if only letters (a-z, A-Z)</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">print("abc".isalpha())
+print("abc123".isalpha())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True
+False</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- isdigit() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.isdigit()</code></h6>
+                        <p class="text-muted">True if only numbers (0-9)</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">print("123".isdigit())
+print("12a".isdigit())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True
+False</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- isalnum() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.isalnum()</code></h6>
+                        <p class="text-muted">True if only letters and numbers</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">print("abc123".isalnum())
+print("abc 123".isalnum())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True
+False</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- isspace() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.isspace()</code></h6>
+                        <p class="text-muted">True if only spaces</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">print("   ".isspace())
+print(" a ".isspace())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">True
+False</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formatting -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Formatting</h5>
+
+                    <!-- format() -->
+                    <div class="method-item mt-4">
+                        <h6><code>.format()</code></h6>
+                        <p class="text-muted">Old way to put variables in strings</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">name = "Sam"
+print("My name is {}".format(name))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">My name is Sam</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- f-string -->
+                    <div class="method-item mt-4">
+                        <h6><code>f"{}"</code></h6>
+                        <p class="text-muted">New way to put variables in strings</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">name = "Sam"
+print(f"My name is {name}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">My name is Sam</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Length -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Length</h5>
+
+                    <!-- len() -->
+                    <div class="method-item mt-4">
+                        <h6><code>len()</code></h6>
+                        <p class="text-muted">Counts characters in string</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "hello"
+print(len(text))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">5</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card-body">
+                    <h5 class="subsection-title lead"><b>Complete reference of Python string methods</b></h5>
+
+                    <!-- Case Conversion -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Case Conversion</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.upper()</code></td>
+                                        <td>Converts to uppercase</td>
+                                        <td><code>"hello".upper()</code></td>
+                                        <td><code>"HELLO"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.lower()</code></td>
+                                        <td>Converts to lowercase</td>
+                                        <td><code>"HELLO".lower()</code></td>
+                                        <td><code>"hello"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.title()</code></td>
+                                        <td>Capitalizes first letter of each word</td>
+                                        <td><code>"hello sam".title()</code></td>
+                                        <td><code>"Hello Sam"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.capitalize()</code></td>
+                                        <td>Capitalizes first letter of sentence</td>
+                                        <td><code>"python".capitalize()</code></td>
+                                        <td><code>"Python"</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Whitespace Handling -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Whitespace Handling</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.strip()</code></td>
+                                        <td>Removes spaces from both ends</td>
+                                        <td><code>" hi ".strip()</code></td>
+                                        <td><code>"hi"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.lstrip()</code></td>
+                                        <td>Removes spaces from the left side</td>
+                                        <td><code>" hi ".lstrip()</code></td>
+                                        <td><code>"hi "</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.rstrip()</code></td>
+                                        <td>Removes spaces from the right side</td>
+                                        <td><code>" hi ".rstrip()</code></td>
+                                        <td><code>" hi"</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Searching -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Searching</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.find()</code></td>
+                                        <td>Finds first index of substring</td>
+                                        <td><code>"hello".find("l")</code></td>
+                                        <td><code>2</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.count()</code></td>
+                                        <td>Counts occurrences of substring</td>
+                                        <td><code>"hello".count("l")</code></td>
+                                        <td><code>2</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.startswith()</code></td>
+                                        <td>Checks if string starts with a value</td>
+                                        <td><code>"hello".startswith("he")</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.endswith()</code></td>
+                                        <td>Checks if string ends with a value</td>
+                                        <td><code>"hello".endswith("lo")</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Replacing & Splitting -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Replacing & Splitting</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.replace()</code></td>
+                                        <td>Replaces part of a string with another</td>
+                                        <td><code>"hello".replace("l","x")</code></td>
+                                        <td><code>"hexxo"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.split()</code></td>
+                                        <td>Splits string into a list</td>
+                                        <td><code>"a b c".split()</code></td>
+                                        <td><code>["a","b","c"]</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.join()</code></td>
+                                        <td>Joins elements of a list into a string</td>
+                                        <td><code>",".join(["a","b"])</code></td>
+                                        <td><code>"a,b"</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Validation -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Validation</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-danger">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.isalpha()</code></td>
+                                        <td>True if all characters are letters</td>
+                                        <td><code>"abc".isalpha()</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.isdigit()</code></td>
+                                        <td>True if all characters are digits</td>
+                                        <td><code>"123".isdigit()</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.isalnum()</code></td>
+                                        <td>True if only letters and numbers</td>
+                                        <td><code>"abc123".isalnum()</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>.isspace()</code></td>
+                                        <td>True if only spaces</td>
+                                        <td><code>" ".isspace()</code></td>
+                                        <td><code>True</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Formatting -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Formatting</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>.format()</code></td>
+                                        <td>Formats string with placeholders</td>
+                                        <td><code>"My name is {}".format("Sam")</code></td>
+                                        <td><code>"My name is Sam"</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>f"{}"</code></td>
+                                        <td>Modern formatting (f-string)</td>
+                                        <td><code>f"My name is {'Sam'}"</code></td>
+                                        <td><code>"My name is Sam"</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Length -->
+                    <div class="pt-3">
+                        <h5 class="subsection-title">Length</h5>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                        <th>Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>len()</code></td>
+                                        <td>Returns length of the string</td>
+                                        <td><code>len("hello")</code></td>
+                                        <td><code>5</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tips -->
+                    <div class="note-box note-success mt-4">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Quick Tips
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li>All string methods return <strong>new strings</strong> (strings are immutable)</li>
+                                <li>Use <code>.</code> (dot) notation: <code>"text".method()</code></li>
+                                <li>Methods with <code>is</code> prefix return <code>True</code> or <code>False</code>
+                                </li>
+                                <li><code>len()</code> is a function, not a method: <code>len(text)</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h5 class="subsection-title">Try It Yourself</h5>
+                    <div class="exercise-problem">
+                        <p>Use this string: <code>text = "  Python is FUN!  "</code></p>
+                        <p>Write code to:</p>
+                        <ol>
+                            <li>Remove spaces from both ends</li>
+                            <li>Convert to uppercase</li>
+                            <li>Replace "FUN" with "AWESOME"</li>
+                            <li>Split into words</li>
+                            <li>Count how many words</li>
+                            <li>Check if it starts with "Python"</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">text = "  Python is FUN!  "
+
+# 1. Remove spaces
+clean = text.strip()
+print("1. No spaces:", clean)
+
+# 2. Uppercase
+upper_text = clean.upper()
+print("2. Uppercase:", upper_text)
+
+# 3. Replace
+replaced = clean.replace("FUN", "AWESOME")
+print("3. Replace:", replaced)
+
+# 4. Split into words
+words = clean.split()
+print("4. Words:", words)
+
+# 5. Count words
+print("5. Word count:", len(words))
+
+# 6. Check start
+print("6. Starts with 'Python':", clean.startswith("Python"))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">1. No spaces: Python is FUN!
+2. Uppercase: PYTHON IS FUN!
+3. Replace: Python is AWESOME!
+4. Words: ['Python', 'is', 'FUN!']
+5. Word count: 3
+6. Starts with 'Python': True</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Remember
+                    </div>
+                    <div class="note-content">
+                        <ul>
+                            <li>Use <code>.method()</code> after the string</li>
+                            <li>Strings are immutable - methods return new strings</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

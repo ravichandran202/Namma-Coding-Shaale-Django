@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Tuple Operations</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Learn various operations you can perform with tuples including slicing,
+                        concatenation, and unpacking.</b></p>
+
+                <!-- Tuple Slicing -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">1. Tuple Slicing</h4>
+                    <p class="text-muted">Extract portions of a tuple using slicing syntax</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">nums = (10, 20, 30, 40, 50)
+print(nums[1:4])    # (20, 30, 40)
+print(nums[:3])     # (10, 20, 30)
+print(nums[::2])    # (10, 30, 50)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">(20, 30, 40)
+(10, 20, 30)
+(10, 30, 50)</code></pre>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+print("Basic slicing:")
+print(my_tuple[0:5])    # (1, 2, 3, 4, 5)
+print(my_tuple[6:9])    # (7, 8, 9)
+print(my_tuple[:5])     # (1, 2, 3, 4, 5)
+print(my_tuple[6:])     # (7, 8, 9)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Basic slicing:
+(1, 2, 3, 4, 5)
+(7, 8, 9)
+(1, 2, 3, 4, 5)
+(7, 8, 9)</code></pre>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+print("\nWith step values:")
+print(my_tuple[::2])    # (1, 3, 5, 7, 9)
+print(my_tuple[1::2])   # (2, 4, 6, 8)
+print(my_tuple[::3])    # (1, 4, 7)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">With step values:
+(1, 3, 5, 7, 9)
+(2, 4, 6, 8)
+(1, 4, 7)</code></pre>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+print("\nNegative indexing:")
+print(my_tuple[-3:])    # (7, 8, 9)
+print(my_tuple[:-3])    # (1, 2, 3, 4, 5, 6)
+
+print("\nNegative step:")
+print(my_tuple[::-1])   # (9, 8, 7, 6, 5, 4, 3, 2, 1)
+print(my_tuple[5:2:-1]) # (6, 5, 4)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Negative indexing:
+(7, 8, 9)
+(1, 2, 3, 4, 5, 6)
+
+Negative step:
+(9, 8, 7, 6, 5, 4, 3, 2, 1)
+(6, 5, 4)</code></pre>
+                    </div>
+
+                    <div class="note-box note-info mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Slicing Syntax
+                        </div>
+                        <div class="note-content">
+                            <p><code>tuple[start:stop:step]</code></p>
+                            <ul class="mb-0">
+                                <li><strong>start:</strong> Starting index (inclusive)</li>
+                                <li><strong>stop:</strong> Ending index (exclusive)</li>
+                                <li><strong>step:</strong> Step size (default is 1)</li>
+                                <li>Negative step reverses the order</li>
+                                <li>Original tuple remains unchanged (immutable)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuple Concatenation -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">2. Tuple Concatenation</h4>
+                    <p class="text-muted">Join tuples together using the + operator</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">tuple1 = (1, 2)
+tuple2 = (3, 4)
+new_tuple = tuple1 + tuple2
+print(new_tuple)   # (1, 2, 3, 4)
+
+# Multiple concatenation
+tuple3 = (5, 6)
+combined = tuple1 + tuple2 + tuple3
+print(combined)    # (1, 2, 3, 4, 5, 6)
+
+# With different data types
+names = ("Alice", "Bob")
+ages = (25, 30)
+people = names + ages
+print(people)      # ('Alice', 'Bob', 25, 30)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">(1, 2, 3, 4)
+(1, 2, 3, 4, 5, 6)
+('Alice', 'Bob', 25, 30)</code></pre>
+                    </div>
+                </div>
+
+                <!-- Tuple Replication -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">3. Tuple Replication</h4>
+                    <p class="text-muted">Repeat tuple contents using the * operator</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">x = ("Hi",)
+print(x * 3)   # ('Hi', 'Hi', 'Hi')
+
+numbers = (1, 2, 3)
+print(numbers * 2)   # (1, 2, 3, 1, 2, 3)
+
+# Practical example - creating patterns
+pattern = ("*",) * 5
+print(pattern)   # ('*', '*', '*', '*', '*')
+
+# With multiple elements
+data = ("A", "B")
+print(data * 3)   # ('A', 'B', 'A', 'B', 'A', 'B')</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">('Hi', 'Hi', 'Hi')
+(1, 2, 3, 1, 2, 3)
+('*', '*', '*', '*', '*')
+('A', 'B', 'A', 'B', 'A', 'B')</code></pre>
+                    </div>
+                </div>
+
+                <!-- Tuple Modification -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">4. Tuple Modification</h4>
+                    <p class="text-muted">Convert to list, modify, then convert back to tuple</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">my_tuple = (10, 20, 30)
+print("Original:", my_tuple)
+
+# Convert to list
+temp_list = list(my_tuple)
+
+# Modify the list
+temp_list[1] = 99
+
+# Convert back to tuple
+my_tuple = tuple(temp_list)
+print("Modified:", my_tuple)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: (10, 20, 30)
+Modified: (10, 99, 30)</code></pre>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># More modification examples
+coordinates = (5, 10, 15)
+print("Before:", coordinates)
+
+# Convert to list and make changes
+coord_list = list(coordinates)
+coord_list[0] = 8      # Change first element
+coord_list.append(20)  # Add new element
+coord_list.remove(10)  # Remove element
+
+coordinates = tuple(coord_list)
+print("After:", coordinates)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Before: (5, 10, 15)
+After: (8, 15, 20)</code></pre>
+                    </div>
+
+                    <div class="note-box note-warning mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Important
+                        </div>
+                        <div class="note-content">
+                            <p>Tuples are immutable, so you cannot modify them directly. The conversion to list and back
+                                creates a <strong>new tuple</strong> with the changes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuple Packing and Unpacking -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">5. Tuple Packing and Unpacking</h4>
+
+                    <div class="method-item mt-4">
+                        <h6>Tuple Packing</h6>
+                        <p class="text-muted">Putting multiple values into a single tuple</p>
+                        <div class="code-container">
+                            <pre><code class="language-python"># Packing values into a tuple
+my_tuple = 10, 20, 30, 40
+print(my_tuple)   # (10, 20, 30, 40)
+
+# With parentheses (recommended)
+packed = ("apple", "banana", "cherry")
+print(packed)     # ('apple', 'banana', 'cherry')
+
+# Mixed data types
+mixed = 42, "hello", True, 3.14
+print(mixed)      # (42, 'hello', True, 3.14)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">(10, 20, 30, 40)
+('apple', 'banana', 'cherry')
+(42, 'hello', True, 3.14)</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="method-item mt-4">
+                        <h6>Tuple Unpacking</h6>
+                        <p class="text-muted">Extracting values into separate variables</p>
+                        <div class="code-container">
+                            <pre><code class="language-python"># Unpacking values from a tuple
+a, b, c, d = (10, 20, 30, 40)
+print("a =", a)  # 10
+print("b =", b)  # 20
+print("c =", c)  # 30
+print("d =", d)  # 40
+
+# Practical example
+student = ("Alice", 25, "Computer Science")
+name, age, major = student
+print(f"{name} is {age} years old, studying {major}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">a = 10
+b = 20
+c = 30
+d = 40
+Alice is 25 years old, studying Computer Science</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="method-item mt-4">
+                        <h6>Extended Unpacking</h6>
+                        <p class="text-muted">Using * to capture multiple values</p>
+                        <div class="code-container">
+                            <pre><code class="language-python">my_tuple = (1, 2, 3, 4, 5)
+    
+# Capture remaining elements
+a, b, *rest = my_tuple
+print("a:", a)       # 1
+print("b:", b)       # 2
+print("rest:", rest) # [3, 4, 5]
+
+# Capture beginning elements
+*start, x, y = my_tuple
+print("start:", start) # [1, 2, 3]
+print("x:", x)       # 4
+print("y:", y)       # 5
+
+# Capture middle elements
+first, *middle, last = my_tuple
+print("first:", first)   # 1
+print("middle:", middle) # [2, 3, 4]
+print("last:", last)     # 5</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">a: 1
+b: 2
+rest: [3, 4, 5]
+
+start: [1, 2, 3]
+x: 4
+y: 5
+
+first: 1
+middle: [2, 3, 4]
+last: 5</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Given the tuple: <code>data = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)</code></p>
+                        <p>Perform these operations:</p>
+                        <ol>
+                            <li>Extract elements from index 2 to 6</li>
+                            <li>Get every third element</li>
+                            <li>Reverse the tuple using slicing</li>
+                            <li>Concatenate with another tuple (110, 120)</li>
+                            <li>Unpack first two elements and capture the rest</li>
+                            <li>Change the value at index 4 to 55</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">data = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+    
+# 1. Extract elements from index 2 to 6
+print("1. Slice [2:6]:", data[2:6])
+
+# 2. Get every third element
+print("2. Every third:", data[::3])
+
+# 3. Reverse the tuple
+print("3. Reversed:", data[::-1])
+
+# 4. Concatenate with another tuple
+new_tuple = (110, 120)
+combined = data + new_tuple
+print("4. Concatenated:", combined)
+
+# 5. Unpack first two and capture rest
+first, second, *remaining = data
+print("5. Unpacking:")
+print("   first:", first)
+print("   second:", second)
+print("   remaining:", remaining)
+
+# 6. Change value at index 4 to 55
+temp_list = list(data)
+temp_list[4] = 55
+modified_data = tuple(temp_list)
+print("6. Modified:", modified_data)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">1. Slice [2:6]: (30, 40, 50, 60)
+
+2. Every third: (10, 40, 70, 100)
+
+3. Reversed: (100, 90, 80, 70, 60, 50, 40, 30, 20, 10)
+
+4. Concatenated: (10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120)
+
+5. Unpacking:
+   first: 10
+   second: 20
+   remaining: [30, 40, 50, 60, 70, 80, 90, 100]
+
+6. Modified: (10, 20, 30, 40, 55, 60, 70, 80, 90, 100)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Key Operations Summary
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Operation</th>
+                                <th>Syntax</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>Create tuple</td>
+                                <td><code>(a, b, c)</code></td>
+                                <td><code>(1, 2, 3)</code></td>
+                            </tr>
+                            <tr>
+                                <td>Access element</td>
+                                <td><code>tuple[index]</code></td>
+                                <td><code>nums[0]</code></td>
+                            </tr>
+                            <tr>
+                                <td>Negative index</td>
+                                <td><code>tuple[-index]</code></td>
+                                <td><code>nums[-1]</code></td>
+                            </tr>
+                            <tr>
+                                <td>Loop through elements</td>
+                                <td><code>for item in tuple:</code></td>
+                                <td><code>for x in points:</code></td>
+                            </tr>
+                            <tr>
+                                <td>Loop with index</td>
+                                <td><code>for i in range(len(tuple)):</code></td>
+                                <td>Index-based access</td>
+                            </tr>
+                            <tr>
+                                <td>Slicing</td>
+                                <td><code>tuple[start:stop:step]</code></td>
+                                <td>Extract portion of tuple</td>
+                            </tr>
+                            <tr>
+                                <td>Concatenation</td>
+                                <td><code>tuple1 + tuple2</code></td>
+                                <td>Join tuples together</td>
+                            </tr>
+                            <tr>
+                                <td>Replication</td>
+                                <td><code>tuple * n</code></td>
+                                <td>Repeat tuple n times</td>
+                            </tr>
+                            <tr>
+                                <td>Modification</td>
+                                <td><code>tuple(list(tuple))</code></td>
+                                <td>Convert to list and back</td>
+                            </tr>
+                            <tr>
+                                <td>Unpacking</td>
+                                <td><code>a, b, c = tuple</code></td>
+                                <td>Extract values to variables</td>
+                            </tr>
+                            <tr>
+                                <td>Extended Unpacking</td>
+                                <td><code>a, *b, c = tuple</code></td>
+                                <td>Capture multiple values</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

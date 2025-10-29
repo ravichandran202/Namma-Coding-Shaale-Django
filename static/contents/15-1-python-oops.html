@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Python Object-Oriented Programming (OOP)</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Learn how to organize code using classes and objects for better structure and reusability.</b></p>
+
+                <!-- Basic Concept -->
+                <div class="note-box note-important">
+                    <div class="note-header">
+                        <i class="fas fa-info-circle"></i>
+                        What is Object-Oriented Programming?
+                    </div>
+                    <div class="note-content">
+                        <p>Object-Oriented Programming (OOP) is a way of writing code that organizes everything into <strong>objects</strong> and <strong>classes</strong>.</p>
+                        <p>Think of classes as blueprints and objects as actual houses built from those blueprints.</p>
+                    </div>
+                </div>
+
+                <!-- Advantages -->
+                <div class="pt-3">
+                    <h4 class="section-title">Advantages of OOP</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="note-box note-tip h-100">
+                                <div class="note-header">
+                                    <i class="fas fa-check-circle"></i> <strong>Clear Structure</strong>
+                                </div>
+                                <div class="note-content">
+                                    <p>Provides a clear structure to programs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="note-box note-tip h-100">
+                                <div class="note-header">
+                                    <i class="fas fa-check-circle"></i> <strong>Easy Maintenance</strong>
+                                </div>
+                                <div class="note-content">
+                                    <p>Makes code easier to maintain, reuse, and debug</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="note-box note-tip h-100">
+                                <div class="note-header">
+                                    <i class="fas fa-check-circle"></i> <strong>DRY Principle</strong>
+                                </div>
+                                <div class="note-content">
+                                    <p>Helps keep your code DRY (Don't Repeat Yourself)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="note-box note-tip h-100">
+                                <div class="note-header">
+                                    <i class="fas fa-check-circle"></i> <strong>Reusable Code</strong>
+                                </div>
+                                <div class="note-content">
+                                    <p>Allows you to build reusable applications with less code</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-box note-info mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            DRY Principle
+                        </div>
+                        <div class="note-content">
+                            <p>The DRY principle means you should avoid writing the same code more than once. Move repeated code into functions or classes and reuse it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classes in Python -->
+                <div class="pt-3">
+                    <h4 class="section-title">Classes in Python</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            What is a Class?
+                        </div>
+                        <div class="note-content">
+                            <p>A class is a blueprint that defines what an object will be like and what it can do.</p>
+                            <p><strong>Class members</strong> are variables and methods that belong to a class.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Basic Class Syntax</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class MyClass:
+    x = 5  # class attribute
+    
+    def my_method(self):
+        print("Hello from method!")</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Example: Human Class</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Human:
+    gender = "Male"      # class attribute
+    age = 22             # class attribute
+    hasHeart = True      # class attribute
+    hasBrain = True      # class attribute
+    
+    def speak(self):
+        print("Hello, I am Human")
+    
+    def walk(self):
+        print("I am walking")
+    
+    def eat(self):
+        print("I am eating")</code></pre>
+                    </div>
+
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Terminology
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li><strong>Functions</strong> inside classes are called <strong>methods</strong></li>
+                                <li><strong>Variables</strong> inside classes are called <strong>attributes</strong></li>
+                                <li><code>self</code> refers to the current object instance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objects in Python -->
+                <div class="pt-3">
+                    <h4 class="section-title">Objects in Python</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            What is an Object?
+                        </div>
+                        <div class="note-content">
+                            <p>An object is a real instance created from a class blueprint that has actual data and can perform real actions.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">1. Creating Objects</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Human:
+    gender = "Male"
+    age = 22
+    hasHeart = True
+    hasBrain = True
+    
+    def speak(self):
+        print("Hello, I am Human")
+    
+    def walk(self):
+        print("I am walking")
+    
+    def eat(self):
+        print("I am eating")
+
+# Create an object
+human = Human()</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">2. Accessing Class Members</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">human = Human()
+
+# Access attributes
+print("Gender:", human.gender)
+print("Age:", human.age)
+print("Has Heart:", human.hasHeart)
+print("Has Brain:", human.hasBrain)
+
+# Call methods
+human.speak()
+human.walk()
+human.eat()</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Gender: Male
+Age: 22
+Has Heart: True
+Has Brain: True
+Hello, I am Human
+I am walking
+I am eating</code></pre>
+                    </div>
+
+                    <div class="note-box note-important mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Important
+                        </div>
+                        <div class="note-content">
+                            <p>You create <strong>ONE class</strong> but can make <strong>MANY objects</strong> from it!</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Creating Multiple Objects</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Human:
+    gender = "Male"
+    age = 22
+    hasHeart = True
+    hasBrain = True
+    
+    def speak(self):
+        print("Hello, I am Human")
+    
+    def walk(self):
+        print("I am walking")
+    
+    def eat(self):
+        print("I am eating")
+
+# Create first human
+human1 = Human()
+print("Human 1 - Gender:", human1.gender)
+human1.speak()
+
+# Create second human
+human2 = Human()
+print("Human 2 - Gender:", human2.gender)
+human2.speak()</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Human 1 - Gender: Male
+Hello, I am Human
+Human 2 - Gender: Male
+Hello, I am Human</code></pre>
+                    </div>
+
+                    <div class="note-box note-warning mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Problem Identified!
+                        </div>
+                        <div class="note-content">
+                            <p>All humans will be Male! All humans will be 22 years old! Each Human should have unique name and attributes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Improved Version with __init__ -->
+                <div class="pt-3">
+                    <h4 class="section-title">Improved Version: Using __init__()</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Key Concepts
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li><code>self</code> refers to the specific object (holds the reference of an object)</li>
+                                <li><code>__init__</code> is a special method that automatically runs when you create a new object</li>
+                                <li>It's called the <strong>constructor</strong> or <strong>initializer</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Improved Human Class</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Human:
+    # Class variables (shared by ALL humans)
+    hasHeart = True
+    hasBrain = True
+    
+    def __init__(self, name, gender, age):  # Constructor
+        # Instance variables (unique to EACH human)
+        self.name = name
+        self.gender = gender
+        self.age = age
+    
+    def speak(self):
+        print(f"Hello, I am {self.name}")
+    
+    def walk(self):
+        print(f"{self.name} is walking")
+    
+    def eat(self):
+        print(f"{self.name} is eating")
+    
+    def introduce(self):
+        print(f"My name is {self.name}, I am {self.gender} with age {self.age}")</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Creating Different Humans</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python"># Human 1
+person1 = Human("Ananya", "Female", 25)
+
+# Human 2
+person2 = Human("Akash", "Male", 30)
+
+# Check INSTANCE variables (different for each)
+person1.speak()    # Hello, I am Ananya
+person2.speak()    # Hello, I am Akash
+
+person1.walk()     # Ananya is walking
+person2.walk()     # Akash is walking
+
+person1.introduce()  # My name is Ananya, I am Female with age 25
+person2.introduce()  # My name is Akash, I am Male with age 30</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Hello, I am Ananya
+Hello, I am Akash
+Ananya is walking
+Akash is walking
+My name is Ananya, I am Female with age 25
+My name is Akash, I am Male with age 30</code></pre>
+                    </div>
+                </div>
+
+                <!-- Mobile Phone Example -->
+                <div class="pt-3">
+                    <h4 class="section-title">Example 2: Mobile Phone Class</h4>
+
+                    <div class="code-container">
+                        <pre><code class="language-python">class MobilePhone:
+    # Class variables (same for all phones)
+    can_call = True
+    can_text = True
+    has_screen = True
+    
+    def __init__(self, brand, model, storage, color):
+        # Instance variables (different for each phone)
+        self.brand = brand
+        self.model = model
+        self.storage = storage
+        self.color = color
+        self.is_on = False
+    
+    def turn_on(self):
+        self.is_on = True
+        return f"{self.brand} {self.model} is now ON"
+    
+    def describe(self):
+        return f"{self.color} {self.brand} {self.model} with {self.storage}GB"
+
+# Creating different phones from same blueprint
+phone1 = MobilePhone("Apple", "iPhone 14", 128, "Black")
+phone2 = MobilePhone("Samsung", "Galaxy S23", 256, "White")
+phone3 = MobilePhone("Google", "Pixel 7", 64, "Blue")
+
+print("=== PHONE DESCRIPTIONS ===")
+print(phone1.describe())
+print(phone2.describe())
+print(phone3.describe())
+
+print("\n=== TURNING THEM ON ===")
+print(phone1.turn_on())
+print(phone2.turn_on())
+print(phone3.turn_on())
+
+print(f"\nAll phones can make calls: {MobilePhone.can_call}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">=== PHONE DESCRIPTIONS ===
+Black Apple iPhone 14 with 128GB
+White Samsung Galaxy S23 with 256GB
+Blue Google Pixel 7 with 64GB
+
+=== TURNING THEM ON ===
+Apple iPhone 14 is now ON
+Samsung Galaxy S23 is now ON
+Google Pixel 7 is now ON
+
+All phones can make calls: True</code></pre>
+                    </div>
+                </div>
+
+                <!-- Class vs Instance Variables -->
+                <div class="pt-3">
+                    <h4 class="section-title">Class Variables vs Instance Variables</h4>
+
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Understanding the Difference
+                        </div>
+                        <div class="note-content">
+                            <table class="table table-bordered">
+                                <tr class="table-primary">
+                                    <th>Type</th>
+                                    <th>Definition</th>
+                                    <th>Access</th>
+                                    <th>Example</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Class Variables</strong></td>
+                                    <td>Shared by ALL objects</td>
+                                    <td><code>ClassName.variable</code></td>
+                                    <td><code>Human.hasHeart</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Instance Variables</strong></td>
+                                    <td>Unique to EACH object</td>
+                                    <td><code>object.variable</code></td>
+                                    <td><code>person1.name</code></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Demonstration</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Car:
+    # Class variable (shared)
+    wheels = 4
+    
+    def __init__(self, brand, color):
+        # Instance variables (unique)
+        self.brand = brand
+        self.color = color
+
+# Create cars
+car1 = Car("Toyota", "Red")
+car2 = Car("Honda", "Blue")
+
+print("=== INSTANCE VARIABLES (Different) ===")
+print(f"Car1: {car1.brand}, {car1.color}")
+print(f"Car2: {car2.brand}, {car2.color}")
+
+print("\n=== CLASS VARIABLES (Same) ===")
+print(f"Car1 wheels: {car1.wheels}")
+print(f"Car2 wheels: {car2.wheels}")
+print(f"All cars have: {Car.wheels} wheels")
+
+# Change class variable (affects ALL cars)
+Car.wheels = 6
+print(f"\nAfter change - All cars now have: {Car.wheels} wheels")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">=== INSTANCE VARIABLES (Different) ===
+Car1: Toyota, Red
+Car2: Honda, Blue
+
+=== CLASS VARIABLES (Same) ===
+Car1 wheels: 4
+Car2 wheels: 4
+All cars have: 4 wheels
+
+After change - All cars now have: 6 wheels</code></pre>
+                    </div>
+                </div>
+
+                <!-- The Pattern -->
+                <div class="pt-3">
+                    <h4 class="section-title">The Universal Pattern</h4>
+
+                    <div class="code-container">
+                        <pre><code class="language-python">class Something:
+    # SHARED stuff (class variables)
+    shared_thing = True
+    
+    def __init__(self, unique1, unique2, unique3):
+        # UNIQUE stuff (instance variables)
+        self.unique1 = unique1
+        self.unique2 = unique2
+        self.unique3 = unique3
+    
+    def do_something(self):
+        return f"Working with {self.unique1}"
+
+# Create different objects
+obj1 = Something("A", "B", "C")
+obj2 = Something("X", "Y", "Z")
+obj3 = Something("1", "2", "3")
+
+print(obj1.do_something())  # Working with A
+print(obj2.do_something())  # Working with X
+print(obj3.do_something())  # Working with 1</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Working with A
+Working with X
+Working with 1</code></pre>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="note-box note-info mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-book"></i>
+                        Quick Reference
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Concept</th>
+                                <th>Syntax</th>
+                                <th>Purpose</th>
+                            </tr>
+                            <tr>
+                                <td>Create Class</td>
+                                <td><code>class ClassName:</code></td>
+                                <td>Define a blueprint</td>
+                            </tr>
+                            <tr>
+                                <td>Constructor</td>
+                                <td><code>def __init__(self, params):</code></td>
+                                <td>Initialize object</td>
+                            </tr>
+                            <tr>
+                                <td>Create Object</td>
+                                <td><code>obj = ClassName()</code></td>
+                                <td>Create instance</td>
+                            </tr>
+                            <tr>
+                                <td>Access Attribute</td>
+                                <td><code>obj.attribute</code></td>
+                                <td>Get/set data</td>
+                            </tr>
+                            <tr>
+                                <td>Call Method</td>
+                                <td><code>obj.method()</code></td>
+                                <td>Perform action</td>
+                            </tr>
+                            <tr>
+                                <td>Class Variable</td>
+                                <td><code>ClassName.variable</code></td>
+                                <td>Shared data</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Create a <code>BankAccount</code> class with the following:</p>
+                        <ol>
+                            <li>Class variable: <code>bank_name = "Python Bank"</code> (shared by all accounts)</li>
+                            <li>Instance variables in constructor: <code>account_holder</code>, <code>balance</code></li>
+                            <li>Methods:
+                                <ul>
+                                    <li><code>deposit(amount)</code> - add to balance</li>
+                                    <li><code>withdraw(amount)</code> - subtract from balance (check if sufficient funds)</li>
+                                    <li><code>get_balance()</code> - return current balance</li>
+                                    <li><code>display_info()</code> - show account holder and balance</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p>Create multiple bank accounts and test all methods.</p>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">class BankAccount:
+    # Class variable (shared by all accounts)
+    bank_name = "Python Bank"
+    
+    def __init__(self, account_holder, balance=0):
+        # Instance variables (unique to each account)
+        self.account_holder = account_holder
+        self.balance = balance
+    
+    def deposit(self, amount):
+        self.balance += amount
+        return f"Deposited ${amount}. New balance: ${self.balance}"
+    
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+            return f"Withdrew ${amount}. New balance: ${self.balance}"
+        else:
+            return "Insufficient funds!"
+    
+    def get_balance(self):
+        return self.balance
+    
+    def display_info(self):
+        return f"Bank: {self.bank_name}, Holder: {self.account_holder}, Balance: ${self.balance}"
+
+# Create accounts
+account1 = BankAccount("Alice", 1000)
+account2 = BankAccount("Bob", 500)
+
+print("=== ACCOUNT INFORMATION ===")
+print(account1.display_info())
+print(account2.display_info())
+
+print("\n=== TRANSACTIONS ===")
+print(account1.deposit(200))
+print(account1.withdraw(300))
+print(account2.withdraw(600))  # Should show insufficient funds
+
+print("\n=== FINAL BALANCES ===")
+print(f"Alice's balance: ${account1.get_balance()}")
+print(f"Bob's balance: ${account2.get_balance()}")
+
+print(f"\nAll accounts belong to: {BankAccount.bank_name}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">=== ACCOUNT INFORMATION ===
+Bank: Python Bank, Holder: Alice, Balance: $1000
+Bank: Python Bank, Holder: Bob, Balance: $500
+
+=== TRANSACTIONS ===
+Deposited $200. New balance: $1200
+Withdrew $300. New balance: $900
+Insufficient funds!
+
+=== FINAL BALANCES ===
+Alice's balance: $900
+Bob's balance: $500
+
+All accounts belong to: Python Bank</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Section -->
+                <div class="quiz-container mt-4">
+                    <h4 class="subsection-title">Test Your Knowledge</h4>
+                    
+                    <div class="quiz-question">
+                        <h5>1. What is the purpose of the __init__ method?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>To destroy objects</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="true">
+                                <label>To initialize object attributes</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>To print object information</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>To compare objects</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! __init__ is the constructor that sets up object attributes.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. __init__ is specifically for initialization.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>2. What does 'self' represent in a class method?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>The class itself</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="true">
+                                <label>The current object instance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>The parent class</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>The method parameters</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! 'self' refers to the specific object calling the method.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. 'self' always refers to the object instance.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>3. What is the main advantage of using OOP?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Makes code run faster</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="true">
+                                <label>Provides clear structure and reusability</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Uses less memory</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Makes code shorter</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! OOP's main benefits are organization and reusability.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. OOP focuses on code organization, not necessarily performance.
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions d-flex flex-column flex-sm-row justify-content-between mt-4">
+                        <button class="btn btn-outline-primary reset-quiz-btn mb-2 mb-sm-0">
+                            <i class="fas fa-undo me-1"></i> Reset Quiz
+                        </button>
+                        <button class="btn btn-primary check-answers-btn">
+                            <i class="fas fa-check-circle me-1"></i> Check Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Key Takeaways
+                    </div>
+                    <div class="note-content">
+                        <ul>
+                            <li><strong>Class</strong> = Blueprint, <strong>Object</strong> = Instance</li>
+                            <li><strong>__init__</strong> method initializes object attributes</li>
+                            <li><strong>self</strong> refers to the current object instance</li>
+                            <li><strong>Class variables</strong> are shared, <strong>instance variables</strong> are unique</li>
+                            <li>OOP provides clear structure and promotes code reuse</li>
+                            <li>Follows DRY principle - Don't Repeat Yourself</li>
+                            <li>One class can create many different objects</li>
+                            <li>Methods define actions, attributes define data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

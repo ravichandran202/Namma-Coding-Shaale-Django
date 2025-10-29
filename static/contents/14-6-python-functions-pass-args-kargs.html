@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Python Functions: pass, *args, and **kwargs</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Learn how to create flexible functions using pass, *args, and **kwargs for powerful
+                        Python programming.</b></p>
+
+                <!-- pass Statement -->
+                <div class="pt-5">
+                    <h4 class="section-title">1. pass Statement</h4>
+
+
+                    <div class="note-content">
+                        <p>A placeholder that does nothing. Used when syntax requires code but you don't want to
+                            write any.</p>
+                    </div>
+
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Empty function using pass
+def my_function():
+    pass  # Does nothing, but prevents error
+
+my_function()  # No output, but no error either</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">When to Use pass</h5>
+                    <ul>
+                        <li>Creating empty functions/classes</li>
+                        <li>Placeholder for future implementation</li>
+                        <li>When you need syntactically correct but empty code</li>
+                    </ul>
+
+                </div>
+
+                <!-- *args -->
+                <div class="pt-5">
+                    <h4 class="section-title">2. *args (Arbitrary Arguments)</h4>
+
+                    <div class="note-content">
+                        <p>Allows a function to accept any number of positional arguments.</p>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Without *args (Limited)</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">def add_two_numbers(a, b):
+    return a + b
+
+print(add_two_numbers(5, 3))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">8</code></pre>
+                    </div>
+
+                    <div class="note-box note-warning">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Problem
+                        </div>
+                        <div class="note-content">
+                            <p><code>add_two_numbers(5, 3, 2)</code> would cause ERROR! ❌</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">With *args (Flexible)</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">def add_numbers(*args):
+    print(f"Args received: {args}")
+    return sum(args)
+
+print(add_numbers(1, 2))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Args received: (1, 2)
+3</code></pre>
+
+                        <pre><code class="language-python">print(add_numbers(1, 2, 3, 4, 5))</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Args received: (1, 2, 3, 4, 5)
+15</code></pre>
+
+                        <pre><code class="language-python">print(add_numbers())</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Args received: ()
+0</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">More *args Examples</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python"># Example 2: Mixed parameters
+def greet(message, *names):
+    print(f"{message} to:")
+    for name in names:
+        print(f"- {name}")
+
+greet("Welcome", "Alice", "Bob", "Charlie")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Welcome to:
+- Alice
+- Bob
+- Charlie</code></pre>
+
+                        <pre><code class="language-python"># Example 3: Find average
+def calculate_average(*numbers):
+    if len(numbers) == 0:
+        return 0
+    return sum(numbers) / len(numbers)
+
+print(f"Average: {calculate_average(10, 20, 30, 40)}")
+print(f"Average: {calculate_average(5, 15)}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Average: 25.0
+Average: 10.0</code></pre>
+                    </div>
+
+                    <div class="note-box note-tip">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Key Points about *args
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li>*args collects extra positional arguments as a <strong>tuple</strong></li>
+                                <li>The name 'args' is convention - you can use any name after *</li>
+                                <li>*args must come after regular parameters</li>
+                                <li>You can access args like a normal tuple</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- **kwargs -->
+                <div class="pt-5">
+                    <h4 class="section-title">3. **kwargs (Arbitrary Keyword Arguments)</h4>
+
+                    <div class="note-content">
+                        <p>Allows a function to accept any number of keyword arguments.</p>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Without **kwargs (Limited)</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">def greet(name, age, city):
+    print(f"Name = {name}")
+    print(f"Age = {age}")
+    print(f"City = {city}")
+
+greet(name="Alice", city="New York", age=25)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Name = Alice
+Age = 25
+City = New York</code></pre>
+                    </div>
+
+                    <div class="note-box note-warning">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Problem
+                        </div>
+                        <div class="note-content">
+                            <p><code>greet(name="Alice", age=25, city="NY", country="USA")</code> would cause ERROR! ❌
+                            </p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">With **kwargs (Flexible)</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">def greet(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key} = {value}")
+
+greet(name="Alice", age=25, city="New York", gender="Male")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">name = Alice
+age = 25
+city = New York
+gender = Male</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">More **kwargs Examples</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python"># Example 2: Create user profile
+def create_user_profile(**user_info):
+    print("User Profile Created:")
+    print("-" * 20)
+    for field, value in user_info.items():
+        print(f"{field.title()}: {value}")
+
+create_user_profile(
+    username="alice123",
+    email="alice@email.com",
+    age=25,
+    profession="Engineer",
+    city="Bangalore"
+)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">User Profile Created:
+--------------------
+Username: alice123
+Email: alice@email.com
+Age: 25
+Profession: Engineer
+City: Bangalore</code></pre>
+
+                    </div>
+
+                    <div class="note-box note-tip">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Key Points about **kwargs
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li>**kwargs collects extra keyword arguments as a <strong>dictionary</strong></li>
+                                <li>The name 'kwargs' is convention - you can use any name after **</li>
+                                <li>**kwargs must come after *args and regular parameters</li>
+                                <li>You can access kwargs like a normal dictionary</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="note-box note-info mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-book"></i>
+                        Quick Reference
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Feature</th>
+                                <th>Purpose</th>
+                                <th>Syntax</th>
+                                <th>Data Type</th>
+                            </tr>
+                            <tr>
+                                <td><code>pass</code></td>
+                                <td>Empty placeholder</td>
+                                <td><code>pass</code></td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><code>*args</code></td>
+                                <td>Unlimited positional arguments</td>
+                                <td><code>def func(*args)</code></td>
+                                <td>Tuple</td>
+                            </tr>
+                            <tr>
+                                <td><code>**kwargs</code></td>
+                                <td>Unlimited keyword arguments</td>
+                                <td><code>def func(**kwargs)</code></td>
+                                <td>Dictionary</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Create a function called <code>student_report</code> that:</p>
+                        <ol>
+                            <li>Takes a required parameter for student name</li>
+                            <li>Accepts any number of subject scores using *args</li>
+                            <li>Accepts any additional information using **kwargs</li>
+                            <li>Calculates and displays the average score</li>
+                            <li>Shows all additional information</li>
+                        </ol>
+                        <p>Test your function with:</p>
+                        <pre><code class="language-python">student_report("Alice", 85, 92, 78, grade="A", attendance="95%")</code></pre>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">def student_report(name, *scores, **details):
+    print(f"Student: {name}")
+    
+    # Calculate average score
+    if scores:
+        average = sum(scores) / len(scores)
+        print(f"Scores: {scores}")
+        print(f"Average: {average:.1f}")
+    else:
+        print("No scores provided")
+    
+    # Display additional details
+    if details:
+        print("Additional Details:")
+        for key, value in details.items():
+            print(f"  {key}: {value}")
+
+# Test the function
+student_report("Alice", 85, 92, 78, grade="A", attendance="95%")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Student: Alice
+Scores: (85, 92, 78)
+Average: 85.0
+Additional Details:
+  grade: A
+  attendance: 95%</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Section -->
+                <div class="quiz-container mt-4">
+                    <h4 class="subsection-title">Test Your Knowledge</h4>
+
+                    <div class="quiz-question">
+                        <h5>1. What does *args collect in a function?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>Keyword arguments as a dictionary</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="true">
+                                <label>Positional arguments as a tuple</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>Only numeric arguments</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>String arguments only</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! *args collects extra positional arguments as a
+                            tuple.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. *args handles positional arguments, not
+                            keyword arguments.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>2. When should you use the pass statement?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>To stop a function</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="true">
+                                <label>As a placeholder for empty code blocks</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>To pass data between functions</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>To create a new variable</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! pass is used as a placeholder when you need
+                            syntactically correct but empty code.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. pass doesn't stop execution or transfer data.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>3. What is the correct order of parameters in a function?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="true">
+                                <label>regular, *args, **kwargs</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>*args, regular, **kwargs</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>**kwargs, *args, regular</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Any order works</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! The order must be: regular parameters, *args,
+                            then **kwargs.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. Python has strict rules about parameter
+                            order.
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions d-flex flex-column flex-sm-row justify-content-between mt-4">
+                        <button class="btn btn-outline-primary reset-quiz-btn mb-2 mb-sm-0">
+                            <i class="fas fa-undo me-1"></i> Reset Quiz
+                        </button>
+                        <button class="btn btn-primary check-answers-btn">
+                            <i class="fas fa-check-circle me-1"></i> Check Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Key Takeaways
+                    </div>
+                    <div class="note-content">
+                        <ul>
+                            <li><strong>pass:</strong> Use as a placeholder for empty code blocks</li>
+                            <li><strong>*args:</strong> Collects unlimited positional arguments as a tuple</li>
+                            <li><strong>**kwargs:</strong> Collects unlimited keyword arguments as a dictionary</li>
+                            <li><strong>Order matters:</strong> regular → *args → **kwargs</li>
+                            <li>These features make functions extremely flexible and reusable</li>
+                            <li>Great for creating APIs, configuration functions, and utility functions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

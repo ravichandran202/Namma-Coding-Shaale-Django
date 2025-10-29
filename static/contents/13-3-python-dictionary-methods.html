@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Dictionary Methods</h1>
+                </div>
+            </div>
+    
+            <div class="card-body">
+                <p class="lead"><b>Learn all built-in dictionary methods for efficient data manipulation</b></p>
+    
+                <!-- Clear Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Remove All Items</h4>
+                    <p><code>.clear()</code>Removes all items from the dictionary.</p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+print("Before clear:", student)
+student.clear()
+print("After clear:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Before clear: {'name': 'Ram', 'age': 22}
+After clear: {}</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Copy Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Copy Values</h4>
+                    <p><code>.copy()</code> : Returns a shallow copy of the dictionary.</p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+new_dict = student.copy()
+print("Original:", student)
+print("Copy:", new_dict)
+
+# Modifying copy doesn't affect original
+new_dict["age"] = 25
+print("\nAfter modifying copy:")
+print("Original:", student)
+print("Copy:", new_dict)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram', 'age': 22}
+Copy: {'name': 'Ram', 'age': 22}
+
+After modifying copy:
+Original: {'name': 'Ram', 'age': 22}
+Copy: {'name': 'Ram', 'age': 25}</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Fromkeys Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Create Dict</h4>
+                    <p><code>.fromkeys(keys, value)</code> - Creates a new dictionary with given keys and a single default value.</p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Create dictionary with default value 0
+keys = ["a", "b", "c"]
+new_dict = dict.fromkeys(keys, 0)
+print("From keys with default 0:", new_dict)
+
+# Create dictionary with None as default
+names = ["Ram", "Sita", "Krishna"]
+name_dict = dict.fromkeys(names)
+print("From keys with None:", name_dict)
+
+# Practical example: initialize scores
+students = ["Alice", "Bob", "Charlie"]
+scores = dict.fromkeys(students, 0)
+print("Student scores:", scores)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">From keys with default 0: {'a': 0, 'b': 0, 'c': 0}
+From keys with None: {'Ram': None, 'Sita': None, 'Krishna': None}
+Student scores: {'Alice': 0, 'Bob': 0, 'Charlie': 0}</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Get Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Access Elements</h4>
+                    <p><code>.get(key, default=None)</code> : Returns value for a key if it exists, else returns default (avoids KeyError). </p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+    
+# Get existing key
+print("Age:", student.get("age"))
+
+# Get non-existing key with default
+print("Marks:", student.get("marks", "N/A"))
+
+# Get non-existing key without default
+print("City:", student.get("city"))
+
+# Compare with direct access (would cause error)
+# print(student["city"])  # This would raise KeyError</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Age: 22
+Marks: N/A
+City: None</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Items, Keys, Values Methods -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Dictionary Views</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6><code>.items()</code> - Returns all key-value pairs as a view object (iterable).</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+items_view = student.items()
+print("Items:", items_view)
+print("As list:", list(items_view))
+
+# Using in loops
+for key, value in student.items():
+    print(f"{key}: {value}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Items: dict_items([('name', 'Ram'), ('age', 22)])
+As list: [('name', 'Ram'), ('age', 22)]
+name: Ram
+age: 22</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6><code>.keys()</code> - Returns all keys as a view object.</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+keys_view = student.keys()
+print("Keys:", keys_view)
+print("As list:", list(keys_view))
+
+# Check if key exists
+if "name" in student.keys():
+    print("Name key exists")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Keys: dict_keys(['name', 'age'])
+As list: ['name', 'age']
+Name key exists</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6><code>.values()</code> - Returns all values as a view object.</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22}
+values_view = student.values()
+print("Values:", values_view)
+print("As list:", list(values_view))
+
+# Check if value exists
+if "Ram" in student.values():
+    print("Ram exists in values")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Values: dict_values(['Ram', 22])
+As list: ['Ram', 22]
+Ram exists in values</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Pop and Popitem Methods -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Remove Elements</h4>
+                    <div class="method-item mt-4">
+                        <h6><code>.pop()</code> - Remove Specific Key</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22, "course": "CS"}
+print("Original:", student)
+
+# Remove and get value
+age = student.pop("age")
+print(f"Removed age: {age}")
+print("After pop:", student)
+
+# Remove with default (no error)
+marks = student.pop("marks", "Not found")
+print(f"Marks: {marks}")
+print("Final:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram', 'age': 22, 'course': 'CS'}
+Removed age: 22
+After pop: {'name': 'Ram', 'course': 'CS'}
+Marks: Not found
+Final: {'name': 'Ram', 'course': 'CS'}</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6><code>popitem()</code> - Remove Last Item</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22, "course": "CS"}
+print("Original:", student)
+
+# Remove last inserted item
+last_item = student.popitem()
+print(f"Removed: {last_item}")
+print("After popitem:", student)
+
+# Remove another
+another_item = student.popitem()
+print(f"Removed: {another_item}")
+print("Final:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram', 'age': 22, 'course': 'CS'}
+Removed: ('course', 'CS')
+After popitem: {'name': 'Ram', 'age': 22}
+Removed: ('age', 22)
+Final: {'name': 'Ram'}</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Setdefault Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Get or Set Value</h4>
+                    <p><code>.setdefault()</code> - Returns the value of the key. If the key does not exist, insert key with the default value </p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {"name": "Ram"}
+print("Original:", student)
+
+# Key exists - returns value
+name = student.setdefault("name", "Unknown")
+print(f"Name: {name}")
+
+# Key doesn't exist - adds with default
+age = student.setdefault("age", 22)
+print(f"Age: {age}")
+print("After setdefault:", student)
+
+# Another example
+city = student.setdefault("city", "Bangalore")
+print(f"City: {city}")
+print("Final:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram'}
+Name: Ram
+Age: 22
+After setdefault: {'name': 'Ram', 'age': 22}
+City: Bangalore
+Final: {'name': 'Ram', 'age': 22, 'city': 'Bangalore'}</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Update Method -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">Merge Dictionaries</h4>
+                    <p><code>.update()</code> : Updates the dictionary with another dictionary (or key-value pairs).</p>
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {"name": "Ram"}
+print("Original:", student)
+
+# Update with another dictionary
+student.update({"age": 22, "course": "CS"})
+print("After update:", student)
+
+# Update with keyword arguments
+student.update(city="Bangalore", grade="A")
+print("After keyword update:", student)
+
+# Update with list of tuples
+student.update([("country", "India"), ("phone", "1234567890")])
+print("After tuple update:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram'}
+After update: {'name': 'Ram', 'age': 22, 'course': 'CS'}
+After keyword update: {'name': 'Ram', 'age': 22, 'course': 'CS', 'city': 'Bangalore', 'grade': 'A'}
+After tuple update: {'name': 'Ram', 'age': 22, 'course': 'CS', 'city': 'Bangalore', 'grade': 'A', 'country': 'India', 'phone': '1234567890'}</code></pre>
+                    </div>
+                </div>
+    
+                <!-- Methods Summary Table -->
+                <div class="note-box note-info mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-table"></i>
+                        Dictionary Methods Summary
+                    </div>
+                    <div class="note-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Syntax</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>clear()</code></td>
+                                        <td><code>dict.clear()</code></td>
+                                        <td>Remove all items</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>copy()</code></td>
+                                        <td><code>dict.copy()</code></td>
+                                        <td>Create shallow copy</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>fromkeys()</code></td>
+                                        <td><code>dict.fromkeys(keys, value)</code></td>
+                                        <td>Create dict with default values</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>get()</code></td>
+                                        <td><code>dict.get(key, default)</code></td>
+                                        <td>Safe value access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>items()</code></td>
+                                        <td><code>dict.items()</code></td>
+                                        <td>All key-value pairs</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>keys()</code></td>
+                                        <td><code>dict.keys()</code></td>
+                                        <td>All keys</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>values()</code></td>
+                                        <td><code>dict.values()</code></td>
+                                        <td>All values</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>pop()</code></td>
+                                        <td><code>dict.pop(key, default)</code></td>
+                                        <td>Remove specific key</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>popitem()</code></td>
+                                        <td><code>dict.popitem()</code></td>
+                                        <td>Remove last item</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>setdefault()</code></td>
+                                        <td><code>dict.setdefault(key, default)</code></td>
+                                        <td>Get or set value</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>update()</code></td>
+                                        <td><code>dict.update(other)</code></td>
+                                        <td>Merge dictionaries</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Given the dictionary: <code>student = {"name": "Ram", "age": 22, "course": "CS"}</code></p>
+                        <p>Perform these operations:</p>
+                        <ol>
+                            <li>Create a copy of the dictionary</li>
+                            <li>Use get() to safely access "grade" (return "N/A" if not found)</li>
+                            <li>Use setdefault() to set "city" to "Bangalore"</li>
+                            <li>Remove "age" using pop() and store its value</li>
+                            <li>Update the dictionary with {"grade": "A", "year": 3}</li>
+                            <li>Get all keys and convert to list</li>
+                            <li>Get all values and convert to list</li>
+                            <li>Use fromkeys() to create a new dict with subjects and default score 0</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "Ram", "age": 22, "course": "CS"}
+print("Original:", student)
+
+# 1. Create copy
+student_copy = student.copy()
+print("\n1. Copy:", student_copy)
+
+# 2. Safe access with get()
+grade = student.get("grade", "N/A")
+print("\n2. Grade:", grade)
+
+# 3. Set default city
+city = student.setdefault("city", "Bangalore")
+print("\n3. City:", city)
+print("   After setdefault:", student)
+
+# 4. Remove age with pop()
+age = student.pop("age")
+print("\n4. Removed age:", age)
+print("   After pop:", student)
+
+# 5. Update with new data
+student.update({"grade": "A", "year": 3})
+print("\n5. After update:", student)
+
+# 6. Get all keys as list
+keys_list = list(student.keys())
+print("\n6. Keys list:", keys_list)
+
+# 7. Get all values as list
+values_list = list(student.values())
+print("7. Values list:", values_list)
+
+# 8. Create new dict with fromkeys()
+subjects = ["Math", "Science", "English"]
+scores = dict.fromkeys(subjects, 0)
+print("\n8. Subjects with default scores:", scores)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'Ram', 'age': 22, 'course': 'CS'}
+
+1. Copy: {'name': 'Ram', 'age': 22, 'course': 'CS'}
+
+2. Grade: N/A
+
+3. City: Bangalore
+   After setdefault: {'name': 'Ram', 'age': 22, 'course': 'CS', 'city': 'Bangalore'}
+
+4. Removed age: 22
+   After pop: {'name': 'Ram', 'course': 'CS', 'city': 'Bangalore'}
+
+5. After update: {'name': 'Ram', 'course': 'CS', 'city': 'Bangalore', 'grade': 'A', 'year': 3}
+
+6. Keys list: ['name', 'course', 'city', 'grade', 'year']
+7. Values list: ['Ram', 'CS', 'Bangalore', 'A', 3]
+
+8. Subjects with default scores: {'Math': 0, 'Science': 0, 'English': 0}</code></pre>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Content Template | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <!-- Problem Header -->
+
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Python Numbers</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Python has several built-in numeric data types for representing different kinds of
+                        numbers.</b></p>
+
+                <!-- Number Types -->
+                <div class="pt-3">
+                    <h2 class="section-title mt-3">Python Number Types</h2>
+
+                    <!-- Interger Types -->
+                    <div class="mt-3">
+                        <h4 class="subsection-title"><b>1. Integer (int):</b></h4>
+                        <ul>
+                            <li>
+                                <p>Whole numbers (positive or negative) without decimal points</p>
+                            </li>
+                            <li>
+                                <p>Unlimited precision (can be very large)</p>
+                            </li>
+                            <pre><code class="language-python"># example of python numeric datatypes
+x = 10
+y = -5
+z = 12345678901234567890
+
+print(x)
+print(y)
+print(z)
+
+print(f"type of {x} is {type(x)}")
+print(f"type of {y} is {type(y)}")
+print(f"type of {z} is {type(z)}")
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">10
+-5
+12345678901234567890
+type of 10 is &lt;class 'int'&gt;
+type of -5 is &lt;class 'int'&gt;
+type of 12345678901234567890 is &lt;class 'int'&gt;
+
+</code></pre>
+                        </ul>
+                    </div>
+
+                    <!-- Floating Types -->
+                    <div class="pt-3">
+                        <h4 class="subsection-title"><b>2. Floating Point (float)</b></h4>
+                        <ul>
+                            <li>
+                                <p>Numbers with decimal points.</p>
+                            </li>
+                            <li>
+                                <p>Represent real numbers but have limited precision</p>
+                            </li>
+                            <li>
+                                <p>Can also use scientific notation</p>
+                            </li>
+                            <pre><code class="language-python"># example of python floating datatype
+a = 3.14
+b = -0.001
+c = 2.5e3  # 2500.0
+d = 1.6e-4 # 0.00016
+
+print(a)
+print(b)
+print(c)
+print(d)
+
+print(f"type of {a} is {type(a)}")
+print(f"type of {b} is {type(b)}")
+print(f"type of {c} is {type(c)}")
+print(f"type of {d} is {type(d)}")
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">3.14
+-0.001
+2500.0
+0.00016
+type of 3.14 is &lt;class 'float'&gt;
+type of -0.001 is &lt;class 'float'&gt;
+type of 2500.0 is &lt;class 'float'&gt;
+type of 0.00016 is &lt;class 'float'&gt;
+</code></pre>
+                            <div class="note-box note-important">
+                                <div class="note-content">
+                                    <p><strong>Explanation:</strong> e means "exponent" and is followed by the power of
+                                        10.
+                                    </p>
+                                </div>
+                            </div>
+                        </ul>
+
+                    </div>
+
+                    <!-- Floating Types -->
+                    <div class="pt-3">
+                        <h4 class="subsection-title"><b>3. Complex Numbers</b></h4>
+                        <ul>
+                            <li>
+                                <p>Numbers with real and imaginary parts.</p>
+                            </li>
+                            <li>
+                                <p>The imaginary part is denoted with <code>j</code>or <code>J</code></p>
+                            </li>
+                            <pre><code class="language-python"># example of python complex number datatype
+c1 = 3 + 4j
+c2 = -2j
+c3 = complex(1, 2)  # 1+2j
+
+print(c1)
+print(c2)
+print(c3)
+
+print(f"type of {c1} is {type(c1)}")
+print(f"type of {c2} is {type(c2)}")
+print(f"type of {c3} is {type(c3)}")
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">(3+4j)
+(-0-2j)
+(1+2j)
+type of (3+4j) is &lt;class 'complex'&gt;
+type of (-0-2j) is &lt;class 'complex'&gt;
+type of (1+2j) is &lt;class 'complex'&gt;
+</code></pre>
+                            <div class="note-box note-important">
+                                <div class="note-content">
+                                    <p><strong>Explanation:</strong></p>
+                                    <p>Two dimensions in one number: Compact representation of 2D systems</p>
+                                    <p>Complex numbers model anything with two related components - position (x,y),</p>
+                                </div>
+                            </div>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card mb-4">
+            <div class="card-body">
+                <!-- Number Types -->
+                <div class="pt-3">
+                    <h2 class="section-title mt-3">Python Numeric Datatype Conversion</h2>
+                    <p>Type conversion (also called type casting) allows you to convert between different types in
+                        Python.</p>
+
+                    <!-- Interger Types -->
+                    <div class="mt-3">
+                        <h4 class="subsection-title"><b>1. Integer (int):</b></h4>
+                        <ul>
+                            <li>
+                                <p>use <code>int()</code> function to convert values to integers.</p>
+                            </li>
+                            <li>
+                                <p> Converting float to integer truncates (removes) the decimal part </p>
+                            </li>
+                            <li>
+                                <p> Boolean values have specific numeric equivalents </p>
+                            </li>
+                            <li>
+                                <p> Strings can be converted only if they contain valid numeric values </p>
+                            </li>
+                            <li>
+                                <p>For decimal strings, convert to float first, then to int</p>
+                            </li>
+                            <pre><code class="language-python"># int() - to integer
+var1 = 3.14  #float data type
+var2 = True  #boolean data type
+var3 = "100" #string data type
+
+print(int(var1))     # 3
+print(int(var2))     # 1
+print(int(var3))     # 100
+
+print(f"Before conversion : {var1}, After Conversion : {int(var1)}")
+print(f"Before conversion : {var2}, After Conversion : {int(var2)}")
+print(f"Before conversion : {var3}, After Conversion : {int(var3)}")
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">3
+1
+100
+Before conversion : 3.14, After Conversion : 3
+Before conversion : True, After Conversion : 1
+Before conversion : 100, After Conversion : 100</code></pre>
+                        </ul>
+                    </div>
+
+                    <!-- Floating Point Types -->
+                    <div class="mt-3">
+                        <h4 class="subsection-title"><b>2. Float (float):</b></h4>
+                        <ul>
+                            <li>
+                                <p>use <code>float()</code> function to convert values to floating numbers.</p>
+                            </li>
+                            <li>
+                                <p> Converting integer to float adds decimal point </p>
+                            </li>
+                            <li>
+                                <p> Boolean values convert to their float equivalents </p>
+                            </li>
+                            <li>
+                                <p> Strings can be converted if they contain valid numeric values </p>
+                            </li>
+                            <li>
+                                <p>Python supports special float values : <code>float("inf")</code>,
+                                    <code>float("-inf")</code>, <code>float("nan")</code></p>
+                            </li>
+                            <pre><code class="language-python"># int() - to integer
+var1 = 5      # integer data type
+var2 = False  # boolean data type
+var3 = "3.14" # string data type
+
+print(float(var1))     # 5.0
+print(float(var2))     # 0.0
+print(float(var3))     # 3.14
+
+print(f"Before conversion : {var1}, After Conversion : {float(var1)}")
+print(f"Before conversion : {var2}, After Conversion : {float(var2)}")
+print(f"Before conversion : {var3}, After Conversion : {float(var3)}")
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">5.0
+0.0
+3.14
+Before conversion : 5, After Conversion : 5.0
+Before conversion : False, After Conversion : 0.0
+Before conversion : 3.14, After Conversion : 3.14</code></pre>
+                        </ul>
+
+                        <!-- Special floating types -->
+                        <div>
+                            <h3 class="subsection-title mt-5"><b>Special Floating Numbers</b></h3>
+                            <p>These represent special mathematical concepts that regular numbers can't express:</p>
+
+                            <ol>
+                                <li>
+                                    <p><b> Positive Infinity : </b> Represents a value that is greater than any finite
+                                        number.</p>
+                                    <p>Syntax : <code>float("inf")</code></p>
+                                </li>
+                                <li>
+                                    <p><b> Negative Infinity : </b> Represents a value that is less than any finite
+                                        number.</p>
+                                    <p>Syntax : <code>float("-inf")</code></p>
+                                </li>
+                                <li>
+                                    <p><b> Not a Number : </b> Represents a value of undefined or unrepresentable
+                                        numerical results.</p>
+                                    <p>Syntax : <code>float("nan")</code></p>
+                                </li>
+
+                                <pre><code class="language-python"># examples for special floating numbers
+var1 = float("inf")   # positive infinity
+var2 = float("-inf")  # negative infinity
+var3 = float("nan")   # not a number
+
+print(var1)
+print(var2)
+print(var3)
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+                   <code class="language-python">inf
+-inf
+nan</code></pre>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="content-card">
+            <div class="card-body">
+                <h2 class="section-title">Summary</h2>
+
+                <div class="summary-content">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            Python provides three main <b>numeric data types</b> — <code>int</code>, <code>float</code>,
+                            and <code>complex</code>.
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            <b>int</b> represents whole numbers without decimals and supports <b>unlimited
+                                precision</b>.
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            <b>float</b> represents real numbers with decimal points or <b>scientific notation</b>
+                            (e.g., <code>2.5e3</code>).
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            <b>complex</b> numbers have real and imaginary parts (e.g., <code>3 + 4j</code>).
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            Python allows <b>type conversion</b> using functions like <code>int()</code> and
+                            <code>float()</code>.
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            Converting <b>float → int</b> removes decimals, and <b>bool → int</b> gives 1 for
+                            <code>True</code> and 0 for <code>False</code>.
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            <b>Special float values</b> include <code>inf</code> (infinity), <code>-inf</code> (negative
+                            infinity), and <code>nan</code> (not a number).
+                        </li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>
+                            Python automatically handles large integers and floating-point precision internally.
+                        </li>
+                    </ul>
+
+                    <div class="key-terms mt-4">
+                        <h3 class="subsection-title">Key Terms</h3>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge badge-primary">int</span>
+                            <span class="badge badge-primary">float</span>
+                            <span class="badge badge-primary">complex</span>
+                            <span class="badge badge-primary">type casting</span>
+                            <span class="badge badge-primary">scientific notation</span>
+                            <span class="badge badge-primary">inf</span>
+                            <span class="badge badge-primary">-inf</span>
+                            <span class="badge badge-primary">nan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>
