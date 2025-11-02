@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Dictionary Operations</h1>
+                </div>
+            </div>
+    
+            <div class="card-body">
+                <p class="lead"><b>Learn how to create, access, modify, and iterate through dictionaries in Python</b></p>
+    
+                <!-- Creating Dictionaries -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">1. Creating Dictionaries</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6>Method A: Using Curly Braces {}</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python"># Empty dictionary
+empty_dict = {}
+print("Empty:", empty_dict)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Empty: {}</code></pre>
+                        </div>
+
+                        <div class="code-container">
+                            <pre><code class="language-python"># Dictionary with string keys
+person = {
+    "name": "Alice", 
+    "age": 25, 
+    "city": "New York"
+}
+print("Person:", person)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Person: {'name': 'Alice', 'age': 25, 'city': 'New York'}</code></pre>
+                        </div>
+
+                        <div class="code-container">
+                            <pre><code class="language-python"># Dictionary with different key types
+mixed_keys = {
+    "name": "Bob", 
+    1: "one", 
+    2.5: "two point five"
+}
+print("Mixed keys:", mixed_keys)
+</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Mixed keys: {'name': 'Bob', 1: 'one', 2.5: 'two point five'}</code></pre>
+                        </div>
+
+                        <div class="code-container">
+                            <pre><code class="language-python"># Dictionary with list as value
+student = {
+    "name": "John", 
+    "scores": [85, 92, 78]
+}
+print("Student:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Student: {'name': 'John', 'scores': [85, 92, 78]}</code></pre>
+                        </div>
+                        
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6>Method B: Using dict() Constructor</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python"># Using keyword arguments
+person = dict(name="Alice", age=25, city="Boston")
+print("Using keywords:", person)
+
+# Using list of tuples
+fruits = dict([("apple", 5), ("banana", 3), ("orange", 2)])
+print("Using tuples:", fruits)
+
+# From two lists (using zip)
+keys = ["name", "age", "city"]
+values = ["Bob", 30, "Chicago"]
+person2 = dict(zip(keys, values))
+print("From two lists:", person2)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Using keywords: {'name': 'Alice', 'age': 25, 'city': 'Boston'}
+Using tuples: {'apple': 5, 'banana': 3, 'orange': 2}
+From two lists: {'name': 'Bob', 'age': 30, 'city': 'Chicago'}</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Accessing Elements -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">2. Accessing Elements</h4>
+    
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">student = {
+   "name": "John", 
+   "age": 20, 
+   "grade": "A"
+}
+
+# Access using key
+name = student["name"]
+age = student["age"]
+print("Name:", name)
+print("Age:", age)
+
+# Access using get() method (safer)
+grade = student.get("grade")
+city = student.get("city", "Not specified")  # Default value
+print("Grade:", grade)
+print("City:", city)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Name: John
+Age: 20
+Grade: A
+City: Not specified</code></pre>
+                    </div>
+    
+                    <div class="note-box note-warning mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Important Note
+                        </div>
+                        <div class="note-content">
+                            <p>Use <code>get()</code> method when you're not sure if a key exists. It returns <code>None</code> (or a default value) instead of raising a KeyError.</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Adding and Modifying Elements -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">3. Adding and Modifying Elements</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6>Adding New Elements</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "John", "age": 20}
+print("Original:", student)
+
+# Add new key-value pairs
+student["grade"] = "A"
+student["city"] = "Boston"
+
+print("After adding:", student)
+
+# Add multiple elements using update()
+student.update({"country": "USA", "major": "Computer Science"})
+print("After update:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'John', 'age': 20}
+After adding: {'name': 'John', 'age': 20, 'grade': 'A', 'city': 'Boston'}
+After update: {'name': 'John', 'age': 20, 'grade': 'A', 'city': 'Boston', 'country': 'USA', 'major': 'Computer Science'}</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6>Modifying Existing Elements</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "John", "age": 20, "grade": "B"}
+print("Original:", student)
+
+# Modify existing values
+student["grade"] = "A"  # Changes grade from B to A
+student["age"] = 21     # Changes age from 20 to 21
+
+print("After modification:", student)
+
+# Modify using update()
+student.update({"age": 22, "city": "New York"})
+print("After update:", student)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Original: {'name': 'John', 'age': 20, 'grade': 'B'}
+After modification: {'name': 'John', 'age': 21, 'grade': 'A'}
+After update: {'name': 'John', 'age': 22, 'grade': 'A', 'city': 'New York'}</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Iterating Items -->
+                <div class="pt-3">
+                    <h4 class="subsection-title">4. Iterating Through Dictionaries</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6>Loop Through Keys</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "John", "age": 20, "grade": "A"}
+    
+print("Method 1: Direct looping (gets keys)")
+for key in student:
+    print(f"Key: {key}")
+
+print("\nMethod 2: Using keys() method")
+for key in student.keys():
+    print(f"Key: {key}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Method 1: Direct looping (gets keys)
+Key: name
+Key: age
+Key: grade
+
+Method 2: Using keys() method
+Key: name
+Key: age
+Key: grade</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6>Loop Through Values</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "John", "age": 20, "grade": "A"}
+    
+print("Loop through values:")
+for value in student.values():
+    print(f"Value: {value}")
+
+# Practical example: calculate average score
+scores_dict = {"math": 85, "science": 92, "english": 78}
+total = 0
+count = 0
+
+for score in scores_dict.values():
+    total += score
+    count += 1
+
+average = total / count
+print(f"\nAverage score: {average:.1f}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Loop through values:
+Value: John
+Value: 20
+Value: A
+
+Average score: 85.0</code></pre>
+                        </div>
+                    </div>
+    
+                    <div class="method-item mt-4">
+                        <h6>Loop Through Key-Value Pairs</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">student = {"name": "John", "age": 20, "grade": "A"}
+    
+print("Loop through key-value pairs:")
+for key, value in student.items():
+    print(f"{key}: {value}")
+
+# Practical example: phone book
+phone_book = {
+    "Alice": "9876543210",
+    "Bob": "8765432109",
+    "Charlie": "7654321098"
+}
+
+print("\nPhone Book:")
+for name, number in phone_book.items():
+    print(f"{name}: {number}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Loop through key-value pairs:
+name: John
+age: 20
+grade: A
+
+Phone Book:
+Alice: 9876543210
+Bob: 8765432109
+Charlie: 7654321098</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Create a dictionary for a car with the following information:</p>
+                        <ul>
+                            <li>Brand: Toyota</li>
+                            <li>Model: Camry</li>
+                            <li>Year: 2020</li>
+                            <li>Color: Blue</li>
+                        </ul>
+                        <p>Then perform these operations:</p>
+                        <ol>
+                            <li>Print all car information</li>
+                            <li>Add a new key "price" with value 25000</li>
+                            <li>Update the color to "Red"</li>
+                            <li>Loop through and print all keys</li>
+                            <li>Loop through and print all values</li>
+                            <li>Loop through and print all key-value pairs</li>
+                            <li>Check if "mileage" key exists</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python"># Create car dictionary
+    car = {
+        "brand": "Toyota",
+        "model": "Camry", 
+        "year": 2020,
+        "color": "Blue"
+    }
+    
+    # 1. Print all information
+    print("1. Car information:")
+    print(car)
+    
+    # 2. Add price
+    car["price"] = 25000
+    print("\n2. After adding price:")
+    print(car)
+    
+    # 3. Update color
+    car["color"] = "Red"
+    print("\n3. After updating color:")
+    print(car)
+    
+    # 4. Loop through keys
+    print("\n4. All keys:")
+    for key in car.keys():
+        print(f"- {key}")
+    
+    # 5. Loop through values
+    print("\n5. All values:")
+    for value in car.values():
+        print(f"- {value}")
+    
+    # 6. Loop through key-value pairs
+    print("\n6. All key-value pairs:")
+    for key, value in car.items():
+        print(f"{key}: {value}")
+    
+    # 7. Check if mileage exists
+    print("\n7. Mileage check:")
+    if "mileage" in car:
+        print("Mileage:", car["mileage"])
+    else:
+        print("Mileage information not available")</code>
+    <i class="fas fa-terminal"></i> <strong>Output</strong>
+    <code class="language-python">1. Car information:
+    {'brand': 'Toyota', 'model': 'Camry', 'year': 2020, 'color': 'Blue'}
+    
+    2. After adding price:
+    {'brand': 'Toyota', 'model': 'Camry', 'year': 2020, 'color': 'Blue', 'price': 25000}
+    
+    3. After updating color:
+    {'brand': 'Toyota', 'model': 'Camry', 'year': 2020, 'color': 'Red', 'price': 25000}
+    
+    4. All keys:
+    - brand
+    - model
+    - year
+    - color
+    - price
+    
+    5. All values:
+    - Toyota
+    - Camry
+    - 2020
+    - Red
+    - 25000
+    
+    6. All key-value pairs:
+    brand: Toyota
+    model: Camry
+    year: 2020
+    color: Red
+    price: 25000
+    
+    7. Mileage check:
+    Mileage information not available</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Dictionary Operations Summary
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Operation</th>
+                                <th>Syntax</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>Create</td>
+                                <td><code>{key: value}</code> or <code>dict()</code></td>
+                                <td>Create new dictionary</td>
+                            </tr>
+                            <tr>
+                                <td>Access</td>
+                                <td><code>dict[key]</code> or <code>dict.get(key)</code></td>
+                                <td>Get value by key</td>
+                            </tr>
+                            <tr>
+                                <td>Add</td>
+                                <td><code>dict[new_key] = value</code></td>
+                                <td>Add new key-value pair</td>
+                            </tr>
+                            <tr>
+                                <td>Modify</td>
+                                <td><code>dict[key] = new_value</code></td>
+                                <td>Update existing value</td>
+                            </tr>
+                            <tr>
+                                <td>Loop Keys</td>
+                                <td><code>for key in dict:</code></td>
+                                <td>Iterate through keys</td>
+                            </tr>
+                            <tr>
+                                <td>Loop Values</td>
+                                <td><code>for value in dict.values():</code></td>
+                                <td>Iterate through values</td>
+                            </tr>
+                            <tr>
+                                <td>Loop Both</td>
+                                <td><code>for k,v in dict.items():</code></td>
+                                <td>Iterate through key-value pairs</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <!-- Problem Header -->
+
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">range() Function with For Loops</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>The <code>range()</code> function generates a sequence of numbers and is commonly used with for loops for numerical iterations.</b></p>
+
+                <!-- Range Syntax Variations -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">range() Syntax Variations</h5>
+                    
+                    <div class="table-responsive mt-4">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Syntax</th>
+                                    <th>Description</th>
+                                    <th>Generated Sequence</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>range(stop)</code></td>
+                                    <td>0 to stop-1</td>
+                                    <td>0, 1, 2, ..., stop-1</td>
+                                    <td><code>range(5) → 0,1,2,3,4</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>range(start, stop)</code></td>
+                                    <td>start to stop-1</td>
+                                    <td>start, start+1, ..., stop-1</td>
+                                    <td><code>range(2,6) → 2,3,4,5</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>range(start, stop, step)</code></td>
+                                    <td>start to stop-1 with step</td>
+                                    <td>start, start+step, ..., stop-1</td>
+                                    <td><code>range(1,10,2) → 1,3,5,7,9</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Basic Range Examples -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Basic range() Examples with For Loops</h5>
+                    
+                    <!-- Example 1: range(stop) -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example 1: range(stop) - 0 to stop-1
+for i in range(5):
+    print(i, end=" ")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">range(5):
+0 1 2 3 4</code></pre>
+                    </div>
+                    
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Key Point
+                        </div>
+                        <div class="note-content">
+                            <p><code>range(5)</code> generates numbers from <strong>0 to 4</strong> (5 numbers total). The stop value (5) is <strong>not included</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 2: range(start, stop) -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example 2: range(start, stop) - start to stop-1
+for i in range(2, 7):
+    print(i, end=" ")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">range(2, 7):
+2 3 4 5 6</code></pre>
+                    </div>
+                    
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Key Point
+                        </div>
+                        <div class="note-content">
+                            <p><code>range(2, 7)</code> generates numbers from <strong>2 to 6</strong>. Start (2) is included, stop (7) is excluded.</p>
+                        </div>
+                    </div>
+
+                    <!-- Example 3: range(start, stop, step) -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example 3: range(start, stop, step) - with step size
+print("range(0, 10, 2):")
+for i in range(0, 10, 2):
+    print(i, end=" ")
+
+print("\nrange(5, 0, -1):")
+for i in range(5, 0, -1):
+    print(i, end=" ")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">range(0, 10, 2):
+0 2 4 6 8 
+
+range(5, 0, -1):
+5 4 3 2 1</code></pre>
+                    </div>
+                    
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Key Point
+                        </div>
+                        <div class="note-content">
+                            <p>Step can be positive (increment) or negative (decrement). With negative step, start should be greater than stop.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Range Visualization -->
+                <div class="content-subsection mt-4">
+                    <h3 class="subsection-title">range() Function Visualization</h3>
+                    <div class="bg-light p-4 rounded">
+                        <div class="mermaid">
+                            graph LR;
+                            A[range function] --> B[range stop];
+                            A --> C[range start stop];
+                            A --> D[range start stop step];
+                            
+                            B --> E[0 to stop-1];
+                            C --> F[start to stop-1];
+                            D --> G[start to stop-1 with step];
+                            
+                            E --> H[range5: 0,1,2,3,4];
+                            F --> I[range2,6: 2,3,4,5];
+                            G --> J[range1,10,2: 1,3,5,7,9];
+                            
+                            style H fill:#e1f5fe
+                            style I fill:#e1f5fe
+                            style J fill:#e1f5fe
+                        </div>
+                        <div class="diagram-caption">range() function variations and their generated sequences</div>
+                    </div>
+                </div>
+
+                <!-- Practical Applications -->
+                <div class="pt-5">
+                    <h3 class="subsection-title">Practical Applications</h3>
+
+                    <!-- Application 2: Mathematical Operations -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example 1: Mathematical sequences
+print("Even numbers from 2 to 10:")
+for num in range(2, 11, 2):
+    print(num, end=" ")
+
+print("\n\nCounting down from 10:")
+for i in range(10, 0, -1):
+    print(i, end=" ")
+print("Blast off!")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Even numbers from 2 to 10:
+2 4 6 8 10 
+
+Counting down from 10:
+10 9 8 7 6 5 4 3 2 1 Blast off!</code></pre>
+                    </div>
+
+                    <!-- Application 3: Multiplication Table -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example 2: Multiplication table
+print("Multiplication Table of 2:")
+num = 2
+for i in range(1, 11):
+    print(f"{num}×{i}={num*i:2}")</code> 
+<i class="fas fa-terminal"></i> <strong>strongOutput</strong>
+<code class="language-python">Multiplication Table of 2:
+1×1= 1
+1×2= 2
+1×3= 3
+1×4= 4
+1×5= 5
+1×6= 6
+1×7= 7
+1×8= 8
+1×9= 9
+1×10=10</code></pre>
+                    </div>
+                </div>
+
+                <!-- Common Patterns and Tips -->
+                <div class="pt-3">
+                    <h5 class="subsection-title">Common Patterns and Tips</h5>
+                    
+                    <div class="note-box note-info mt-4">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Useful Range Patterns
+                        </div>
+                        <div class="note-content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th>Pattern</th>
+                                            <th>Description</th>
+                                            <th>Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>1 to n</strong></td>
+                                            <td>Numbers starting from 1</td>
+                                            <td><code>range(1, n+1)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Even numbers</strong></td>
+                                            <td>Generate even numbers</td>
+                                            <td><code>range(2, n+1, 2)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Odd numbers</strong></td>
+                                            <td>Generate odd numbers</td>
+                                            <td><code>range(1, n+1, 2)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Reverse order</strong></td>
+                                            <td>Count backwards</td>
+                                            <td><code>range(n, 0, -1)</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>List indices</strong></td>
+                                            <td>Iterate through list indices</td>
+                                            <td><code>range(len(my_list))</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Underscore Convention -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Using _ for unused loop variables
+print("Printing 'Hello' 5 times:")
+for _ in range(5):
+    print("Hello")
+
+# vs. using i when not needed
+for i in range(5):
+    print("Hello")  # i is not used - less clear</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Printing 'Hello' 5 times:
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello</code></pre>
+                    </div>
+                </div>
+
+                <!-- Common Mistakes -->
+                <div class="pt-3">
+                    <h3 class="subsection-title">Common Mistakes with range()</h3>
+                    
+                    <!-- Mistake 1: Off-by-One -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Mistake 1: Off-by-one error
+print("Trying to print 1 to 5:")
+for i in range(5):
+    print(i)  # Prints 0-4, not 1-5</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Trying to print 1 to 5:
+0
+1
+2
+3
+4</code></pre>
+                    </div>
+                    
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python"># Correct: For 1 to 5
+print("Correct: Printing 1 to 5:")
+for i in range(1, 6):
+    print(i)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Correct: Printing 1 to 5:
+1
+2
+3
+4
+5</code></pre>
+                    </div>
+
+                    <!-- Mistake 2: Empty Range -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Mistake 2: Empty range (no output)
+print("Empty range example:")
+for i in range(5, 2):  # Start > stop with positive step
+    print(i)  # No output - range is empty
+
+print("Done")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Empty range example:
+Done</code></pre>
+                    </div>
+                    
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python"># Correct: Use negative step for reverse
+print("Correct reverse range:")
+for i in range(5, 2, -1):
+    print(i)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Correct reverse range:
+5
+4
+3</code></pre>
+                    </div>
+                </div>
+
+                <!-- Range vs List Conversion -->
+                <div class="note-box note-warning mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        range() vs List Conversion
+                    </div>
+                    <div class="note-content">
+                        <div class="code-container">
+                            <pre><code class="language-python"># range() is memory efficient
+print("range(5):", range(5))
+print("list(range(5)):", list(range(5)))
+
+# Use range() for large sequences
+large_range = range(1000000)  # Memory efficient
+large_list = list(range(1000000))  # Uses significant memory</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">range(5): range(0, 5)
+list(range(5)): [0, 1, 2, 3, 4]</code></pre>
+                        </div>
+                        <p class="mt-2"><strong>Key Insight:</strong> <code>range()</code> generates numbers on-the-fly, making it memory efficient for large sequences.</p>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h3 class="subsection-title">Practice Exercise</h3>
+                    <div class="exercise-problem">
+                        <p>Write Python programs that use <code>range()</code> with for loops to:</p>
+                        <ol>
+                            <li>Print all multiples of 3 between 1 and 20</li>
+                            <li>Print numbers from 10 down to 1</li>
+                            <li>Calculate the sum of first 10 natural numbers (1 to 10)</li>
+                            <li>Print a pattern: 1, 2, 4, 8, 16, 32 (powers of 2)</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python"># Solution 1: Multiples of 3
+print("Multiples of 3 (1-20):")
+for i in range(3, 21, 3):
+    print(i, end=" ")
+print("\n")
+
+# Solution 2: Countdown from 10
+print("Countdown from 10:")
+for i in range(10, 0, -1):
+    print(i, end=" ")
+print("\n")
+
+# Solution 3: Sum of first 10 numbers
+total = 0
+for i in range(1, 11):
+    total += i
+print(f"Sum of 1 to 10: {total}")
+print()
+
+# Solution 4: Powers of 2
+print("Powers of 2:")
+for i in range(6):  # 2^0 to 2^5
+    print(2 ** i, end=" ")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Multiples of 3 (1-20):
+3 6 9 12 15 18 
+
+Countdown from 10:
+10 9 8 7 6 5 4 3 2 1 
+
+Sum of 1 to 10: 55
+
+Powers of 2:
+1 2 4 8 16 32</code></pre>
+                        </div>
+                        <div class="note-box note-tip mt-3">
+                            <div class="note-header">
+                                <i class="fas fa-footsteps"></i>
+                                Solution Explanation
+                            </div>
+                            <div class="note-content">
+                                <ol>
+                                    <li><strong>Multiples of 3:</strong> <code>range(3, 21, 3)</code> generates 3,6,9,...,18</li>
+                                    <li><strong>Countdown:</strong> <code>range(10, 0, -1)</code> generates numbers from 10 down to 1</li>
+                                    <li><strong>Sum calculation:</strong> Accumulate sum in a variable while iterating</li>
+                                    <li><strong>Powers of 2:</strong> Use exponentiation <code>2 ** i</code> for each iteration</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

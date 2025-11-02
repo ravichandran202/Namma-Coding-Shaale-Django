@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">The Four Pillars of OOP</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Master the four fundamental concepts of Object-Oriented Programming: Encapsulation, Inheritance, Polymorphism, and Abstraction.</b></p>
+
+                <!-- Introduction -->
+                <div class="note-box note-important">
+                    <div class="note-header">
+                        <i class="fas fa-info-circle"></i>
+                        The Four Pillars of OOP
+                    </div>
+                    <div class="note-content">
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-3">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body">
+                                        <h5>1. Encapsulation</h5>
+                                        <p>Bundling data and methods</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body">
+                                        <h5>2. Inheritance</h5>
+                                        <p>Creating new classes from existing ones</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card bg-warning text-dark">
+                                    <div class="card-body">
+                                        <h5>3. Polymorphism</h5>
+                                        <p>Many forms, same interface</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body">
+                                        <h5>4. Abstraction</h5>
+                                        <p>Hiding complex implementation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Encapsulation -->
+                <div class="pt-3">
+                    <h4 class="section-title">1. Encapsulation</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Definition
+                        </div>
+                        <div class="note-content">
+                            <p>Encapsulation refers to the bundling of attributes and methods inside a single class.</p>
+                            <p>It prevents outer classes from accessing and changing attributes and methods of a class. This also helps to achieve <strong>data hiding</strong>.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Private Attributes in Python</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class BankAccount:
+    def __init__(self, name, balance=0):
+        self.name = name
+        self.__balance = balance  # Private variable (double underscore)
+    
+    def get_balance(self):
+        return self.__balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            return f"Deposited {amount}. New balance: {self.__balance}"
+        return "Invalid amount"
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            return f"Withdrew {amount}. New balance: {self.__balance}"
+        return "Not enough balance"
+
+# Example usage
+account = BankAccount("John", 1000)
+print(account.deposit(500))    # Deposited 500. New balance: 1500
+print(account.withdraw(200))   # Withdrew 200. New balance: 1300
+print(account.get_balance())   # 1300
+# print(account.__balance)     # This would cause AttributeError!</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Deposited 500. New balance: 1500
+Withdrew 200. New balance: 1300
+1300</code></pre>
+                    </div>
+
+                    <div class="note-box note-warning mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Access Control in Python
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li><strong>No modifier:</strong> Public - accessible from anywhere</li>
+                                <li><strong>Single underscore (_variable):</strong> Protected - internal use (convention)</li>
+                                <li><strong>Double underscore (__variable):</strong> Private - name mangling makes it harder to access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Inheritance -->
+                <div class="pt-3">
+                    <h4 class="section-title">2. Inheritance</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Definition
+                        </div>
+                        <div class="note-content">
+                            <p>Inheritance is a way of creating a new class for using details of an existing class without modifying it.</p>
+                            <p>Creating new classes from existing ones.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Types of Inheritance</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Single Inheritance</h6>
+                                    <p>One parent → One child</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Multiple Inheritance</h6>
+                                    <p>Multiple parents → One child</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Multilevel Inheritance</h6>
+                                    <p>Grandparent → Parent → Child</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Hierarchical Inheritance</h6>
+                                    <p>One parent → Multiple children</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Hybrid Inheritance</h6>
+                                    <p>Combination of multiple types</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">a. Single Inheritance</h5>
+                    <p>When a child class inherits from a single parent class, it can access the parent’s methods and attributes.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):  # Child inherits from Parent
+    def display(self):
+        print("This is Child class")
+
+# Usage
+c = Child()
+c.greet()    # Accessing Parent method
+c.display()  # Accessing Child method</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Hello from Parent
+This is Child class</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">b. Multiple Inheritance</h5>
+                    <p>When a <b>child class inherits from more than one parent class</b>.
+                        This allows the child to use methods from multiple parents.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Father:
+    def drive(self):
+        print("Father can drive")
+
+class Mother:
+    def cook(self):
+        print("Mother can cook")
+
+class Child(Father, Mother):  # Inherits from both
+    def play(self):
+        print("Child loves to play")
+
+# Usage
+c = Child()
+c.drive()  # From Father
+c.cook()   # From Mother
+c.play()   # From Child</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Father can drive
+Mother can cook
+Child loves to play</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">c. Multilevel Inheritance</h5>
+                    <p>When a <b> class is derived from another derived class</b> (like a chain).</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class GrandParent:
+    def wisdom(self):
+        print("GrandParent shares wisdom")
+
+class Parent(GrandParent):  # Parent inherits from GrandParent
+    def guidance(self):
+        print("Parent gives guidance")
+
+class Child(Parent):  # Child inherits from Parent
+    def learn(self):
+        print("Child learns")
+
+# Usage
+c = Child()
+c.wisdom()   # From GrandParent
+c.guidance() # From Parent
+c.learn()    # From Child</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">GrandParent shares wisdom
+Parent gives guidance
+Child learns</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">d. Hierarchical Inheritance</h5>
+                    <p>When <b>multiple child classes inherit from the same parent</b>.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child1(Parent):  # First child
+    def feature1(self):
+        print("Feature from Child1")
+
+class Child2(Parent):  # Second child
+    def feature2(self):
+        print("Feature from Child2")
+
+# Usage
+c1 = Child1()
+c2 = Child2()
+c1.greet()    # From Parent
+c1.feature1() # From Child1
+c2.greet()    # From Parent
+c2.feature2() # From Child2</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Hello from Parent
+Feature from Child1
+Hello from Parent
+Feature from Child2</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">e. Hybrid Inheritance</h5>
+                    <p>A <b>combination of multiple inheritance types</b> (like multiple + multilevel).</p>
+                    <p>It forms a complex structure where a class inherits from more than one path.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class A:
+    def showA(self):
+        print("Class A")
+
+class B(A):  # B inherits from A
+    def showB(self):
+        print("Class B")
+
+class C(A):  # C inherits from A
+    def showC(self):
+        print("Class C")
+
+class D(B, C):  # D inherits from both B and C
+    def showD(self):
+        print("Class D")
+
+# Usage
+d = D()
+d.showA()  # From A (through B or C)
+d.showB()  # From B
+d.showC()  # From C
+d.showD()  # From D</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Class A
+Class B
+Class C
+Class D</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">super() Method</h5>
+                    <p>In Python, <code>super()</code> is a built-in function that provides a way to access methods and properties of a parent or superclass from within a child or subclass.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Parent:
+    def __init__(self, name):
+        self.name = name
+        print(f"Parent initialized with name: {self.name}")
+
+class Child(Parent):
+    def __init__(self, name, age):
+        super().__init__(name)  # Call Parent's __init__
+        self.age = age
+        print(f"Child initialized with age: {self.age}")
+
+# Usage
+c = Child("John", 12)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Parent initialized with name: John
+Child initialized with age: 12</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">super() with Multiple Inheritance</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Father:
+    def __init__(self):
+        print("Father initialized")
+
+class Mother:
+    def __init__(self):
+        print("Mother initialized")
+
+class Child(Father, Mother):
+    def __init__(self):
+        super().__init__()  # Calls Father first (based on MRO)
+        print("Child initialized")
+
+# Usage
+c = Child()</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Father initialized
+Child initialized</code></pre>
+                    </div>
+
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Method Resolution Order (MRO)
+                        </div>
+                        <div class="note-content">
+                            <p>Python follows a specific order when looking for methods in inheritance chains. Use <code>ClassName.__mro__</code> to see the order.</p>
+                            <pre class="mt-2"><code class="language-python">print(Child.__mro__)
+# Shows the method resolution order</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Polymorphism -->
+                <div class="pt-3">
+                    <h4 class="section-title">3. Polymorphism</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Definition
+                        </div>
+                        <div class="note-content">
+                            <p>Polymorphism means "many forms". In Python, it allows the same function/method name to perform different tasks depending on the object or class using it.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Built-in Polymorphism Example</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python"># len() function works with different objects
+x = "Hello World!"
+print(len(x))  # String length
+
+x = [1, 2, 4, 5, 6]
+print(len(x))  # List length
+
+x = (1, 2, 4, 5, 6)
+print(len(x))  # Tuple length</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">12
+5
+5</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Polymorphism with Functions</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">def add(a, b):
+    return a + b
+
+# Works with integers
+print(add(5, 10))           # 15
+
+# Works with strings
+print(add("Hello ", "World"))  # Hello World
+
+# Works with lists
+print(add([1, 2], [3, 4]))    # [1, 2, 3, 4]</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">15
+Hello World
+[1, 2, 3, 4]</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Method Overloading vs Method Overriding</h5>
+                    
+                    <div class="note-box note-warning">
+                        <div class="note-header">
+                            <i class="fas fa-exchange-alt"></i>
+                            Comparison
+                        </div>
+                        <div class="note-content">
+                            <table class="table table-bordered">
+                                <tr class="table-primary">
+                                    <th>Feature</th>
+                                    <th>Method Overloading</th>
+                                    <th>Method Overriding</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Definition</strong></td>
+                                    <td>Same method name, different parameters</td>
+                                    <td>Same method name in parent & child classes</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>When resolved</strong></td>
+                                    <td>Compile-time Polymorphism</td>
+                                    <td>Runtime Polymorphism</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Arguments</strong></td>
+                                    <td>Different number/type of arguments</td>
+                                    <td>Must have the same arguments</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Where used?</strong></td>
+                                    <td>Inside the same class</td>
+                                    <td>Between parent & child classes</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Python Support</strong></td>
+                                    <td>Not directly supported (simulate with default args / *args)</td>
+                                    <td>Fully supported</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Method Overloading (Simulated)</h5>
+                    <p><b>Meaning:</b> Same method name, but different number or type of parameters.</p>
+                    <p><b>In Python:</b> True overloading doesn’t exist (like in Java or C++).</p>
+                    <p>Achieved during compilation.</p>
+                    <p>Instead, Python handles this using default arguments or <code>*args</code>.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Math:
+    def add(self, a, b=0, c=0):  # Same method, flexible arguments
+        return a + b + c
+
+m = Math()
+print(m.add(5))        # 5 (a=5, b=0, c=0)
+print(m.add(5, 10))    # 15 (a=5, b=10, c=0)
+print(m.add(5, 10, 15)) # 30 (a=5, b=10, c=15)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">5
+15
+30</code></pre>
+                    </div>
+
+                    <h5 class="subsection-title mt-4">Method Overriding</h5>
+                    <p><b>Meaning:</b> Child class provides a new implementation for a method that already exists in the parent class.</p>
+                    <p>Achieved while the program runs.</p>
+                    <p>This allows customizing or changing behavior in subclasses.</p>
+                    <div class="code-container">
+                        <pre><code class="language-python">class Vehicle:
+    def start(self):
+        return "Starting vehicle..."
+
+class Car(Vehicle):
+    def start(self):  # Overriding parent method
+        return "Car engine started"
+
+class Bike(Vehicle):
+    def start(self):  # Overriding parent method
+        return "Bike engine started"
+
+# Usage
+vehicle = Vehicle()
+car = Car()
+bike = Bike()
+
+print(vehicle.start())  # Starting vehicle...
+print(car.start())      # Car engine started
+print(bike.start())     # Bike engine started</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Starting vehicle...
+Car engine started
+Bike engine started</code></pre>
+                    </div>
+                </div>
+
+                <!-- 4. Abstraction -->
+                <div class="pt-3">
+                    <h4 class="section-title">4. Abstraction</h4>
+                    
+                    <div class="note-box note-info">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Definition
+                        </div>
+                        <div class="note-content">
+                            <p>Abstraction means hiding the complex implementation details and showing only the essential features of the object.</p>
+                            <p>In Python, we achieve abstraction using abstract classes and interfaces.</p>
+                        </div>
+                    </div>
+
+                    <h5 class="subsection-title">Abstract Base Classes (ABC)</h5>
+                    <div class="code-container">
+                        <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Shape(ABC):  # Abstract class
+    @abstractmethod
+    def area(self):
+        pass  # No implementation - must be overridden
+    
+    @abstractmethod
+    def perimeter(self):
+        pass
+    
+    def description(self):  # Concrete method
+        return "This is a shape"
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):  # Must implement abstract method
+        return 3.14 * self.radius * self.radius
+    
+    def perimeter(self):  # Must implement abstract method
+        return 2 * 3.14 * self.radius
+
+class Rectangle(Shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    
+    def area(self):
+        return self.length * self.width
+    
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+# Usage
+circle = Circle(5)
+rectangle = Rectangle(4, 6)
+
+print(f"Circle area: {circle.area()}")
+print(f"Rectangle area: {rectangle.area()}")
+print(f"Circle description: {circle.description()}")
+
+# shape = Shape()  # This would cause TypeError - cannot instantiate abstract class</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Circle area: 78.5
+Rectangle area: 24
+Circle description: This is a shape</code></pre>
+                    </div>
+
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Key Points about Abstraction
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li>Abstract classes cannot be instantiated</li>
+                                <li>Abstract methods must be implemented by child classes</li>
+                                <li>Provides a template for other classes</li>
+                                <li>Hides complex implementation details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="note-box note-info mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-book"></i>
+                        Quick Reference
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Pillar</th>
+                                <th>Purpose</th>
+                                <th>Key Features</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Encapsulation</strong></td>
+                                <td>Bundling data and methods</td>
+                                <td>Private variables, getters/setters</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inheritance</strong></td>
+                                <td>Code reuse and hierarchy</td>
+                                <td>Single, Multiple, Multilevel, Hierarchical, Hybrid</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Polymorphism</strong></td>
+                                <td>Many forms, same interface</td>
+                                <td>Method overloading, overriding, built-in functions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Abstraction</strong></td>
+                                <td>Hide complex implementation</td>
+                                <td>Abstract classes, abstract methods</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>Create a complete OOP system demonstrating all four pillars:</p>
+                        <ol>
+                            <li><strong>Encapsulation:</strong> Create a <code>BankAccount</code> class with private balance</li>
+                            <li><strong>Inheritance:</strong> Create <code>SavingsAccount</code> and <code>CurrentAccount</code> that inherit from <code>BankAccount</code></li>
+                            <li><strong>Polymorphism:</strong> Override <code>withdraw()</code> method in child classes with different rules</li>
+                            <li><strong>Abstraction:</strong> Create an abstract <code>Account</code> class that defines required methods</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">from abc import ABC, abstractmethod
+
+# 4. Abstraction - Abstract base class
+class Account(ABC):
+    @abstractmethod
+    def withdraw(self, amount):
+        pass
+    
+    @abstractmethod
+    def deposit(self, amount):
+        pass
+    
+    def get_account_type(self):
+        return "Generic Account"
+
+# 1. Encapsulation & 2. Inheritance
+class BankAccount(Account):
+    def __init__(self, account_holder, balance=0):
+        self.account_holder = account_holder
+        self.__balance = balance  # Private variable
+    
+    def get_balance(self):
+        return self.__balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            return f"Deposited ${amount}. New balance: ${self.__balance}"
+        return "Invalid amount"
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            return f"Withdrew ${amount}. New balance: ${self.__balance}"
+        return "Insufficient funds"
+    
+    def get_account_type(self):
+        return "Basic Bank Account"
+
+# 2. Inheritance & 3. Polymorphism
+class SavingsAccount(BankAccount):
+    def __init__(self, account_holder, balance=0, interest_rate=0.02):
+        super().__init__(account_holder, balance)
+        self.interest_rate = interest_rate
+    
+    def withdraw(self, amount):  # 3. Polymorphism - Overriding
+        if self.get_balance() - amount < 100:  # Minimum balance rule
+            return "Cannot withdraw: Minimum balance of $100 required"
+        return super().withdraw(amount)
+    
+    def add_interest(self):
+        interest = self.get_balance() * self.interest_rate
+        self.deposit(interest)
+        return f"Added interest: ${interest}"
+    
+    def get_account_type(self):
+        return "Savings Account"
+
+class CurrentAccount(BankAccount):
+    def __init__(self, account_holder, balance=0, overdraft_limit=500):
+        super().__init__(account_holder, balance)
+        self.overdraft_limit = overdraft_limit
+    
+    def withdraw(self, amount):  # 3. Polymorphism - Overriding
+        available_balance = self.get_balance() + self.overdraft_limit
+        if 0 < amount <= available_balance:
+            # For current account, allow overdraft
+            new_balance = self.get_balance() - amount
+            return f"Withdrew ${amount}. New balance: ${new_balance}"
+        return "Exceeds overdraft limit"
+    
+    def get_account_type(self):
+        return "Current Account"
+
+# Testing the system
+print("=== BANKING SYSTEM DEMO ===")
+
+savings = SavingsAccount("Alice", 500)
+current = CurrentAccount("Bob", 300, 200)
+
+print(f"\n{savings.get_account_type()}:")
+print(savings.deposit(200))
+print(savings.withdraw(400))  # Should fail due to min balance
+print(savings.withdraw(300))  # Should work
+print(savings.add_interest())
+
+print(f"\n{current.get_account_type()}:")
+print(current.deposit(100))
+print(current.withdraw(500))  # Should work (uses overdraft)
+print(current.withdraw(200))  # Should fail (exceeds limit)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">=== BANKING SYSTEM DEMO ===
+
+Savings Account:
+Deposited $200. New balance: $700
+Cannot withdraw: Minimum balance of $100 required
+Withdrew $300. New balance: $400
+Added interest: $8.0
+
+Current Account:
+Deposited $100. New balance: $400
+Withdrew $500. New balance: $-100
+Exceeds overdraft limit</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Section -->
+                <div class="quiz-container mt-4">
+                    <h4 class="subsection-title">Test Your Knowledge</h4>
+                    
+                    <div class="quiz-question">
+                        <h5>1. Which OOP pillar is demonstrated by using private variables with getters/setters?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>Inheritance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="true">
+                                <label>Encapsulation</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>Polymorphism</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q1" data-correct="false">
+                                <label>Abstraction</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! Encapsulation bundles data with methods and controls access.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. Private variables with access methods are classic encapsulation.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>2. What type of inheritance is shown: class D(B, C): where B and C inherit from A?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>Single Inheritance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>Multilevel Inheritance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="true">
+                                <label>Hybrid Inheritance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q2" data-correct="false">
+                                <label>Hierarchical Inheritance</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! This is hybrid inheritance (multiple + hierarchical).
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. Multiple classes inheriting through different paths is hybrid.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h5>3. Which concept allows the len() function to work with strings, lists, and tuples?</h5>
+                        <div class="quiz-options">
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Encapsulation</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Inheritance</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="true">
+                                <label>Polymorphism</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="radio" name="q3" data-correct="false">
+                                <label>Abstraction</label>
+                            </div>
+                        </div>
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! Same function working with different types is polymorphism.
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. One interface, multiple implementations is polymorphism.
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions d-flex flex-column flex-sm-row justify-content-between mt-4">
+                        <button class="btn btn-outline-primary reset-quiz-btn mb-2 mb-sm-0">
+                            <i class="fas fa-undo me-1"></i> Reset Quiz
+                        </button>
+                        <button class="btn btn-primary check-answers-btn">
+                            <i class="fas fa-check-circle me-1"></i> Check Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Key Takeaways
+                    </div>
+                    <div class="note-content">
+                        <ul>
+                            <li><strong>Encapsulation:</strong> Bundle data and methods, control access with private variables</li>
+                            <li><strong>Inheritance:</strong> Create hierarchies, reuse code through parent-child relationships</li>
+                            <li><strong>Polymorphism:</strong> Same interface, different implementations through overloading and overriding</li>
+                            <li><strong>Abstraction:</strong> Hide complexity, define templates with abstract classes</li>
+                            <li>These four pillars work together to create robust, maintainable, and scalable code</li>
+                            <li>Python supports all OOP concepts with its unique syntax and features</li>
+                            <li>Understanding these concepts is crucial for professional Python development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            console.log("HELLO")
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+
+        // Generic Quiz Functionality
+        function setupQuiz(quizContainer) {
+            const checkBtn = quizContainer.querySelector('.check-answers-btn');
+            const resetBtn = quizContainer.querySelector('.reset-quiz-btn');
+            const questions = quizContainer.querySelectorAll('.quiz-question');
+
+            checkBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    const feedback = question.querySelector('.quiz-feedback');
+                    const correctFeedback = question.querySelector('.correct-feedback');
+                    const incorrectFeedback = question.querySelector('.incorrect-feedback');
+
+                    // Hide all feedback first
+                    if (feedback) feedback.style.display = 'none';
+
+                    // Check question type (radio = single answer, checkbox = multiple)
+                    const isMultipleChoice = question.querySelector('input[type="checkbox"]') !== null;
+
+                    if (isMultipleChoice) {
+                        // Multiple choice question
+                        const correctOptions = question.querySelectorAll('input[type="checkbox"][data-correct="true"]');
+                        let allCorrect = true;
+
+                        correctOptions.forEach(option => {
+                            if (!option.checked) allCorrect = false;
+                        });
+
+                        // Also check if any incorrect options were selected
+                        const incorrectOptions = question.querySelectorAll('input[type="checkbox"]:not([data-correct="true"])');
+                        incorrectOptions.forEach(option => {
+                            if (option.checked) allCorrect = false;
+                        });
+
+                        if (allCorrect && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none'
+                        } else if (incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        }
+                    } else {
+                        // Single choice question
+                        const selectedOption = question.querySelector('input[type="radio"]:checked');
+
+                        if (selectedOption && selectedOption.dataset.correct === "true" && correctFeedback) {
+                            correctFeedback.style.display = 'flex';
+                            incorrectFeedback.style.display = 'none';
+                        } else if (selectedOption && incorrectFeedback) {
+                            incorrectFeedback.style.display = 'flex';
+                            correctFeedback.style.display = 'none';
+                        } else if (incorrectFeedback) {
+                            // No option selected
+                            incorrectFeedback.style.display = 'flex';
+                        }
+                    }
+                });
+            });
+
+            resetBtn.addEventListener('click', function () {
+                questions.forEach(question => {
+                    question.querySelectorAll('input').forEach(input => {
+                        input.checked = false;
+                    });
+                    question.querySelectorAll('.quiz-feedback').forEach(fb => {
+                        fb.style.display = 'none';
+                    });
+                });
+            });
+        }
+
+        // Initialize all quizzes on the page
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.quiz-container').forEach(quiz => {
+                setupQuiz(quiz);
+            });
+        });
+        document.getElementById('resetQuizBtn').addEventListener('click', function () {
+            // Reset all quiz inputs and feedback
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.quiz-feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

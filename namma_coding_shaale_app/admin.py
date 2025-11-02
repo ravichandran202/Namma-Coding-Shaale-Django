@@ -66,3 +66,10 @@ class QuizSubmissionAdmin(admin.ModelAdmin):
     list_filter = ['passed', 'attempt_number', 'completed_at', 'course']
     search_fields = ['user__username', 'content__title']
     readonly_fields = ['started_at', 'completed_at']
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin): 
+    list_display=['order_id','transaction_id','user','total_amount','status','payment_status','payment_method','created_at','updated_at']
+    list_filter=['status','payment_status','payment_method','created_at'] 
+    search_fields=['order_id','user__username','vendor__name']
+    readonly_fields=['created_at','updated_at']

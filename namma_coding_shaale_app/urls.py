@@ -8,6 +8,7 @@ urlpatterns = [
     path('verify-otp', views.login, name='verify-otp'),  # Same view handles both
     path('resend-otp', views.resend_otp, name='resend-otp'),
     path('logout', views.logout, name='logout'),
+     path('profile', views.profile_page, name='profile'),
 
     path("code-editor/<int:course_id>",views.code_editor,name="code-editor"),
     path("code-editor",views.code_editor_freemium,name="code-editor-freemium"),

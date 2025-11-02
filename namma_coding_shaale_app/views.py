@@ -28,7 +28,7 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission
+from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission, Order
 import logging
 import json
 import ast
@@ -300,6 +300,10 @@ from django.shortcuts import render
 from .models import UserCourse, CourseContent, ProblemSubmission
 
 @login_required(login_url="login")
+def profile_page(request):
+    return render(request, "profile-page.html")
+
+@login_required(login_url="login")
 def list_problems(request, course_id):
     if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
         return redirect("home")
@@ -392,7 +396,7 @@ def payment_status(request):
     merchant_order_id = request.GET.get('txn_id')
 
     #TODO : verify the txn_id from DB
-
+    
     phonepe_client = setup_phonepe_client()
     order_status = get_order_status(request, phonepe_client, merchant_order_id)
 
@@ -400,7 +404,17 @@ def payment_status(request):
         course_id = order_status.meta_info.udf2
         if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
             enroll_course(request, course_id)
-
+        
+            order, created = Order.objects.get_or_create(
+            order_id = order_status.order_id,
+            defaults = {
+                'user': request.user,
+                'total_amount': int(order_status.amount)//100,
+                'status': 'COMPLETED',
+                'payment_status': 'PAID',
+                'transaction_id': merchant_order_id,
+               }
+            )
 
     context = {
         'status': order_status.state,
@@ -520,12 +534,12 @@ def my_courses(request):
         course = user_course.course
         
         # Get counts in single queries
-        total_contents = CourseContent.objects.filter(course=course).count()
+        total_contents = CourseContent.objects.filter(course=course).exclude(content__type='PROBLEM').count()
         completed_contents = UserContentProgress.objects.filter(
             user=request.user,
             course=course,
-            is_completed=True
-        ).count()
+            is_completed=True,
+        ).exclude(content__type='PROBLEM').count()
 
         
         # Get all problems in this course (through content)
@@ -596,7 +610,8 @@ def continue_course(request, course_id):
         course=user_course.course
     ).exclude(
         content__usercontentprogress__user=request.user,
-        content__usercontentprogress__is_completed=True
+        content__usercontentprogress__is_completed=True,
+        content__type='PROBLEM',
     ).order_by('sequence_number').first()
     
     if next_content:
@@ -641,7 +656,6 @@ def view_content(request, course_id, content_file_id):
             course=course, 
             content=content
         )
-
         
         # Get or create user course progress
         user_course, _ = UserCourse.objects.get_or_create(
@@ -678,8 +692,8 @@ def view_content(request, course_id, content_file_id):
             # Get next content in sequence
             next_content = CourseContent.objects.filter(
                 course=course,
-                sequence_number__gt=course_content.sequence_number
-            ).order_by('sequence_number').first()
+                sequence_number__gt=course_content.sequence_number,
+            ).exclude(content__type='PROBLEM').order_by('sequence_number').first()
             
             if next_content:
                 # Update user's current content
@@ -807,35 +821,69 @@ def view_content(request, course_id, content_file_id):
             context['quiz_correct_answer_count'] =  quiz_submission.correct_answers
             context['quiz_attempt'] =  quiz_submission.attempt_number
 
-            print(context['quiz_submission'] )
-            print(context['quiz_data'])
-            print(context['quiz_score'] )
-            print(context['quiz_passed'])
-            print(context['quiz_correct_answer_count'])
-            print(context['quiz_attempt'])
-
             return render(request, "view_quiz_content.html", context)
 
         if content.type.lower() == "problem":
             return render(request, "view_problem_content.html", context)
+        
+        if content.type.lower() == "problems":
+            problem_ids = json.loads(content.content_text).get("problem_ids")
+            print("\n\ncontent text : ", problem_ids)
+            contents = bulk_fetch_content_content(request.user, course, problem_ids)
+            context["contents"] = contents
+            print(context["contents"], type(contents))
+            return render(request, "view_problems_content.html", context)
+        
     
         return render(request, "view_content.html", context)
+
+def bulk_fetch_content_content(user, course, problem_ids):
+    """Optimized bulk fetch using prefetch_related"""
+    
+    # Build problem to content mapping
+    contents = []
+    for id in problem_ids:
+        course_content = Content.objects.filter(
+            problem__id = id,
+            coursecontent__course=course
+        ).first()
+
+        user_progress = UserContentProgress.objects.filter(
+            content=course_content,
+            user=user,
+            course=course
+        ).first()
+
+        print(user_progress)
+
+        contents.append({
+            "content" : course_content,
+            "is_completed" : user_progress.is_completed
+        })
+
+        print(course_content)
+    
+    
+    return contents
+
 
 '''
    HANDLERS
 '''
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
-    cached_result = memorycache_sidebar.get(user_id+course_id)
-    if cached_result is not None:
-        print(f"CACHE FOUND : for id {user_id+course_id}")
-        return cached_result
+    # cached_result = memorycache_sidebar.get(user_id+course_id)
+    # if cached_result is not None:
+    #     print(f"CACHE FOUND : for id {user_id+course_id}")
+    #     return cached_result
     
     user_progress = {
         up.content_id: up 
         for up in UserContentProgress.objects.filter(
             user_id=user_id,
             course_id=course_id
+        ).exclude(
+            content__type='PROBLEM'
         ).select_related('content')
     }
 
@@ -843,6 +891,7 @@ def get_user_roadmap_html(user_id, course_id):
     course_contents = (
         CourseContent.objects
         .filter(course_id=course_id)
+        .exclude(content__type='PROBLEM')  # Exclude PROBLEM type
         .select_related('content')
         .order_by('sequence_number')
     )
@@ -1031,6 +1080,22 @@ def save_code(request):
                 'test_results': data.get('test_results')
             }
         )
+
+        #update 
+        content = get_object_or_404(Content, problem=problem, coursecontent__course_id=course_id)
+    
+        user_content_progress = UserContentProgress.objects.get(
+            user=request.user,
+            course_id=course_id,
+            content=content,
+            content__problem = problem
+        )
+        
+        if not user_content_progress.is_completed and status == 'SOLVED':
+            user_content_progress.is_completed = True
+            user_content_progress.completed_at = timezone.now()
+            user_content_progress.save()
+
         
         response_data = {
             "message": "Data received successfully",
@@ -1185,34 +1250,27 @@ def enroll_course(request, course_id):
         user_course = UserCourse.objects.create(
             user=user,
             course=course,
-            fees_paid=0 if not course.is_premium else course.base_price,
-            payment_status='PAID' if not course.is_premium else 'PENDING'
+            fees_paid=course.base_price,
+            payment_status='PAID'
         )
         
         # Get all course contents ordered by sequence number
         course_contents = CourseContent.objects.filter(course=course).order_by('sequence_number')
-        
+
         # Create UserContentProgress records for each content
         for index, course_content in enumerate(course_contents):
+
+             # Set the first content as current if available
+            if index == 0:
+                user_course.current_content = course_content.content
+                user_course.save()
+            
             UserContentProgress.objects.create(
                 user=user,
                 course=course,
                 content=course_content.content,
                 is_locked=not (index == 0 and course_content.is_unlocked_by_default)
             )
-        
-        # Set the first content as current if available
-        if course_contents.exists():
-            first_content = course_contents.first().content
-            user_course.current_content = first_content
-            user_course.save()
-            
-            # Unlock the first content if it's locked (override the default)
-            UserContentProgress.objects.filter(
-                user=user,
-                course=course,
-                content=first_content
-            ).update(is_locked=False)
         
         messages.success(request, f'Successfully enrolled in {course.name}!')
 

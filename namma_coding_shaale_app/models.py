@@ -74,6 +74,7 @@ class Content(models.Model):
         ('PROBLEM', 'Problem'),
         ('VIDEO', 'Video'),
         ('QUIZ', 'Quiz'),
+        ('PROBLEMS', "Problems")
     ]
     
     title = models.CharField(max_length=255)
@@ -247,3 +248,38 @@ class QuizSubmission(models.Model):
         self.total_questions = len(quiz_data['questions'])
         self.score = round((correct_count / self.total_questions) * 100, 2)
         self.passed = self.score >= quiz_data.get('passingScore', 70)
+
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('CONFIRMED', 'Confirmed'),
+        ('PROCESSING', 'Processing'),
+        ('COMPLETED', 'Completed'),
+        ('CANCELLED', 'Cancelled'),
+    ]
+
+    # Relationships
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+
+    # Order details
+    order_id = models.CharField(max_length=256, unique=True)
+    transaction_id = models.CharField(max_length=256, unique=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    payment_status = models.CharField(max_length=20, default='UNPAID')
+    payment_method = models.CharField(max_length=30, blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order #{self.order_id} - {self.user.username}"
+
+    class Meta:
+        ordering = ['-created_at']
