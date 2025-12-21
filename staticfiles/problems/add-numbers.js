@@ -1,52 +1,75 @@
-module.exports = {
-    title: 'Add Two Numbers',
-    difficulty: 'easy',
-    acceptance: '92.3%',
+module.exports =  {
+    "title": "Add Two Numbers",
+    "difficulty": "easy",
+    "acceptance": "99.8%",
   
-    description: `
-      <p>Create a function that takes two numbers and returns their sum.</p>
+    "description": `
+      <p>Read two numbers and print their sum.</p>
+      <p><b>Requirements:</b></p>
+      <ul>
+        <li>Read two integer inputs</li>
+        <li>Calculate the sum of the two numbers</li>
+        <li>Print the result</li>
+      </ul>
+      <p>This problem teaches basic arithmetic operations and input handling in programming.</p>
     `,
   
-    signatures: `
-      <pre><b>Python:</b> def add_numbers(a, b):</pre>
-      <pre><b>Java:</b> public static int addNumbers(int a, int b)</pre>
-      <pre><b>JavaScript:</b> function addNumbers(a, b)</pre>
-      <pre><b>C++:</b> int addNumbers(int a, int b)</pre>
+    "examples": `
+      <h3>Example 1</h3>
+      <pre class="constraints">Input: 
+4
+7
+Output: 11</pre>
+      
+      <h3>Example 2</h3>
+      <pre class="constraints">Input:
+-5
+8
+Output: 3</pre>
+      
+      <h3>Example 3</h3>
+      <pre class="constraints">Input:
+-10
+-5
+Output: -15</pre>
     `,
   
-    examples: `
-      <h3>Example:</h3>
-      <pre>Input: 2, 3\nOutput: 5</pre>
+    "conditions": `
+      <ul>
+        <li>Input will be two valid integers</li>
+        <li>Numbers can be positive, negative, or zero</li>
+        <li>Result will be within the range of standard integer operations</li>
+      </ul>
     `,
   
-    constraints: `
-      <ul><li>-10^6 ≤ a, b ≤ 10^6</li></ul>
-    `,
-  
-    testCases: [
-      { id: 1, input: [2, 3], expected: "5" },
-      { id: 2, input: [-4, 9], expected: "5" },
-      { id: 3, input: [0, 0], expected: "0" },
-      { id: 4, input: [1000000, -1000000], expected: "0" },
-      { id: 5, input: [-10, -20], expected: "-30" }
+    "testCases": [
+      { "id": 1, "input": [], "expected": "11", "stdinput": "4\n7" },
+      { "id": 2, "input": [], "expected": "3", "stdinput": "-5\n8" },
+      { "id": 3, "input": [], "expected": "0", "stdinput": "0\n0" },
+      { "id": 4, "input": [], "expected": "-15", "stdinput": "-10\n-5" },
+      { "id": 5, "input": [], "expected": "30", "stdinput": "10\n20" },
+      { "id": 6, "input": [], "expected": "100", "stdinput": "50\n50" },
     ],
   
-    templates: {
-      python: `def add_numbers(a, b):\n    # write your code here\n    pass`,
-      java: `public static int addNumbers(int a, int b) {\n    // write your code here\n    return 0;\n}`,
-      javascript: `function addNumbers(a, b) {\n    // write your code here\n    return 0;\n}`,
-      "c++": `int addNumbers(int a, int b) {\n    // write your code here\n    return 0;\n}`
+    "templates": {
+      "python": `a = int(input())\nb = int(input())\nprint(a + b)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        System.out.println(a + b);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        console.log(inputs[0] + inputs[1]);\n        readline.close();\n    });\n});`,
+      "c++": `#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << a + b << std::endl;\n    return 0;\n}`
     },
   
-    wrapCode(lang, code, input) {
-      const i = input.join(', ');
+    "wrapCode": function(lang, userCode, input) {
       switch(lang) {
-        case 'python': return `${code}\nprint(add_numbers(${i}))`;
-        case 'java': return `class Main { ${code}\npublic static void main(String[] args) {\n    System.out.println(addNumbers(${i}));}\n}`;
-        case 'javascript': return `${code}\nconsole.log(addNumbers(${i}));`;
-        case 'c++': return `#include <iostream>\nusing namespace std;\n${code}\nint main() {\n    cout << addNumbers(${i}) << endl;\n    return 0;\n}`;
-        default: return code;
+        case 'python':
+          return `${userCode}`;
+        case 'java':
+          return userCode;
+        case 'javascript':
+          return `${userCode}`;
+        case 'c++':
+          return userCode;
+        default:
+          return userCode;
       }
     }
-  };
-  
+  }
