@@ -299,9 +299,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import UserCourse, CourseContent, ProblemSubmission
 
-@login_required(login_url="login")
-def profile_page(request):
+# @login_required(login_url="login")
+def profile_page(request, section):
+    if section == "certificates":
+        return render(request, "profile-page-certificates.html")
     return render(request, "profile-page.html")
+
+# @login_required(login_url="login")
+def certificate_page(request):
+    return render(request, "profile-page-certificates.html")
 
 @login_required(login_url="login")
 def list_problems(request, course_id):
