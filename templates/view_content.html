@@ -430,6 +430,30 @@
                 margin-left: var(--sidebar-width);
             }
         }
+
+        /* Loader Styles */
+      .loader-overlay {
+          position: absolute;
+          top: 56px; /* Below Top Bar */
+          left: 0;
+          right: 0;
+          bottom: 120px; /* Leave space for completion card */
+          background: #ffffff;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          z-index: 50; /* Above iframe, below sidebar */
+          transition: opacity 0.3s ease;
+      }
+      
+      /* Adjust for Desktop */
+      @media (min-width: 993px) {
+          .loader-overlay {
+              top: 0;
+              left: var(--sidebar-width);
+          }
+      }
     </style>
 </head>
 
@@ -513,6 +537,13 @@
     <div class="main-content" id="mainContent">
         <div class="container-fluid p-0 p-lg-3 d-flex flex-column h-100">
 
+          <div id="loader-container" class="loader-overlay">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading content...</p>
+          </div>
+
             <div style="flex-grow: 1; min-height: 0; overscroll-behavior-y: contain; border-radius: 8px; overflow: hidden; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 <iframe id="problem-container" src="" frameborder="0" width="100%" height="100%" scrolling="auto"></iframe>
             </div>
@@ -562,79 +593,117 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Sidebar toggle functionality
-        const topBarMenuBtn = document.getElementById('topBarMenuBtn');
-        const topBarCloseBtn = document.getElementById('topBarCloseBtn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        document.addEventListener('DOMContentLoaded', () => {
+    // --- UI Elements ---
+    const topBarMenuBtn = document.getElementById('topBarMenuBtn');
+    const topBarCloseBtn = document.getElementById('topBarCloseBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const iframe = document.getElementById('problem-container');
+    const loader = document.getElementById('loader-container');
 
-        topBarMenuBtn.addEventListener('click', () => {
+    // --- Sidebar Logic ---
+    function toggleSidebar(isOpen) {
+        if (isOpen) {
             sidebar.classList.add('active');
             sidebarOverlay.classList.add('active');
             topBarMenuBtn.style.display = 'none';
             topBarCloseBtn.style.display = 'block';
-        });
-
-        topBarCloseBtn.addEventListener('click', () => {
+        } else {
             sidebar.classList.remove('active');
             sidebarOverlay.classList.remove('active');
             topBarMenuBtn.style.display = 'block';
             topBarCloseBtn.style.display = 'none';
-        });
+        }
+    }
 
-        sidebarOverlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            sidebarOverlay.classList.remove('active');
-            topBarMenuBtn.style.display = 'block';
-            topBarCloseBtn.style.display = 'none';
-        });
+    topBarMenuBtn.addEventListener('click', () => toggleSidebar(true));
+    topBarCloseBtn.addEventListener('click', () => toggleSidebar(false));
+    sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
 
-        // Sidebar Submenu Toggles
-        document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function (e) {
-                e.preventDefault();
-                const parentLi = this.closest('li');
+    // Handle sidebar submenu toggles
+    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const parentLi = this.closest('li');
 
-                if (parentLi.classList.contains('has-submenu')) {
-                    parentLi.classList.toggle('active');
-
-                    // Rotate the caret icon
-                    const icon = this.querySelector('.toggle-icon');
-                    if (parentLi.classList.contains('active')) {
-                        icon.style.transform = 'rotate(90deg)';
-                    } else {
-                        icon.style.transform = 'rotate(0deg)';
-                    }
+            if (parentLi.classList.contains('has-submenu')) {
+                parentLi.classList.toggle('active');
+                const icon = this.querySelector('.toggle-icon');
+                if (icon) {
+                    icon.style.transform = parentLi.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
                 }
-            });
-        });
-
-        // Content Loading Logic
-        async function loadProblemContent(contentId) {
-            try {
-                const response = await fetch("{% static 'contents/' %}" + contentId + ".html");
-                if (!response.ok) throw new Error('Content not found');
-
-                src = "{% static 'contents/' %}" + contentId + ".html";
-                document.getElementById('problem-container').src = src;
-                initializeProblemSpecificJS();
-            } catch (error) {
-                console.error('Error loading content:', error);
-                // Fallback for visual feedback
-                // document.getElementById('problem-container').srcdoc = `<div style="padding:20px; font-family:sans-serif; color:red;">Error loading content: ${error.message}</div>`;
             }
+        });
+    });
+
+    // --- Iframe & Loader Logic ---
+    
+    /**
+     * Shows the loader overlay
+     */
+    function showLoader() {
+        if (loader) {
+            loader.style.display = 'flex';
+            loader.style.opacity = '1';
         }
+    }
 
-        function initializeProblemSpecificJS() {
-            console.log('Problem content initialized');
+    /**
+     * Hides the loader overlay with a slight fade-out
+     */
+    function hideLoader() {
+        if (loader) {
+            loader.style.opacity = '0';
+            // Wait for CSS transition (0.3s) before hiding element
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 300);
         }
+    }
 
-        // Get content ID from URL (e.g., ?content=introduction)
-        const contentId = "{{ content_file_id| default:'introduction' }}";
+    /**
+     * Loads HTML content into the iframe
+     */
+    async function loadProblemContent(contentId) {
+        if (!iframe) return;
 
-        // Load the problem content
-        loadProblemContent(contentId);
+        showLoader();
 
+        // Construct the path (Django static helper logic)
+        const contentUrl = "{% static 'contents/' %}" + contentId + ".html";
+
+        // Setting the src triggers the iframe's internal load process
+        iframe.src = contentUrl;
+        
+        // Optional: Error handling if the URL is unreachable
+        try {
+            const response = await fetch(contentUrl, { method: 'HEAD' });
+            if (!response.ok) {
+                console.error('Content file not found:', contentUrl);
+                // You could display an error message inside the iframe here if desired
+            }
+        } catch (err) {
+            console.error('Network error checking content:', err);
+        }
+    }
+
+    // Native iframe event listener: hides loader when content is fully ready
+    iframe.addEventListener('load', () => {
+        hideLoader();
+        console.log('Iframe content fully loaded');
+        initializeProblemSpecificJS();
+    });
+
+    function initializeProblemSpecificJS() {
+        // Add any custom logic you want to run after every page load
+        console.log('Problem environment initialized');
+    }
+
+    // --- Initial Load ---
+    const contentId = "{{ content_file_id|default:'introduction' }}";
+    loadProblemContent(contentId);
+   });
     </script>
 </body>
 
