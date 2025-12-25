@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,18 +6,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DSA Problem Tracker</title>
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
-    rel="stylesheet">
-  <!-- Custom CSS -->
   <style>
+    /* =================================================================
+       1. ORIGINAL SIDEBAR & GLOBAL VARIABLES (STRICTLY UNCHANGED)
+       ================================================================= */
     :root {
       --primary: #3b82f6;
       --primary-hover: #2563eb;
@@ -48,874 +46,257 @@
     }
 
     /* Top Bar Styles */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 1rem;
-      z-index: 900;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      justify-content: space-between;
-    }
-
-    .top-bar-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      margin: 0;
-      flex-grow: 1;
-      text-align: center;
-    }
-
-    .top-bar-menu-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.25rem;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background-color 0.2s ease;
-    }
-
-    .top-bar-menu-btn:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
+    .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
+    .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
+    .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
+    .top-bar-menu-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
 
     /* Sidebar Styles */
-    .sidebar {
-      position: fixed;
-      top: 56px;
-      left: 0;
-      bottom: 0;
-      width: var(--sidebar-width);
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: white;
-      padding: 0;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      z-index: 1000;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
+    .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-width); background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.08); z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; }
+    .sidebar.active { transform: translateX(0); }
+    .sidebar-overlay { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+    .sidebar-header { padding: 1rem; margin-bottom: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 10; display: flex; align-items: center; justify-content: center; }
+    .sidebar-header h3 { font-weight: 700; margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+    .sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
+    .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+    .sidebar-menu li { margin-bottom: 0.25rem; }
+    .sidebar-menu a { display: flex; align-items: center; padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
+    .sidebar-menu a:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
+    .sidebar-menu a.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
+    .sidebar-menu a i { margin-right: 0.75rem; width: 20px; text-align: center; }
+    .sidebar-footer { position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); background: rgba(15, 23, 42, 0.98); }
+    .sidebar-title { font-family: 'Playfair Display', serif; margin: 0; font-size: 1rem; }
+    .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
+    .sidebar-section { margin-bottom: 1.5rem; }
+    .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); margin: 1rem 0 0.5rem 1rem; font-weight: 600; }
+    .sidebar-submenu { list-style: none; padding-left: 1.5rem; margin: 0.25rem 0; }
+    .sidebar-submenu li { margin-bottom: 0.1rem; }
+    .sidebar-submenu a { padding: 0.5rem 1rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
 
-    .sidebar.active {
-      transform: translateX(0);
-    }
+    /* =================================================================
+       2. IMPROVED PREMIUM MAIN CONTENT STYLES
+       ================================================================= */
 
-    .sidebar-overlay {
-      position: fixed;
-      top: 56px;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .sidebar-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .sidebar-header {
-      padding: 1rem;
-      margin-bottom: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: sticky;
-      top: 0;
-      background: rgba(15, 23, 42, 0.98);
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .sidebar-header h3 {
-      font-weight: 700;
-      margin-bottom: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: white;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-    }
-
-    .sidebar-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-    }
-
-    .sidebar-menu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .sidebar-menu li {
-      margin-bottom: 0.25rem;
-    }
-
-    .sidebar-menu a {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      color: rgba(255, 255, 255, 0.8);
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar-menu a:hover {
-      color: white !important;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .sidebar-menu a.active {
-      color: white !important;
-      background: rgba(37, 99, 235, 0.15);
-    }
-
-    .sidebar-menu a i {
-      margin-right: 0.75rem;
-      width: 20px;
-      text-align: center;
-    }
-
-    .sidebar-footer {
-      position: sticky;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.5);
-      background: rgba(15, 23, 42, 0.98);
-    }
-
-    .sidebar-title {
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .brand-highlight {
-      color: var(--primary-light);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-    }
-
-    /* Sidebar sections */
-    .sidebar-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .sidebar-section-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: rgba(255, 255, 255, 0.5);
-      margin: 1rem 0 0.5rem 1rem;
-      font-weight: 600;
-    }
-
-    .sidebar-submenu {
-      list-style: none;
-      padding-left: 1.5rem;
-      margin: 0.25rem 0;
-    }
-
-    .sidebar-submenu li {
-      margin-bottom: 0.1rem;
-    }
-
-    .sidebar-submenu a {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .brand-highlight {
-      color: var(--primary-light);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-    }
-
-    /* Sidebar sections */
-    .sidebar-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .sidebar-section-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: rgba(255, 255, 255, 0.5);
-      margin: 1rem 0 0.5rem 1rem;
-      font-weight: 600;
-    }
-
-    .sidebar-submenu {
-      list-style: none;
-      padding-left: 1.5rem;
-      margin: 0.25rem 0;
-    }
-
-    .sidebar-submenu li {
-      margin-bottom: 0.1rem;
-    }
-
-    .sidebar-submenu a {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .back-btn {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 0.25rem;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-    }
-
-    .back-btn:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-
-    /* Main Content Styles */
     .main-content {
-      padding: 1rem;
+      padding: 2rem;
       transition: transform 0.3s ease;
       height: 100%;
-    }
-
-    /* Status Styles */
-    .status {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      vertical-align: middle;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .status-solved {
-      background-color: var(--success);
-      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-    }
-
-    .status-attempted {
-      background-color: var(--warning);
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-    }
-
-    .status-unsolved {
-      background-color: #cbd5e1;
-      box-shadow: 0 0 0 2px rgba(203, 213, 225, 0.2);
-    }
-
-    .problem-title {
-      font-weight: 500;
-      color: var(--text);
-      transition: color 0.2s;
-    }
-
-    .problem-title:hover {
-      color: var(--primary);
-    }
-
-    .difficulty {
-      font-weight: 600;
-      font-size: 0.85rem;
-      padding: 5px 10px;
-      border-radius: 20px;
-      display: inline-block;
-      min-width: 70px;
-      text-align: center;
-    }
-
-    .easy {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-    }
-
-    .medium {
-      background-color: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
-    }
-
-    .hard {
-      background-color: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
-    }
-
-    .problems-table {
-      background-color: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .problems-table thead th {
-      background-color: #f1f5f9;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-size: 0.75rem;
-      color: var(--text-light);
-      padding: 0.75rem 1rem;
-      white-space: nowrap;
-    }
-
-    .problems-table tbody tr:hover {
-      background-color: var(--row-hover);
-    }
-
-    .problems-table td {
-      padding: 1rem;
-      vertical-align: middle;
-      border-top: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    .filter-scroll {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding-bottom: 10px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .section-header {
-      background-color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      margin: 1.5rem 0 0.5rem;
-      cursor: pointer;
-      border-left: 4px solid var(--primary);
-      transition: all 0.2s;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .section-header:hover {
       background-color: #f8fafc;
     }
 
-    .section-header h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .section-header .badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.35em 0.65em;
-    }
-
-    .section-content {
-      padding: 0;
-      display: none;
-      /* Collapsed by default */
-    }
-
-    /* Progress Overview Section */
-    .progress-overview {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .progress-overview h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: var(--text);
-    }
-
-    .progress-item {
-      margin-bottom: 1.5rem;
-    }
-
-    .progress-title {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .progress-count {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .progress-bar-container {
-      height: 8px;
-      background-color: var(--meter-background);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.5s ease;
-    }
-
-    .progress-total .progress-bar-fill {
-      background-color: var(--primary);
-    }
-
-    .progress-easy .progress-bar-fill {
-      background-color: var(--success);
-    }
-
-    .progress-medium .progress-bar-fill {
-      background-color: var(--warning);
-    }
-
-    .progress-hard .progress-bar-fill {
-      background-color: var(--danger);
-    }
-
-    /* Digital Meter UI */
-    .digital-meter {
-      background-color: #f1f5f9;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .digital-meter-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-    }
-
-    .digital-meter-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-      line-height: 1;
-    }
-
-    .digital-meter-total {
-      font-size: 1rem;
-      color: var(--text-light);
-    }
-
-    /* Notes Section */
-    .notes-section {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .notes-section h4 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text);
-    }
-
-    .notes-content {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      line-height: 1.6;
-    }
-
-    /* Mobile optimizations */
-    @media (max-width: 768px) {
-      body {
-        padding: 0rem;
-        font-size: 0.9rem;
-      }
-
-      .main-content {
-        padding: 0rem;
-      }
-
-      .search-container {
-        flex-direction: column;
-      }
-
-      .problems-table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 8px;
-      }
-
-      .problems-table {
-        min-width: 800px;
-      }
-
-      .problems-table td,
-      .problems-table th {
-        padding: 0.75rem;
-      }
-
-      .section-header h3 {
-        font-size: 0.9rem;
-      }
-
-      .digital-meter {
-        padding: 1rem;
-      }
-
-      .digital-meter-value {
-        font-size: 2rem;
-      }
-
-      .progress-overview {
-        padding: 1rem;
-      }
-
-
-    }
-
-    @media (max-width: 992px) {
-      .main-content {
-        margin-top: 4rem;
-      }
-    }
-
-    /* Desktop styles */
-    @media (min-width: 992px) {
-      .top-bar {
-        display: none;
-      }
-
-      .sidebar {
-        top: 0;
-        height: 100vh;
-        transform: translateX(0);
-      }
-
-      .sidebar-overlay {
-        display: none;
-      }
-
-      .main-content {
-        margin-left: var(--sidebar-width);
-        padding-top: 1rem;
-      }
-    }
-
-    /* Premium look enhancements */
-    .header-container {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .header-title {
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 0.5rem;
-    }
-
-    .header-subtitle {
-      font-weight: 400;
-      color: var(--text-light);
-    }
-
-    .btn-sm {
-      padding: 0.35rem 0.75rem;
-      font-size: 0.8rem;
-    }
-
-    .search-input {
-      font-size: 0.9rem;
-      padding: 0.65rem 1rem;
-    }
-
-    /* Premium Progress Cards */
+    /* Premium Card Design (Replaces Bootstrap Cards) */
     .premium-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
-      border-radius: 16px;
-      /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08),
-        0 5px 15px rgba(0, 0, 0, 0.05); */
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      overflow: hidden;
-      margin-bottom: 24px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      /* opacity: 0.3; */
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        overflow: hidden;
+        margin-bottom: 24px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
-    /* .premium-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12),
-        0 8px 20px rgba(0, 0, 0, 0.08);
-    } */
 
     .progress-card-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: linear-gradient(to right, #ffffff, #fafafa);
     }
 
     .progress-card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 0;
-      color: var(--text);
-      letter-spacing: 0.2px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.02em;
     }
 
     .progress-card-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        width: 42px;
+        height: 42px;
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--primary);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
     }
 
-    .progress-card-body {
-      padding: 24px;
+    .progress-card-body { padding: 2rem; }
+
+    /* Radial Chart Polish */
+    .radial-circle { width: 160px; height: 160px; position: relative; }
+    .circle-bg { stroke: #f1f5f9; stroke-width: 2.5; }
+    .circle-fill { stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3)); }
+    .radial-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.5rem; font-weight: 800; color: #0f172a; letter-spacing: -1px; }
+    .radial-total { font-size: 0.9rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* New Modern Search Bar */
+    .search-container { position: relative; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); border-radius: 12px; }
+    .search-input {
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        background-color: white;
+        transition: all 0.2s;
+    }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    .search-icon-overlay { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+
+    /* Modern Filter Buttons */
+    .filter-buttons .btn {
+        border-radius: 20px;
+        padding: 0.4rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border: 1px solid #e2e8f0;
+        background: white;
+        color: #64748b;
+        transition: all 0.2s;
+    }
+    .filter-buttons .btn:hover { background-color: #f1f5f9; color: #334155; }
+    .filter-buttons .btn.active {
+        background-color: #0f172a;
+        color: white;
+        border-color: #0f172a;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
     }
 
-    /* Radial Progress */
-    .progress-radial {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+    /* Premium Section Headers */
+    .section-header {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid var(--primary);
+        padding: 1.2rem 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .section-header:hover { transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .section-header h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; color: #1e293b; margin: 0; font-weight: 700; }
+    .section-toggle-icon { color: #cbd5e1; transition: transform 0.3s; }
+    .section-header.active .section-toggle-icon { transform: rotate(180deg); }
+
+    /* Premium Table Styling */
+    .problems-table-wrapper {
+        background: white;
+        border-radius: 0 0 12px 12px;
+        border: 1px solid #e2e8f0;
+        border-top: none;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+    
+    .table { margin-bottom: 0; }
+    .table thead th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .table tbody td {
+        padding: 1rem 1.5rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+        font-size: 0.95rem;
+    }
+    .table tbody tr:last-child td { border-bottom: none; }
+    .table tbody tr:hover { background-color: #fcfcfc; }
+
+    /* Difficulty & Status Badges */
+    .difficulty {
+        font-weight: 600;
+        font-size: 0.75rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        min-width: 80px;
+        text-align: center;
+        letter-spacing: 0.3px;
+    }
+    .easy { background-color: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+    .medium { background-color: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
+    .hard { background-color: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+
+    /* Status Indicator (Dot) */
+    .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+    }
+    .status-dot::after {
+        content: '';
+        position: absolute;
+        top: -4px; left: -4px; right: -4px; bottom: -4px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        transition: border-color 0.2s;
+    }
+    .status-dot:hover::after { border-color: rgba(0,0,0,0.1); }
+    
+    .status-solved { background-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+    .status-attempted { background-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); }
+    .status-unsolved { background-color: #e2e8f0; border: 2px solid #cbd5e1; }
+
+    /* Solve Button */
+    .btn-solve {
+        background-color: #0f172a;
+        color: white;
+        border-radius: 8px;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .btn-solve:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
     }
 
-    .radial-circle {
-      position: relative;
-      width: 180px;
-      height: 180px;
+    /* Responsive Adjustments */
+    @media (min-width: 992px) {
+      .top-bar { display: none; }
+      .sidebar { top: 0; height: 100vh; transform: translateX(0); }
+      .sidebar-overlay { display: none; }
+      .main-content { margin-left: var(--sidebar-width); padding-top: 2rem; }
     }
 
-    .circular-chart {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    .circle-bg {
-      fill: none;
-      stroke: #f1f5f9;
-      stroke-width: 2.5;
-    }
-
-    .circle-fill {
-      fill: none;
-      stroke: var(--primary);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      transform-origin: center;
-      transform: rotate(-90deg);
-      transition: stroke-dasharray 0.5s ease;
-    }
-
-    @keyframes circle-fill-animation {
-      0% {
-        stroke-dasharray: 0, 100;
-      }
-    }
-
-    .radial-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
-
-    .radial-value {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .radial-total {
-      font-size: 1.25rem;
-      color: var(--text-light);
-    }
-
-    .progress-card-footer {
-      text-align: center;
-      margin-top: 16px;
-    }
-
-    .progress-percentage {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-right: 8px;
-    }
-
-    .progress-label {
-      font-size: 0.9rem;
-      color: var(--text-light);
-      font-weight: 500;
-    }
-
-    /* Difficulty Progress */
-    .difficulty-progress {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .difficulty-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .difficulty-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .difficulty-label {
-      font-weight: 500;
-      color: var(--text);
-      font-size: 0.95rem;
-    }
-
-    .difficulty-count {
-      font-weight: 600;
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    .progress-bar-container {
-      height: 8px;
-      background-color: #f1f5f9;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg,
-          rgba(255, 255, 255, 0.2) 0%,
-          rgba(255, 255, 255, 0.8) 50%,
-          rgba(255, 255, 255, 0.2) 100%);
-      animation: shimmer 2s infinite linear;
-    }
-
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-100%);
-      }
-
-      100% {
-        transform: translateX(100%);
-      }
-    }
-
-    #easy-progress-bar {
-      background: linear-gradient(90deg, var(--success), #34d399);
-    }
-
-    #medium-progress-bar {
-      background: linear-gradient(90deg, var(--warning), #fbbf24);
-    }
-
-    #hard-progress-bar {
-      background: linear-gradient(90deg, var(--danger), #f87171);
-    }
-
-    .difficulty-percentage {
-      text-align: right;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-light);
-    }
-
-    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .radial-circle {
-        width: 140px;
-        height: 140px;
-      }
-
-      .radial-value {
-        font-size: 2rem;
-      }
-
-      .radial-total {
-        font-size: 1rem;
-      }
-
-      .progress-percentage {
-        font-size: 1.25rem;
-      }
+      .main-content { padding: 1rem; margin-top: 56px; }
+      .progress-card-body { padding: 1.5rem; }
+      .radial-circle { width: 140px; height: 140px; }
+      .radial-value { font-size: 2rem; }
+      .filter-buttons { overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
+      .section-header { padding: 1rem; }
+      .section-header h3 { font-size: 1rem; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Top Bar (for mobile) -->
   <div class="top-bar" id="topBar">
     <button class="top-bar-menu-btn" id="topBarMenuBtn">
       <i class="fas fa-bars"></i>
@@ -925,10 +306,8 @@
     </button>
   </div>
 
-  <!-- Sidebar Overlay (for mobile) -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <h3 class="sidebar-title">
@@ -937,7 +316,6 @@
     </div>
 
     <div class="sidebar-content">
-
       <div class="sidebar-section">
         <p class="sidebar-section-title">Main Menu</p>
         <ul class="sidebar-menu">
@@ -955,16 +333,14 @@
           {% if section.has_submenu %}
           <li class="has-submenu">
             <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
-              <i
-                class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              <i class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
               {{ section.title }}
             </a>
             <ul class="sidebar-submenu">
               {% for content in section.contents %}
               <li>
                 <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}">
-                  <i
-                    class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                  <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                   {{ content.title }}
                 </a>
               </li>
@@ -974,8 +350,7 @@
           {% else %}
           <li>
             <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
-              <i
-                class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              <i class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
               {{ section.contents.0.title }}
             </a>
           </li>
@@ -984,26 +359,6 @@
       </div>
       {% endfor %}
       {% endif %}
-
-      <!-- <div class="sidebar-section">
-              <p class="sidebar-section-title">Data Structures</p>
-              <ul class="sidebar-menu">
-                  <li><a href="#"><i class="fas fa-layer-group"></i> Arrays</a></li>
-                  <li><a href="#"><i class="fas fa-link"></i> Linked Lists</a></li>
-                  <li><a href="#"><i class="fas fa-tree"></i> Trees</a></li>
-                  <li><a href="#"><i class="fas fa-sitemap"></i> Graphs</a></li>
-              </ul>
-          </div>
-
-          <div class="sidebar-section">
-              <p class="sidebar-section-title">Algorithms</p>
-              <ul class="sidebar-menu">
-                  <li><a href="#"><i class="fas fa-search"></i> Searching</a></li>
-                  <li><a href="#"><i class="fas fa-sort-amount-down"></i> Sorting</a></li>
-                  <li><a href="#"><i class="fas fa-route"></i> Path Finding</a></li>
-                  <li><a href="#"><i class="fas fa-chess"></i> Dynamic Programming</a></li>
-              </ul>
-          </div> -->
     </div>
 
     <div class="sidebar-footer">
@@ -1011,1140 +366,116 @@
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content" id="mainContent">
-    <div class="container-fluid">
+    <div class="container-fluid p-0" style="max-width: 1200px; margin: 0 auto;">
 
-      <!-- Premium Progress Dashboard -->
-      <div class="premium-progress-dashboard mb-4">
-        <div class="premium-card">
+      <div class="premium-progress-dashboard mb-5">
+        <div class="premium-card position-relative">
 
-          <!-- Lock overlay message -->
           {% if is_freemium %}
-          <div
-            style="position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: rgba(255,255,255,0.7);">
-            <div class="text-center p-4"
-              style="background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-              <i class="fas fa-lock fa-2x mb-3" style="color: #6c757d;"></i>
-              <h5 class="mb-2">Premium Feature Locked</h5>
-              <p class="text-muted small mb-0">This advanced analytics feature is only available for premium members.
-              </p>
-              <button class="btn btn-sm btn-primary mt-3">Upgrade Now</button>
+          <div style="position: absolute; z-index: 10; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(4px);">
+            <div class="text-center p-4" style="background-color: white; border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+              <i class="fas fa-lock fa-2x mb-3 text-secondary"></i>
+              <h5 class="mb-2 fw-bold text-dark">Premium Analytics</h5>
+              <p class="text-muted small mb-3">Upgrade to track detailed progress</p>
+              <button class="btn btn-sm btn-dark rounded-pill px-4">Unlock Now</button>
             </div>
           </div>
           {% endif %}
 
           <div class="progress-card-header">
             <div>
-              <h3 class="progress-card-title mb-1">
-                <i class="fas fa-trophy me-2" style="color: #f59e0b;"></i>
-                Coding Mastery Progress
-              </h3>
-              <p class="text-muted small mb-0">Track your DSA journey with premium analytics</p>
+              <h3 class="progress-card-title">Coding Mastery</h3>
+              <p class="text-muted small mb-0 mt-1">Your journey to excellence</p>
             </div>
             <div class="progress-card-icon">
-              <i class="fas fa-crown"></i>
+              <i class="fas fa-chart-pie"></i>
             </div>
           </div>
 
           <div class="progress-card-body">
-            <div class="row">
-              <!-- Radial Progress -->
-              <div class="col-md-4 border-end pe-md-4 d-flex flex-column align-items-center">
-                <div class="progress-radial">
-                  <div class="radial-circle">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                      <path class="circle-bg"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                      <path class="circle-fill" stroke-dasharray="0, 100"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    </svg>
-                    <div class="radial-content">
-                      <div class="radial-value" id="total-problems-count">0</div>
-                      <div class="radial-total">of <span id="total-problems-total">100</span></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Difficulty Progress Bars -->
-              <div class="col-md-8 ps-md-4">
-                <div class="difficulty-progress">
-                  <div class="difficulty-item">
-                    <div class="difficulty-info">
-                      <div class="d-flex align-items-center">
-                        <span class="badge bg-success bg-opacity-10 text-success fs-6 rounded-pill px-3 py-1 me-2">
-                          <i class="fas fa-check-circle me-1"></i> Easy
-                        </span>
-                        <small class="text-muted">
-                          <span id="easy-count">0</span>/<span id="easy-total">40</span> solved
-                        </small>
-                      </div>
-                      <small class="fw-bold text-success" id="easy-percent">0%</small>
-                    </div>
-                    <div class="progress-bar-container">
-                      <div id="easy-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-                    </div>
-                  </div>
-
-                  <div class="difficulty-item">
-                    <div class="difficulty-info">
-                      <div class="d-flex align-items-center">
-                        <span class="badge bg-warning bg-opacity-10 text-warning fs-6 rounded-pill px-3 py-1 me-2">
-                          <i class="fas fa-exclamation-circle me-1"></i> Medium
-                        </span>
-                        <small class="text-muted">
-                          <span id="medium-count">0</span>/<span id="medium-total">40</span> solved
-                        </small>
-                      </div>
-                      <small class="fw-bold text-warning" id="medium-percent">0%</small>
-                    </div>
-                    <div class="progress-bar-container">
-                      <div id="medium-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-                    </div>
-                  </div>
-
-                  <div class="difficulty-item">
-                    <div class="difficulty-info">
-                      <div class="d-flex align-items-center">
-                        <span class="badge bg-danger bg-opacity-10 text-danger fs-6 rounded-pill px-3 py-1 me-2">
-                          <i class="fas fa-fire me-1"></i> Hard
-                        </span>
-                        <small class="text-muted">
-                          <span id="hard-count">0</span>/<span id="hard-total">20</span> solved
-                        </small>
-                      </div>
-                      <small class="fw-bold text-danger" id="hard-percent">0%</small>
-                    </div>
-                    <div class="progress-bar-container">
-                      <div id="hard-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
-                  <div class="d-flex align-items-center">
-                    <i class="fas fa-bolt text-warning me-2"></i>
-                    <small class="text-muted">Daily streak: <strong class="text-dark">5 days</strong></small>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <i class="fas fa-star text-primary me-2"></i>
-                    <small class="text-muted">Premium member</small>
+            <div class="row align-items-center">
+              <div class="col-lg-4 border-end-lg pe-lg-5 mb-4 mb-lg-0 d-flex flex-column align-items-center">
+                <div class="radial-circle">
+                  <svg viewBox="0 0 36 36" style="width:100%; height:100%;">
+                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                    <path class="circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                  </svg>
+                  <div class="position-absolute top-50 start-50 translate-middle text-center">
+                    <div class="radial-value" id="total-problems-count">0</div>
+                    <div class="radial-total">Solved</div>
                   </div>
                 </div>
               </div>
 
+              <div class="col-lg-8 ps-lg-5">
+                <div class="d-flex flex-column gap-4">
+                  <div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-success bg-opacity-10 text-success me-2">Easy</span></span>
+                        <span class="text-muted small fw-bold"><span id="easy-count">0</span> / <span id="easy-total">0</span></span>
+                    </div>
+                    <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
+                        <div id="easy-progress-bar" class="progress-bar bg-success" style="width: 0%; border-radius: 4px;"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-warning bg-opacity-10 text-warning me-2">Medium</span></span>
+                        <span class="text-muted small fw-bold"><span id="medium-count">0</span> / <span id="medium-total">0</span></span>
+                    </div>
+                    <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
+                        <div id="medium-progress-bar" class="progress-bar bg-warning" style="width: 0%; border-radius: 4px;"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-danger bg-opacity-10 text-danger me-2">Hard</span></span>
+                        <span class="text-muted small fw-bold"><span id="hard-count">0</span> / <span id="hard-total">0</span></span>
+                    </div>
+                    <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
+                        <div id="hard-progress-bar" class="progress-bar bg-danger" style="width: 0%; border-radius: 4px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-
-      <!-- Search and Filters -->
-      <div class="search-container d-flex gap-2 mb-3">
-        <input type="text" class="form-control search-input" id="searchInput" placeholder="Search problems...">
-        <button class="btn btn-primary btn-sm d-flex align-items-center gap-2" id="resetBtn">
-          <i class="fas fa-sync-alt"></i> Reset
-        </button>
-      </div>
-
-      <div class="filter-scroll mb-3">
-        <div class="d-flex gap-2 filter-buttons">
-          <button class="btn btn-sm btn-primary active" data-filter="all">All</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="easy">Easy</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="medium">Medium</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="hard">Hard</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="solved">Solved</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="attempted">Attempted</button>
-          <button class="btn btn-sm btn-outline-secondary" data-filter="unsolved">Unsolved</button>
+      <div class="d-flex flex-column flex-md-row gap-3 mb-4 justify-content-between align-items-md-center">
+        <div class="search-container flex-grow-1" style="max-width: 400px;">
+            <i class="fas fa-search search-icon-overlay"></i>
+            <input type="text" class="form-control search-input" id="searchInput" placeholder="Search problems...">
+        </div>
+        
+        <div class="filter-buttons d-flex gap-2">
+            <button class="btn active" data-filter="all">All</button>
+            <button class="btn" data-filter="easy">Easy</button>
+            <button class="btn" data-filter="medium">Medium</button>
+            <button class="btn" data-filter="hard">Hard</button>
+            <button class="btn" id="resetBtn"><i class="fas fa-undo me-1"></i> Reset</button>
         </div>
       </div>
 
-      <!-- Problem Sections -->
       <div id="sections-container">
-        <!-- Sections will be loaded here dynamically -->
-      </div>
+        </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script type="application/json" id="sections-data">
     {{ sections_js_json|safe }}
-</script>
+  </script>
 
-  <!-- Problem Data and Application Script -->
   <script>
     // Problem data module
     const ProblemData = (() => {
-
       const sections = JSON.parse(document.getElementById('sections-data').textContent);
-      // const sections = [
-      //   {
-      //     id: "basic-problems",
-      //     title: "1. Basic Python Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "hello-world",
-      //         title: "Print 'Hello, World!'",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["print", "basic"]
-      //       },
-      //       {
-      //         id: "add-numbers",
-      //         title: "Add Two Numbers",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["arithmetic", "input"]
-      //       },
-      //       {
-      //         id: "swap-vars",
-      //         title: "Swap Two Variables",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["variables"]
-      //       },
-      //       {
-      //         id: "convert-celsius",
-      //         title: "Convert Celsius to Fahrenheit",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["conversion"]
-      //       },
-      //       {
-      //         id: "quadratic-roots",
-      //         title: "Find Quadratic Roots",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["math", "quadratic"]
-      //       },
-      //       {
-      //         id: "km-to-miles",
-      //         title: "Convert Kilometers to Miles",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["conversion"]
-      //       },
-      //       {
-      //         id: "check-even",
-      //         title: "Check Even or Odd",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["modulus"]
-      //       },
-      //       {
-      //         id: "leap-year",
-      //         title: "Check Leap Year",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["conditions"]
-      //       },
-      //       {
-      //         id: "largest-three",
-      //         title: "Find Largest Among Three Numbers",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["comparison"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "string-problems",
-      //     title: "2. String Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "reverse-string",
-      //         title: "Reverse a String",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "reverse"]
-      //       },
-      //       {
-      //         id: "palindrome",
-      //         title: "Check Palindrome",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "palindrome"]
-      //       },
-      //       {
-      //         id: "count-vowels",
-      //         title: "Count Vowels in String",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "count"]
-      //       },
-      //       {
-      //         id: "anagram",
-      //         title: "Check if Two Strings are Anagrams",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "anagram"]
-      //       },
-      //       {
-      //         id: "remove-duplicates",
-      //         title: "Remove Duplicate Characters",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "duplicates"]
-      //       },
-      //       {
-      //         id: "word-count",
-      //         title: "Count Words in String",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "count"]
-      //       },
-      //       {
-      //         id: "first-char-capital",
-      //         title: "Capitalize First Character",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "capitalize"]
-      //       },
-      //       {
-      //         id: "string-rotation",
-      //         title: "Check String Rotation",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "rotation"]
-      //       },
-      //       {
-      //         id: "longest-substring",
-      //         title: "Longest Substring Without Repeating",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "substring"]
-      //       },
-      //       {
-      //         id: "string-compression",
-      //         title: "String Compression",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["string", "compression"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "list-problems",
-      //     title: "3. List Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "sum-list",
-      //         title: "Sum of List Elements",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "sum"]
-      //       },
-      //       {
-      //         id: "largest-list",
-      //         title: "Find Largest in List",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "max"]
-      //       },
-      //       {
-      //         id: "rotate-list",
-      //         title: "Rotate List by N Positions",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "rotation"]
-      //       },
-      //       {
-      //         id: "remove-duplicates-list",
-      //         title: "Remove Duplicates from List",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "duplicates"]
-      //       },
-      //       {
-      //         id: "list-comprehension",
-      //         title: "List Comprehension Exercises",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "comprehension"]
-      //       },
-      //       {
-      //         id: "merge-sorted",
-      //         title: "Merge Two Sorted Lists",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "merge"]
-      //       },
-      //       {
-      //         id: "flatten-list",
-      //         title: "Flatten Nested List",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "recursion"]
-      //       },
-      //       {
-      //         id: "list-chunks",
-      //         title: "Split List into Chunks",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "chunks"]
-      //       },
-      //       {
-      //         id: "second-largest",
-      //         title: "Find Second Largest Number",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "sorting"]
-      //       },
-      //       {
-      //         id: "common-elements",
-      //         title: "Find Common Elements in Lists",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["list", "intersection"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "dictionary-problems",
-      //     title: "4. Dictionary Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "merge-dicts",
-      //         title: "Merge Two Dictionaries",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "merge"]
-      //       },
-      //       {
-      //         id: "key-exists",
-      //         title: "Check if Key Exists",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "key"]
-      //       },
-      //       {
-      //         id: "sum-values",
-      //         title: "Sum All Values in Dictionary",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "sum"]
-      //       },
-      //       {
-      //         id: "word-frequency",
-      //         title: "Word Frequency Counter",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "frequency"]
-      //       },
-      //       {
-      //         id: "sort-dict",
-      //         title: "Sort Dictionary by Value",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "sort"]
-      //       },
-      //       {
-      //         id: "max-value",
-      //         title: "Find Key with Maximum Value",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "max"]
-      //       },
-      //       {
-      //         id: "nested-dict",
-      //         title: "Access Nested Dictionary Items",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "nested"]
-      //       },
-      //       {
-      //         id: "dict-comprehension",
-      //         title: "Dictionary Comprehension",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "comprehension"]
-      //       },
-      //       {
-      //         id: "invert-dict",
-      //         title: "Invert a Dictionary",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "invert"]
-      //       },
-      //       {
-      //         id: "two-sum",
-      //         title: "Two Sum Problem",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dictionary", "hash"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "function-problems",
-      //     title: "5. Function Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "factorial",
-      //         title: "Factorial Using Recursion",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "recursion"]
-      //       },
-      //       {
-      //         id: "fibonacci",
-      //         title: "Fibonacci Sequence",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "recursion"]
-      //       },
-      //       {
-      //         id: "prime-check",
-      //         title: "Check Prime Number",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "prime"]
-      //       },
-      //       {
-      //         id: "gcd",
-      //         title: "Find GCD of Two Numbers",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "gcd"]
-      //       },
-      //       {
-      //         id: "lcm",
-      //         title: "Find LCM of Two Numbers",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "lcm"]
-      //       },
-      //       {
-      //         id: "power-function",
-      //         title: "Implement Power Function",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "power"]
-      //       },
-      //       {
-      //         id: "decorator-example",
-      //         title: "Create a Timer Decorator",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "decorator"]
-      //       },
-      //       {
-      //         id: "closure-example",
-      //         title: "Create a Closure Function",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "closure"]
-      //       },
-      //       {
-      //         id: "memoization",
-      //         title: "Implement Memoization",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "memoization"]
-      //       },
-      //       {
-      //         id: "generator-fib",
-      //         title: "Fibonacci with Generator",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["function", "generator"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "file-io-problems",
-      //     title: "6. File I/O Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "read-file",
-      //         title: "Read File Contents",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "read"]
-      //       },
-      //       {
-      //         id: "write-file",
-      //         title: "Write to File",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "write"]
-      //       },
-      //       {
-      //         id: "copy-file",
-      //         title: "Copy File Contents",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "copy"]
-      //       },
-      //       {
-      //         id: "word-count-file",
-      //         title: "Word Count in File",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "count"]
-      //       },
-      //       {
-      //         id: "merge-files",
-      //         title: "Merge Two Files",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "merge"]
-      //       },
-      //       {
-      //         id: "csv-read",
-      //         title: "Read CSV File",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "csv"]
-      //       },
-      //       {
-      //         id: "json-read",
-      //         title: "Read JSON File",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "json"]
-      //       },
-      //       {
-      //         id: "log-analysis",
-      //         title: "Analyze Log File",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "log"]
-      //       },
-      //       {
-      //         id: "file-encryption",
-      //         title: "Simple File Encryption",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "encryption"]
-      //       },
-      //       {
-      //         id: "directory-listing",
-      //         title: "List Files in Directory",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["file", "directory"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "oop-problems",
-      //     title: "7. OOP Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "class-circle",
-      //         title: "Circle Class",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["class", "oop"]
-      //       },
-      //       {
-      //         id: "bank-account",
-      //         title: "Bank Account Class",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["class", "oop"]
-      //       },
-      //       {
-      //         id: "inheritance-shapes",
-      //         title: "Shape Inheritance",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["inheritance", "oop"]
-      //       },
-      //       {
-      //         id: "polymorphism-animals",
-      //         title: "Animal Polymorphism",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["polymorphism", "oop"]
-      //       },
-      //       {
-      //         id: "magic-methods",
-      //         title: "Implement Magic Methods",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["magic-methods", "oop"]
-      //       },
-      //       {
-      //         id: "class-student",
-      //         title: "Student Management System",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["class", "oop"]
-      //       },
-      //       {
-      //         id: "singleton-pattern",
-      //         title: "Implement Singleton Pattern",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["design-pattern", "oop"]
-      //       },
-      //       {
-      //         id: "decorator-class",
-      //         title: "Class Decorator",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["decorator", "oop"]
-      //       },
-      //       {
-      //         id: "property-decorator",
-      //         title: "Use Property Decorator",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["property", "oop"]
-      //       },
-      //       {
-      //         id: "abstract-class",
-      //         title: "Create Abstract Class",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["abstract", "oop"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "algorithm-problems",
-      //     title: "8. Algorithm Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "bubble-sort",
-      //         title: "Implement Bubble Sort",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["sorting", "algorithm"]
-      //       },
-      //       {
-      //         id: "binary-search",
-      //         title: "Implement Binary Search",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["search", "algorithm"]
-      //       },
-      //       {
-      //         id: "linear-search",
-      //         title: "Implement Linear Search",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["search", "algorithm"]
-      //       },
-      //       {
-      //         id: "merge-sort",
-      //         title: "Implement Merge Sort",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["sorting", "algorithm"]
-      //       },
-      //       {
-      //         id: "quick-sort",
-      //         title: "Implement Quick Sort",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["sorting", "algorithm"]
-      //       },
-      //       {
-      //         id: "linked-list",
-      //         title: "Implement Linked List",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["data-structure", "algorithm"]
-      //       },
-      //       {
-      //         id: "binary-tree",
-      //         title: "Implement Binary Tree",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["data-structure", "algorithm"]
-      //       },
-      //       {
-      //         id: "graph-traversal",
-      //         title: "Graph Traversal",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["graph", "algorithm"]
-      //       },
-      //       {
-      //         id: "dijkstra",
-      //         title: "Dijkstra's Algorithm",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["graph", "algorithm"]
-      //       },
-      //       {
-      //         id: "knapsack",
-      //         title: "0/1 Knapsack Problem",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["dynamic-programming", "algorithm"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "datetime-problems",
-      //     title: "9. Date/Time Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "current-date",
-      //         title: "Get Current Date/Time",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "date-diff",
-      //         title: "Calculate Date Difference",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "format-date",
-      //         title: "Format Date String",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "add-days",
-      //         title: "Add Days to Date",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "day-of-week",
-      //         title: "Find Day of Week",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "timezone-convert",
-      //         title: "Convert Between Timezones",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "age-calculator",
-      //         title: "Age Calculator",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "business-days",
-      //         title: "Count Business Days",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "leap-year-check",
-      //         title: "Check Leap Year",
-      //         difficulty: "easy",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       },
-      //       {
-      //         id: "time-delta",
-      //         title: "Calculate Time Delta",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["datetime"]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     id: "regex-problems",
-      //     title: "10. Regular Expression Problems",
-      //     type: "problems",
-      //     problems: [
-      //       {
-      //         id: "email-validation",
-      //         title: "Validate Email Address",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "phone-validation",
-      //         title: "Validate Phone Number",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "password-strength",
-      //         title: "Check Password Strength",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "extract-numbers",
-      //         title: "Extract Numbers from String",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "find-urls",
-      //         title: "Find URLs in Text",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "replace-words",
-      //         title: "Replace Words in String",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "split-string",
-      //         title: "Split String by Multiple Delimiters",
-      //         difficulty: "medium",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "html-tags",
-      //         title: "Remove HTML Tags",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "date-extraction",
-      //         title: "Extract Dates from Text",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       },
-      //       {
-      //         id: "credit-card",
-      //         title: "Validate Credit Card Number",
-      //         difficulty: "hard",
-      //         status: "unsolved",
-      //         solution: "#",
-      //         video: "#",
-      //         tags: ["regex"]
-      //       }
-      //     ]
-      //   }
-      // ];
-
 
       const getAllProblems = () => {
         return sections.flatMap(section => section.type === "problems" ? section.problems : []);
@@ -2168,7 +499,6 @@
             filtered = filtered.filter(problem => problem.difficulty === filter);
           }
         }
-
         return filtered;
       };
 
@@ -2195,72 +525,29 @@
         const hardProblems = allProblems.filter(p => p.difficulty === 'hard');
 
         return {
-          total: {
-            count: solvedProblems,
-            total: totalProblems,
-            percent: Math.round((solvedProblems / totalProblems) * 100) || 0
-          },
-          easy: {
-            count: easyProblems.filter(p => p.status === 'solved').length,
-            total: easyProblems.length,
-            percent: Math.round((easyProblems.filter(p => p.status === 'solved').length / easyProblems.length) * 100) || 0
-          },
-          medium: {
-            count: mediumProblems.filter(p => p.status === 'solved').length,
-            total: mediumProblems.length,
-            percent: Math.round((mediumProblems.filter(p => p.status === 'solved').length / mediumProblems.length) * 100) || 0
-          },
-          hard: {
-            count: hardProblems.filter(p => p.status === 'solved').length,
-            total: hardProblems.length,
-            percent: Math.round((hardProblems.filter(p => p.status === 'solved').length / hardProblems.length) * 100) || 0
-          }
+          total: { count: solvedProblems, total: totalProblems, percent: totalProblems ? Math.round((solvedProblems / totalProblems) * 100) : 0 },
+          easy: { count: easyProblems.filter(p => p.status === 'solved').length, total: easyProblems.length, percent: easyProblems.length ? Math.round((easyProblems.filter(p => p.status === 'solved').length / easyProblems.length) * 100) : 0 },
+          medium: { count: mediumProblems.filter(p => p.status === 'solved').length, total: mediumProblems.length, percent: mediumProblems.length ? Math.round((mediumProblems.filter(p => p.status === 'solved').length / mediumProblems.length) * 100) : 0 },
+          hard: { count: hardProblems.filter(p => p.status === 'solved').length, total: hardProblems.length, percent: hardProblems.length ? Math.round((hardProblems.filter(p => p.status === 'solved').length / hardProblems.length) * 100) : 0 }
         };
       };
 
-      return {
-        sections,
-        getAllProblems,
-        getFilteredProblems,
-        updateProblemStatus,
-        getProgressStats
-      };
+      return { sections, getAllProblems, getFilteredProblems, updateProblemStatus, getProgressStats };
     })();
 
     // UI Controller module
     const UIController = (() => {
       const DOMStrings = {
-        problemList: '#problemList',
         searchInput: '#searchInput',
         filterButtons: '.filter-buttons button',
         resetBtn: '#resetBtn',
         sectionsContainer: '#sections-container',
         progressElements: {
-          total: {
-            count: '#total-problems-count',
-            total: '#total-problems-total'
-          },
-          easy: {
-            count: '#easy-count',
-            total: '#easy-total',
-            bar: '#easy-progress-bar',
-            percent: "#easy-percent"
-          },
-          medium: {
-            count: '#medium-count',
-            total: '#medium-total',
-            bar: '#medium-progress-bar',
-            percent: "#medium-percent"
-          },
-          hard: {
-            count: '#hard-count',
-            total: '#hard-total',
-            bar: '#hard-progress-bar',
-            percent: "#hard-percent"
-          }
-        },
-
-        mainContent: '#mainContent',
+          total: { count: '#total-problems-count' },
+          easy: { count: '#easy-count', total: '#easy-total', bar: '#easy-progress-bar' },
+          medium: { count: '#medium-count', total: '#medium-total', bar: '#medium-progress-bar' },
+          hard: { count: '#hard-count', total: '#hard-total', bar: '#hard-progress-bar' }
+        }
       };
 
       const saveSectionState = (sectionId, isExpanded) => {
@@ -2271,303 +558,215 @@
 
       const getSectionState = (sectionId) => {
         const sectionStates = JSON.parse(localStorage.getItem('sectionStates') || '{}');
-        return sectionStates[sectionId] || false; // Default to collapsed
+        return sectionStates[sectionId] || false; 
       };
 
-      const clearSectionStates = () => {
-        localStorage.removeItem('sectionStates');
-      };
+      const clearSectionStates = () => { localStorage.removeItem('sectionStates'); };
 
+      // === MODIFIED RENDER LOGIC FOR PREMIUM TABLE ===
       const renderProblems = (problems) => {
         const container = document.querySelector(DOMStrings.sectionsContainer);
         container.innerHTML = '';
 
-        // Group problems by their sections
         const problemsBySection = {};
         problems.forEach(problem => {
-          const section = ProblemData.sections.find(s =>
-            s.type === "problems" && s.problems.some(p => p.id === problem.id)
-          );
+          const section = ProblemData.sections.find(s => s.type === "problems" && s.problems.some(p => p.id === problem.id));
           if (section) {
-            if (!problemsBySection[section.id]) {
-              problemsBySection[section.id] = {
-                section: section,
-                problems: []
-              };
-            }
+            if (!problemsBySection[section.id]) problemsBySection[section.id] = { section: section, problems: [] };
             problemsBySection[section.id].problems.push(problem);
           }
         });
 
-        // Render each section with its problems
         for (const sectionId in problemsBySection) {
           const { section, problems } = problemsBySection[sectionId];
-
-          const sectionElement = document.createElement('div');
-          sectionElement.className = 'section mb-4';
-
-          // Section header
-          const header = document.createElement('div');
-          header.className = 'section-header';
-          header.innerHTML = `
-          <h3>
-            ${section.title}
-            <span class="badge bg-primary rounded-pill">${problems.length} problems</span>
-          </h3>
-        `;
-
-          // Section content
-          const content = document.createElement('div');
-          content.className = 'section-content';
-
-          // Check localStorage for saved state
           const isExpanded = getSectionState(sectionId);
-          content.style.display = isExpanded ? 'block' : 'none';
 
-          // Problems table wrapper for horizontal scrolling
-          const tableWrapper = document.createElement('div');
-          tableWrapper.className = 'problems-table-wrapper';
-
-          // Problems table
-          const table = document.createElement('div');
-          table.className = 'problems-table shadow-sm';
-          table.innerHTML = `
-          <table class="table table-hover mb-0">
-            <thead>
-              <tr>
-                <th width="50">#</th>
-                <th width="80">Status</th>
-                <th>Problem</th>
-                <th width="120">Difficulty</th>
-                <th width="120">Solution</th>
-                <th width="120">Video</th>
-                <th width="120">Solve</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${problems.map((problem, index) => `
-                <tr data-problem-id="${problem.id}">
-                  <td>${index + 1}</td>
-                  <td>
-                    <span class="status status-${problem.status}" 
-                          title="${problem.status.charAt(0).toUpperCase() + problem.status.slice(1)}"
-                          aria-label="Status: ${problem.status}"
-                          data-problem-id="${problem.id}"></span>
-                  </td>
-                  <td>
-                    <div class="problem-title">${problem.title}</div>
-                    <div class="text-muted small mt-1">
-                      ${problem.tags.join(', ')}
+          const sectionHTML = `
+            <div class="mb-4">
+              <div class="section-header ${isExpanded ? 'active' : ''}" data-section-id="${sectionId}">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded p-2 d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                        <i class="fas fa-folder-open"></i>
                     </div>
-                  </td>
-                  <td>
-                    <span class="difficulty ${problem.difficulty}">
-                      ${problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}
-                    </span>
-                  </td>
-                  <td>
-                    <a href="${problem.solution}" target="_blank" class="text-decoration-none text-primary">
-                      <i class="fas fa-code me-1"></i> Solution
-                    </a>
-                  </td>
-                  <td>
-                    <a href="${problem.video}" target="_blank" class="text-decoration-none text-primary">
-                      <i class="fas fa-video me-1"></i> Video
-                    </a>
-                  </td>
-                  <td>
-                    <a href="{% url 'problem-solver' course_id %}?id=${problem.id}" class="btn btn-success btn-sm">
-                      <i class="fas fa-terminal me-1"></i> Solve
-                    </a>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
+                    <div>
+                        <h3>${section.title}</h3>
+                        <div class="text-muted" style="font-size: 0.8rem;">${problems.length} challenges</div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down section-toggle-icon"></i>
+              </div>
 
-          tableWrapper.appendChild(table);
-          content.appendChild(tableWrapper);
-          sectionElement.appendChild(header);
-          sectionElement.appendChild(content);
-          container.appendChild(sectionElement);
-
-          // Add click event to toggle section content
-          header.addEventListener('click', () => {
-            const isExpanded = content.style.display === 'none';
-            content.style.display = isExpanded ? 'block' : 'none';
-            saveSectionState(sectionId, isExpanded);
-          });
+              <div class="section-content" style="display: ${isExpanded ? 'block' : 'none'};">
+                <div class="problems-table-wrapper">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th style="width: 50px;">#</th>
+                          <th style="width: 60px; text-align:center;">Status</th>
+                          <th>Problem Title</th>
+                          <th style="width: 120px;">Difficulty</th>
+                          <th style="width: 120px; text-align:center;">Resources</th>
+                          <th style="width: 120px; text-align:end;">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${problems.map((problem, index) => `
+                          <tr>
+                            <td class="text-muted fw-bold">${index + 1}</td>
+                            <td class="text-center">
+                              <div class="status-dot status-${problem.status}" 
+                                   title="${problem.status}" 
+                                   data-problem-id="${problem.id}"></div>
+                            </td>
+                            <td>
+                              <div class="fw-semibold text-dark">${problem.title}</div>
+                              <div class="d-flex gap-2 mt-1">
+                                ${problem.tags.map(tag => `<span class="badge bg-light text-secondary border fw-normal">${tag}</span>`).join('')}
+                              </div>
+                            </td>
+                            <td>
+                              <span class="difficulty ${problem.difficulty}">
+                                ${problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}
+                              </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-3">
+                                    ${problem.solution && problem.solution !== '#' ? `<a href="${problem.solution}" class="text-secondary" title="Solution" target="_blank"><i class="fas fa-code"></i></a>` : '<span class="text-muted opacity-25"><i class="fas fa-code"></i></span>'}
+                                    ${problem.video && problem.video !== '#' ? `<a href="${problem.video}" class="text-danger" title="Video" target="_blank"><i class="fab fa-youtube"></i></a>` : '<span class="text-muted opacity-25"><i class="fab fa-youtube"></i></span>'}
+                                </div>
+                            </td>
+                            <td class="text-end">
+                              <a href="{% url 'problem-solver' course_id %}?id=${problem.id}" class="btn-solve">
+                                Solve <i class="fas fa-arrow-right"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        `).join('')}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML('beforeend', sectionHTML);
         }
 
-        // Add notes sections
-        ProblemData.sections.filter(section => section.type === "notes").forEach(section => {
-          const notesElement = document.createElement('div');
-          notesElement.className = 'notes-section mb-4';
-          notesElement.innerHTML = `
-          <h4><i class="fas fa-clipboard me-2"></i>${section.title}</h4>
-          <div class="notes-content">
-            ${section.content || ''}
-          </div>
-        `;
-          container.appendChild(notesElement);
+        // Add Notes
+        ProblemData.sections.filter(s => s.type === "notes").forEach(note => {
+            const noteHTML = `
+                <div class="premium-card p-4 mb-4 border-start border-4 border-warning">
+                    <h4 class="fw-bold mb-2 text-dark"><i class="fas fa-sticky-note text-warning me-2"></i>${note.title}</h4>
+                    <div class="text-secondary">${note.content || ''}</div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', noteHTML);
         });
 
-        // Add event listeners for status changes
-        document.querySelectorAll('.status').forEach(statusElement => {
-          statusElement.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const problemId = statusElement.dataset.problemId;
-            const currentStatus = statusElement.classList.contains('status-solved') ? 'solved' :
-              statusElement.classList.contains('status-attempted') ? 'attempted' : 'unsolved';
+        // Add Event Listeners
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isHidden = content.style.display === 'none';
+                content.style.display = isHidden ? 'block' : 'none';
+                this.classList.toggle('active');
+                saveSectionState(this.dataset.sectionId, isHidden);
+            });
+        });
 
-            // Cycle through statuses: unsolved -> attempted -> solved -> unsolved
-            let newStatus;
-            if (currentStatus === 'unsolved') {
-              newStatus = 'attempted';
-            } else if (currentStatus === 'attempted') {
-              newStatus = 'solved';
-            } else {
-              newStatus = 'unsolved';
-            }
+        document.querySelectorAll('.status-dot').forEach(status => {
+            status.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const pid = status.dataset.problemId;
+                let current = 'unsolved';
+                if(status.classList.contains('status-attempted')) current = 'attempted';
+                if(status.classList.contains('status-solved')) current = 'solved';
 
-            // Update the problem status in the data model
-            if (ProblemData.updateProblemStatus(problemId, newStatus)) {
-              // Update the UI
-              statusElement.className = 'status';
-              statusElement.classList.add(`status-${newStatus}`);
-              statusElement.setAttribute('title', newStatus.charAt(0).toUpperCase() + newStatus.slice(1));
-              statusElement.setAttribute('aria-label', `Status: ${newStatus}`);
-
-              // Update progress
-              updateProgressStats();
-            }
-          });
+                const next = current === 'unsolved' ? 'attempted' : current === 'attempted' ? 'solved' : 'unsolved';
+                
+                if(ProblemData.updateProblemStatus(pid, next)) {
+                    status.className = `status-dot status-${next}`;
+                    UIController.updateProgressStats();
+                }
+            });
         });
       };
 
       const updateProgressStats = () => {
-        const progress = ProblemData.getProgressStats();
+        const stats = ProblemData.getProgressStats();
+        const elems = DOMStrings.progressElements;
 
-        // Update total progress
-        const totalElem = DOMStrings.progressElements.total;
-        document.querySelector(totalElem.count).textContent = progress.total.count;
-        document.querySelector(totalElem.total).textContent = progress.total.total;
-
-        // Update radial progress
-        const radialFill = document.querySelector('.circle-fill');
-        if (radialFill) {
-          const circumference = 2 * Math.PI * 15.9155; // 2πr where r = 15.9155 (from the SVG path)
-          const dashValue = (progress.total.percent / 100) * circumference;
-          radialFill.style.strokeDasharray = `${dashValue} ${circumference}`;
+        // Radial
+        const circle = document.querySelector('.circle-fill');
+        if(circle) {
+            const r = 15.9155;
+            const c = 2 * Math.PI * r;
+            const val = (stats.total.percent / 100) * c;
+            circle.style.strokeDasharray = `${val} ${c}`;
         }
+        document.querySelector(elems.total.count).textContent = stats.total.count;
 
-        // Update easy progress
-        const easyElem = DOMStrings.progressElements.easy;
-        document.querySelector(easyElem.count).textContent = progress.easy.count;
-        document.querySelector(easyElem.total).textContent = progress.easy.total;
-        document.querySelector(easyElem.bar).style.width = `${progress.easy.percent}%`;
-        document.querySelector(easyElem.percent).textContent = `${progress.easy.percent}%`;
-
-        // Update medium progress
-        const mediumElem = DOMStrings.progressElements.medium;
-        document.querySelector(mediumElem.count).textContent = progress.medium.count;
-        document.querySelector(mediumElem.total).textContent = progress.medium.total;
-        document.querySelector(mediumElem.bar).style.width = `${progress.medium.percent}%`;
-        document.querySelector(mediumElem.percent).textContent = `${progress.medium.percent}%`;
-
-        // Update hard progress
-        const hardElem = DOMStrings.progressElements.hard;
-        document.querySelector(hardElem.count).textContent = progress.hard.count;
-        document.querySelector(hardElem.total).textContent = progress.hard.total;
-        document.querySelector(hardElem.bar).style.width = `${progress.hard.percent}%`;
-        document.querySelector(hardElem.percent).textContent = `${progress.hard.percent}%`;
-      };
-      const updateActiveFilter = (activeFilter) => {
-        document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
-          btn.classList.remove('btn-primary', 'active');
-          btn.classList.add('btn-outline-secondary');
-
-          if (btn.dataset.filter === activeFilter) {
-            btn.classList.add('btn-primary', 'active');
-            btn.classList.remove('btn-outline-secondary');
-          }
+        // Bars
+        ['easy', 'medium', 'hard'].forEach(diff => {
+            document.querySelector(elems[diff].count).textContent = stats[diff].count;
+            document.querySelector(elems[diff].total).textContent = stats[diff].total;
+            document.querySelector(elems[diff].bar).style.width = `${stats[diff].percent}%`;
         });
       };
 
-      const clearSearch = () => {
-        document.querySelector(DOMStrings.searchInput).value = '';
+      const updateActiveFilter = (activeFilter) => {
+        document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.dataset.filter === activeFilter) btn.classList.add('active');
+        });
       };
 
-      const getSearchInput = () => {
-        return document.querySelector(DOMStrings.searchInput).value.trim();
-      };
+      const clearSearch = () => { document.querySelector(DOMStrings.searchInput).value = ''; };
+      const getSearchInput = () => document.querySelector(DOMStrings.searchInput).value.trim();
 
-      return {
-        DOMStrings,
-        renderProblems,
-        updateProgressStats,
-        updateActiveFilter,
-        clearSearch,
-        getSearchInput,
-        clearSectionStates
-      };
+      return { DOMStrings, renderProblems, updateProgressStats, updateActiveFilter, clearSearch, getSearchInput, clearSectionStates };
     })();
 
     // Main App Controller
     const AppController = ((ProblemData, UIController) => {
       const setupEventListeners = () => {
-        // Search input
-        document.querySelector(UIController.DOMStrings.searchInput)
-          .addEventListener('input', filterProblems);
+        document.querySelector(UIController.DOMStrings.searchInput).addEventListener('input', updateView);
+        
+        document.querySelectorAll(UIController.DOMStrings.filterButtons).forEach(btn => {
+            if(btn.id !== 'resetBtn') {
+                btn.addEventListener('click', () => {
+                    UIController.updateActiveFilter(btn.dataset.filter);
+                    updateView();
+                });
+            }
+        });
 
-        // Filter buttons
-        document.querySelectorAll(UIController.DOMStrings.filterButtons)
-          .forEach(button => {
-            button.addEventListener('click', () => {
-              const filter = button.dataset.filter;
-              UIController.updateActiveFilter(filter);
-              filterProblems();
-            });
-          });
-
-        // Reset button
-        document.querySelector(UIController.DOMStrings.resetBtn)
-          .addEventListener('click', resetFilters);
-
+        document.querySelector(UIController.DOMStrings.resetBtn).addEventListener('click', () => {
+            UIController.clearSearch();
+            UIController.updateActiveFilter('all');
+            UIController.clearSectionStates();
+            updateView();
+        });
       };
 
-      const filterProblems = () => {
-        const searchTerm = UIController.getSearchInput();
-        const activeFilter = document.querySelector(`${UIController.DOMStrings.filterButtons}.active`).dataset.filter;
-
-        const filteredProblems = ProblemData.getFilteredProblems(activeFilter, searchTerm);
-        UIController.renderProblems(filteredProblems);
-      };
-
-      const resetFilters = () => {
-        UIController.clearSearch();
-        UIController.updateActiveFilter('all');
-        UIController.clearSectionStates(); // Clear saved section states
-        filterProblems();
+      const updateView = () => {
+        const search = UIController.getSearchInput();
+        const filter = document.querySelector('.filter-buttons .active').dataset.filter;
+        const problems = ProblemData.getFilteredProblems(filter, search);
+        UIController.renderProblems(problems);
       };
 
       const init = () => {
-        console.log('App initialized');
         setupEventListeners();
-
-        // Initial render
-        UIController.renderProblems(ProblemData.getAllProblems());
+        updateView();
         UIController.updateProgressStats();
       };
 
-      return {
-        init
-      };
+      return { init };
     })(ProblemData, UIController);
 
-
-    // Sidebar toggle functionality
+    // Sidebar toggle functionality (EXACT COPY OF YOUR LOGIC)
     const topBarMenuBtn = document.getElementById('topBarMenuBtn');
     const topBarCloseBtn = document.getElementById('topBarCloseBtn');
     const sidebar = document.getElementById('sidebar');
@@ -2594,16 +793,13 @@
       topBarCloseBtn.style.display = 'none';
     });
 
-    // Add this to your existing JavaScript
+    // Submenu toggles (EXACT COPY)
     document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
       toggle.addEventListener('click', function (e) {
         e.preventDefault();
         const parentLi = this.closest('li');
-
         if (parentLi.classList.contains('has-submenu')) {
           parentLi.classList.toggle('active');
-
-          // Rotate the caret icon
           const icon = this.querySelector('.toggle-icon');
           if (parentLi.classList.contains('active')) {
             icon.style.transform = 'rotate(90deg)';
@@ -2614,11 +810,7 @@
       });
     });
 
-    // Handle window resize
-
-    // Initialize the application
     document.addEventListener('DOMContentLoaded', AppController.init);
   </script>
 </body>
-
 </html>
