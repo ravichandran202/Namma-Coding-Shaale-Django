@@ -299,13 +299,39 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import UserCourse, CourseContent, ProblemSubmission
 
-# @login_required(login_url="login")
-def profile_page(request, section):
-    if section == "certificates":
-        return render(request, "profile-page-certificates.html")
-    return render(request, "profile-page.html")
+@login_required(login_url="login")
+def profile_page(request, section=None):
+    user = request.user
+    
+    # --- Profile Update Logic ---
+    if request.method == "POST":
+        user.first_name = request.POST.get('firstName', user.first_name).strip().title()
+        user.last_name = request.POST.get('lastName', user.last_name).strip().title()
+        user.email = request.POST.get('email', user.email).lower().strip()
+        user.save()
 
-# @login_required(login_url="login")
+    # --- Fetching Course Enrollment Data ---
+    # We fetch all enrollments and their related course data in one go
+    all_enrollments = UserCourse.objects.filter(user=user).select_related('course')
+
+    # Separate them for the frontend
+    completed_courses = all_enrollments.filter(status='COMPLETED')
+    in_progress_courses = all_enrollments.filter(status='IN_PROGRESS')
+
+    context = {
+        "user": user,
+        "completed_courses": completed_courses,
+        "in_progress_courses": in_progress_courses,
+        "total_enrollments": all_enrollments.count(),
+        "active_section": section
+    }
+
+    print(context)
+
+    template_name = "profile-page-certificates.html" if section == "certificates" else "profile-page.html"
+    return render(request, template_name, context)
+
+@login_required(login_url="login")
 def certificate_page(request):
     return render(request, "profile-page-certificates.html")
 
@@ -524,6 +550,14 @@ def problem_solver(request, course_id):
 
 @login_required
 def my_courses(request):
+    #check eligibility for onboarding
+    #check if First and Last name exists
+    # if request.user.first_name == "" or request.user.last_name == "" :
+    #     return render(request, "onboarding_form.html", context = {
+    #         "user" : request.user
+    #     })
+
+
     # Get all enrolled courses with progress annotations
     enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
     
