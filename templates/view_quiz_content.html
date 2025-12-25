@@ -1149,6 +1149,99 @@
             transform: translateY(-2px);
         }
 
+                /* ---------------------------------------------------- */
+        /* --- NEW STYLES FOR LESSON COMPLETION COMPONENT --- */
+        /* ---------------------------------------------------- */
+        
+        .lesson-completion-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            margin-top: 1rem;
+            flex-wrap: wrap; /* Makes it responsive */
+            flex-shrink: 0; /* Prevents shrinking in flex container */
+        }
+
+        .completion-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: #ecfdf5; /* Light Green Bg */
+            color: #10b981; /* Green Icon */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .text-content h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .text-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .action-box {
+            flex-shrink: 0;
+        }
+
+        /* Button Style */
+        .btn-complete {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-complete:hover {
+            background-color: #059669;
+        }
+
+        /* Completed Badge Style */
+        .completed-badge {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .completed-badge i {
+            color: #10b981;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .premium-welcome-card {
@@ -1229,6 +1322,26 @@
             }
 
             .btn-premium {
+                width: 100%;
+            }
+        }
+
+        /* Extra Mobile Tweaks for Completion Card */
+        @media (max-width: 576px) {
+            .lesson-completion-card {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+                padding: 1rem;
+            }
+            
+            .action-box, .btn-complete, .completed-badge {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .btn-complete {
                 width: 100%;
             }
         }
@@ -1326,42 +1439,42 @@
             </div>
 
             <!-- Completion Status Section -->
-            <div class="completion-status-container mb-4 mt-4 quiz-container">
-                <div class="row align-items-center">
-                    <div class="col-12 col-md-6 mb-2 mb-md-0">
-                        <h5 class="mb-0" style="font-size: medium;">
-                            <i
-                                class="fas {% if progress.is_completed %}fa-check-circle text-success{% else %}fa-circle{% endif %} me-2"></i>
+            <div class="lesson-completion-card">
+                <div class="completion-content">
+                    <div class="icon-box">
+                        <i class="fas {% if progress.is_completed %}fa-check{% else %}fa-flag{% endif %}"></i>
+                    </div>
+                    <div class="text-content">
+                        <h5>
                             {% if progress.is_completed %}
-                            You've completed this lesson!
+                                Lesson Completed!
                             {% else %}
-                            Have you completed the lesson?
+                                Mark as Completed
                             {% endif %}
                         </h5>
-                    </div>
-                    <div class="col-12 col-md-6 text-md-end">
-                        {% if not progress.is_completed %}
-                        <form method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" name="mark_completed"
-                                class="btn btn-success w-100 w-md-auto {% if not quiz_passed %} disabled {% endif %}"
-                                id="markCompletedBtn">
-                                <i class="fas fa-check me-1"></i> Mark as Completed
-                            </button>
-                        </form>
-                        {% else %}
-                        <div class="d-flex align-items-center justify-content-end d-none d-md-block">
-                            <span class="badge bg-success p-2 me-2">
-                                <i class="fas fa-check-circle me-1"></i> Completed
-                            </span>
-                            {% if user_course.completion_date %}
-                            <small class="text-muted">
-                                Course completed!
-                            </small>
+                        <p>
+                            {% if progress.is_completed %}
+                                Good job! You can move on to the next topic.
+                            {% else %}
+                                Finished reading? Click the button to track your progress.
                             {% endif %}
-                        </div>
-                        {% endif %}
+                        </p>
                     </div>
+                </div>
+                
+                <div class="action-box">
+                    {% if not progress.is_completed %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="mark_completed" class="btn-complete">
+                            Complete Lesson
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="completed-badge">
+                        <i class="fas fa-check-circle"></i> Done
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
