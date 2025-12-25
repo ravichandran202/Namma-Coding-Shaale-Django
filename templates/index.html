@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
-  
+
   <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
@@ -1183,7 +1183,7 @@
       border-color: rgba(37, 99, 235, 0.3) !important;
     }
 
-    #msme-logo{
+    #msme-logo {
       max-height: 400px;
       opacity: 0.8;
     }
@@ -1351,7 +1351,7 @@
         font-size: 2rem;
       }
 
-      #msme-logo{
+      #msme-logo {
         max-height: 300px;
         opacity: 0.8;
       }
@@ -1386,7 +1386,7 @@
         display: none;
       }
 
-      #msme-logo{
+      #msme-logo {
         max-height: 200px;
         opacity: 0.8;
       }
@@ -1594,6 +1594,182 @@
         navbar.classList.remove('scrolled');
       }
     }); */
+    /* --- PREMIUM LIGHT THEME HERO STYLES --- */
+    .hero-section.premium-light {
+      background-color: #ffffff;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Update Particle Color for Light Theme */
+    #particles-js {
+      opacity: 0.4;
+      filter: invert(1);
+      /* Makes particles dark to show on light background */
+    }
+
+    .premium-tag {
+      background: #f1f5f9;
+      color: var(--primary);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-display-title {
+      font-size: clamp(2.5rem, 8vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #0f172a;
+      margin-bottom: 2rem;
+    }
+
+    .text-primary-gradient {
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-name-light {
+      font-family: 'Playfair Display', serif;
+      color: #1e293b;
+    }
+
+    .hero-subtitle-light {
+      font-size: 1.3rem;
+      color: #64748b;
+      max-width: 750px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+    }
+
+    .highlight-text {
+      color: #1e293b;
+      font-weight: 600;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    /* LUXURY BUTTONS */
+    .btn-luxury-primary {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 1.1rem 2.8rem;
+      border-radius: 14px;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-luxury-primary:hover {
+      background: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-luxury-ghost {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 1.1rem 2.8rem;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      margin-left: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-luxury-ghost:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateY(-4px);
+      color: black;
+    }
+
+    /* STAT BUBBLES */
+    .hero-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .stat-bubble {
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      padding: 0.8rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      color: #475569;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 768px) {
+      .hero-stats-row {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        display: none;
+      }
+
+      .btn-luxury-ghost {
+        margin-left: 0;
+        margin-top: 1rem;
+        width: 100%;
+      }
+
+      .btn-luxury-primary {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-section.premium-light {
+        padding-top: 120px;
+      }
+
+      .hero-display-title {
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-bubble {
+        width: 100%;
+        /* Bubbles stack on very small screens */
+        max-width: 250px;
+        text-align: center;
+      }
+
+      .premium-tag {
+        font-size: 0.7rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .hero-display-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-subtitle-light {
+        font-size: 0.8rem;
+        padding: 0 15px;
+        margin-bottom: 5rem !important;
+      }
+    }
+
+    /* TABLET SPECIFIC OVERRIDES */
+    @media (max-width: 991px) {
+      .hero-subtitle-light {
+        max-width: 90%;
+      }
+    }
   </style>
 </head>
 
@@ -1636,12 +1812,44 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero-section">
-    <div id="particles-js"></div> <!-- Add this line -->
-    <div class="container text-center hero-content">
-      <h1 class="hero-title animate">&lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span>
-          ಶಾಲೆ</span> /&gt;</h1>
-      <p class="hero-subtitle animate delay-1">Master Coding through practical problem-solving and interview preparation.</p>
+  <section class="hero-section premium-light">
+    <div id="particles-js"></div>
+
+    <div class="container hero-content">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-lg-10 text-center">
+          <div class="hero-main-box">
+            <div class="premium-tag-container animate">
+              <span class="premium-tag"><i class="fas fa-certificate me-2"></i>The Gold Standard in Learning</span>
+            </div>
+
+            <h1 class="hero-display-title animate delay-1">
+              <span>ನಮ್ಮ <span class="text-gradient">CODING ಶಾಲೆ</span></span>
+            </h1>
+
+            <div class="hero-description-box animate delay-2">
+              <p class="hero-subtitle-light">
+                Master the logic behind every line of code with 500+ problems and personalized industry mentorship.
+              </p>
+            </div>
+
+            <div class="hero-action-group animate delay-3">
+              <a href="#course-section" class="btn btn-luxury-primary">
+                View Courses <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+              <a href="{% url 'code-editor-freemium' %}" class="btn btn-luxury-ghost">
+                <i class="fas fa-terminal me-2"></i>Problems List
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-stats-row animate delay-3">
+            <div class="stat-bubble"><strong>500+</strong> Problems</div>
+            <div class="stat-bubble"><strong>1-on-1</strong> Mentorship</div>
+            <div class="stat-bubble"><strong>Lifetime</strong> Access</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1950,7 +2158,8 @@
               <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Code autocompletion</li>
               <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Save and load your solutions</li>
               <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Multiple Language support</li>
-              <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Test case validation on hidden cases</li>
+              <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Test case validation on hidden
+                cases</li>
             </ul>
             <div class="mt-4">
               <a href="{% url 'code-editor-freemium' %}" class="btn btn-primary">
@@ -2986,78 +3195,79 @@
   </section>
 
   <!-- Official Registration Section -->
-<section class="section bg-light">
-  <div class="container">
+  <section class="section bg-light">
+    <div class="container">
       <div class="row align-items-center">
-          <!-- Right Column - MSME Logo Image Only -->
-          <div class="col-lg-6 text-center d-block d-lg-none">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg" 
-                   alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" 
-                   class="img-fluid" 
-                   id="msme-logo" >
-            <p class="fw-bold">UDYAM-KR-22-0128456</p>
-          </div>
+        <!-- Right Column - MSME Logo Image Only -->
+        <div class="col-lg-6 text-center d-block d-lg-none">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg"
+            alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" class="img-fluid" id="msme-logo">
+          <p class="fw-bold">UDYAM-KR-22-0128456</p>
+        </div>
 
-          <!-- Left Column - Content -->
-          <div class="col-lg-6 mb-5 mb-lg-0">
-              <span class="text-uppercase text-primary fw-bold letter-spacing-3">Official Recognition</span>
-              <h2 class="section-title mt-3 text-dark">Officially <span class="text-gradient">Registered</span></h2>
-              <p class="section-subtitle text-muted">ನಮ್ಮ CODING ಶಾಲೆ is a legally recognized educational institution registered under the MSME Udyam Registration scheme.</p>
+        <!-- Left Column - Content -->
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <span class="text-uppercase text-primary fw-bold letter-spacing-3">Official Recognition</span>
+          <h2 class="section-title mt-3 text-dark">Officially <span class="text-gradient">Registered</span></h2>
+          <p class="section-subtitle text-muted">ನಮ್ಮ CODING ಶಾಲೆ is a legally recognized educational institution
+            registered under the MSME Udyam Registration scheme.</p>
 
-              <div class="mt-5">
-                  <!-- Feature 1 -->
-                  <div class="d-flex mb-4">
-                      <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
-                          <i class="fas fa-shield-alt"></i>
-                      </div>
-                      <div>
-                          <h5 class="text-dark mb-2">Government Verified</h5>
-                          <p class="text-muted mb-0">Our registration with Udyam validates our commitment to quality education and business standards.</p>
-                      </div>
-                  </div>
-
-                  <!-- Feature 2 -->
-                  <div class="d-flex mb-4">
-                      <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
-                          <i class="fas fa-certificate"></i>
-                      </div>
-                      <div>
-                          <h5 class="text-dark mb-2">Legal Entity</h5>
-                          <p class="text-muted mb-0">As a registered MSME, we operate with full transparency and compliance with Indian business regulations.</p>
-                      </div>
-                  </div>
-
-                  <!-- Feature 3 -->
-                  <div class="d-flex">
-                      <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
-                          <i class="fas fa-handshake"></i>
-                      </div>
-                      <div>
-                          <h5 class="text-dark mb-2">Trust & Credibility</h5>
-                          <p class="text-muted mb-0">Our official registration ensures your investment in education is secure and protected.</p>
-                      </div>
-                  </div>
-
-                  <!-- Verification Button -->
-                  <div class="mt-5 pt-2">
-                      <a href="https://udyamregistration.gov.in/UdyamRegistration.aspx" target="_blank" rel="noopener" class="btn btn-primary px-4 py-3 rounded-pill">
-                          <i class="fas fa-external-link-alt me-2"></i> Verify on Udyam Portal
-                      </a>
-                  </div>
+          <div class="mt-5">
+            <!-- Feature 1 -->
+            <div class="d-flex mb-4">
+              <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
+                <i class="fas fa-shield-alt"></i>
               </div>
-          </div>
+              <div>
+                <h5 class="text-dark mb-2">Government Verified</h5>
+                <p class="text-muted mb-0">Our registration with Udyam validates our commitment to quality education and
+                  business standards.</p>
+              </div>
+            </div>
 
-          <!-- Right Column - MSME Logo Image Only -->
-          <div class="col-lg-6 text-center d-none d-md-none d-lg-block">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg" 
-                   alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" 
-                   class="img-fluid" 
-                   id="msme-logo">
-            <p class="fw-bold">UDYAM-KR-22-0128456</p>
+            <!-- Feature 2 -->
+            <div class="d-flex mb-4">
+              <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
+                <i class="fas fa-certificate"></i>
+              </div>
+              <div>
+                <h5 class="text-dark mb-2">Legal Entity</h5>
+                <p class="text-muted mb-0">As a registered MSME, we operate with full transparency and compliance with
+                  Indian business regulations.</p>
+              </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="d-flex">
+              <div class="icon-sm bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-4 flex-shrink-0">
+                <i class="fas fa-handshake"></i>
+              </div>
+              <div>
+                <h5 class="text-dark mb-2">Trust & Credibility</h5>
+                <p class="text-muted mb-0">Our official registration ensures your investment in education is secure and
+                  protected.</p>
+              </div>
+            </div>
+
+            <!-- Verification Button -->
+            <div class="mt-5 pt-2">
+              <a href="https://udyamregistration.gov.in/UdyamRegistration.aspx" target="_blank" rel="noopener"
+                class="btn btn-primary px-4 py-3 rounded-pill">
+                <i class="fas fa-external-link-alt me-2"></i> Verify on Udyam Portal
+              </a>
+            </div>
           </div>
+        </div>
+
+        <!-- Right Column - MSME Logo Image Only -->
+        <div class="col-lg-6 text-center d-none d-md-none d-lg-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/MSME_Logo.svg"
+            alt="MSME Logo - Ministry of Micro, Small & Medium Enterprises" class="img-fluid" id="msme-logo">
+          <p class="fw-bold">UDYAM-KR-22-0128456</p>
+        </div>
       </div>
-  </div>
-</section>
+    </div>
+  </section>
 
 
   <!-- Certificate Section -->
@@ -3068,8 +3278,7 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
           <div class="position-relative certificate-container">
             <!-- Actual image with fallback -->
-            <img
-            src="{% static 'images/course-completion-certificate-online-design-template.png' %}"
+            <img src="{% static 'images/course-completion-certificate-online-design-template.png' %}"
               class="img-fluid rounded-3 shadow-sm certificate-img" alt="Certificate Sample">
             <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10 rounded-3"></div>
             <div class="position-absolute bottom-0 end-0 m-4">
@@ -3153,9 +3362,12 @@
           <p class="footer-about">Master Coding through practical problem-solving and interview
             preparation.</p>
           <div class="social-links">
-            <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-            <a href="mailto:nammacodingshaale@gmail.com?subject=Question&body=Hello, I have a question about..." target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
-            <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank"
+              rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+            <a href="mailto:nammacodingshaale@gmail.com?subject=Question&body=Hello, I have a question about..."
+              target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" rel="noopener"><i
+                class="fab fa-instagram"></i></a>
             <!-- <a href="#" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a> -->
           </div>
         </div>
