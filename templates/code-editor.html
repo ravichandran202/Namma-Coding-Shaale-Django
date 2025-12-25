@@ -6,23 +6,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multi-Language Code Editor | DSA Problem Tracker</title>
-  <!-- Bootstrap CSS -->
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
-    rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
   
-  <!-- Monaco Editor -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
-  <!-- Custom CSS -->
+
   <style>
+    /* =========================================
+       1. YOUR EXACT SIDEBAR & GLOBAL CSS
+       ========================================= */
     :root {
       --primary: #3b82f6;
       --primary-hover: #2563eb;
@@ -34,23 +31,34 @@
       --text: #1e293b;
       --text-light: #64748b;
       --border: #e2e8f0;
+      --row-hover: #f1f5f9;
+      --meter-background: #e2e8f0;
+      --meter-fill: #3b82f6;
       --sidebar-width: 280px;
       --sidebar-bg: #ffffff;
       --sidebar-text: #1e293b;
       --sidebar-active-bg: #f1f5f9;
       --sidebar-hover-bg: #f8fafc;
+
+      /* Editor Specific Variables (Dark Theme) */
+      --editor-bg: #1e1e1e;
+      --editor-sidebar: #252526;
+      --editor-border: #333333;
+      --editor-accent: #007acc;
+      --editor-text: #cccccc;
+      --console-bg: #181818;
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
+      background-color: var(--editor-bg); /* Changed to Dark for Editor Page */
       color: var(--text);
       font-weight: 400;
       line-height: 1.5;
-      overflow-x: hidden;
+      overflow: hidden; /* Prevent body scroll for editor layout */
       height: 100vh;
+      margin: 0;
     }
-
 
     /* Top Bar Styles */
     .top-bar {
@@ -231,7 +239,6 @@
       font-weight: 700;
     }
 
-    /* Sidebar sections */
     .sidebar-section {
       margin-bottom: 1.5rem;
     }
@@ -261,254 +268,208 @@
       color: rgba(255, 255, 255, 0.6);
     }
 
-
-    /* Main Content Styles */
+    /* Main Content - Structure */
     .main-content {
-      padding: 1rem;
+      padding: 0; /* OVERRIDE: Remove padding for full-screen editor */
       transition: transform 0.3s ease;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--editor-bg);
+    }
+
+    /* =========================================
+       2. PREMIUM EDITOR CSS (New)
+       ========================================= */
+
+    .playground-wrapper {
+      display: flex;
+      flex-direction: column;
       height: 100%;
+      width: 100%;
+      overflow: hidden;
     }
 
-    /* Mobile Menu Toggle Button */
-    .menu-toggle {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 1100;
-      background: var(--primary);
-      color: white;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+    /* Toolbar */
+    .playground-toolbar {
+      height: 50px;
+      background-color: var(--editor-sidebar);
+      border-bottom: 1px solid var(--editor-border);
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .menu-toggle:hover {
-      background: var(--primary-hover);
-    }
-
-    /* Editor and Console Container */
-    .editor-console-wrapper {
-      display: flex;
-      flex-direction: column;
-      height: calc(100vh - 2rem);
-      /* Subtract padding */
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
-
-    .editor-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 100px;
-      /* Minimum height for editor */
-    }
-
-    .editor-header {
-      background-color: #f1f5f9;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
       justify-content: space-between;
-      align-items: center;
+      padding: 0 1rem;
       flex-shrink: 0;
     }
 
-    .editor-header h4 {
-      margin: 0;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text);
+    .toolbar-left {
       display: flex;
       align-items: center;
+      gap: 1rem;
     }
 
-    .editor-actions {
+    .toolbar-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e2e8f0;
       display: flex;
+      align-items: center;
       gap: 0.5rem;
     }
 
-    .language-selector {
-      margin-left: 10px;
-      padding: 2px 8px;
+    /* Custom Select */
+    .lang-select-wrapper { position: relative; }
+    .custom-select {
+      appearance: none;
+      background-color: #333333;
+      border: 1px solid #454545;
+      color: #eee;
+      padding: 5px 35px 5px 12px;
       border-radius: 4px;
-      border: 1px solid var(--border);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+    .custom-select:hover { border-color: #666; }
+    .custom-select:focus { border-color: var(--editor-accent); }
+    .select-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #aaa; font-size: 0.7rem; }
+
+    /* Editor Area */
+    .editor-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
     }
 
     #editor {
-      flex: 1;
       width: 100%;
+      height: 100%;
     }
 
-    /* Console Section */
-    .console-container {
+    /* Resizer */
+    .resizer {
+      height: 10px;
+      background-color: var(--editor-sidebar);
+      border-top: 1px solid var(--editor-border);
+      border-bottom: 1px solid var(--editor-border);
+      cursor: row-resize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      border-top: 1px solid var(--border);
+      z-index: 100;
+      transition: background-color 0.2s;
+    }
+    .resizer:hover, .resizer.active { background-color: var(--editor-accent); }
+    .resizer-handle { width: 40px; height: 4px; background-color: #555; border-radius: 2px; }
+
+    /* Console */
+    .console-area {
+      height: 30%;
+      min-height: 40px;
+      background-color: var(--console-bg);
       display: flex;
       flex-direction: column;
-      height: 200px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .console-resize-handle {
-      position: absolute;
-      top: -4px;
-      left: 0;
-      right: 0;
-      height: 8px;
-      cursor: row-resize;
-      z-index: 10;
-      background: transparent;
+      flex-shrink: 0;
+      border-top: 1px solid var(--editor-border);
     }
 
     .console-header {
-      background-color: #f1f5f9;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      background-color: var(--editor-sidebar);
+      border-bottom: 1px solid var(--editor-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-
-    .console-header h4 {
-      margin: 0;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       font-weight: 600;
-      color: var(--text);
+      color: #aaa;
     }
 
-    .console-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    #console {
+    .console-output {
       flex: 1;
-      width: 100%;
-      background-color: #1e293b;
-      color: #e2e8f0;
-      font-family: 'Courier New', Courier, monospace;
       padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #d4d4d4;
       overflow-y: auto;
       white-space: pre-wrap;
     }
 
-    /* Button Styles */
-    .btn-run {
-      background-color: var(--success);
+    /* Status Bar */
+    .status-bar {
+      height: 24px;
+      background-color: var(--editor-accent);
       color: white;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      justify-content: space-between;
+      flex-shrink: 0;
     }
 
-    .btn-run:hover {
-      background-color: #0d9c6d;
-      color: white;
+    /* Buttons */
+    .btn-premium {
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
+    .btn-run { background-color: #2ea043; color: white; }
+    .btn-run:hover { background-color: #268e3b; box-shadow: 0 0 8px rgba(46, 160, 67, 0.4); }
+    .btn-reset { background: transparent; color: #aaa; border: 1px solid #444; }
+    .btn-reset:hover { background-color: rgba(255,255,255,0.05); color: white; border-color: #666; }
+    .btn-icon-only { background: none; border: none; color: #aaa; cursor: pointer; }
+    .btn-icon-only:hover { color: white; }
 
-    .btn-reset {
-      background-color: var(--danger);
-      color: white;
-    }
+    /* Spinner */
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .btn-reset:hover {
-      background-color: #dc2626;
-      color: white;
-    }
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--editor-bg); }
+    ::-webkit-scrollbar-thumb { background: #424242; border-radius: 5px; border: 2px solid var(--editor-bg); }
+    ::-webkit-scrollbar-thumb:hover { background: #4f4f4f; }
 
-    .btn-maximize {
-      background-color: var(--warning);
-      color: white;
-    }
+    /* =========================================
+       3. RESPONSIVE LOGIC
+       ========================================= */
 
-    .btn-maximize:hover {
-      background-color: #e6910a;
-      color: white;
-    }
-
-    /* Loading spinner */
-    .spinner {
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      border: 2px solid rgba(255, 255, 255, .3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+    /* Desktop styles */
+    @media (min-width: 992px) {
+      .top-bar { display: none; }
+      .sidebar { top: 0; height: 100vh; transform: translateX(0); }
+      .sidebar-overlay { display: none; }
+      .main-content { margin-left: var(--sidebar-width); }
     }
 
     /* Mobile optimizations */
     @media (max-width: 768px) {
-      body {
-        padding: 0rem;
-        font-size: 0.9rem;
-      }
-
-      .main-content {
-        padding: 0rem;
-      }
-
-      .editor-console-wrapper {
-        height: calc(100vh - 1.5rem);
-        /* Adjust for smaller padding */
-      }
-
-      .console-container {
-        height: 150px;
-      }
-
-      .main-content {
-        margin-top: 3.5rem;
-      }
-    }
-
-    /* Desktop styles */
-    @media (min-width: 992px) {
-      .top-bar {
-        display: none;
-      }
-
-      .sidebar {
-        top: 0;
-        height: 100vh;
-        transform: translateX(0);
-      }
-
-      .sidebar-overlay {
-        display: none;
-      }
-
-      .main-content {
-        margin-left: var(--sidebar-width);
-        padding-top: .5rem;
-      }
-
-      .problem-info {
-        padding: .5rem;
-      }
+      .main-content { margin-top: 56px; height: calc(100vh - 56px); }
+      .playground-toolbar { padding: 0 0.5rem; }
+      .toolbar-title span { display: none; }
+      .btn-premium span { display: none; }
+      .btn-premium { padding: 8px; }
+      .custom-select { width: 110px; }
+      .console-area { height: 40%; }
+      .resizer { height: 24px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Top Bar (for mobile) -->
   <div class="top-bar" id="topBar">
     <button class="top-bar-menu-btn" id="topBarMenuBtn">
       <i class="fas fa-bars"></i>
@@ -516,13 +477,10 @@
     <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;">
       <i class="fas fa-times"></i>
     </button>
-    <!-- <span class="brand-text m-auto"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> -->
-  </div>
+    </div>
 
-  <!-- Sidebar Overlay (for mobile) -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <h3 class="sidebar-title">
@@ -578,26 +536,6 @@
       </div>
       {% endfor %}
       {% endif %}
-
-      <!-- <div class="sidebar-section">
-              <p class="sidebar-section-title">Data Structures</p>
-              <ul class="sidebar-menu">
-                  <li><a href="#"><i class="fas fa-layer-group"></i> Arrays</a></li>
-                  <li><a href="#"><i class="fas fa-link"></i> Linked Lists</a></li>
-                  <li><a href="#"><i class="fas fa-tree"></i> Trees</a></li>
-                  <li><a href="#"><i class="fas fa-sitemap"></i> Graphs</a></li>
-              </ul>
-          </div>
-
-          <div class="sidebar-section">
-              <p class="sidebar-section-title">Algorithms</p>
-              <ul class="sidebar-menu">
-                  <li><a href="#"><i class="fas fa-search"></i> Searching</a></li>
-                  <li><a href="#"><i class="fas fa-sort-amount-down"></i> Sorting</a></li>
-                  <li><a href="#"><i class="fas fa-route"></i> Path Finding</a></li>
-                  <li><a href="#"><i class="fas fa-chess"></i> Dynamic Programming</a></li>
-              </ul>
-          </div> -->
     </div>
 
     <div class="sidebar-footer">
@@ -605,100 +543,142 @@
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content" id="mainContent">
-    <div class="container-fluid h-100 main-container" style="padding: 0%;">
-      <!-- Combined Editor and Console Container -->
-
-      <div class="editor-console-wrapper">
-        <!-- Editor Section -->
-        <div class="editor-container">
-          <div class="editor-header">
-            <h4><i class="fas fa-code me-2"></i>Code Editor
-              <select class="language-selector" id="languageSelector">
-                <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
-                <option value="java">Java</option>
-                <option value="cpp">C++</option>
-              </select>
-            </h4>
-            <div class="editor-actions">
-              <button class="btn btn-sm btn-reset" id="resetBtn">
-                <i class="fas fa-redo me-1"></i> Reset
-              </button>
-            </div>
+    <div class="playground-wrapper">
+      
+      <div class="playground-toolbar">
+        <div class="toolbar-left">
+          <div class="toolbar-title">
+            <i class="fas fa-code text-primary"></i>
+            <span>Playground</span>
           </div>
-          <div id="editor"></div>
+          <div class="lang-select-wrapper">
+            <select class="custom-select" id="languageSelector">
+              <option value="python">Python</option>
+              <option value="javascript">JavaScript</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+            </select>
+            <i class="fas fa-chevron-down select-arrow"></i>
+          </div>
         </div>
-
-        <!-- Console Section -->
-        <div class="console-container" id="consoleContainer">
-          <div class="console-resize-handle" id="consoleResizeHandle"></div>
-          <div class="console-header">
-            <h4><i class="fas fa-terminal me-2"></i>Console</h4>
-            <div class="console-actions">
-              <button class="btn btn-sm btn-maximize" id="maximizeBtn">
-                <i class="fas fa-expand me-1"></i> Maximize
-              </button>
-              <button class="btn btn-sm btn-run" id="runBtn">
-                <i class="fas fa-play me-1"></i> Run Code
-              </button>
-            </div>
-          </div>
-          <div id="console"></div>
+        
+        <div class="d-flex gap-2">
+            <button class="btn-premium btn-reset" id="resetBtn" title="Reset to template">
+                <i class="fas fa-rotate-right"></i> <span>Reset</span>
+            </button>
+            <button class="btn-premium btn-run" id="runBtn" title="Run Code">
+                <i class="fas fa-play"></i> <span>Run Code</span>
+            </button>
         </div>
       </div>
+
+      <div class="editor-area" id="editorContainer">
+        <div id="editor"></div>
+      </div>
+
+      <div class="resizer" id="resizer">
+        <div class="resizer-handle"></div>
+      </div>
+
+      <div class="console-area" id="consoleContainer">
+        <div class="console-header">
+          <span><i class="fas fa-terminal me-2"></i>Terminal</span>
+          <button class="btn-icon-only" id="clearConsoleBtn" title="Clear Console">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+        <div class="console-output" id="console"></div>
+      </div>
+
+      <div class="status-bar">
+        <div id="statusLanguage"><i class="fas fa-code-branch me-1"></i> Python 3.10</div>
+        <div id="statusState">Ready</div>
+      </div>
+
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Editor and Application Script -->
   <script>
-    // Language templates and Piston API mappings
+    // --- 1. SIDEBAR TOGGLE LOGIC (EXACTLY AS PROVIDED) ---
+    const topBarMenuBtn = document.getElementById('topBarMenuBtn');
+    const topBarCloseBtn = document.getElementById('topBarCloseBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    topBarMenuBtn.addEventListener('click', () => {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      topBarMenuBtn.style.display = 'none';
+      topBarCloseBtn.style.display = 'block';
+    });
+
+    topBarCloseBtn.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      topBarMenuBtn.style.display = 'block';
+      topBarCloseBtn.style.display = 'none';
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      topBarMenuBtn.style.display = 'block';
+      topBarCloseBtn.style.display = 'none';
+    });
+
+    // Sidebar Submenu Toggles
+    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        const parentLi = this.closest('li');
+
+        if (parentLi.classList.contains('has-submenu')) {
+          parentLi.classList.toggle('active');
+
+          // Rotate the caret icon
+          const icon = this.querySelector('.toggle-icon');
+          if (parentLi.classList.contains('active')) {
+            icon.style.transform = 'rotate(90deg)';
+          } else {
+            icon.style.transform = 'rotate(0deg)';
+          }
+        }
+      });
+    });
+
+    // --- 2. EDITOR LOGIC (MONACO + PISTON) ---
     const languageConfig = {
       python: {
-        template: `# Python 3 Code
-print("Hello, World!")`,
+        template: `def main():\n    # Write your code here\n    print("Hello, World!")\n\nif __name__ == "__main__":\n    main()`,
         pistonLang: "python",
         pistonVersion: "3.10.0",
-        compileCmd: null
+        label: "Python 3.10"
       },
       javascript: {
-        template: `// JavaScript Code
-console.log("Hello, World!");`,
+        template: `// JavaScript Code\nconsole.log("Hello, World!");`,
         pistonLang: "javascript",
         pistonVersion: "18.15.0",
-        compileCmd: null
+        label: "NodeJS v18"
       },
       java: {
-        template: `// Java Code
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}`,
+        template: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`,
         pistonLang: "java",
         pistonVersion: "15.0.2",
-        compileCmd: "javac Main.java"
+        compileCmd: "javac Main.java",
+        label: "Java OpenJDK 15"
       },
       cpp: {
-        template: `// C++ Code
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}`,
+        template: `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}`,
         pistonLang: "cpp",
         pistonVersion: "10.2.0",
-        compileCmd: "g++ -o main main.cpp"
+        compileCmd: "g++ -o main main.cpp",
+        label: "C++ (GCC 10)"
       }
     };
 
-    // Initialize Monaco Editor
     require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
 
     let editor;
@@ -712,228 +692,125 @@ int main() {
         automaticLayout: true,
         minimap: { enabled: false },
         fontSize: 14,
+        fontFamily: "'JetBrains Mono', 'Courier New', monospace",
         lineNumbers: 'on',
-        roundedSelection: true,
+        padding: { top: 15, bottom: 15 },
         scrollBeyondLastLine: false,
-        renderWhitespace: 'selection'
+        smoothScrolling: true
       });
 
-      // Get DOM elements
+      // --- RESIZE LOGIC ---
+      const resizer = document.getElementById('resizer');
+      const consoleContainer = document.getElementById('consoleContainer');
+      const wrapper = document.querySelector('.playground-wrapper');
+
+      const startResize = (clientY) => {
+        document.body.style.userSelect = 'none'; 
+        resizer.classList.add('active');
+
+        const moveHandler = (moveEvent) => {
+            const y = moveEvent.touches ? moveEvent.touches[0].clientY : moveEvent.clientY;
+            const wrapperRect = wrapper.getBoundingClientRect();
+            // Calculate height from bottom (24 is status bar height)
+            const newHeight = wrapperRect.bottom - y - 24; 
+            
+            // Constraints
+            if (newHeight > 40 && newHeight < wrapper.clientHeight * 0.8) {
+                consoleContainer.style.height = `${newHeight}px`;
+                editor.layout(); 
+            }
+        };
+
+        const stopHandler = () => {
+            document.body.style.userSelect = '';
+            resizer.classList.remove('active');
+            document.removeEventListener('mousemove', moveHandler);
+            document.removeEventListener('mouseup', stopHandler);
+            document.removeEventListener('touchmove', moveHandler);
+            document.removeEventListener('touchend', stopHandler);
+        };
+
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('mouseup', stopHandler);
+        document.addEventListener('touchmove', moveHandler);
+        document.addEventListener('touchend', stopHandler);
+      };
+
+      resizer.addEventListener('mousedown', (e) => startResize(e.clientY));
+      resizer.addEventListener('touchstart', (e) => {
+          e.preventDefault(); 
+          startResize(e.touches[0].clientY);
+      }, { passive: false });
+
+      // --- RUN LOGIC ---
       const runBtn = document.getElementById('runBtn');
       const resetBtn = document.getElementById('resetBtn');
-      const languageSelector = document.getElementById('languageSelector');
       const consoleOutput = document.getElementById('console');
-      const consoleContainer = document.getElementById('consoleContainer');
-      const maximizeBtn = document.getElementById('maximizeBtn');
-      const resizeHandle = document.getElementById('consoleResizeHandle');
+      const statusState = document.getElementById('statusState');
+      const statusLanguage = document.getElementById('statusLanguage');
 
-      // Console state
-      let isConsoleMaximized = false;
-      let originalConsoleHeight = consoleContainer.offsetHeight;
+      async function executeCode() {
+        const config = languageConfig[currentLanguage];
+        const code = editor.getValue();
 
-      // Toggle console maximize/minimize
-      maximizeBtn.addEventListener('click', () => {
-        if (isConsoleMaximized) {
-          // Restore to original height
-          consoleContainer.style.height = `${originalConsoleHeight}px`;
-          maximizeBtn.innerHTML = '<i class="fas fa-expand me-1"></i> Maximize';
-        } else {
-          // Maximize console (take 70% of viewport)
-          originalConsoleHeight = consoleContainer.offsetHeight;
-          const newHeight = window.innerHeight * 0.7;
-          consoleContainer.style.height = `${newHeight}px`;
-          maximizeBtn.innerHTML = '<i class="fas fa-compress me-1"></i> Minimize';
-        }
-        isConsoleMaximized = !isConsoleMaximized;
-        editor.layout(); // Tell Monaco to recalculate layout
-      });
-
-      // Make console resizable
-      resizeHandle.addEventListener('mousedown', function (e) {
-        e.preventDefault();
-
-        const startY = e.clientY;
-        const startHeight = parseInt(document.defaultView.getComputedStyle(consoleContainer).height, 10);
-
-        function doDrag(e) {
-          const newHeight = startHeight + startY - e.clientY;
-          if (newHeight > 100 && newHeight < window.innerHeight - 100) {
-            consoleContainer.style.height = `${newHeight}px`;
-            editor.layout(); // Tell Monaco to recalculate layout
-          }
-        }
-
-        function stopDrag() {
-          document.documentElement.removeEventListener('mousemove', doDrag, false);
-          document.documentElement.removeEventListener('mouseup', stopDrag, false);
-
-          // Update state if we're near max/min
-          const currentHeight = parseInt(document.defaultView.getComputedStyle(consoleContainer).height, 10);
-          if (currentHeight > window.innerHeight * 0.6) {
-            isConsoleMaximized = true;
-            maximizeBtn.innerHTML = '<i class="fas fa-compress me-1"></i> Minimize';
-          } else if (currentHeight < window.innerHeight * 0.3) {
-            isConsoleMaximized = false;
-            maximizeBtn.innerHTML = '<i class="fas fa-expand me-1"></i> Maximize';
-          }
-        }
-
-        document.documentElement.addEventListener('mousemove', doDrag, false);
-        document.documentElement.addEventListener('mouseup', stopDrag, false);
-      });
-
-      // Execute code using Piston API
-      async function executeCode(code, language) {
-        const config = languageConfig[language];
+        runBtn.innerHTML = '<div class="spinner-sm"></div> <span>Running...</span>';
+        runBtn.disabled = true;
+        statusState.textContent = "Executing...";
+        statusState.style.color = "#fbbf24";
+        consoleOutput.innerHTML = `<span style="color: #666;">> Executing ${config.label}...</span>\n`;
 
         try {
-          // Show loading state
-          runBtn.innerHTML = '<span class="spinner"></span> Running';
-          runBtn.disabled = true;
-
-          consoleOutput.innerHTML = `[${new Date().toLocaleTimeString()}] Executing ${language} code...\n`;
-
-          const payload = {
-            language: config.pistonLang,
-            version: config.pistonVersion,
-            files: [{
-              name: language === 'java' ? 'Main.java' :
-                language === 'cpp' ? 'main.cpp' : 'main',
-              content: code
-            }]
-          };
-
-          if (config.compileCmd) {
-            payload.compile = {
-              cmd: config.compileCmd
+            const payload = {
+                language: config.pistonLang,
+                version: config.pistonVersion,
+                files: [{ content: code }]
             };
-          }
+            
+            const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            const data = await response.json();
+            consoleOutput.innerHTML = ''; 
 
-          const response = await fetch('https://emkc.org/api/v2/piston/execute', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          const data = await response.json();
-
-          // Clear previous output
-          consoleOutput.innerHTML = '';
-
-          // Display execution results
-          if (data.compile && data.compile.stderr) {
-            consoleOutput.innerHTML += `=== Compilation Error ===\n${data.compile.stderr}\n\n`;
-          }
-
-          if (data.run) {
-            if (data.run.stdout) {
-              consoleOutput.innerHTML += `=== Output ===\n${data.run.stdout}\n`;
+            if (data.run) {
+                if (data.run.stdout) consoleOutput.innerHTML += `${data.run.stdout}`;
+                if (data.run.stderr) consoleOutput.innerHTML += `<span style="color: #ef4444;">${data.run.stderr}</span>`;
+            } else {
+                consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: No output.</span>`;
             }
-            if (data.run.stderr) {
-              consoleOutput.innerHTML += `=== Runtime Error ===\n${data.run.stderr}\n`;
-            }
-
-            // Show execution summary
-            consoleOutput.innerHTML += `\n=== Execution Summary ===
-Language: ${language}
-Exit Code: ${data.run.code || 0}
-Execution Time: ${data.run.time || 0}ms
-Memory Usage: ${data.run.memory || 'N/A'}\n`;
-          } else {
-            consoleOutput.innerHTML += "No execution output received.\n";
-          }
-        } catch (error) {
-          consoleOutput.innerHTML += `=== Fatal Error ===\n${error.message}\n`;
+        } catch (err) {
+            consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: ${err.message}</span>`;
         } finally {
-          // Reset button state
-          runBtn.innerHTML = '<i class="fas fa-play me-1"></i> Run Code';
-          runBtn.disabled = false;
-
-          // Auto-scroll to bottom
-          consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            runBtn.innerHTML = '<i class="fas fa-play"></i> <span>Run Code</span>';
+            runBtn.disabled = false;
+            statusState.textContent = "Ready";
+            statusState.style.color = "white";
         }
       }
 
-      // Run button click handler
-      runBtn.addEventListener('click', () => {
-        const code = editor.getValue();
-        executeCode(code, currentLanguage);
-      });
-
-      // Reset button click handler
+      runBtn.addEventListener('click', executeCode);
+      
       resetBtn.addEventListener('click', () => {
-        editor.setValue(languageConfig[currentLanguage].template);
-        consoleOutput.innerHTML = `[${new Date().toLocaleTimeString()}] Reset ${currentLanguage} template.\n`;
+          if(confirm("Reset code?")) editor.setValue(languageConfig[currentLanguage].template);
       });
 
-      // Sidebar toggle functionality
-      const topBarMenuBtn = document.getElementById('topBarMenuBtn');
-      const topBarCloseBtn = document.getElementById('topBarCloseBtn');
-      const sidebar = document.getElementById('sidebar');
-      const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-      topBarMenuBtn.addEventListener('click', () => {
-        sidebar.classList.add('active');
-        sidebarOverlay.classList.add('active');
-        topBarMenuBtn.style.display = 'none';
-        topBarCloseBtn.style.display = 'block';
-      });
-
-      topBarCloseBtn.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-        sidebarOverlay.classList.remove('active');
-        topBarMenuBtn.style.display = 'block';
-        topBarCloseBtn.style.display = 'none';
-      });
-
-      sidebarOverlay.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-        sidebarOverlay.classList.remove('active');
-        topBarMenuBtn.style.display = 'block';
-        topBarCloseBtn.style.display = 'none';
-      });
-
-      // Add this to your existing JavaScript
-      document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
-        toggle.addEventListener('click', function (e) {
-          e.preventDefault();
-          const parentLi = this.closest('li');
-
-          if (parentLi.classList.contains('has-submenu')) {
-            parentLi.classList.toggle('active');
-
-            // Rotate the caret icon
-            const icon = this.querySelector('.toggle-icon');
-            if (parentLi.classList.contains('active')) {
-              icon.style.transform = 'rotate(90deg)';
-            } else {
-              icon.style.transform = 'rotate(0deg)';
-            }
-          }
-        });
-      });
-
-
-      // Language selector change handler
-      languageSelector.addEventListener('change', (e) => {
+      document.getElementById('languageSelector').addEventListener('change', (e) => {
         currentLanguage = e.target.value;
-        const languageMap = {
-          python: 'python',
-          javascript: 'javascript',
-          java: 'java',
-          cpp: 'cpp'
-        };
-
-        monaco.editor.setModelLanguage(editor.getModel(), languageMap[currentLanguage]);
-        editor.setValue(languageConfig[currentLanguage].template);
-        consoleOutput.innerHTML = `[${new Date().toLocaleTimeString()}] Switched to ${currentLanguage}.\n`;
+        const config = languageConfig[currentLanguage];
+        monaco.editor.setModelLanguage(editor.getModel(), currentLanguage === 'cpp' ? 'cpp' : currentLanguage);
+        editor.setValue(config.template);
+        statusLanguage.innerHTML = `<i class="fas fa-code-branch me-1"></i> ${config.label}`;
       });
+      
+      document.getElementById('clearConsoleBtn').addEventListener('click', () => {
+          consoleOutput.innerHTML = '';
+      });
+      
+      window.addEventListener('resize', () => editor.layout());
     });
-
-
   </script>
 </body>
-
 </html>
