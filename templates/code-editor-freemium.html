@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Language Code Editor | DSA Problem Tracker</title>
+  <title>Namma Coding Shaale | IDE</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -16,18 +16,18 @@
   
   <style>
     :root {
-      /* Modern Professional Palette (Slate/Dark) */
-      --bg-app: #0f172a;        /* Main background */
-      --bg-panel: #1e293b;      /* Panels/Headers */
-      --bg-editor: #1e1e1e;     /* Editor background */
-      --border-color: #334155;  /* Subtle borders */
+      /* LIGHT THEME PALETTE */
+      --bg-app: #f1f5f9;
+      --bg-panel: #e2e8f0;
+      --bg-editor: #ffffff;
+      --border-color: #cbd5e1;
       
-      --primary: #3b82f6;
+      --primary: #2563eb;
       --success: #10b981;
       --danger: #ef4444;
       
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
       
       --radius: 6px;
     }
@@ -44,7 +44,7 @@
     }
 
     /* =========================================
-       NAVBAR STYLES (PRESERVED + MOBILE TWEAK)
+       NAVBAR STYLES (DARK PRESERVED)
        ========================================= */
     .top-bar {
       position: fixed;
@@ -52,7 +52,7 @@
       left: 0;
       right: 0;
       height: 56px;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+      background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(15, 23, 42, 1));
       color: white;
       display: flex;
       align-items: center;
@@ -84,16 +84,6 @@
       font-weight: 700;
     }
 
-    /* --- MOBILE NAV TWEAK --- */
-    @media (max-width: 768px) {
-      .navbar-brand {
-        font-size: 0.9rem; /* Smaller font on mobile */
-      }
-      .brand-text {
-        margin: 0 0.2rem;
-      }
-    }
-
     /* =========================================
        UI STYLES & LAYOUT
        ========================================= */
@@ -114,31 +104,29 @@
       width: 100%;
     }
 
-    /* Wrapper: The main box holding editor & console */
     .editor-console-wrapper {
       display: flex;
       height: 100%;
       background-color: var(--bg-editor);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      position: relative; /* Needed for resizing calculations */
+      position: relative;
     }
 
-    /* Left Side: Editor */
     .editor-container {
-      width: 50%; /* Default width */
+      width: 50%;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       position: relative;
     }
 
-    /* --- DRAGGABLE RESIZER STYLES --- */
+    /* Resizer */
     .gutter-col {
       width: 10px;
-      background-color: var(--bg-app); /* Matches background so it looks like a gap */
+      background-color: var(--bg-app);
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
       cursor: col-resize;
@@ -150,28 +138,36 @@
     }
     
     .gutter-col:hover, .gutter-col.active {
-      background-color: var(--primary); /* Highlight on hover/drag */
+      background-color: #cbd5e1;
     }
 
-    /* The little dots inside the handle */
     .gutter-col::after {
       content: "⋮";
-      color: #64748b;
+      color: var(--text-muted);
       font-size: 14px;
       pointer-events: none;
     }
 
     /* Right Side: Console */
     .console-container {
-      flex: 1; /* Takes remaining space */
+      flex: 1;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      background-color: #0d1117;
-      min-width: 150px; /* Minimum width constraint */
+      background-color: #ffffff;
+      min-width: 150px;
+      position: relative; /* Important for overlay */
     }
 
-    /* Headers */
+    /* Overlay prevents iframe capturing mouse events during resize */
+    .resize-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 999;
+      display: none;
+      cursor: col-resize;
+    }
+
     .editor-header, .console-header {
       background-color: var(--bg-panel);
       padding: 0 1rem;
@@ -187,7 +183,7 @@
       margin: 0;
       font-size: 0.85rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--text-main);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       display: flex;
@@ -207,8 +203,8 @@
     #console {
       flex: 1;
       width: 100%;
-      background-color: transparent;
-      color: #e2e8f0;
+      background-color: #f8fafc;
+      color: #334155;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       padding: 1rem;
       overflow-y: auto;
@@ -218,13 +214,21 @@
       border: none;
     }
 
-    /* Controls */
+    #webPreview {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: white;
+      display: none;
+    }
+
     .language-selector {
       margin-left: 12px;
       padding: 4px 10px;
       border-radius: 4px;
       border: 1px solid var(--border-color);
-      background-color: var(--bg-app);
+      background-color: #ffffff;
       color: var(--text-main);
       font-size: 0.8rem;
       outline: none;
@@ -254,7 +258,7 @@
       color: white;
     }
     .btn-run:hover {
-      background-color: #2563eb;
+      background-color: #1d4ed8;
       color: white;
     }
 
@@ -286,10 +290,10 @@
     .btn-run-output { display: none; }
 
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-editor); }
-    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* Responsive Logic */
     @media (max-width: 768px) {
       body { padding: 0; }
       .main-content { padding: 0; padding-top: 56px; }
@@ -301,18 +305,14 @@
         border: none;
       }
 
-      /* On mobile, remove dragging, stack vertically */
       .editor-container {
-        width: 100% !important; /* Force full width */
+        width: 100% !important;
         flex: 1; 
         border-right: none;
         min-height: 40vh;
       }
 
-      /* Hide the drag handle on mobile */
-      .gutter-col {
-        display: none;
-      }
+      .gutter-col { display: none; }
 
       .console-container {
         flex: 1;
@@ -334,7 +334,6 @@
     </a>
   </div>
 
-
   <div class="main-content" id="mainContent">
     <div class="container-fluid h-100 main-container" style="padding: 0%;">
       
@@ -346,7 +345,8 @@
               <i class="fas fa-code"></i>Editor
               <select class="language-selector" id="languageSelector">
                 <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
+                <option value="web">Web (HTML/JS)</option>
+                <option value="javascript">Node.js</option>
                 <option value="java">Java</option>
                 <option value="cpp">C++</option>
               </select>
@@ -356,7 +356,7 @@
                 <i class="fas fa-redo"></i> Reset
               </button>
               <button class="btn btn-sm btn-run btn-run-playground" id="runBtn">
-                <i class="fas fa-play"></i> Run Code
+                <i class="fas fa-play"></i> Run
               </button>
             </div>
           </div>
@@ -366,15 +366,18 @@
         <div class="gutter-col" id="resizer"></div>
 
         <div class="console-container" id="consoleContainer">
+          <div class="resize-overlay" id="resizeOverlay"></div>
+          
           <div class="console-header">
-            <h4><i class="fas fa-terminal"></i>Terminal Output</h4>
+            <h4 id="outputHeader"><i class="fas fa-terminal"></i>Terminal Output</h4>
             <div class="console-actions">
               <button class="btn btn-sm btn-run btn-run-output" id="runBtnMobile">
-                <i class="fas fa-play"></i> Run Code
+                <i class="fas fa-play"></i> Run
               </button>
             </div>
           </div>
           <div id="console"></div>
+          <iframe id="webPreview"></iframe>
         </div>
       </div>
 
@@ -384,21 +387,118 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Language templates and Piston API mappings (UNCHANGED)
     const languageConfig = {
       python: {
         template: `# Python 3 Code
-print("Hello, World!")`,
+print("Hello from Namma Coding Shaale!")
+for i in range(5):
+    print(f"Count: {i}")`,
         pistonLang: "python",
         pistonVersion: "3.10.0",
-        compileCmd: null
+        mode: "python"
+      },
+      web: {
+        template: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* CSS Styles */
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .school-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      border-top: 5px solid #2563eb;
+    }
+
+    h1 { color: #1e293b; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
+    .subtitle { color: #64748b; margin-bottom: 2rem; font-size: 0.95rem; }
+
+    .features { text-align: left; margin-bottom: 2rem; background: #f8fafc; padding: 1rem; border-radius: 8px; }
+    .features li { color: #475569; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    
+    .btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: transform 0.1s;
+    }
+    .btn:active { transform: scale(0.98); }
+    
+    #message {
+      margin-top: 15px;
+      min-height: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .success { color: #10b981; }
+  </style>
+</head>
+<body>
+
+  <div class="school-card">
+    <h1>Namma Coding Shaale</h1>
+    <p class="subtitle">Future-ready coding education for everyone.</p>
+
+    <button class="btn" onclick="joinClass()">
+      Join Next Batch
+    </button>
+    
+    <div id="message"></div>
+  </div>
+
+  <script>
+    // JavaScript Logic
+    function joinClass() {
+      const msgDiv = document.getElementById('message');
+      const btn = document.querySelector('.btn');
+      
+      // Simulate registration
+      btn.innerText = "Registering...";
+      btn.style.backgroundColor = "#94a3b8";
+      
+      setTimeout(() => {
+        msgDiv.innerText = "🎉 Welcome! Registration Successful.";
+        msgDiv.className = "success";
+        btn.innerText = "Join Next Batch";
+        btn.style.backgroundColor = "#2563eb";
+      }, 800);
+    }
+  <\/script>
+
+</body>
+</html>`,
+        pistonLang: null, 
+        pistonVersion: null,
+        mode: "html"
       },
       javascript: {
-        template: `// JavaScript Code
-console.log("Hello, World!");`,
+        template: `// Node.js Code
+console.log("Hello, World!");
+const arr = [1, 2, 3];
+console.log("Array map:", arr.map(x => x * 2));`,
         pistonLang: "javascript",
         pistonVersion: "18.15.0",
-        compileCmd: null
+        mode: "javascript"
       },
       java: {
         template: `// Java Code
@@ -409,7 +509,8 @@ public class Main {
 }`,
         pistonLang: "java",
         pistonVersion: "15.0.2",
-        compileCmd: "javac Main.java"
+        compileCmd: "javac Main.java",
+        mode: "java"
       },
       cpp: {
         template: `// C++ Code
@@ -422,11 +523,11 @@ int main() {
 }`,
         pistonLang: "cpp",
         pistonVersion: "10.2.0",
-        compileCmd: "g++ -o main main.cpp"
+        compileCmd: "g++ -o main main.cpp",
+        mode: "cpp"
       }
     };
 
-    // Initialize Monaco Editor
     require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
 
     let editor;
@@ -437,63 +538,61 @@ int main() {
 
       editor = monaco.editor.create(document.getElementById('editor'), {
         value: savedCode,
-        language: currentLanguage,
-        theme: 'vs-dark',
-        automaticLayout: false, // Changed to False so we can manually layout on Drag
+        language: languageConfig[currentLanguage].mode,
+        theme: 'vs',
+        automaticLayout: false,
         minimap: { enabled: false },
         fontSize: 14,
         fontFamily: 'JetBrains Mono, Consolas, monospace',
         lineNumbers: 'on',
         roundedSelection: true,
         scrollBeyondLastLine: false,
-        renderWhitespace: 'selection',
         padding: { top: 12, bottom: 12 }
       });
 
-      // Initial layout check
       window.addEventListener('resize', () => editor.layout());
 
-      // DOM Elements
-      document.getElementById('languageSelector').value = currentLanguage;
       const resetBtn = document.getElementById('resetBtn');
       const languageSelector = document.getElementById('languageSelector');
       const consoleOutput = document.getElementById('console');
+      const webPreview = document.getElementById('webPreview');
+      const outputHeader = document.getElementById('outputHeader');
+
+      languageSelector.value = currentLanguage;
+      updateInterfaceForLanguage(currentLanguage);
 
       // ---------------------------------------------------------
-      // RESIZER LOGIC START
+      // FIXED RESIZER LOGIC
       // ---------------------------------------------------------
       const resizer = document.getElementById('resizer');
       const leftSide = document.getElementById('editorPane');
       const wrapper = document.getElementById('wrapper');
-      
+      const resizeOverlay = document.getElementById('resizeOverlay'); // Helper div
       let isResizing = false;
 
       resizer.addEventListener('mousedown', (e) => {
         isResizing = true;
         resizer.classList.add('active');
         document.body.style.cursor = 'col-resize';
-        document.body.style.userSelect = 'none'; // Stop text selection
+        document.body.style.userSelect = 'none';
+        
+        // Disable iframe interaction while dragging
+        webPreview.style.pointerEvents = 'none';
+        resizeOverlay.style.display = 'block';
       });
 
       document.addEventListener('mousemove', (e) => {
         if (!isResizing) return;
         
-        // Calculate new percentage based on mouse X relative to wrapper
         const containerRect = wrapper.getBoundingClientRect();
         const containerWidth = containerRect.width;
-        // Offset by container left position
         const newLeftWidth = e.clientX - containerRect.left;
-        
-        // Convert to percentage
         let percentage = (newLeftWidth / containerWidth) * 100;
         
-        // Limits (Min 10% - Max 90%)
         if(percentage < 10) percentage = 10;
         if(percentage > 90) percentage = 90;
-
-        leftSide.style.width = `${percentage}%`;
         
-        // Important: Tell Monaco to redraw immediately
+        leftSide.style.width = `${percentage}%`;
         editor.layout();
       });
 
@@ -503,11 +602,14 @@ int main() {
           resizer.classList.remove('active');
           document.body.style.cursor = 'default';
           document.body.style.userSelect = 'auto';
-          editor.layout(); // Final redraw
+          
+          // Re-enable iframe interaction
+          webPreview.style.pointerEvents = 'auto';
+          resizeOverlay.style.display = 'none';
+          
+          editor.layout();
         }
       });
-      // ---------------------------------------------------------
-      // RESIZER LOGIC END
       // ---------------------------------------------------------
 
       const updateRunButtonsState = (isLoading) => {
@@ -517,19 +619,26 @@ int main() {
                  btn.innerHTML = '<span class="spinner"></span> Running';
                  btn.disabled = true;
              } else {
-                 btn.innerHTML = '<i class="fas fa-play me-1"></i> Run Code';
+                 btn.innerHTML = '<i class="fas fa-play me-1"></i> Run';
                  btn.disabled = false;
              }
          });
       };
 
-      editor.onDidChangeModelContent(function () {
-        const code = editor.getValue();
-        localStorage.setItem(`code_${currentLanguage}`, code);
-      });
-
       async function executeCode(code, language) {
+        if (language === 'web') {
+           consoleOutput.style.display = 'none';
+           webPreview.style.display = 'block';
+           
+           // SECURITY FIX: Use srcdoc to avoid Cross-Origin error
+           webPreview.srcdoc = code;
+           return;
+        }
+
         const config = languageConfig[language];
+        consoleOutput.style.display = 'block';
+        webPreview.style.display = 'none';
+
         try {
           updateRunButtonsState(true);
           consoleOutput.innerHTML = `> Executing ${language} code...\n`;
@@ -564,7 +673,7 @@ int main() {
           if (data.run) {
             if (data.run.stdout) consoleOutput.innerHTML += `${data.run.stdout}\n`;
             if (data.run.stderr) consoleOutput.innerHTML += `\n=== Runtime Error ===\n${data.run.stderr}\n`;
-            consoleOutput.innerHTML += `\n\n=== Execution Summary ===\nExit Code: ${data.run.code || 0} | Time: ${data.run.time || 0}ms\n`;
+            consoleOutput.innerHTML += `\n\n=== Execution Summary ===\nExit Code: ${data.run.code || 0}\n`;
           } else {
             consoleOutput.innerHTML += "No execution output received.\n";
           }
@@ -576,7 +685,18 @@ int main() {
         }
       }
 
-      // Attach handlers to ALL run buttons
+      function updateInterfaceForLanguage(lang) {
+        if (lang === 'web') {
+          outputHeader.innerHTML = '<i class="fas fa-globe"></i> Live Preview';
+          consoleOutput.style.display = 'none';
+          webPreview.style.display = 'block';
+        } else {
+          outputHeader.innerHTML = '<i class="fas fa-terminal"></i> Terminal Output';
+          consoleOutput.style.display = 'block';
+          webPreview.style.display = 'none';
+        }
+      }
+
       const allRunBtns = document.querySelectorAll('.btn-run');
       allRunBtns.forEach(btn => {
           btn.addEventListener('click', () => {
@@ -589,7 +709,9 @@ int main() {
         const template = languageConfig[currentLanguage].template;
         editor.setValue(template);
         localStorage.setItem(`code_${currentLanguage}`, template);
-        consoleOutput.innerHTML = `> Reset ${currentLanguage} template.\n`;
+        if(currentLanguage !== 'web') {
+            consoleOutput.innerHTML = `> Reset ${currentLanguage} template.\n`;
+        }
       });
 
       languageSelector.addEventListener('change', (e) => {
@@ -599,15 +721,20 @@ int main() {
         currentLanguage = e.target.value;
         localStorage.setItem('currentLanguage', currentLanguage);
 
-        const languageMap = { python: 'python', javascript: 'javascript', java: 'java', cpp: 'cpp' };
-        const savedCode = localStorage.getItem(`code_${currentLanguage}`) || languageConfig[currentLanguage].template;
+        updateInterfaceForLanguage(currentLanguage);
 
-        monaco.editor.setModelLanguage(editor.getModel(), languageMap[currentLanguage]);
+        const config = languageConfig[currentLanguage];
+        const savedCode = localStorage.getItem(`code_${currentLanguage}`) || config.template;
+
+        monaco.editor.setModelLanguage(editor.getModel(), config.mode);
         editor.setValue(savedCode);
-        consoleOutput.innerHTML = `> Switched to ${currentLanguage}.\n`;
       });
       
-      // Force initial layout
+      editor.onDidChangeModelContent(function () {
+        const code = editor.getValue();
+        localStorage.setItem(`code_${currentLanguage}`, code);
+      });
+      
       setTimeout(() => editor.layout(), 100);
     });
   </script>
