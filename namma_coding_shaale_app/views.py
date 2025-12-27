@@ -563,8 +563,8 @@ def my_courses(request):
     
     #if a user is new or not having any course - enroll it to fremium course and send a Mail
     if len(enrolled_courses) == 0:
-        FREEMUIUM_COURSE_ID = 1
-        enroll_course(request, FREEMUIUM_COURSE_ID)
+        FREEMIUM_COURSE_ID = 101
+        enroll_course(request, FREEMIUM_COURSE_ID)
 
         # since newly created, get course data
         enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
