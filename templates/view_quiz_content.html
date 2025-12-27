@@ -444,7 +444,7 @@
     <script>
         // --- QUIZ DATA & STATE ---
         const quizDataString = `{{ quiz_data|escapejs }}`;
-        const quizData = JSON.parse(quizDataString.replace(/'/g, '"'));
+        const quizData = JSON.parse(quizDataString);
         
         let quizState = {
             currentIndex: 0,
