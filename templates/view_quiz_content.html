@@ -156,14 +156,17 @@
         
         .option-card {
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Keeps the checkbox at the top */
             padding: 1rem;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
             background: white;
+        }
+
+        .option-input {
+            margin-top: 0.25rem; /* Align perfectly with the first line of code */
         }
         
         .option-card:hover { border-color: var(--primary); background: #f8fafc; transform: translateX(4px); }
@@ -213,6 +216,10 @@
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
             display: inline-block;
+            /* FIX: This allows \n to create new lines */
+            white-space: pre-wrap;
+            display: block; /* Changing to block helps multi-line layout */
+            width: 100%;
         }
 
         /* Footer */
@@ -427,9 +434,14 @@
                 </div>
                 <div class="action-box">
                     {% if not progress.is_completed %}
-                    <form method="post">{% csrf_token %}
-                        <button type="submit" name="mark_completed" class="btn-complete">Complete Lesson</button>
-                    </form>
+                        {% if quiz_passed %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="mark_completed" class="btn-complete">Complete Lesson</button>
+                            </form>
+                        {% else %}
+                              <div class="completed-badge"><i class="fas fa-check-circle text-danger"></i> Pass the Quiz</div>
+                        {% endif %}
                     {% else %}
                     <div class="completed-badge"><i class="fas fa-check-circle text-success"></i> Done</div>
                     {% endif %}
@@ -539,15 +551,30 @@
             else if (question.type === 'multiple-choice') {
                 const currentAns = quizState.answers[question.id] || [];
                 optionsHtml = question.options.map(opt => {
-                    const isCode = opt.trim().startsWith('`') && opt.trim().endsWith('`');
-                    const displayContent = isCode 
-                        ? `<span class="inline-code">${opt.replace(/`/g, '')}</span>` 
-                        : opt;
-                        
-                    const isSelected = currentAns.includes(opt);
+                    const trimmedOpt = opt.trim();
+                    const isCode = trimmedOpt.startsWith('`') && trimmedOpt.endsWith('`');
                     
+                    let displayContent;
+                    if (isCode) {
+                        // Remove outer backticks for display
+                        const codeText = trimmedOpt.substring(1, trimmedOpt.length - 1);
+                        displayContent = `<span class="inline-code">${codeText}</span>`;
+                    } else {
+                        displayContent = opt;
+                    }
+                    
+                    const isSelected = currentAns.includes(opt);
+                
+                    // FIX: Escape backslashes, single quotes, AND newlines for the onclick attribute
+                    const safeOptForAttribute = opt
+                        .replace(/\\/g, '\\\\')   // Escape backslashes
+                        .replace(/'/g, "\\'")      // Escape single quotes
+                        .replace(/\n/g, '\\n')     // Convert real newline to string '\n'
+                        .replace(/\r/g, '');       // Remove carriage returns
+                
                     return `
-                    <div class="option-card ${isSelected ? 'selected' : ''}" onclick="selectOption('${question.id}', '${opt.replace(/'/g, "\\'")}', 'multi')">
+                    <div class="option-card ${isSelected ? 'selected' : ''}" 
+                         onclick="selectOption('${question.id}', '${safeOptForAttribute}', 'multi')">
                         <div class="option-input" type="checkbox"></div>
                         <div class="option-content">${displayContent}</div>
                     </div>`;
