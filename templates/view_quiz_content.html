@@ -550,32 +550,42 @@
             } 
             else if (question.type === 'multiple-choice') {
                 const currentAns = quizState.answers[question.id] || [];
-                optionsHtml = question.options.map(opt => {
+                    optionsHtml = question.options.map(opt => {
+                    // 1. Prepare the content for display in the UI
                     const trimmedOpt = opt.trim();
+                    // Your data doesn't use backticks, but if it did:
                     const isCode = trimmedOpt.startsWith('`') && trimmedOpt.endsWith('`');
                     
                     let displayContent;
                     if (isCode) {
-                        // Remove outer backticks for display
                         const codeText = trimmedOpt.substring(1, trimmedOpt.length - 1);
                         displayContent = `<span class="inline-code">${codeText}</span>`;
                     } else {
-                        displayContent = opt;
+                        // For your current data: wrap in inline-code if it looks like Python
+                        displayContent = opt.includes('print(') || opt.includes('\n') 
+                            ? `<span class="inline-code">${opt}</span>` 
+                            : opt;
                     }
                     
-                    const isSelected = currentAns.includes(opt);
-                
-                    // FIX: Escape backslashes, single quotes, AND newlines for the onclick attribute
+                    // 2. Prepare the string for the 'onclick' attribute
+                    // We must escape single quotes and turn literal newlines back into the string "\n"
                     const safeOptForAttribute = opt
                         .replace(/\\/g, '\\\\')   // Escape backslashes
                         .replace(/'/g, "\\'")      // Escape single quotes
                         .replace(/\n/g, '\\n')     // Convert real newline to string '\n'
                         .replace(/\r/g, '');       // Remove carriage returns
                 
+                    const currentAns = quizState.answers[question.id] || [];
+                    const isSelected = question.type === 'multiple-choice' 
+                        ? currentAns.includes(opt) 
+                        : quizState.answers[question.id] === opt;
+                    
+                    const clickType = question.type === 'multiple-choice' ? 'multi' : 'single';
+                
                     return `
                     <div class="option-card ${isSelected ? 'selected' : ''}" 
-                         onclick="selectOption('${question.id}', '${safeOptForAttribute}', 'multi')">
-                        <div class="option-input" type="checkbox"></div>
+                         onclick="selectOption('${question.id}', '${safeOptForAttribute}', '${clickType}')">
+                        <div class="option-input" ${question.type === 'multiple-choice' ? 'type="checkbox"' : ''}></div>
                         <div class="option-content">${displayContent}</div>
                     </div>`;
                 }).join('');
