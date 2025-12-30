@@ -1,0 +1,324 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Courses</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+    }
+
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* === HEADER & SEARCH === */
+    .page-title {
+      font-weight: 800;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+      font-size: 2.2rem;
+    }
+
+    .page-subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+        font-size: 1rem;
+    }
+
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .search-input {
+      padding: 1rem 1.2rem 1rem 3rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    /* === COURSE CARD === */
+    .course-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .course-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        text-decoration: none; /* For the anchor wrap */
+        color: inherit;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .course-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        border-color: var(--primary);
+    }
+
+    /* Icon Box */
+    .course-icon-box {
+        width: 60px;
+        height: 60px;
+        background: #eff6ff;
+        color: var(--primary);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    /* Content */
+    .course-details {
+        flex-grow: 1;
+    }
+
+    .course-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: #0f172a;
+    }
+
+    .course-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Meta Tags (Level, Count) */
+    .course-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .meta-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 4px 10px;
+        background: #f1f5f9;
+        border-radius: 6px;
+        color: #475569;
+    }
+
+    /* Arrow Action */
+    .course-action {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f8fafc;
+        color: #cbd5e1;
+        transition: all 0.2s;
+    }
+
+    .course-card:hover .course-action {
+        background: var(--primary);
+        color: white;
+    }
+
+    /* === ANIMATION === */
+    .fade-in { animation: fadeIn 0.4s ease-out forwards; opacity: 0; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === MOBILE OPTIMIZATION === */
+    @media (max-width: 768px) {
+        .main-container { padding: 0 1rem; }
+        .page-title { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .page-subtitle { margin-bottom: 1.5rem; font-size: 0.9rem; }
+        
+        .search-wrapper { margin-bottom: 1.5rem; }
+        .search-input { font-size: 0.9rem; padding: 0.75rem 1rem 0.75rem 2.5rem; }
+        .search-icon { left: 14px; font-size: 0.9rem; }
+
+        /* Card changes to vertical stack on mobile */
+        .course-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem;
+            gap: 1rem;
+        }
+
+        .course-icon-box {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+        }
+
+        .course-title { font-size: 1.1rem; }
+        .course-desc { font-size: 0.85rem; }
+        
+        .course-action {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
+            color: var(--primary); /* Always colored on mobile to indicate tap */
+        }
+        
+        .course-card:hover .course-action { background: transparent; } /* Remove bg hover on mobile */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="main-container">
+    
+    <h1 class="page-title">Explore Courses</h1>
+    <p class="page-subtitle">Select a course to view its problem set</p>
+      
+    <div class="search-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search for a course...">
+    </div>
+
+    <div id="course-container" class="course-list fade-in">
+        </div>
+
+  </div>
+
+  <script type="application/json" id="courses-data">
+    {{ courses_js_json|safe }}
+  </script>
+
+  <script>
+    const CourseApp = (() => {
+        const rawData = document.getElementById('courses-data').textContent;
+        const courses = rawData ? JSON.parse(rawData) : [];
+        const container = document.getElementById('course-container');
+        const searchInput = document.getElementById('searchInput');
+
+        // IMPORTANT: Handle URL Pattern dynamically
+        // We assume you have a URL pattern like: path('course/<int:course_id>/problems/', ...)
+        // We use a dummy ID '0' to generate the base string, then replace it in JS
+        const urlPattern = "{% url 'problems-catalog' 0 %}"; 
+
+        const renderCourses = (searchTerm = '') => {
+            const term = searchTerm.toLowerCase();
+            const filtered = courses.filter(c => 
+                c.title.toLowerCase().includes(term) || 
+                (c.description && c.description.toLowerCase().includes(term))
+            );
+
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="text-center py-5 text-muted">No courses found.</div>`;
+                return;
+            }
+
+            filtered.forEach(course => {
+                // Generate URL for this specific course
+                const courseUrl = urlPattern.replace('0', course.id);
+
+                const html = `
+                    <a href="${courseUrl}" class="course-card">
+                        <div class="course-icon-box">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        
+                        <div class="course-details">
+                            <div class="course-title">${course.title}</div>
+                            <div class="course-desc">${course.description || 'No description available.'}</div>
+                            
+                            <div class="course-meta">
+                                <div class="meta-tag">
+                                    <i class="fas fa-layer-group"></i> 
+                                    ${course.level || 'All Levels'}
+                                </div>
+                                <div class="meta-tag">
+                                    <i class="fas fa-list-ol"></i> 
+                                    ${course.total_problems || 0} Problems
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-action">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        };
+
+        // Event Listeners
+        searchInput.addEventListener('input', (e) => renderCourses(e.target.value));
+
+        // Initial Render
+        renderCourses();
+    })();
+  </script>
+
+</body>
+</html>

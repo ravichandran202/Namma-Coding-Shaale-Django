@@ -877,6 +877,111 @@ def view_content(request, course_id, content_file_id):
     
         return render(request, "view_content.html", context)
 
+def problems_catalog(request, course_id):
+    # 1. Get the Course
+    course = get_object_or_404(Course, id=course_id)
+
+    # 2. Gather all CourseContent (Reuse existing logic)
+    course_contents = CourseContent.objects.filter(
+        course_id=course_id, 
+        content__type='PROBLEM'
+    ).select_related('content__problem').order_by('sequence_number')
+
+    # 3. Section grouping: section_title -> [problems]
+    sections_map = {}
+    
+    for cc in course_contents:
+        if not cc.content.problem:
+            continue
+
+        section_title = cc.section_title
+        
+        # Initialize section if not exists
+        if section_title not in sections_map:
+            sections_map[section_title] = {
+                "id": section_title.lower().replace(" ", "-"),
+                "title": section_title,
+                "type": "problems",
+                "problems": []
+            }
+
+        problem_obj = cc.content.problem
+
+        # Construct Problem Data
+        # Note: Since this is public, we default status to 'unsolved' 
+        # or we don't include solution/video links if you want to hide them.
+        sections_map[section_title]["problems"].append({
+            # IMPORTANT: Ensure this matches what your 'problem_solver' view expects.
+            # If your solver expects a database integer ID, use problem_obj.id
+            # If it expects a string slug, use problem_obj.file_name
+            "id": problem_obj.id, 
+            "title": problem_obj.title,
+            "difficulty": problem_obj.difficulty.lower(),
+            "status": "unsolved", # Default status for public view
+            "tags": [], 
+        })
+
+    # 4. Convert to list and add numbering
+    sections = []
+    for idx, (sec_title, section) in enumerate(sections_map.items(), 1):
+        section_data = section.copy() # Safe copy
+        section_data["title"] = f"{idx}. {section_data['title']}"
+        sections.append(section_data)
+    
+    is_user_enrolled = False
+    if request.user.is_authenticated:
+        is_user_enrolled = UserCourse.objects.filter(
+            user=request.user, 
+            course=course
+        ).exists()
+
+
+
+    # 5. Build the context
+    context = {
+        'course': course,        # Useful for showing the Course Title in the header
+        'course_id': course_id,  # Required for the {% url %} tag in the template
+        'sections_js_json': json.dumps(sections), # The data for the JS
+        'is_user_enrolled_to_course' : is_user_enrolled
+    }
+    
+    return render(request, "problems_catalog.html", context)
+
+
+def course_catalog(request):
+    # 1. Fetch Courses
+    # Changed 'course_content' to 'contents' based on your error message
+    courses = Course.objects.all().annotate(
+        total_problems=Count(
+            'contents', 
+            filter=Q(contents__content__type='PROBLEM')
+        )
+    ).values('id', 'name', 'description', 'language', 'total_problems') 
+    # Note: I also changed 'title' to 'name' based on your field list
+
+    # 2. Prepare Data for JavaScript
+    courses_data = list(courses)
+
+    # 3. Normalization (Renaming keys to match what the JS expects)
+    # The JS expects 'title' and 'level', but your model has 'name' and 'language'
+    normalized_data = []
+    for c in courses_data:
+        normalized_data.append({
+            'id': c['id'],
+            'title': c['name'], # Map 'name' to 'title'
+            'description': c['description'] or '',
+            'level': c['language'] or 'All Levels', # Using language as the "meta tag"
+            'total_problems': c['total_problems']
+        })
+
+    context = {
+        'courses_js_json': json.dumps(normalized_data),
+    }
+
+    return render(request, 'course_catalog.html', context)
+
+
+
 def bulk_fetch_content_content(user, course, problem_ids):
     """Optimized bulk fetch using prefetch_related"""
     
