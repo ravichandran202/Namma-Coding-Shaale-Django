@@ -855,7 +855,7 @@ def view_content(request, course_id, content_file_id):
             
             
             context['quiz_submission'] = quiz_submission
-            context['quiz_data'] = json.dumps(quiz_submission.quiz_data)
+            context['quiz_data'] = json.dumps(content.quiz_data)
             context['quiz_score'] = quiz_submission.score
             context['quiz_passed'] =  quiz_submission.passed
             context['quiz_correct_answer_count'] =  quiz_submission.correct_answers
