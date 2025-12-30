@@ -624,10 +624,20 @@
                 </div>
 
                 <div class="quiz-body">
-                    {% if user.is_superuser %}
-                        ${question.correctAnswer === undefined && `<p>${question.correctAnswer}</p>`}
-                        ${question.correctAnswers === undefined && `<p>${question.correctAnswers}</p>`}
+                     {% if user.is_superuser %}
+                    ${
+                        question.correctAnswer !== undefined
+                            ? `<p>${question.correctAnswer}</p>`
+                            : ""
+                    }
+            
+                    ${
+                        question.correctAnswers !== undefined
+                            ? `<p>${question.correctAnswers}</p>`
+                            : ""
+                    }
                     {% endif %}
+                    
                     <h3 class="question-text">${question.question}</h3>
                     ${qCode}
                     <div class="option-grid">
