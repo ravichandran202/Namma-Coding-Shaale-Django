@@ -59,7 +59,7 @@
             -webkit-touch-callout: none; /* iOS Safari */
         }
 
-        /* --- SIDEBAR & TOPBAR (UNCHANGED) --- */
+        /* --- SIDEBAR & TOPBAR --- */
         .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
         .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
         .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
@@ -216,9 +216,8 @@
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
             display: inline-block;
-            /* FIX: This allows \n to create new lines */
             white-space: pre-wrap;
-            display: block; /* Changing to block helps multi-line layout */
+            display: block; 
             width: 100%;
         }
 
@@ -332,7 +331,6 @@
         .completed-badge { background: #f1f5f9; color: #0f172a; padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
-        /* @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } */
 
         /* Responsive */
         @media (max-width: 992px) {
@@ -503,7 +501,7 @@
                     </div>
 
                     <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
-                        <div class="px-4 py-3 bg-light rounded-4 border">Last Score : ${'{{quiz_score}}'}</div>
+                        <div class="px-4 py-3 bg-light rounded-4 border">Last Score : ${'{{quiz_score|default:0|floatformat:0}}'}%</div>
                     </div>
 
                     <button class="btn-quiz btn-next px-5 py-3 fs-5 shadow-sm" onclick="startQuiz()">
@@ -517,8 +515,36 @@
             quizState.startTime = new Date();
             quizState.currentIndex = 0;
             quizState.answers = {};
+            // FIX 4: Explicitly start timer here
+            startTimer();
             showQuestion();
             startClipboardProtection();
+        }
+
+        // FIX 4: Dedicated function to manage timer resetting
+        function startTimer() {
+            clearInterval(quizState.timer);
+            quizState.timeLeft = quizData.timePerQuestion;
+            
+            quizState.timer = setInterval(() => {
+                quizState.timeLeft--;
+                const display = document.getElementById('timeDisplay');
+                const badge = document.getElementById('timerBadge');
+                
+                if (display) display.textContent = `${quizState.timeLeft}s`;
+                if (badge && quizState.timeLeft <= 10) badge.classList.add('warning');
+                
+                if (quizState.timeLeft <= 0) {
+                    clearInterval(quizState.timer);
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+
+        // FIX 1: Helper function to decode base64 back to raw string for storage
+        function handleSelection(qId, encodedValue, type) {
+            const value = decodeURIComponent(escape(atob(encodedValue)));
+            selectOption(qId, value, type);
         }
 
         function showQuestion() {
@@ -526,8 +552,7 @@
             const question = quizData.questions[qIndex];
             const progressPercent = ((qIndex + 1) / quizData.questions.length) * 100;
 
-            clearInterval(quizState.timer);
-            quizState.timeLeft = quizData.timePerQuestion;
+            // REMOVED TIMER RESET LOGIC FROM HERE TO FIX BUG
             
             // Generate Options HTML based on type
             let optionsHtml = '';
@@ -541,8 +566,11 @@
                     
                     const isSelected = quizState.answers[question.id] === opt;
                     
+                    // FIX 1: Encode value to Base64 for the onclick event
+                    const b64 = btoa(unescape(encodeURIComponent(opt)));
+                    
                     return `
-                    <div class="option-card ${isSelected ? 'selected' : ''}" onclick="selectOption('${question.id}', '${opt.replace(/'/g, "\\'")}', 'single')">
+                    <div class="option-card ${isSelected ? 'selected' : ''}" onclick="handleSelection('${question.id}', '${b64}', 'single')">
                         <div class="option-input"></div>
                         <div class="option-content">${displayContent}</div>
                     </div>`;
@@ -553,7 +581,6 @@
                     optionsHtml = question.options.map(opt => {
                     // 1. Prepare the content for display in the UI
                     const trimmedOpt = opt.trim();
-                    // Your data doesn't use backticks, but if it did:
                     const isCode = trimmedOpt.startsWith('`') && trimmedOpt.endsWith('`');
                     
                     let displayContent;
@@ -567,24 +594,19 @@
                             : opt;
                     }
                     
-                    // 2. Prepare the string for the 'onclick' attribute
-                    // We must escape single quotes and turn literal newlines back into the string "\n"
-                    const safeOptForAttribute = opt
-                        .replace(/\\/g, '\\\\')   // Escape backslashes
-                        .replace(/'/g, "\\'")      // Escape single quotes
-                        .replace(/\n/g, '\\n')     // Convert real newline to string '\n'
-                        .replace(/\r/g, '');       // Remove carriage returns
-                
                     const currentAns = quizState.answers[question.id] || [];
                     const isSelected = question.type === 'multiple-choice' 
                         ? currentAns.includes(opt) 
                         : quizState.answers[question.id] === opt;
                     
                     const clickType = question.type === 'multiple-choice' ? 'multi' : 'single';
+                    
+                    // FIX 1: Encode value to Base64 for the onclick event
+                    const b64 = btoa(unescape(encodeURIComponent(opt)));
                 
                     return `
                     <div class="option-card ${isSelected ? 'selected' : ''}" 
-                         onclick="selectOption('${question.id}', '${safeOptForAttribute}', '${clickType}')">
+                         onclick="handleSelection('${question.id}', '${b64}', '${clickType}')">
                         <div class="option-input" ${question.type === 'multiple-choice' ? 'type="checkbox"' : ''}></div>
                         <div class="option-content">${displayContent}</div>
                     </div>`;
@@ -650,27 +672,14 @@
                         <i class="fas fa-arrow-left"></i> Previous
                     </button>
                     <button class="btn-quiz btn-next" onclick="nextQuestion()">
-                        ${qIndex === quizData.questions.length - 1 ? 'Submit Quiz' : 'Next Question'} <i class="fas fa-arrow-right"></i>
+                        ${qIndex === quizData.questions.length - 1 ? 'Submit Quiz' : 'Next'} <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             `;
 
             hljs.highlightAll();
-
-            // Timer
-            quizState.timer = setInterval(() => {
-                quizState.timeLeft--;
-                const display = document.getElementById('timeDisplay');
-                const badge = document.getElementById('timerBadge');
-                
-                if (display) display.textContent = `${quizState.timeLeft}s`;
-                if (badge && quizState.timeLeft <= 10) badge.classList.add('warning');
-                
-                if (quizState.timeLeft <= 0) {
-                    clearInterval(quizState.timer);
-                    nextQuestion();
-                }
-            }, 1000);
+            
+            // REMOVED TIMER INTERVAL SETTING FROM HERE TO FIX BUG
         }
 
         // --- INTERACTION ---
@@ -686,13 +695,15 @@
                     quizState.answers[qId] = [...current, value];
                 }
             }
-            showQuestion(); // Re-render for visual feedback
+            showQuestion(); // Re-render for visual feedback (DOES NOT RESET TIMER NOW)
         }
 
         function nextQuestion() {
             clearInterval(quizState.timer);
             if (quizState.currentIndex < quizData.questions.length - 1) {
                 quizState.currentIndex++;
+                // FIX 4: Explicitly start timer here
+                startTimer();
                 showQuestion();
             } else {
                 finishQuiz();
@@ -703,12 +714,28 @@
             clearInterval(quizState.timer);
             if (quizState.currentIndex > 0) {
                 quizState.currentIndex--;
+                // FIX 4: Explicitly start timer here
+                startTimer();
                 showQuestion();
             }
+        }
+        
+        // FIX 2: Helper to apply code styling in the result view
+        function formatResultValue(val) {
+            if (!val) return 'No Answer';
+            // Handle arrays (recursion)
+            if (Array.isArray(val)) return val.map(v => formatResultValue(v)).join(', ');
+            
+            // Check for backticks OR newlines
+            if (val.trim().startsWith('`') || val.includes('\n')) {
+                return `<span class="inline-code">${val.replace(/`/g, '')}</span>`;
+            }
+            return val;
         }
 
         function finishQuiz() {
             stopClipboardProtection();
+            clearInterval(quizState.timer); // Ensure timer stops
             
             let correctCount = 0;
             const results = [];
@@ -739,13 +766,9 @@
 
                 if (isCorrect) correctCount++;
 
-                // Format display strings (remove backticks for review)
-                let displayUserAns = Array.isArray(userAns) ? userAns.join(', ') : (userAns || 'No Answer');
-                let displayCorrectAns = Array.isArray(q.correctAnswers) ? q.correctAnswers.join(', ') : (q.correctAnswer || q.correctAnswers);
-
-                // Clean backticks for display
-                if (typeof displayUserAns === 'string') displayUserAns = displayUserAns.replace(/`/g, '');
-                if (typeof displayCorrectAns === 'string') displayCorrectAns = displayCorrectAns.replace(/`/g, '');
+                // FIX 2: Use the helper to format strings
+                let displayUserAns = formatResultValue(userAns);
+                let displayCorrectAns = formatResultValue(q.correctAnswers || q.correctAnswer);
 
                 results.push({
                     qNum: idx + 1,
