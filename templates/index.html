@@ -1877,9 +1877,7 @@
             <!-- Course 1 -->
             <div class="course-card animate premium-edition">
               <div class="course-img-container">
-                <img
-                  src="https://c4.wallpaperflare.com/wallpaper/544/77/284/programming-programming-language-python-programming-logo-hd-wallpaper-preview.jpg"
-                  alt="Python Basics" class="course-img">
+                <img src="{% static 'images/python-professional-image.png' %}" alt="Python Basics" class="course-img">
                 <div class="course-overlay"></div>
                 <div class="course-badge bg-gold">Premium</div>
                 <div class="exclusive-ribbon">Exclusive</div>
@@ -1911,8 +1909,8 @@
                 </ul>
 
                 <div class="course-meta text-light">
-                  <span><i class="far fa-file-alt me-1"></i> 18 Modules</span>
-                  <span><i class="far fa-clock me-1"></i> 60 Hours</span>
+                  <span><i class="far fa-file-alt me-1"></i> 60 Modules</span>
+                  <span><i class="far fa-clock me-1"></i> 50+ Hours</span>
                 </div>
                 <div class="course-progress mt-3">
                   <div class="progress-bar bg-gold" style="width: 100%"></div>
@@ -1949,10 +1947,9 @@
             <!-- Course 2-->
             <div class="course-card animate">
               <div class="course-img-container">
-                <img
-                  src="https://c4.wallpaperflare.com/wallpaper/978/36/954/blue-green-python-programming-wallpaper-preview.jpg"
-                  alt="Python Basics" class="course-img">
+                <img src="{% static 'images/python-fundamentals-image.png' %}" alt="Python Basics" class="course-img">
                 <div class="course-overlay"></div>
+                <div class="exclusive-ribbon">FREE</div>
                 <div class="course-badge bg-primary">Beginner</div>
                 <div class="course-level">
                   <span class="level-dot active"></span>
@@ -1964,35 +1961,35 @@
                 <div class="d-flex justify-content-between align-items-start mb-3">
                   <div>
                     <span class="text-muted small">Foundation Course</span>
-                    <h3 class="course-title">Python Foundation</h3>
+                    <h3 class="course-title">Python Fundamentals</h3>
                   </div>
                   <!-- <div class="course-rating">
                     <i class="fas fa-star"></i>
                     <span>4.9</span>
                   </div> -->
                 </div>
-                <p class="course-desc">Basic to Advanced Python with 100+ Coding problems
+                <p class="course-desc">Basic Python course with 60+ Coding problems
                 </p>
 
                 <!-- Premium Features List -->
                 <ul class="premium-features mb-3">
                   <li><i class="fas fa-check-circle me-2"></i>Certificate of Completion</li>
-                  <li><i class="fas fa-check-circle me-2"></i>1-on-1 Mentorship</li>
-                  <li><i class="fas fa-check-circle me-2"></i>70+ Coding Problems</li>
+                  <li><i class="fas fa-check-circle me-2"></i>60+ Coding Problems</li>
+                  <li><i class="fas fa-check-circle me-2"></i>200+ Quiz Questions</li>
                   <li><i class="fas fa-check-circle me-2"></i>Self-Paced learning</li>
                 </ul>
 
                 <div class="course-meta">
-                  <span><i class="far fa-file-alt me-1"></i> 15 Modules</span>
-                  <span><i class="far fa-clock me-1"></i> 40 Hours</span>
+                  <span><i class="far fa-file-alt me-1"></i> 40 Modules</span>
+                  <span><i class="far fa-clock me-1"></i> 20+ Hours</span>
                 </div>
                 <div class="course-progress mt-3">
                   <div class="progress-bar" style="width: 100%"></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mt-4">
                   <div class="course-price">
-                    <span class="text-primary fw-bold">₹1499</span>
-                    <span class="text-muted text-decoration-line-through ms-2">₹2000</span>
+                    <span class="text-primary fw-bold">₹0</span>
+                    <span class="text-muted text-decoration-line-through ms-2">₹599</span>
                   </div>
                   <button href="{% url 'contact_us' %}" class="btn btn-sm btn-premium" data-bs-toggle="modal"
                     data-bs-target="#python-syllabus-foundational-modal">
@@ -2013,6 +2010,62 @@
                 </div> -->
               </div>
             </div>
+
+            <!-- Course 3 -->
+            <div class="course-card animate delay-1">
+              <div class="course-img-container">
+                <img src="{% static 'images/python-mastery-image.png' %}" alt="DSA with Python" class="course-img">
+                <div class="course-overlay"></div>
+                <div class="course-badge bg-gradient-secondary">Advanced</div>
+                <div class="course-level">
+                  <span class="level-dot active"></span>
+                  <span class="level-dot active"></span>
+                  <span class="level-dot"></span>
+                </div>
+              </div>
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <span class="text-muted small">Core Program</span>
+                    <h3 class="course-title">Python Mastery</h3>
+                  </div>
+                  <!-- <div class="course-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8</span>
+                  </div> -->
+                </div>
+                <p class="course-desc">Master Python by solving 500+ hands-on coding problems.</p>
+
+                <ul class="premium-features mb-3">
+                  <li><i class="fas fa-check-circle me-2"></i>Certificate of Completion</li>
+                  <li><i class="fas fa-check-circle me-2"></i>500+ Coding Problems</li>
+                  <li><i class="fas fa-check-circle me-2"></i>Self-Paced learning</li>
+                  <li><i class="fas fa-check-circle me-2"></i>1-on-1 Mentorship</li>
+                </ul>
+
+                <div class="course-meta">
+                  <span><i class="far fa-file-alt me-1"></i> 10 Modules</span>
+                  <span><i class="far fa-clock me-1"></i> 45 Hours</span>
+                </div>
+                <div class="course-progress mt-3">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                  <div class="course-price">
+                    <span class="text-primary fw-bold">₹1499</span>
+                    <span class="text-muted text-decoration-line-through ms-2">₹2999</span>
+                  </div>
+                  <!-- <button href="{% url 'contact_us' %}" class="btn btn-sm btn-premium" data-bs-toggle="modal"
+                    data-bs-target="#syllabusModal2">
+                    <i class="fas fa-gem me-1"></i> Enroll
+                  </button> -->
+                  <div class="coming-soon">
+                    <span class="text-primary fw-bold">Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <!-- Course 3 -->
             <div class="course-card animate delay-1">
@@ -2039,7 +2092,7 @@
                     <span>4.8</span>
                   </div> -->
                 </div>
-                <p class="course-desc">Master data structures and algorithms with multi language for technical
+                <p class="course-desc">Master Python structures and algorithms with multi language for technical
                   interviews.</p>
 
                 <ul class="premium-features mb-3">
@@ -2214,63 +2267,69 @@
   </section>
 
   <!-- Modal 1: Python Professional -->
-  <div class="modal fade" id="python-syllabus-professional-modal" tabindex="-1" aria-labelledby="syllabusModal1Label"
+  <div class="modal fade" id="python-syllabus-professional-modal" tabindex="-1" aria-labelledby="proModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content border-0 overflow-hidden" style="box-shadow: var(--shadow-xl);">
+
         <div class="modal-header position-relative p-0">
-          <div class="w-100 text-white p-4 premium-edition-modal">
+          <div class="w-100 bg-gradient-dark text-white p-4"
+            style="background: linear-gradient(45deg, #1a1a2e, #16213e);">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <h5 class="modal-title text-serif mb-1" id="python-">Python Professional</h5>
-                <p class="mb-0 opacity-75">Basic to Advanced Python with 100+ Coding problems</p>
+                <h5 class="modal-title text-serif mb-1" id="proModalLabel">Python Professional</h5>
+                <p class="mb-0 opacity-75">Master Python: From Basics to Advanced + Real World Projects</p>
               </div>
               <button type="button" class="btn-close btn-close-white opacity-100" data-bs-dismiss="modal"
                 aria-label="Close"></button>
             </div>
           </div>
           <div class="position-absolute bottom-0 start-0 w-100">
-            <div class="progress" style="height: 4px;">
-              <div class="progress-bar bg-white" style="width: 75%"></div>
+            <div class="progress" style="height: 4px; background-color: rgba(255,255,255,0.2);">
+              <div class="progress-bar bg-warning" style="width: 0%"></div>
             </div>
           </div>
         </div>
+
         <div class="modal-body p-0">
-          <div class="row g-0" style="min-height: 300px;"> <!-- Changed to min-height -->
-            <!-- Left Column - Stacked on mobile -->
-            <div class="col-lg-6 p-4 border-end">
+          <div class="row g-0" style="min-height: 500px;">
+
+            <div class="col-lg-5 p-4 border-end bg-light bg-opacity-10">
               <div class="d-flex align-items-center mb-4">
-                <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
-                  <i class="fas fa-gem fs-4"></i>
+                <div class="bg-warning bg-opacity-10 text-warning rounded p-2 me-3">
+                  <i class="fas fa-crown fs-4"></i>
                 </div>
                 <div>
-                  <h6 class="mb-0">Course Includes</h6>
-                  <p class="text-muted small mb-0">Everything you need to master Python</p>
+                  <h6 class="mb-0">Professional Edition</h6>
+                  <p class="text-muted small mb-0">The complete Python roadmap</p>
                 </div>
               </div>
 
               <ul class="list-unstyled mb-4">
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-video"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-warning rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-video small"></i>
                   </div>
                   <div>
                     <h6 class="mb-0">30+ Hrs Live Classes</h6>
                     <p class="text-muted small mb-0">5 Hrs a week</p>
                   </div>
                 </li>
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-laptop-code"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-warning rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-laptop-code small"></i>
                   </div>
                   <div>
-                    <h6 class="mb-0">100+ Coding Exercises</h6>
+                    <h6 class="mb-0">500+ Coding Exercises</h6>
                     <p class="text-muted small mb-0">Hands-on practice with code editor</p>
                   </div>
                 </li>
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-certificate"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-warning rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-certificate small"></i>
                   </div>
                   <div>
                     <h6 class="mb-0">Certificate</h6>
@@ -2279,50 +2338,51 @@
                 </li>
               </ul>
 
-              <div class="bg-light rounded p-3 mb-4">
+              <div class="bg-light rounded p-3 mb-4 border">
                 <div class="d-flex justify-content-between mb-2">
                   <span class="text-muted">Duration:</span>
-                  <span class="fw-bold">Lifetime</span>
+                  <span class="fw-bold">Lifetime Access</span>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
                   <span class="text-muted">Level:</span>
-                  <span class="fw-bold">Beginner</span>
+                  <span class="fw-bold">Zero to Hero</span>
                 </div>
                 <div class="d-flex justify-content-between">
                   <span class="text-muted">Projects:</span>
-                  <span class="fw-bold">3 Real World</span>
+                  <span class="fw-bold text-success">2 Mini + 5 Capstone</span>
                 </div>
               </div>
 
               <div class="text-center">
-                <a href="{% url 'checkout' 1 %}" class="btn btn-primary w-100 py-3">
-                  <i class="fas fa-gem me-2"></i> Enroll Now - ₹2499
+                <a href="{% url 'checkout' 1 %}" class="btn btn-dark w-100 py-3 shadow-sm">
+                  <i class="fas fa-rocket me-2 text-warning"></i> Enroll Now - ₹2499
                 </a>
-                <p class="small text-muted mt-2 mb-0">Lifetime validity: Course contents with code playground</p>
+                <p class="small text-muted mt-2 mb-0">Includes Code Playground & Project Reviews</p>
               </div>
             </div>
 
-            <!-- Right Column - Scrollable on all devices -->
-            <div class="col-lg-6 p-4" style="max-height: 60vh; overflow-y: auto;">
-              <div class="accordion accordion-flush" id="pythonAccordion">
+            <div class="col-lg-7 p-4" style="max-height: 70vh; overflow-y: auto;">
+              <div class="accordion accordion-flush" id="pythonProAccordion">
+
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule1">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 1: Python Basics</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod1">
+                      <span class="me-3 fw-bold text-dark opacity-50">01</span>
+                      <span class="fw-bold">Introduction & Basics</span>
                     </button>
                   </h6>
-                  <div id="pythonModule1" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod1" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Introduction to Python
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Introduction to Programming & Python</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The
+                          Print Function & Comments</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Intro, Print(), Input()</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Python Print() Function
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Variables and Data Types
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Operators and Expressions
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Input and Output</li>
                       </ul>
                     </div>
                   </div>
@@ -2331,40 +2391,23 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule2">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 2: Control Flow</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod2">
+                      <span class="me-3 fw-bold text-dark opacity-50">02</span>
+                      <span class="fw-bold">Variables & Data Types</span>
                     </button>
                   </h6>
-                  <div id="pythonModule2" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod2" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Conditional Statements
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Identifiers, Variables & Data Types</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Numeric Types & Character Encoding (ASCII)</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Variables, Data Types, ASCII
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Loops (for, while)</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Break and Continue</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Add more modules here -->
-                <!-- Example additional content to demonstrate scrolling -->
-                <div class="accordion-item border-0 mb-3">
-                  <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
-                    </button>
-                  </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
-                    <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Python Types & Numbers
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
                       </ul>
                     </div>
                   </div>
@@ -2373,18 +2416,25 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod3">
+                      <span class="me-3 fw-bold text-dark opacity-50">03</span>
+                      <span class="fw-bold">Operators</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod3" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Arithmetic, Relational & Assignment Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Logical, Bitwise, Identity & Membership Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Operator Precedence (BODMAS)</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 8+ Quizzes covering all Operator types
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 8 Coding Challenges (Arithmetic,
+                          Relational, Logical, Assignment)</li>
                       </ul>
                     </div>
                   </div>
@@ -2393,18 +2443,20 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod4">
+                      <span class="me-3 fw-bold text-dark opacity-50">04</span>
+                      <span class="fw-bold">Control Flow: Conditionals</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod4" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          If-Else & Indentation Rules</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Conditionals, Match Case</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 6 Coding Problem Sets (Basic to
+                          Hard)</li>
                       </ul>
                     </div>
                   </div>
@@ -2413,18 +2465,25 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod5">
+                      <span class="me-3 fw-bold text-dark opacity-50">05</span>
+                      <span class="fw-bold">Mastering Loops & Patterns</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod5" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          While Loop, For Loop, Range Function</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Nested Loops & Jump Statements</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 10 Quizzes: Loops, Nested Loops, Jumps
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> 15+
+                          Pattern Printing Exercises (Triangle, Hollow, Alpha, Numeric)</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 10+ Loop Logic Problems (Basic to
+                          Advanced)</li>
                       </ul>
                     </div>
                   </div>
@@ -2433,18 +2492,25 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod6">
+                      <span class="me-3 fw-bold text-dark opacity-50">06</span>
+                      <span class="fw-bold">Python Strings</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod6" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Concatenation, Replication, f-strings</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Slicing, Indexing, Escape Characters</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          String Methods & Functions</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 9 Quizzes: Indexing, Methods,
+                          Formatting</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding Challenges: String
+                          Manipulation</li>
                       </ul>
                     </div>
                   </div>
@@ -2453,37 +2519,23 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod7">
+                      <span class="me-3 fw-bold text-dark opacity-50">07</span>
+                      <span class="fw-bold">Data Structures: Lists</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod7" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item border-0 mb-3">
-                  <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
-                    </button>
-                  </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
-                    <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Introduction, Operations, Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Lists vs Arrays, 2D (Nested) Lists</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 12 Quizzes: Operations, Methods, 2D
+                          Lists</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 11 Coding Sets: List Ops,
+                          Methods, Matrix Ops</li>
                       </ul>
                     </div>
                   </div>
@@ -2492,24 +2544,158 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#proMod8">
+                      <span class="me-3 fw-bold text-dark opacity-50">08</span>
+                      <span class="fw-bold">Data Structures: Tuples & Sets</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="proMod8" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Tuples: Operations, Methods, Immutability</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Sets: Operations, Methods, Comparison logic</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 9 Quizzes: Tuples, Sets, Errors,
+                          Comparisons</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 4 Coding Sets: Set Operations
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <!-- Add even more modules if needed -->
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#proMod9">
+                      <span class="me-3 fw-bold text-dark opacity-50">09</span>
+                      <span class="fw-bold">Data Structures: Dictionaries</span>
+                    </button>
+                  </h6>
+                  <div id="proMod9" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Key-Value Pairs, Operations, Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Common Mistakes, Dict vs Lists</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 8 Quizzes: Ops, Methods, Nested Dicts
+                        </li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 6 Coding Sets: Dictionary
+                          Manipulation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#proMod10">
+                      <span class="me-3 fw-bold text-dark opacity-50">10</span>
+                      <span class="fw-bold">Functions & Scope</span>
+                    </button>
+                  </h6>
+                  <div id="proMod10" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Definition, Return Values, Execution Flow</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Args, Kwargs, Lambda, Recursion</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Global vs Local Scope</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> 15+ Quizzes covering all Function
+                          concepts</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 7 Coding Sets: Logic, Recursion,
+                          Inbuilt Funcs</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#proMod11">
+                      <span class="me-3 fw-bold text-dark opacity-50">11</span>
+                      <span class="fw-bold">Object Oriented Programming (OOP)</span>
+                    </button>
+                  </h6>
+                  <div id="proMod11" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Introduction & The 4 Pillars of OOP</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: OOP Concepts & Pillars</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Real World Problems: Bank
+                          Management System, Railway Reservation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#proMod12">
+                      <span class="me-3 fw-bold text-dark opacity-50">12</span>
+                      <span class="fw-bold">File Handling & Exceptions</span>
+                    </button>
+                  </h6>
+                  <div id="proMod12" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> File
+                          Operations, Error Handling, Modules</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Files, Exceptions, Packages
+                        </li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Exception Handling</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-white border border-warning rounded px-3 py-3 collapsed"
+                      type="button" data-bs-toggle="collapse" data-bs-target="#proMod13">
+                      <span class="me-3 fw-bold text-warning">13</span>
+                      <span class="fw-bold text-dark">Capstone Projects</span>
+                    </button>
+                  </h6>
+                  <div id="proMod13" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
+                          Calculator (With Memory & File History)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
+                          Fake News Generator</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
+                          Guess the Word & Madlibs Generator</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
+                          Timed Math Problem Solver</li>
+                        <li class="py-2"><i class="fas fa-gamepad text-success me-3"></i> Rock Paper Scissors</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-white border border-warning rounded px-3 py-3 collapsed">
+                      <span class="me-3 fw-bold text-warning">14</span>
+                      <span class="fw-bold text-dark">Mock Interview</span>
+                    </button>
+                  </h6>
+                </div>
+
               </div>
             </div>
           </div>
@@ -2523,6 +2709,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content border-0 overflow-hidden" style="box-shadow: var(--shadow-xl);">
+
         <div class="modal-header position-relative p-0">
           <div class="w-100 bg-gradient-primary text-white p-4">
             <div class="d-flex justify-content-between align-items-center">
@@ -2536,46 +2723,50 @@
           </div>
           <div class="position-absolute bottom-0 start-0 w-100">
             <div class="progress" style="height: 4px;">
-              <div class="progress-bar bg-white" style="width: 75%"></div>
+              <div class="progress-bar bg-white" style="width: 0%"></div>
             </div>
           </div>
         </div>
+
         <div class="modal-body p-0">
-          <div class="row g-0" style="min-height: 300px;"> <!-- Changed to min-height -->
-            <!-- Left Column - Stacked on mobile -->
-            <div class="col-lg-6 p-4 border-end">
+          <div class="row g-0" style="min-height: 500px;">
+
+            <div class="col-lg-5 p-4 border-end bg-light bg-opacity-10">
               <div class="d-flex align-items-center mb-4">
                 <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
                   <i class="fas fa-gem fs-4"></i>
                 </div>
                 <div>
                   <h6 class="mb-0">Course Includes</h6>
-                  <p class="text-muted small mb-0">Everything you need to learn Python</p>
+                  <p class="text-muted small mb-0">Everything you need to learn basics in Python</p>
                 </div>
               </div>
 
               <ul class="list-unstyled mb-4">
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-video"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-primary rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-video small"></i>
                   </div>
                   <div>
-                    <h6 class="mb-0">No Video Lessons</h6>
-                    <p class="text-muted small mb-0">This course is completly self-paced</p>
+                    <h6 class="mb-0">Topic wise Quiz Questions</h6>
+                    <p class="text-muted small mb-0">250+ Questions</p>
                   </div>
                 </li>
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-laptop-code"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-primary rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-laptop-code small"></i>
                   </div>
                   <div>
-                    <h6 class="mb-0">70+ Coding Exercises</h6>
+                    <h6 class="mb-0">60+ Coding Exercises</h6>
                     <p class="text-muted small mb-0">Hands-on practice with code editor</p>
                   </div>
                 </li>
-                <li class="mb-3 d-flex">
-                  <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-3 flex-shrink-0">
-                    <i class="fas fa-certificate"></i>
+                <li class="mb-3 d-flex align-items-center">
+                  <div class="bg-white shadow-sm text-primary rounded-circle p-2 me-3 flex-shrink-0"
+                    style="width: 40px; height: 40px; display: grid; place-items: center;">
+                    <i class="fas fa-certificate small"></i>
                   </div>
                   <div>
                     <h6 class="mb-0">Certificate</h6>
@@ -2584,50 +2775,35 @@
                 </li>
               </ul>
 
-              <div class="bg-light rounded p-3 mb-4">
-                <div class="d-flex justify-content-between mb-2">
-                  <span class="text-muted">Duration:</span>
-                  <span class="fw-bold">Lifetime</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                  <span class="text-muted">Level:</span>
-                  <span class="fw-bold">Beginner</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="text-muted">Projects:</span>
-                  <span class="fw-bold">0 Real-world</span>
-                </div>
-              </div>
-
-              <div class="text-center">
-                <a href="{% url 'checkout' 30001 %}" class="btn btn-primary w-100 py-3">
-                  <i class="fas fa-gem me-2"></i> Enroll Now - ₹1499
+              <div class="bg-white border rounded p-3 mb-4 text-center">
+                <p class="small text-muted mb-2">Ready to start learning?</p>
+                <a href="{% url 'checkout' 101 %}" class="btn btn-primary w-100 shadow-sm">
+                  <i class="fas fa-play-circle me-2"></i> Enroll Now
                 </a>
-                <p class="small text-muted mt-2 mb-0">Lifetime validity: Course contents with code playground</p>
               </div>
             </div>
 
-            <!-- Right Column - Scrollable on all devices -->
-            <div class="col-lg-6 p-4" style="max-height: 60vh; overflow-y: auto;">
+            <div class="col-lg-7 p-4" style="max-height: 65vh; overflow-y: auto;">
               <div class="accordion accordion-flush" id="pythonAccordion">
+
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule1">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 1: Python Basics</span>
+                      data-bs-toggle="collapse" data-bs-target="#modIntro">
+                      <span class="me-3 fw-bold text-primary opacity-50">01</span>
+                      <span class="fw-bold">Introduction to Python</span>
                     </button>
                   </h6>
-                  <div id="pythonModule1" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modIntro" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Introduction to Python
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Variables and Data Types
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Operators and Expressions
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Input and Output</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Introduction & Setup</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Basic Syntax</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Problem Set 1</li>
                       </ul>
                     </div>
                   </div>
@@ -2636,40 +2812,17 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule2">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 2: Control Flow</span>
+                      data-bs-toggle="collapse" data-bs-target="#modVars">
+                      <span class="me-3 fw-bold text-primary opacity-50">02</span>
+                      <span class="fw-bold">Identifiers and Variables</span>
                     </button>
                   </h6>
-                  <div id="pythonModule2" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modVars" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Conditional Statements
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Loops (for, while)</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Break and Continue</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Add more modules here -->
-                <!-- Example additional content to demonstrate scrolling -->
-                <div class="accordion-item border-0 mb-3">
-                  <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
-                    </button>
-                  </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
-                    <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Naming Conventions & Usage</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
                       </ul>
                     </div>
                   </div>
@@ -2678,18 +2831,16 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modTypes">
+                      <span class="me-3 fw-bold text-primary opacity-50">03</span>
+                      <span class="fw-bold">Data Types</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modTypes" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2"><i class="fas fa-file-alt text-muted me-3"></i> Core Data Types (int, float,
+                          str)</li>
                       </ul>
                     </div>
                   </div>
@@ -2698,18 +2849,21 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modOps">
+                      <span class="me-3 fw-bold text-primary opacity-50">04</span>
+                      <span class="fw-bold">Operators</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modOps" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Arithmetic & Relational Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Logical & Assignment Operators</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Problem Set: Operators</li>
                       </ul>
                     </div>
                   </div>
@@ -2718,18 +2872,22 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modCond">
+                      <span class="me-3 fw-bold text-primary opacity-50">05</span>
+                      <span class="fw-bold">Conditional Statements</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modCond" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> If,
+                          Elif, Else</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Basic
+                          Conditionals Practice</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Advanced Conditionals Practice
                         </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
                       </ul>
                     </div>
                   </div>
@@ -2738,18 +2896,29 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modLoop">
+                      <span class="me-3 fw-bold text-primary opacity-50">06</span>
+                      <span class="fw-bold">Looping Statements</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modLoop" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          While Loops</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> For
+                          Loops</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Loops Quiz 1</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i>
+                          Iteration Problems</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Nested Loops & Control</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Loops Quiz 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i>
+                          Pattern Printing Problems</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Advanced Loop Problems</li>
                       </ul>
                     </div>
                   </div>
@@ -2758,37 +2927,17 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modStrings">
+                      <span class="me-3 fw-bold text-primary opacity-50">07</span>
+                      <span class="fw-bold">Python Strings</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modStrings" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item border-0 mb-3">
-                  <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
-                    </button>
-                  </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
-                    <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          String Methods & Slicing</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
                       </ul>
                     </div>
                   </div>
@@ -2797,24 +2946,123 @@
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#pythonModule3">
-                      <i class="fas fa-circle text-primary me-2" style="font-size: 8px;"></i>
-                      <span class="fw-bold">Module 3: Functions</span>
+                      data-bs-toggle="collapse" data-bs-target="#modLists">
+                      <span class="me-3 fw-bold text-primary opacity-50">08</span>
+                      <span class="fw-bold">Python Lists</span>
                     </button>
                   </h6>
-                  <div id="pythonModule3" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                  <div id="modLists" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
                     <div class="accordion-body px-3 py-2">
-                      <ul class="list-unstyled">
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Defining Functions</li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Parameters and Arguments
-                        </li>
-                        <li class="py-1"><i class="fas fa-check-circle text-primary me-2"></i> Return Values</li>
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> List
+                          Operations & Methods</li>
+                        <li class="py-2 border-bottom border-light"><i
+                            class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> List Manipulation Problems</li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <!-- Add even more modules if needed -->
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#modTuples">
+                      <span class="me-3 fw-bold text-primary opacity-50">09</span>
+                      <span class="fw-bold">Python Tuples</span>
+                    </button>
+                  </h6>
+                  <div id="modTuples" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Understanding Immutability</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#modSets">
+                      <span class="me-3 fw-bold text-primary opacity-50">10</span>
+                      <span class="fw-bold">Python Sets</span>
+                    </button>
+                  </h6>
+                  <div id="modSets" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Set
+                          Operations (Union, Intersection)</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#modDict">
+                      <span class="me-3 fw-bold text-primary opacity-50">11</span>
+                      <span class="fw-bold">Python Dictionary</span>
+                    </button>
+                  </h6>
+                  <div id="modDict" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Key-Value Pairs & Methods</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#modFunc">
+                      <span class="me-3 fw-bold text-primary opacity-50">12</span>
+                      <span class="fw-bold">Functions</span>
+                    </button>
+                  </h6>
+                  <div id="modFunc" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Function Definition & Syntax</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Arguments & Return Values</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Scope & Recursion</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-muted me-3"></i> Knowledge Check</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#modOOP">
+                      <span class="me-3 fw-bold text-primary opacity-50">13</span>
+                      <span class="fw-bold">Object Oriented Programming (OOPS)</span>
+                    </button>
+                  </h6>
+                  <div id="modOOP" class="accordion-collapse collapse" data-bs-parent="#pythonAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
+                          Classes & Objects</li>
+                        <li class="py-2"><i class="fas fa-file-alt text-muted me-3"></i> Inheritance & Polymorphism</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
