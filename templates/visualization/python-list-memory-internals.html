@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Memory • Strict CPython Sequence</title>
+    <style>
+        /* --- DESIGN SYSTEM --- */
+        :root {
+            --bg-dark: #0f172a;
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        header { text-align: center; }
+        h1 { margin: 0; background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* STATS */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .stat-card { background: rgba(30,41,59,0.5); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-val { font-size: 1.8rem; font-weight: bold; display: block; font-family: 'Fira Code', monospace; }
+        .stat-lbl { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+
+        /* VIEWPORT */
+        .viewport {
+            background: #0b1120; border-radius: 20px; padding: 50px 30px; min-height: 260px;
+            position: relative; border: 1px dashed var(--text-muted);
+            overflow-x: auto; display: flex; align-items: center;
+            white-space: nowrap;
+        }
+        
+        .memory-track { display: inline-flex; gap: 8px; margin: 0 auto; transition: opacity 0.3s; padding-bottom: 10px; }
+
+        /* SLOTS */
+        .slot {
+            width: 55px; height: 85px;
+            background: rgba(255,255,255,0.05); border: 2px dashed #334155; border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            flex-shrink: 0; position: relative; transition: all 0.4s;
+        }
+        .slot.filled { background: var(--primary); border-style: solid; border-color: #60a5fa; box-shadow: 0 4px 15px rgba(59,130,246,0.3); color: white; }
+        .slot.shifting { transform: translateX(-63px); background: var(--accent); box-shadow: 0 0 20px rgba(139,92,246,0.5); z-index: 10; }
+        
+        .slot-idx { position: absolute; bottom: -22px; font-size: 0.7rem; color: #64748b; font-family: monospace; }
+        .slot-val { font-weight: bold; font-size: 1.1rem; }
+
+        /* OVERLAY */
+        .overlay {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(15,23,42,0.98); border: 1px solid var(--warning); padding: 25px;
+            border-radius: 12px; text-align: center; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            z-index: 20; min-width: 350px; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .overlay.active { opacity: 1; }
+        
+        .math-box { font-family: 'Fira Code', monospace; background: rgba(0,0,0,0.4); padding: 15px; margin-top: 15px; border-radius: 8px; color: #cbd5e1; text-align: left; font-size: 0.9rem; line-height: 1.6; }
+        .hl { color: #facc15; font-weight: bold; }
+
+        /* CONTROLS */
+        .controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        button {
+            padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; color: white; font-weight: 600;
+            transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+        }
+        button:active { transform: scale(0.96); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn-add { background: var(--success); }
+        .btn-add:hover { background: #059669; }
+        .btn-pop { background: var(--danger); }
+        .btn-pop:hover { background: #dc2626; }
+        .btn-shift { background: var(--accent); }
+        .btn-shift:hover { background: #7c3aed; }
+        .btn-reset { background: #334155; }
+
+        /* LOG */
+        .log-win { font-family: 'Fira Code', monospace; color: #94a3b8; font-size: 0.85rem; height: 120px; overflow-y: auto; background: #1e1e1e; padding: 15px; border-radius: 12px; border: 1px solid #333; width: 100%; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 2px; }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Python Memory Internals</h1>
+            <p class="subtitle">Growth Sequence: 0 → 4 → 8 → 16 → 25 → 35 → 46 → 58...</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-val" style="color:#60a5fa" id="len-val">0</span>
+                <span class="stat-lbl">Length (Items)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" style="color:#f472b6" id="cap-val">0</span>
+                <span class="stat-lbl">Capacity (Slots)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-val" style="color:#34d399" id="next-val">4</span>
+                <span class="stat-lbl">Next Resize Size</span>
+            </div>
+        </div>
+
+        <div class="viewport">
+            <div class="overlay" id="overlay">
+                <div style="color:var(--warning); font-weight:bold; font-size:1.2rem; margin-bottom:5px;">⚠️ MEMORY REALLOCATION</div>
+                <div style="color:#94a3b8; font-size:0.9rem;">Moving to larger memory block...</div>
+                <div class="math-box" id="math-box">
+                    </div>
+            </div>
+
+            <div class="memory-track" id="track">
+                <span style="color:#64748b; font-style:italic; margin:auto">Empty List (0 bytes)</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-add" id="btn-add" onclick="addItem()"><span>+</span> Append</button>
+            <button class="btn-pop" id="btn-pop" onclick="popItem()"><span>×</span> Pop Last</button>
+            <button class="btn-shift" id="btn-shift" onclick="popFront()"><span>←</span> Pop(0)</button>
+            <button class="btn-reset" onclick="reset()">Reset</button>
+        </div>
+
+        <div class="log-win" id="log">
+            <div class="log-entry"># System Ready.</div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let items = [];
+        let capacity = 0;
+        let isLocked = false;
+
+        // DOM Elements
+        const els = {
+            len: document.getElementById('len-val'),
+            cap: document.getElementById('cap-val'),
+            next: document.getElementById('next-val'),
+            track: document.getElementById('track'),
+            overlay: document.getElementById('overlay'),
+            math: document.getElementById('math-box'),
+            log: document.getElementById('log'),
+            btnAdd: document.getElementById('btn-add')
+        };
+
+        // --- CORE ACTIONS ---
+
+        function addItem() {
+            if(isLocked) return;
+
+            // Resize Check
+            if (items.length === capacity) {
+                performResize(() => {
+                    pushData();
+                });
+            } else {
+                pushData();
+            }
+        }
+
+        function pushData() {
+            items.push(items.length + 1); // Simple counter values
+            render();
+            log(`Appended item '${items.length}'. List is ${items.length}/${capacity} full.`);
+            scrollToRight();
+        }
+
+        function popItem() {
+            if (isLocked || items.length === 0) return;
+            const val = items.pop();
+            render();
+            log(`Popped '${val}' from end.`);
+        }
+
+        function popFront() {
+            if (isLocked || items.length === 0) return;
+            isLocked = true;
+            log(`Executing pop(0)... Shifting ${items.length - 1} items left.`);
+
+            // 1. Visual Shift Animation
+            const slots = document.querySelectorAll('.slot.filled');
+            
+            // Fade out the first one
+            if(slots[0]) {
+                slots[0].style.opacity = '0';
+                slots[0].style.transform = 'scale(0.8)';
+            }
+
+            // Shift the rest
+            setTimeout(() => {
+                for(let i = 1; i < slots.length; i++) {
+                    slots[i].classList.add('shifting');
+                }
+            }, 100);
+
+            // 2. Actual Logic Update
+            setTimeout(() => {
+                const val = items.shift();
+                render();
+                isLocked = false;
+                log(`Shift complete. New length: ${items.length}`);
+            }, 700); // Wait for CSS transition
+        }
+
+        // --- CPYTHON GROWTH LOGIC ---
+
+        function getNextCapacity(requiredSize) {
+            // Strict enforcement of 0 -> 4 -> 8 -> 16 sequence
+            if (requiredSize <= 4) return 4;
+            if (requiredSize <= 8) return 8;
+            if (requiredSize <= 16) return 16;
+            
+            // For > 16, use the CPython formula:
+            // new_allocated = newsize + (newsize >> 3) + 6
+            return requiredSize + Math.floor(requiredSize / 8) + 6;
+        }
+
+        function performResize(callback) {
+            isLocked = true;
+            els.btnAdd.style.opacity = '0.5';
+
+            // 1. We need space for current items + 1 new one
+            const requiredSize = items.length + 1;
+            
+            // 2. Calculate
+            const newCapacity = getNextCapacity(requiredSize);
+            
+            // 3. Prepare Display Text based on which rule we used
+            let formulaHTML = '';
+            
+            if (newCapacity <= 16) {
+                formulaHTML = `
+                    <div style="margin-bottom:5px">Mode: <span class="hl">Small List Doubling</span></div>
+                    <div>Required: ${requiredSize}</div>
+                    <div>Next Milestone: <span class="hl">${newCapacity}</span></div>
+                `;
+            } else {
+                // Show the math for 16 -> 25, 25 -> 35, etc.
+                const term1 = requiredSize;
+                const term2 = Math.floor(requiredSize / 8);
+                const padding = 6;
+                formulaHTML = `
+                    <div style="margin-bottom:5px">Mode: <span class="hl">Growth Formula</span></div>
+                    <div style="font-size:0.8rem; color:#94a3b8">new = req + (req >> 3) + 6</div>
+                    <div>Calc: <span class="hl">${term1}</span> + <span class="hl">${term2}</span> + <span class="hl">${padding}</span></div>
+                    <div style="margin-top:5px; border-top:1px solid #555; paddingTop:5px">Result: <span class="hl" style="color:#f472b6; font-size:1.2rem">${newCapacity} slots</span></div>
+                `;
+            }
+
+            els.math.innerHTML = formulaHTML;
+            els.overlay.classList.add('active');
+            els.track.style.opacity = '0.2';
+            log(`RESIZE TRIGGERED: ${capacity} → ${newCapacity}`);
+
+            setTimeout(() => {
+                capacity = newCapacity;
+                render();
+                els.overlay.classList.remove('active');
+                els.track.style.opacity = '1';
+                isLocked = false;
+                els.btnAdd.style.opacity = '1';
+                if(callback) callback();
+            }, 2000); // 2s delay for reading
+        }
+
+        // --- UTILS ---
+
+        function render() {
+            els.len.innerText = items.length;
+            els.cap.innerText = capacity;
+            
+            // Preview next resize
+            const predictedNext = getNextCapacity(items.length + 1);
+            // If we are full, predicted is the JUMP. If not full, predicted is current capacity (no jump)
+            // But to be helpful, let's show where it WOULD jump if we overflowed
+            const jumpTarget = getNextCapacity(capacity + 1); 
+            els.next.innerText = jumpTarget;
+
+            els.track.innerHTML = '';
+            
+            if (capacity === 0) {
+                els.track.innerHTML = '<span style="color:#64748b; font-style:italic; margin:auto">Empty List (0 bytes)</span>';
+                return;
+            }
+
+            for(let i=0; i<capacity; i++) {
+                const div = document.createElement('div');
+                div.className = i < items.length ? 'slot filled' : 'slot';
+                
+                const idx = document.createElement('div');
+                idx.className = 'slot-idx';
+                idx.innerText = i;
+                div.appendChild(idx);
+
+                if (i < items.length) {
+                    const val = document.createElement('div');
+                    val.className = 'slot-val';
+                    val.innerText = items[i];
+                    div.appendChild(val);
+                }
+
+                els.track.appendChild(div);
+            }
+        }
+
+        function reset() {
+            items = [];
+            capacity = 0;
+            render();
+            log('Memory Reset.');
+        }
+
+        function log(msg) {
+            const d = document.createElement('div');
+            d.className = 'log-entry';
+            const time = new Date().toLocaleTimeString('en-US', {hour12:false, minute:'numeric', second:'numeric'});
+            d.innerText = `[${time}] ${msg}`;
+            els.log.appendChild(d);
+            els.log.scrollTop = els.log.scrollHeight;
+        }
+
+        function scrollToRight() {
+            setTimeout(() => {
+                const vp = document.querySelector('.viewport');
+                vp.scrollTo({ left: vp.scrollWidth, behavior: 'smooth' });
+            }, 50);
+        }
+
+        // Init
+        render();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Python Visualizer (Mobile Ready)</title>
+    <style>
+        /* --- DESIGN SYSTEM --- */
+        :root {
+            --bg-dark: #0f172a;
+            --stack-bg: rgba(30, 41, 59, 0.7);
+            --heap-bg: rgba(15, 23, 42, 0.8);
+            --primary: #3b82f6; 
+            --accent: #8b5cf6; 
+            --success: #10b981; 
+            --danger: #ef4444; 
+            --warning: #f59e0b;
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-dark); 
+            color: var(--text-main);
+            margin: 0; padding: 20px 10px;
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 800; letter-spacing: -0.5px;
+            font-size: 1.8rem; text-align: center;
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* --- CONTROL PANEL --- */
+        .controls-wrapper {
+            width: 100%; max-width: 900px;
+            background: rgba(30,41,59,0.6);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 50;
+        }
+
+        .input-group {
+            display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;
+        }
+
+        .prompt-symbol { font-family: 'Fira Code', monospace; color: #facc15; font-weight: bold; font-size: 1.2rem; }
+
+        input {
+            flex-grow: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #475569;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+        input:focus { border-color: var(--primary); outline: none; }
+
+        button {
+            background: var(--primary); color: white; border: none; padding: 12px 24px;
+            border-radius: 8px; cursor: pointer; font-weight: 700; white-space: nowrap;
+            transition: transform 0.1s;
+            flex-grow: 0;
+        }
+        button:active { transform: scale(0.96); }
+
+        .chip-container {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start;
+        }
+
+        .chip {
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .chip:active { background: rgba(59,130,246,0.3); transform: scale(0.95); }
+
+        .console-log {
+            margin-top: 15px;
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            height: 80px;
+            overflow-y: auto;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+        }
+        .log-err { color: var(--danger); border-left: 3px solid var(--danger); padding-left: 5px; }
+        .log-success { color: var(--success); }
+
+        /* --- VISUALIZATION STAGE --- */
+        .stage {
+            display: grid;
+            grid-template-columns: 300px 1fr 400px; /* Desktop Layout */
+            gap: 30px;
+            width: 100%; max-width: 1200px;
+            position: relative;
+            min-height: 500px;
+        }
+
+        #svg-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .column {
+            background: var(--stack-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 20; 
+            overflow: hidden; 
+        }
+        .heap-col { background: var(--heap-bg); border-style: dashed; border-color: #475569; }
+
+        .col-title {
+            background: rgba(255,255,255,0.03);
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem;
+        }
+
+        .card-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            min-height: 150px;
+        }
+
+        /* --- CARDS --- */
+        .var-card {
+            background: rgba(255,255,255,0.04);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative;
+        }
+        .var-name { font-family: 'Fira Code', monospace; font-weight: bold; font-size: 1.1rem; color: #e2e8f0; }
+        
+        .obj-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 12px;
+            border-radius: 8px;
+            position: relative;
+            display: flex; flex-direction: column; gap: 5px;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        /* Connection Anchors */
+        .anchor-dot {
+            width: 10px; height: 10px; border-radius: 50%; position: absolute;
+            background: var(--text-muted);
+        }
+        /* Desktop Anchors */
+        .anchor-right { right: -5px; top: 50%; transform: translateY(-50%); background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .anchor-left { left: -5px; top: 50%; transform: translateY(-50%); }
+
+        /* Mobile Anchors (Will be applied via media query logic in JS drawing mostly, or CSS overrides) */
+
+        .obj-id { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #64748b; align-self: flex-end; }
+        .obj-val {
+            font-family: 'Fira Code', monospace; font-size: 1.2rem; font-weight: bold;
+            color: var(--success); text-align: center; margin: 4px 0;
+            word-break: break-all;
+        }
+        .obj-footer {
+            display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; margin-top: 4px;
+        }
+
+        .t-str { color: #facc15 !important; }
+        .t-list { color: #60a5fa !important; }
+        .t-float { color: #f472b6 !important; }
+
+        .garbage { opacity: 0.3; filter: grayscale(100%); transform: scale(0.98); border-color: var(--danger); }
+        .garbage::after {
+            content: 'GARBAGE'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg);
+            border: 2px solid var(--danger); color: var(--danger); padding: 4px 10px; font-weight: bold; font-size: 0.9rem;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 900px) {
+            h1 { font-size: 1.5rem; }
+            .stage {
+                grid-template-columns: 1fr; /* Stack vertically */
+                gap: 50px; /* Space for lines to travel down */
+            }
+            
+            /* Hide the spacer column in grid */
+            .stage > div:nth-child(2) { display: none; }
+
+            .input-group { flex-direction: column; align-items: stretch; }
+            button { width: 100%; }
+
+            /* On mobile, move anchors to Bottom of Var and Top of Obj */
+            .anchor-right { right: 50%; top: auto; bottom: -5px; transform: translateX(50%); }
+            .anchor-left { left: 50%; top: -5px; transform: translateX(-50%); }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Python Object & Reference Visualizer</h1>
+    <div class="subtitle">Supports: Math (x = a + b), Aliasing, Indexing (Responsive)</div>
+
+    <div class="controls-wrapper">
+        <div class="input-group">
+            <span class="prompt-symbol">>>></span>
+            <input type="text" id="cmd" placeholder="e.g. z = x + 10 or x += 5" onkeypress="handleEnter(event)">
+            <button onclick="run()">Execute</button>
+        </div>
+        
+        <div class="chip-container">
+            <span class="chip" onclick="fill('a = 10')">a = 10</span>
+            <span class="chip" onclick="fill('b = 20')">b = 20</span>
+            <span class="chip" onclick="fill('sum = a + b')">sum = a + b</span>
+            <span class="chip" onclick="fill('score = 100')">score = 100</span>
+            <span class="chip" onclick="fill('score += 50')">score += 50</span>
+            <span class="chip" onclick="fill('users = [\'Ali\', \'Bob\']')">users = ['Ali', 'Bob']</span>
+            <span class="chip" onclick="fill('admin = users[0]')">admin = users[0]</span>
+        </div>
+
+        <div class="console-log" id="console">
+            <div>Python 3.10 Memory Shell Ready...</div>
+        </div>
+    </div>
+
+    <div class="stage" id="stage">
+        <svg id="svg-layer"></svg>
+
+        <div class="column">
+            <div class="col-title">Stack (Global Frame)</div>
+            <div class="card-container" id="stack-container">
+                <div style="text-align:center; color:#475569; padding:20px;">Empty Namespace</div>
+            </div>
+        </div>
+
+        <div></div>
+
+        <div class="column heap-col">
+            <div class="col-title">Heap Memory (Objects)</div>
+            <div class="card-container" id="heap-container">
+                <div style="text-align:center; color:#475569; padding:20px;">Empty Memory</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- MEMORY ENGINE ---
+        const MEMORY = {
+            vars: {}, 
+            heap: [],
+            addrBase: 140200
+        };
+
+        // --- EXECUTION LOGIC ---
+        function run() {
+            const inputEl = document.getElementById('cmd');
+            const raw = inputEl.value.trim();
+            if(!raw) return;
+
+            try {
+                // 1. Identify Operator
+                const augOps = ['//=', '**=', '+=', '-=', '*=', '/='];
+                let augOp = null;
+                for(let o of augOps) { if(raw.includes(o)) { augOp = o; break; } }
+
+                let varName, rhsExpr;
+
+                if (augOp) {
+                    const parts = raw.split(augOp);
+                    varName = parts[0].trim();
+                    const valExpr = parts[1].trim();
+                    
+                    if(!MEMORY.vars.hasOwnProperty(varName)) throw new Error(`NameError: name '${varName}' is not defined`);
+                    
+                    const mathOp = augOp.slice(0, -1); 
+                    rhsExpr = `${varName} ${mathOp} ${valExpr}`;
+                } else if (raw.includes('=')) {
+                    const parts = raw.split('=');
+                    varName = parts[0].trim();
+                    rhsExpr = parts[1].trim(); 
+                } else {
+                    throw new Error("SyntaxError: Missing assignment operator");
+                }
+
+                if(!isValidName(varName)) throw new Error(`SyntaxError: Invalid identifier '${varName}'`);
+
+                // 2. Evaluate RHS (Math Logic)
+                const result = evaluateRHS(rhsExpr);
+
+                // 3. Assign
+                assignVariable(varName, result.val, result.type);
+                
+                let logMsg = augOp 
+                    ? `Augmented: ${varName} ${augOp} ... → ${fmt(result)}` 
+                    : `Assigned: ${varName} = ${fmt(result)}`;
+                    
+                log(logMsg, 'success');
+                inputEl.value = '';
+
+            } catch (err) {
+                log(err.message, 'err');
+            }
+        }
+
+        // Logic to calculate expressions like "10 + 5" or "x + y"
+        function evaluateRHS(expr) {
+            expr = expr.trim();
+
+            // A. Indexing
+            const idxMatch = expr.match(/^([a-zA-Z_]\w*)\[(\d+)\]$/);
+            if (idxMatch) {
+                const name = idxMatch[1];
+                const i = parseInt(idxMatch[2]);
+                if (!MEMORY.vars.hasOwnProperty(name)) throw new Error(`NameError: '${name}' not found`);
+                
+                const obj = MEMORY.heap.find(o => o.id === MEMORY.vars[name]);
+                if (obj.type === 'list') {
+                    const arr = parseList(obj.val);
+                    if (i >= arr.length) throw new Error("IndexError: list index out of range");
+                    return detectType(arr[i]);
+                } else if (obj.type === 'str') {
+                    if (i >= obj.val.length) throw new Error("IndexError: string index out of range");
+                    return { val: obj.val[i], type: 'str' };
+                }
+                throw new Error(`TypeError: '${obj.type}' object is not subscriptable`);
+            }
+
+            // B. Math Operations
+            const mathOps = ['//', '**', '+', '-', '*', '/', '%'];
+            let foundOp = null;
+            
+            for(let op of mathOps) { if(expr.includes(op)) { foundOp = op; break; } }
+
+            if (foundOp) {
+                const parts = expr.split(foundOp);
+                const leftRaw = parts[0].trim();
+                const rightRaw = parts[1].trim();
+
+                const left = resolveValue(leftRaw);
+                const right = resolveValue(rightRaw);
+
+                if (!isMathable(left) || !isMathable(right)) {
+                    // Allow String Concat
+                    if(foundOp === '+' && left.type === 'str' && right.type === 'str') {
+                        return { val: left.val + right.val, type: 'str' };
+                    }
+                    throw new Error(`TypeError: unsupported operand types for ${foundOp}`);
+                }
+
+                let resVal;
+                const a = left.val;
+                const b = right.val;
+
+                switch(foundOp) {
+                    case '+': resVal = a + b; break;
+                    case '-': resVal = a - b; break;
+                    case '*': resVal = a * b; break;
+                    case '/': resVal = a / b; break;
+                    case '//': resVal = Math.floor(a / b); break;
+                    case '**': resVal = a ** b; break;
+                    case '%': resVal = a % b; break;
+                }
+
+                const resType = (Number.isInteger(resVal) && foundOp !== '/') ? 'int' : 'float';
+                return { val: resVal, type: resType };
+            }
+
+            // C. Single Value
+            return resolveValue(expr);
+        }
+
+        function resolveValue(token) {
+            if (/^[a-zA-Z_]\w*$/.test(token)) {
+                 if(token === 'True') return {val: 'True', type: 'bool'};
+                 if(token === 'False') return {val: 'False', type: 'bool'};
+                 if(MEMORY.vars.hasOwnProperty(token)) {
+                     const obj = MEMORY.heap.find(o => o.id === MEMORY.vars[token]);
+                     return { val: obj.val, type: obj.type };
+                 }
+                 throw new Error(`NameError: name '${token}' is not defined`);
+            }
+            return detectType(token);
+        }
+
+        function assignVariable(name, val, type) {
+            let target = null;
+            if (type !== 'list') {
+                target = MEMORY.heap.find(o => o.val === val && o.type === type);
+            }
+
+            if (!target) {
+                target = {
+                    id: MEMORY.addrBase,
+                    val: val,
+                    type: type,
+                    refs: 0
+                };
+                MEMORY.addrBase += 16 + Math.floor(Math.random() * 64);
+                MEMORY.heap.push(target);
+            }
+
+            MEMORY.vars[name] = target.id;
+            updateUI();
+        }
+
+        // --- UI & RENDERING ---
+        function updateUI() {
+            // Refs
+            MEMORY.heap.forEach(o => o.refs = 0);
+            Object.values(MEMORY.vars).forEach(id => {
+                const o = MEMORY.heap.find(x => x.id === id);
+                if(o) o.refs++;
+            });
+
+            // Stack
+            const stackEl = document.getElementById('stack-container');
+            stackEl.innerHTML = '';
+            if (Object.keys(MEMORY.vars).length === 0) stackEl.innerHTML = '<div style="text-align:center;color:#64748b;padding:10px">Empty</div>';
+
+            for (let [name, id] of Object.entries(MEMORY.vars)) {
+                stackEl.innerHTML += `
+                    <div class="var-card" id="card-${name}">
+                        <div class="var-name">${name}</div>
+                        <div class="anchor-dot anchor-right" id="anchor-var-${name}"></div>
+                    </div>`;
+            }
+
+            // Heap
+            const heapEl = document.getElementById('heap-container');
+            heapEl.innerHTML = '';
+            MEMORY.heap.sort((a,b) => a.id - b.id);
+
+            MEMORY.heap.forEach(obj => {
+                const isGarbage = obj.refs === 0;
+                let display = obj.val;
+                let tClass = '';
+                if(obj.type === 'str') { display = `"${obj.val}"`; tClass='t-str'; }
+                if(obj.type === 'list') tClass='t-list';
+                if(obj.type === 'float') tClass='t-float';
+
+                heapEl.innerHTML += `
+                    <div class="obj-card ${isGarbage ? 'garbage' : ''}" id="obj-${obj.id}">
+                        <div class="obj-id">id: ${obj.id}</div>
+                        <div class="anchor-dot anchor-left" id="anchor-obj-${obj.id}"></div>
+                        <div class="obj-val ${tClass}">${display}</div>
+                        <div class="obj-footer">
+                            <span>${obj.type}</span>
+                            <span>Ref: ${obj.refs}</span>
+                        </div>
+                    </div>`;
+            });
+
+            requestAnimationFrame(drawLines);
+        }
+
+        function drawLines() {
+            const svg = document.getElementById('svg-layer');
+            svg.innerHTML = '';
+            const stage = document.getElementById('stage').getBoundingClientRect();
+            
+            // Detect Layout Mode (Mobile or Desktop) by checking if columns are stacked
+            const isMobile = window.innerWidth <= 900;
+
+            for (let [name, id] of Object.entries(MEMORY.vars)) {
+                const startEl = document.getElementById(`anchor-var-${name}`);
+                const endEl = document.getElementById(`anchor-obj-${id}`);
+
+                if (startEl && endEl) {
+                    const r1 = startEl.getBoundingClientRect();
+                    const r2 = endEl.getBoundingClientRect();
+
+                    const x1 = r1.left + r1.width/2 - stage.left;
+                    const y1 = r1.top + r1.height/2 - stage.top;
+                    const x2 = r2.left + r2.width/2 - stage.left;
+                    const y2 = r2.top + r2.height/2 - stage.top;
+
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    let d = '';
+
+                    if (isMobile) {
+                        // Vertical Flow (S-curve from Top to Bottom)
+                        const curveY = (y2 - y1) * 0.5;
+                        d = `M ${x1} ${y1} C ${x1} ${y1 + curveY}, ${x2} ${y2 - curveY}, ${x2} ${y2}`;
+                    } else {
+                        // Horizontal Flow (S-curve from Left to Right)
+                        const curveX = Math.abs(x2 - x1) * 0.5;
+                        d = `M ${x1} ${y1} C ${x1 + curveX} ${y1}, ${x2 - curveX} ${y2}, ${x2} ${y2}`;
+                    }
+
+                    path.setAttribute('d', d);
+                    path.setAttribute('stroke', '#8b5cf6');
+                    path.setAttribute('stroke-width', '2');
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke-dasharray', '5,5');
+
+                    const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+                    anim.setAttribute('attributeName', 'stroke-dashoffset');
+                    anim.setAttribute('from', '20');
+                    anim.setAttribute('to', '0');
+                    anim.setAttribute('dur', '1s');
+                    anim.setAttribute('repeatCount', 'indefinite');
+                    path.appendChild(anim);
+
+                    svg.appendChild(path);
+                }
+            }
+        }
+
+        // --- HELPERS ---
+        function detectType(raw) {
+            if (typeof raw !== 'string') raw = String(raw);
+            if(raw.startsWith('[') && raw.endsWith(']')) return {val:raw, type:'list'};
+            if((raw.startsWith('"')||raw.startsWith("'"))) return {val:raw.slice(1,-1), type:'str'};
+            if(/^-?\d+$/.test(raw)) return {val:parseInt(raw), type:'int'};
+            if(/^-?\d*\.\d+$/.test(raw)) return {val:parseFloat(raw), type:'float'};
+            return {val:raw, type:'str'};
+        }
+
+        function parseList(str) {
+            try {
+                let inner = str.slice(1,-1);
+                if(!inner.trim()) return [];
+                return inner.split(',').map(s=> {
+                    s=s.trim();
+                    if((s.startsWith("'")||s.startsWith('"'))) return s.slice(1,-1);
+                    if(!isNaN(s)) return Number(s);
+                    return s;
+                });
+            } catch { return []; }
+        }
+
+        function isValidName(n) { return /^[a-zA-Z_]\w*$/.test(n); }
+        function isNum(o) { return o.type === 'int' || o.type === 'float'; }
+        function isMathable(o) { return isNum(o); }
+        function fmt(r) { return r.type === 'str' ? `"${r.val}"` : r.val; }
+
+        function log(msg, type) {
+            const c = document.getElementById('console');
+            const d = document.createElement('div');
+            d.className = type === 'err' ? 'log-err' : 'log-success';
+            d.innerText = `> ${msg}`;
+            c.prepend(d);
+        }
+
+        function fill(txt) { document.getElementById('cmd').value = txt; }
+        function handleEnter(e) { if(e.key === 'Enter') run(); }
+
+        const observer = new MutationObserver(() => requestAnimationFrame(drawLines));
+        observer.observe(document.getElementById('stack-container'), { childList: true, subtree: true });
+        observer.observe(document.getElementById('heap-container'), { childList: true, subtree: true });
+        window.addEventListener('resize', drawLines);
+
+    </script>
+</body>
+</html>

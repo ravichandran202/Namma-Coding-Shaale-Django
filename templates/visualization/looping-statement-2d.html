@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Logic Pro • Visualizer</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --bg-input: #334155;
+            
+            --primary: #818cf8; /* Soft Indigo */
+            --accent: #f472b6;  /* Soft Pink */
+            --success: #34d399; /* Emerald */
+            --warning: #fbbf24; /* Amber */
+            --danger: #f87171;  /* Red */
+            
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+            height: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: var(--border);
+        }
+        h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.5px; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .panel {
+            background: var(--bg-panel);
+            border: var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .panel-header {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Loop Config Inputs */
+        .input-row { display: flex; gap: 8px; }
+        .input-group { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .input-group label { font-size: 0.65rem; color: var(--text-muted); font-family: 'Fira Code', monospace; }
+
+        input {
+            background: var(--bg-input);
+            border: 1px solid rgba(0,0,0,0.3);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            width: 100%;
+            font-family: 'Fira Code', monospace;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        input:focus { border-color: var(--primary); }
+        
+        /* Logic Input */
+        .logic-input { text-align: left; color: var(--warning); border-color: rgba(251, 191, 36, 0.3); }
+
+        /* Presets */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+        .btn-preset {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .btn-preset:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-preset.active { background: rgba(129, 140, 248, 0.2); border-color: var(--primary); color: white; }
+
+        /* --- STAGE --- */
+        .stage {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            border: var(--border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-bar {
+            padding: 10px 20px;
+            border-bottom: var(--border);
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .grid-container {
+            flex: 1;
+            padding: 30px;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .vis-grid {
+            display: grid;
+            gap: 4px;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: #1e293b;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            color: rgba(255,255,255,0.1);
+            border: 1px solid transparent;
+            transition: transform 0.2s, background-color 0.2s;
+            position: relative;
+        }
+        
+        .cell-coord { font-size: 0.6rem; margin-top: 4px; }
+        .cell-content { font-size: 1.4rem; height: 24px; line-height: 24px; }
+
+        /* Animation States */
+        .cell.scanning { 
+            background: #475569; 
+            border-color: var(--text-muted); 
+            transform: scale(1.1); 
+            z-index: 10;
+            color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .cell.matched {
+            background: var(--primary);
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .cell.ignored {
+            opacity: 0.2;
+            background: #0f172a;
+        }
+
+        /* --- CODE OVERLAY --- */
+        .code-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+        
+        .code-line { opacity: 0.4; padding: 2px 0; transition: opacity 0.2s; }
+        .code-line.lit { opacity: 1; color: var(--warning); font-weight: bold; text-shadow: 0 0 8px rgba(251, 191, 36, 0.3); }
+        .indent { margin-left: 20px; }
+
+        /* --- ACTIONS --- */
+        .actions { margin-top: auto; display: flex; gap: 10px; }
+        button { border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Fira Code', monospace; transition: filter 0.2s; }
+        button:hover { filter: brightness(1.1); }
+
+        .btn-run { flex: 1; background: var(--success); color: #000; }
+        .btn-stop { background: var(--danger); color: white; opacity: 0.5; pointer-events: none; }
+        .btn-stop.enabled { opacity: 1; pointer-events: auto; }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-container">
+    
+    <header>
+        <h1>Pattern Logic Pro</h1>
+        <div style="font-size:0.8rem; color:var(--text-muted)">
+            Speed: <input type="range" id="speed" min="50" max="1000" value="300" style="vertical-align:middle; width:80px;">
+        </div>
+    </header>
+
+    <div class="sidebar">
+        
+        <div class="panel">
+            <div class="panel-header">Quick Patterns</div>
+            <div class="preset-grid">
+                <button class="btn-preset" onclick="setPreset('matrix')">Full Matrix</button>
+                <button class="btn-preset" onclick="setPreset('diag')">Diagonal (i==j)</button>
+                <button class="btn-preset" onclick="setPreset('tri_l')">Left Tri (j&lt;=i)</button>
+                <button class="btn-preset" onclick="setPreset('tri_r')">Right Tri (j&gt;=i)</button>
+                <button class="btn-preset" onclick="setPreset('checker')">Checkerboard</button>
+                <button class="btn-preset" onclick="setPreset('hollow')">Hollow Box</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header" style="color:var(--primary)">Outer Loop (i)</div>
+            <div class="input-row">
+                <div class="input-group"><label>Start</label><input type="number" id="i-start" value="0" oninput="updatePreview()"></div>
+                <div class="input-group"><label>Stop</label><input type="number" id="i-stop" value="5" oninput="updatePreview()"></div>
+                <div class="input-group"><label>Step</label><input type="number" id="i-step" value="1" oninput="updatePreview()"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header" style="color:var(--accent)">Inner Loop (j)</div>
+            <div class="input-row">
+                <div class="input-group"><label>Start</label><input type="number" id="j-start" value="0" oninput="updatePreview()"></div>
+                <div class="input-group"><label>Stop</label><input type="number" id="j-stop" value="5" oninput="updatePreview()"></div>
+                <div class="input-group"><label>Step</label><input type="number" id="j-step" value="1" oninput="updatePreview()"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">Python Logic Condition</div>
+            <input type="text" id="logic-cond" class="logic-input" value="i == j" oninput="updatePreview()">
+        </div>
+
+        <div class="actions">
+            <button class="btn-run" id="btn-run" onclick="runSim()">RUN VISUALIZER</button>
+            <button class="btn-stop" id="btn-stop" onclick="stopSim()">STOP</button>
+        </div>
+
+    </div>
+
+    <div class="stage">
+        <div class="stage-bar">
+            <span id="status">Ready</span>
+            <span>Total Cells: <span id="cell-count">0</span></span>
+        </div>
+
+        <div class="grid-container">
+            <div id="vis-grid" class="vis-grid"></div>
+        </div>
+
+        <div class="code-overlay">
+            <div class="code-line" id="ln-1">for i in range(<span id="c-r1">0,5,1</span>):</div>
+            <div class="code-line indent" id="ln-2">for j in range(<span id="c-r2">0,5,1</span>):</div>
+            <div class="code-line indent indent" id="ln-3">if <span id="c-cond">i == j</span>:</div>
+            <div class="code-line indent indent indent" id="ln-4">print("*", end=" ")</div>
+            <div class="code-line indent indent" id="ln-5">else: print(" ", end=" ")</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- STATE ---
+    let abortCtrl = null;
+    let iRange = [], jRange = [];
+
+    // --- DOM ---
+    const gridEl = document.getElementById('vis-grid');
+    const inputs = {
+        iStart: document.getElementById('i-start'),
+        iStop: document.getElementById('i-stop'),
+        iStep: document.getElementById('i-step'),
+        jStart: document.getElementById('j-start'),
+        jStop: document.getElementById('j-stop'),
+        jStep: document.getElementById('j-step'),
+        cond: document.getElementById('logic-cond')
+    };
+    
+    // --- PRESETS ---
+    // Note: We use dynamic variable names min_i/max_i for the hollow box
+    const presets = {
+        'matrix': 'True',
+        'diag': 'i == j',
+        'tri_l': 'j <= i',
+        'tri_r': 'j >= i',
+        'checker': '(i + j) % 2 == 0',
+        'hollow': 'i==min_i or i==max_i or j==min_j or j==max_j'
+    };
+
+    function setPreset(key) {
+        inputs.cond.value = presets[key];
+        
+        // Reset Loops to 0-5 for visual clarity
+        inputs.iStart.value = 0; inputs.iStop.value = 5; inputs.iStep.value = 1;
+        inputs.jStart.value = 0; inputs.jStop.value = 5; inputs.jStep.value = 1;
+        
+        // Highlight button
+        document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        // Update
+        updatePreview();
+    }
+
+    // --- GENERATORS ---
+    function getRange(start, stop, step) {
+        let arr = [];
+        start = parseInt(start);
+        stop = parseInt(stop);
+        step = parseInt(step);
+        if (step === 0) return [];
+        if (step > 0) { for (let k = start; k < stop; k += step) arr.push(k); }
+        else { for (let k = start; k > stop; k += step) arr.push(k); }
+        return arr;
+    }
+
+    function transpileCondition(pythonCode) {
+        let js = pythonCode;
+        // Basic Python -> JS conversion
+        js = js.replace(/\bTrue\b/g, 'true').replace(/\bFalse\b/g, 'false');
+        js = js.replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!');
+        return js;
+    }
+
+    function updatePreview() {
+        if(abortCtrl) return;
+
+        // Generate Data
+        iRange = getRange(inputs.iStart.value, inputs.iStop.value, inputs.iStep.value);
+        jRange = getRange(inputs.jStart.value, inputs.jStop.value, inputs.jStep.value);
+
+        // --- DYNAMIC BOUNDS CALCULATION ---
+        const min_i = iRange.length ? Math.min(...iRange) : 0;
+        const max_i = iRange.length ? Math.max(...iRange) : 0;
+        const min_j = jRange.length ? Math.min(...jRange) : 0;
+        const max_j = jRange.length ? Math.max(...jRange) : 0;
+
+        // Update Code Overlay
+        document.getElementById('c-r1').innerText = `${inputs.iStart.value}, ${inputs.iStop.value}, ${inputs.iStep.value}`;
+        document.getElementById('c-r2').innerText = `${inputs.jStart.value}, ${inputs.jStop.value}, ${inputs.jStep.value}`;
+        document.getElementById('c-cond').innerText = inputs.cond.value;
+        document.getElementById('cell-count').innerText = iRange.length * jRange.length;
+
+        // Grid CSS
+        gridEl.style.gridTemplateColumns = `repeat(${jRange.length}, 1fr)`;
+        gridEl.innerHTML = '';
+
+        if(iRange.length * jRange.length > 400) {
+            gridEl.innerHTML = '<div style="color:#f87171">Grid too large to render</div>';
+            return;
+        }
+
+        // Logic Check Function
+        const jsLogic = transpileCondition(inputs.cond.value);
+        let checkFunc = null;
+        try { 
+            // We pass the dynamic bounds into the function scope
+            checkFunc = new Function('i', 'j', 'min_i', 'max_i', 'min_j', 'max_j', `return ${jsLogic};`); 
+        } catch(e) {}
+
+        iRange.forEach(i => {
+            jRange.forEach(j => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `c_${i}_${j}`;
+                
+                let isMatch = false;
+                if(checkFunc) {
+                    try { isMatch = checkFunc(i, j, min_i, max_i, min_j, max_j); } catch(e) {}
+                }
+
+                if(isMatch) {
+                    cell.style.backgroundColor = 'rgba(129, 140, 248, 0.2)'; 
+                    cell.innerHTML = `<div class="cell-content">★</div><div class="cell-coord">${i},${j}</div>`;
+                    cell.dataset.match = "true";
+                } else {
+                    cell.innerHTML = `<div class="cell-content"></div><div class="cell-coord">${i},${j}</div>`;
+                    cell.dataset.match = "false";
+                }
+                gridEl.appendChild(cell);
+            });
+        });
+    }
+
+    // --- SIMULATION ---
+    async function runSim() {
+        if(abortCtrl) return;
+        abortCtrl = new AbortController();
+        const signal = abortCtrl.signal;
+
+        document.getElementById('btn-run').style.display = 'none';
+        document.getElementById('btn-stop').classList.add('enabled');
+        updatePreview(); 
+        
+        document.querySelectorAll('.cell').forEach(c => c.style.backgroundColor = '');
+
+        const jsLogic = transpileCondition(inputs.cond.value);
+        
+        // Recalculate bounds for the run loop
+        const min_i = iRange.length ? Math.min(...iRange) : 0;
+        const max_i = iRange.length ? Math.max(...iRange) : 0;
+        const min_j = jRange.length ? Math.min(...jRange) : 0;
+        const max_j = jRange.length ? Math.max(...jRange) : 0;
+
+        try {
+            for (let i of iRange) {
+                if(signal.aborted) break;
+                
+                highLine('ln-1');
+                document.getElementById('status').innerText = `Outer Loop: i=${i}`;
+                await sleep();
+
+                for (let j of jRange) {
+                    if(signal.aborted) break;
+                    
+                    highLine('ln-2');
+                    document.getElementById('status').innerText = `Inner Loop: j=${j}`;
+                    
+                    const cell = document.getElementById(`c_${i}_${j}`);
+                    if(cell) cell.classList.add('scanning');
+                    await sleep();
+
+                    highLine('ln-3');
+                    let isMatch = false;
+                    try {
+                        // Use the function with bounds args
+                        isMatch = new Function('i', 'j', 'min_i', 'max_i', 'min_j', 'max_j', `return ${jsLogic};`)(i, j, min_i, max_i, min_j, max_j);
+                    } catch(e) { console.log("Logic Error", e); }
+
+                    if(isMatch) {
+                        highLine('ln-4');
+                        if(cell) {
+                            cell.classList.add('matched');
+                            cell.querySelector('.cell-content').innerText = "★";
+                        }
+                    } else {
+                        highLine('ln-5');
+                        if(cell) cell.classList.add('ignored');
+                    }
+                    
+                    await sleep();
+                    if(cell) cell.classList.remove('scanning');
+                }
+            }
+        } catch(e) {}
+
+        stopSim();
+    }
+
+    function stopSim() {
+        if(abortCtrl) abortCtrl.abort();
+        abortCtrl = null;
+        document.getElementById('btn-run').style.display = 'block';
+        document.getElementById('btn-stop').classList.remove('enabled');
+        highLine(null);
+        document.getElementById('status').innerText = "Complete";
+    }
+
+    function highLine(id) {
+        document.querySelectorAll('.code-line').forEach(el => el.classList.remove('lit'));
+        if(id) document.getElementById(id).classList.add('lit');
+    }
+
+    function sleep() {
+        const ms = 1050 - document.getElementById('speed').value;
+        return new Promise(r => setTimeout(r, ms));
+    }
+
+    // Init
+    updatePreview();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Logic Pro • Visualizer</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-panel: #1e293b;
+            --bg-input: #334155;
+            
+            --primary: #3b82f6;   /* Blue */
+            --accent: #a855f7;    /* Purple */
+            --success: #22c55e;   /* Green */
+            --warning: #eab308;   /* Yellow */
+            --danger: #ef4444;    /* Red */
+            
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+            height: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: var(--border);
+        }
+        h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.5px; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .panel {
+            background: var(--bg-panel);
+            border: var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .panel-header {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Inputs */
+        .list-input {
+            background: var(--bg-input);
+            border: 1px solid rgba(0,0,0,0.3);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+        .list-input:focus { border-color: var(--primary); }
+
+        .logic-input { color: var(--warning); border-color: rgba(234, 179, 8, 0.3); }
+
+        /* Presets */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+        .btn-preset {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .btn-preset:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-preset.active { background: rgba(59, 130, 246, 0.2); border-color: var(--primary); color: white; }
+
+        /* --- STAGE --- */
+        .stage {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            border: var(--border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-bar {
+            padding: 10px 20px;
+            border-bottom: var(--border);
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .grid-container {
+            flex: 1;
+            padding: 30px;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .vis-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        .cell {
+            width: 120px; /* Wider for text */
+            height: 60px;
+            background: #1e293b;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            color: rgba(255,255,255,0.3);
+            border: 1px solid transparent;
+            transition: transform 0.2s, background-color 0.2s;
+            position: relative;
+        }
+        
+        .cell-combo { font-size: 0.75rem; color: var(--text-muted); }
+        .cell-match-icon { font-size: 1.2rem; margin-bottom: 2px; height: 20px; }
+
+        /* Animation States */
+        .cell.scanning { 
+            background: #475569; 
+            border-color: var(--text-muted); 
+            transform: scale(1.05); 
+            z-index: 10;
+            color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .cell.matched {
+            background: var(--primary);
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+        }
+        .cell.matched .cell-combo { color: rgba(255,255,255,0.9); }
+        
+        .cell.ignored { opacity: 0.3; background: #0f172a; }
+
+        /* --- CODE OVERLAY --- */
+        .code-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+        
+        .code-line { opacity: 0.4; padding: 2px 0; transition: opacity 0.2s; }
+        .code-line.lit { opacity: 1; color: var(--warning); font-weight: bold; text-shadow: 0 0 8px rgba(251, 191, 36, 0.3); }
+        .indent { margin-left: 20px; }
+
+        /* --- ACTIONS --- */
+        .actions { margin-top: auto; display: flex; gap: 10px; }
+        button { border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Fira Code', monospace; transition: filter 0.2s; }
+        button:hover { filter: brightness(1.1); }
+
+        .btn-run { flex: 1; background: var(--success); color: #000; }
+        .btn-stop { background: var(--danger); color: white; opacity: 0.5; pointer-events: none; }
+        .btn-stop.enabled { opacity: 1; pointer-events: auto; }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-container">
+    
+    <header>
+        <h1>List Logic Pro</h1>
+        <div style="font-size:0.8rem; color:var(--text-muted)">
+            Speed: <input type="range" id="speed" min="50" max="1000" value="300" style="vertical-align:middle; width:80px;">
+        </div>
+    </header>
+
+    <div class="sidebar">
+        
+        <div class="panel">
+            <div class="panel-header">Quick Presets</div>
+            <div class="preset-grid">
+                <button class="btn-preset" onclick="setPreset('match')">Match Items (a == b)</button>
+                <button class="btn-preset" onclick="setPreset('len')">Length Check (len(a) == len(b))</button>
+                <button class="btn-preset" onclick="setPreset('contains')">String Search ('e' in a)</button>
+                <button class="btn-preset" onclick="setPreset('pairs')">Unique Pairs (a != b)</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header" style="color:var(--primary)">Outer List (a)</div>
+            <input type="text" id="list-a" class="list-input" value="['Apple', 'Banana', 'Kiwi']" oninput="updatePreview()">
+        </div>
+
+        <div class="panel">
+            <div class="panel-header" style="color:var(--accent)">Inner List (b)</div>
+            <input type="text" id="list-b" class="list-input" value="['Kiwi', 'Mango', 'Apple']" oninput="updatePreview()">
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">Condition (Python)</div>
+            <input type="text" id="logic-cond" class="list-input logic-input" value="a == b" oninput="updatePreview()">
+        </div>
+
+        <div class="actions">
+            <button class="btn-run" id="btn-run" onclick="runSim()">RUN VISUALIZER</button>
+            <button class="btn-stop" id="btn-stop" onclick="stopSim()">STOP</button>
+        </div>
+
+    </div>
+
+    <div class="stage">
+        <div class="stage-bar">
+            <span id="status">Ready</span>
+            <span>Total Pairs: <span id="cell-count">0</span></span>
+        </div>
+
+        <div class="grid-container">
+            <div id="vis-grid" class="vis-grid"></div>
+        </div>
+
+        <div class="code-overlay">
+            <div class="code-line" id="ln-1">for a in list_a:</div>
+            <div class="code-line indent" id="ln-2">for b in list_b:</div>
+            <div class="code-line indent indent" id="ln-3">if <span id="c-cond">a == b</span>:</div>
+            <div class="code-line indent indent indent" id="ln-4">print(f"{a} & {b}")</div>
+            <div class="code-line indent indent" id="ln-5">else: pass</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- STATE ---
+    let abortCtrl = null;
+    let listA = [], listB = [];
+
+    // --- DOM ---
+    const gridEl = document.getElementById('vis-grid');
+    const inputs = {
+        a: document.getElementById('list-a'),
+        b: document.getElementById('list-b'),
+        cond: document.getElementById('logic-cond')
+    };
+
+    const presets = {
+        'match': { a: "['Apple', 'Banana', 'Kiwi']", b: "['Kiwi', 'Mango', 'Apple']", logic: "a == b" },
+        'len': { a: "['Cat', 'Dog', 'Elephant']", b: "['Rat', 'Bat', 'Ant']", logic: "len(a) == len(b)" },
+        'contains': { a: "['Red', 'Green', 'Blue']", b: "['Light', 'Dark']", logic: "'e' in a" },
+        'pairs': { a: "[1, 2, 3]", b: "[1, 2, 3]", logic: "a != b" }
+    };
+
+    // --- PRESETS ---
+    function setPreset(key) {
+        inputs.a.value = presets[key].a;
+        inputs.b.value = presets[key].b;
+        inputs.cond.value = presets[key].logic;
+        
+        document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        updatePreview();
+    }
+
+    // --- PARSING ---
+    function parseList(str) {
+        try {
+            // Replace Python-style single quotes with double quotes for JSON parsing
+            // This is a simple parser, might break on complex strings containing quotes
+            const jsonStr = str.replace(/'/g, '"');
+            return JSON.parse(jsonStr);
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function transpileCondition(pythonCode) {
+        let js = pythonCode;
+        // Python to JS map
+        js = js.replace(/\bTrue\b/g, 'true').replace(/\bFalse\b/g, 'false');
+        js = js.replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!');
+        // String length mapping: len(x) -> x.length
+        js = js.replace(/len\(([^)]+)\)/g, '$1.length');
+        
+        // "in" operator (simple strings/arrays)
+        // Convert "x in y" -> "y.includes(x)"
+        // This is a rough regex for visualization purposes
+        // It matches: (word or quote) in (word or quote)
+        const inRegex = /(\S+)\s+in\s+(\S+)/g;
+        js = js.replace(inRegex, "$2.includes($1)");
+
+        return js;
+    }
+
+    function updatePreview() {
+        if(abortCtrl) return;
+
+        listA = parseList(inputs.a.value);
+        listB = parseList(inputs.b.value);
+
+        document.getElementById('c-cond').innerText = inputs.cond.value;
+        document.getElementById('cell-count').innerText = listA.length * listB.length;
+
+        // Grid setup
+        gridEl.style.gridTemplateColumns = `repeat(${listB.length}, 1fr)`;
+        gridEl.innerHTML = '';
+
+        if(listA.length * listB.length > 200) {
+            gridEl.innerHTML = '<div style="color:#f87171">List too large</div>';
+            return;
+        }
+
+        // Pre-check for preview
+        const jsLogic = transpileCondition(inputs.cond.value);
+        let checkFunc = null;
+        try { checkFunc = new Function('a', 'b', `return ${jsLogic};`); } catch(e) {}
+
+        listA.forEach((a, i) => {
+            listB.forEach((b, j) => {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `c_${i}_${j}`;
+                
+                // Show items
+                const displayA = String(a).substring(0, 8);
+                const displayB = String(b).substring(0, 8);
+                
+                let isMatch = false;
+                if(checkFunc) {
+                    try { isMatch = checkFunc(a, b); } catch(e) {}
+                }
+
+                if(isMatch) {
+                    cell.style.backgroundColor = 'rgba(59, 130, 246, 0.2)'; 
+                    cell.innerHTML = `<div class="cell-match-icon">★</div><div class="cell-combo">${displayA}, ${displayB}</div>`;
+                    cell.dataset.match = "true";
+                } else {
+                    cell.innerHTML = `<div class="cell-match-icon"></div><div class="cell-combo">${displayA}, ${displayB}</div>`;
+                    cell.dataset.match = "false";
+                }
+                gridEl.appendChild(cell);
+            });
+        });
+    }
+
+    // --- SIMULATION ---
+    async function runSim() {
+        if(abortCtrl) return;
+        abortCtrl = new AbortController();
+        const signal = abortCtrl.signal;
+
+        document.getElementById('btn-run').style.display = 'none';
+        document.getElementById('btn-stop').classList.add('enabled');
+        updatePreview();
+        document.querySelectorAll('.cell').forEach(c => c.style.backgroundColor = ''); // Clear preview
+
+        const jsLogic = transpileCondition(inputs.cond.value);
+
+        try {
+            // Loop A
+            for (let i = 0; i < listA.length; i++) {
+                if(signal.aborted) break;
+                const itemA = listA[i];
+                
+                highLine('ln-1');
+                document.getElementById('status').innerText = `Outer Loop: a = ${itemA}`;
+                await sleep();
+
+                // Loop B
+                for (let j = 0; j < listB.length; j++) {
+                    if(signal.aborted) break;
+                    const itemB = listB[j];
+
+                    highLine('ln-2');
+                    document.getElementById('status').innerText = `Inner Loop: b = ${itemB}`;
+                    
+                    const cell = document.getElementById(`c_${i}_${j}`);
+                    if(cell) cell.classList.add('scanning');
+                    await sleep();
+
+                    // Check
+                    highLine('ln-3');
+                    let isMatch = false;
+                    try {
+                        isMatch = new Function('a', 'b', `return ${jsLogic};`)(itemA, itemB);
+                    } catch(e) { console.log(e); }
+
+                    if(isMatch) {
+                        highLine('ln-4');
+                        if(cell) {
+                            cell.classList.add('matched');
+                            cell.querySelector('.cell-match-icon').innerText = "★";
+                        }
+                    } else {
+                        highLine('ln-5');
+                        if(cell) cell.classList.add('ignored');
+                    }
+                    
+                    await sleep();
+                    if(cell) cell.classList.remove('scanning');
+                }
+            }
+        } catch(e) {}
+
+        stopSim();
+    }
+
+    function stopSim() {
+        if(abortCtrl) abortCtrl.abort();
+        abortCtrl = null;
+        document.getElementById('btn-run').style.display = 'block';
+        document.getElementById('btn-stop').classList.remove('enabled');
+        highLine(null);
+        document.getElementById('status').innerText = "Complete";
+    }
+
+    function highLine(id) {
+        document.querySelectorAll('.code-line').forEach(el => el.classList.remove('lit'));
+        if(id) document.getElementById(id).classList.add('lit');
+    }
+
+    function sleep() {
+        const ms = 1050 - document.getElementById('speed').value;
+        return new Promise(r => setTimeout(r, ms));
+    }
+
+    // Init
+    updatePreview();
+
+</script>
+</body>
+</html>

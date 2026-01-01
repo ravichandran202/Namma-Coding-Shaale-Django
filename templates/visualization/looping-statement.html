@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Loop Visualizer v17 (Math Fixed)</title>
+    <style>
+        /* --- PREMIUM THEME --- */
+        :root {
+            --bg-body: #020617;
+            --bg-panel: #0f172a;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --primary: #6366f1; 
+            --accent: #d946ef;
+            --success: #10b981;
+            --danger: #ef4444;
+            --text: #f1f5f9;
+            --muted: #64748b;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-body); color: var(--text);
+            margin: 0; padding: 20px 10px;
+            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; text-align: center; color: var(--text); letter-spacing: -0.5px; flex-shrink: 0; }
+        .subtitle { text-align: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 20px; flex-shrink: 0; }
+
+        /* --- LAYOUT --- */
+        .workspace {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            width: 100%; max-width: 1400px; flex-grow: 1; overflow: hidden; margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--bg-panel); border: var(--border); border-radius: 12px;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- EDITOR --- */
+        .editor-container { padding: 15px; display: flex; flex-direction: column; gap: 10px; height: 100%; }
+
+        .toolbar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .chip {
+            background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 20px;
+            font-size: 0.75rem; color: var(--muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent;
+        }
+        .chip:hover { border-color: var(--primary); color: white; background: rgba(99,102,241,0.1); }
+
+        .editor-stack {
+            flex-grow: 1; position: relative; border-radius: 8px; overflow: hidden;
+            border: 1px solid #334155; background: #0b0f19;
+        }
+
+        .code-editor, .execution-view {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            font-family: var(--font-code); font-size: 0.95rem; line-height: 1.6;
+            padding: 15px; border: none; background: transparent; white-space: pre;
+        }
+
+        .code-editor { color: #e2e8f0; resize: none; z-index: 2; }
+        .execution-view { z-index: 1; pointer-events: none; overflow: hidden; display: none; }
+        
+        .exec-line { display: flex; }
+        .ln-num { width: 25px; color: #475569; text-align: right; margin-right: 15px; }
+        .ln-code { color: #cbd5e1; }
+        
+        .active-line { background: rgba(99, 102, 241, 0.2); border-left: 3px solid var(--primary); }
+        .active-line .ln-num { color: var(--primary); font-weight: bold; }
+
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto; }
+        button {
+            padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
+            font-family: var(--font-code); font-size: 0.9rem; transition: 0.2s;
+        }
+        .btn-load { background: var(--primary); color: white; }
+        .btn-step { background: var(--success); color: #020617; }
+        .btn-reset { background: #334155; color: white; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+
+        /* --- VISUALIZER --- */
+        .visual-container { padding: 20px; display: flex; flex-direction: column; gap: 20px; height: 100%; overflow-y: auto; }
+
+        .section-title {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; margin-bottom: 10px;
+        }
+
+        .var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+        .var-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 10px; border-radius: 8px; text-align: center; transition: 0.3s;
+        }
+        .v-name { color: var(--muted); font-size: 0.7rem; font-family: var(--font-code); }
+        .v-val { font-size: 1.1rem; font-weight: bold; color: var(--text); font-family: var(--font-code); margin-top: 4px; word-break: break-all; }
+        .updated { border-color: var(--accent); background: rgba(217, 70, 239, 0.15); transform: scale(1.05); }
+
+        .stage-area {
+            flex-grow: 1; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; min-height: 150px; flex-direction: column;
+        }
+
+        .seq-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 10px; }
+        .seq-node {
+            min-width: 40px; height: 40px; background: #1e293b; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; padding: 0 8px;
+            font-family: var(--font-code); font-weight: bold; color: #64748b;
+            border: 2px solid #334155; transition: 0.3s;
+        }
+        .seq-node.active { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-5px); }
+        
+        .orbit-box { 
+            width: 120px; height: 120px; border-radius: 50%; border: 2px solid #475569;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            background: rgba(30,41,59,0.5); transition: 0.3s;
+        }
+        .orbit-box.true { border-color: var(--success); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+        .orbit-box.false { border-color: var(--danger); box-shadow: 0 0 20px rgba(239,68,68,0.2); }
+
+        .output-area {
+            flex-grow: 1; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px;
+            font-family: var(--font-code); font-size: 0.85rem; color: #cbd5e1; overflow-y: auto;
+            border: 1px dashed #334155; min-height: 120px;
+        }
+        .log-entry { margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+        @media (max-width: 900px) {
+            body { padding: 10px; height: auto; overflow-y: auto; }
+            .workspace { grid-template-columns: 1fr; overflow: visible; height: auto; display: flex; flex-direction: column; }
+            .panel { min-height: 400px; }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Loop Visualizer</h1>
+    <div class="subtitle">v17 Stable • Math Fixed • Mobile Ready</div>
+
+    <div class="workspace">
+        
+        <div class="panel">
+            <div class="editor-container">
+                <div class="toolbar">
+                    <div class="chip" onclick="loadEx('basic')">Range</div>
+                    <div class="chip" onclick="loadEx('list')">List</div>
+                    <div class="chip" onclick="loadEx('str')">String</div>
+                    <div class="chip" onclick="loadEx('while')">While</div>
+                    <div class="chip" onclick="loadEx('math')">Math</div>
+                </div>
+
+                <div class="editor-stack">
+                    <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="Write python code here..."></textarea>
+                    <div id="execution-view" class="execution-view"></div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-load" id="btn-load" onclick="parseAndLock()">Load Logic</button>
+                    <button class="btn-step" id="btn-step" onclick="step()" disabled>Step Into</button>
+                    <button class="btn-reset" onclick="resetEditor()" style="grid-column: span 2">Edit Code</button>
+                </div>
+                <div id="err-msg" style="color:#ef4444; font-size:0.8rem; text-align:center; min-height:1rem;"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="visual-container">
+                <div>
+                    <div class="section-title">Variables</div>
+                    <div class="var-grid" id="var-grid">
+                        <div style="color:#64748b; font-size:0.8rem">Waiting...</div>
+                    </div>
+                </div>
+
+                <div style="flex-grow:1; display:flex; flex-direction:column;">
+                    <div class="section-title">Flow</div>
+                    <div class="stage-area" id="stage">
+                        <div style="color:rgba(255,255,255,0.1); font-weight:800; font-size:2rem; text-transform:uppercase;">Stage</div>
+                    </div>
+                </div>
+
+                <div style="flex-grow:1; display:flex; flex-direction:column;">
+                    <div class="section-title">Terminal</div>
+                    <div class="output-area" id="terminal">
+                        <div style="color:#64748b">Ready.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1D EXAMPLES ---
+        const EXAMPLES = {
+            basic: `total = 0
+for i in range(5):
+    total += i
+    print(total)`,
+            list: `prices = [10, 20, 30]
+sum = 0
+for p in prices:
+    sum = sum + p
+    print(sum)`,
+            str: `word = "Code"
+for c in word:
+    print(c)`,
+            while: `n = 0
+while n < 3:
+    print(n)
+    n += 1`,
+            math: `x = 2
+for i in range(3):
+    x = x * 2
+    print(x)`
+        };
+
+        // --- ENGINE STATE ---
+        let engine = {
+            lines: [],
+            steps: [], 
+            stepIdx: 0,
+            initialVars: {},
+            loopKind: null,
+            loopData: null,
+            condition: null
+        };
+
+        function loadEx(key) {
+            document.getElementById('code-editor').value = EXAMPLES[key];
+            resetEditor();
+        }
+
+        function resetEditor() {
+            document.getElementById('code-editor').style.display = 'block';
+            document.getElementById('execution-view').style.display = 'none';
+            document.getElementById('btn-load').style.display = 'block';
+            document.getElementById('btn-step').disabled = true;
+            document.getElementById('err-msg').innerText = '';
+            
+            document.getElementById('var-grid').innerHTML = '<div style="color:#64748b; font-size:0.8rem">Waiting...</div>';
+            document.getElementById('terminal').innerHTML = '<div style="color:#64748b">Ready.</div>';
+            document.getElementById('stage').innerHTML = '<div style="color:rgba(255,255,255,0.1); font-weight:800; font-size:2rem; text-transform:uppercase;">Stage</div>';
+        }
+
+        function parseAndLock() {
+            const rawCode = document.getElementById('code-editor').value;
+            if(!rawCode.trim()) return;
+
+            try {
+                // 1. Clean Reset
+                engine = { lines: rawCode.split('\n'), steps: [], stepIdx: 0, initialVars: {}, loopKind: null, loopData: null };
+
+                // 2. Simulate
+                simulateExecution(rawCode);
+
+                // 3. UI Switch
+                document.getElementById('code-editor').style.display = 'none';
+                const execView = document.getElementById('execution-view');
+                execView.style.display = 'block';
+                document.getElementById('btn-load').style.display = 'none';
+                document.getElementById('btn-step').disabled = false;
+
+                // Render Lines
+                execView.innerHTML = '';
+                engine.lines.forEach((line, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'exec-line';
+                    div.id = `line-${i}`;
+                    div.innerHTML = `<span class="ln-num">${i+1}</span><span class="ln-code">${escapeHtml(line)}</span>`;
+                    execView.appendChild(div);
+                });
+
+                // Render Initial State
+                renderVars(engine.initialVars);
+                
+                if(engine.loopKind === 'for') renderForStage(engine.loopData);
+                else if(engine.loopKind === 'while') renderWhileStage(engine.condition);
+
+                document.getElementById('terminal').innerHTML = '<div style="color:#10b981">> Logic Loaded</div>';
+
+            } catch(e) {
+                document.getElementById('err-msg').innerText = e.message;
+            }
+        }
+
+        // --- ROBUST SIMULATION ENGINE ---
+
+        function simulateExecution(code) {
+            const lines = code.split('\n');
+            let currentVars = {}; 
+
+            // Snapshot Init
+            let loopStartLine = -1;
+            for(let i=0; i<lines.length; i++) {
+                const l = lines[i].trim();
+                if(l.startsWith('for ') || l.startsWith('while ')) {
+                    loopStartLine = i;
+                    break;
+                }
+                if(l.includes('=')) runLine(l, currentVars);
+            }
+            engine.initialVars = JSON.parse(JSON.stringify(currentVars));
+
+            if(loopStartLine === -1) throw new Error("No loop found.");
+
+            // Parser Helper
+            function execBlock(startLine, indentLevel) {
+                let i = startLine;
+                while(i < lines.length) {
+                    const line = lines[i];
+                    if (line.trim() === '') { i++; continue; }
+                    const currentIndent = line.search(/\S|$/); 
+                    if (currentIndent < indentLevel) return i; 
+
+                    const trimLine = line.trim();
+                    const lineNum = i;
+
+                    // FOR LOOP
+                    if (trimLine.startsWith('for ')) {
+                        const match = trimLine.match(/for\s+(\w+)\s+in\s+(.+):/);
+                        if(!match) throw new Error(`Syntax Error line ${i+1}`);
+                        
+                        const iterVar = match[1];
+                        const sourceExpr = match[2];
+                        let iterable = evaluateExpr(sourceExpr, currentVars);
+
+                        // Capture Loop Info
+                        if(!engine.loopKind) {
+                            engine.loopKind = 'for';
+                            engine.loopData = iterable;
+                        }
+
+                        let bodyStart = i + 1;
+                        let nextI = bodyStart;
+                        let limit = 0;
+                        
+                        if (Array.isArray(iterable) || typeof iterable === 'string') {
+                            for (let item of iterable) {
+                                if(limit++ > 100) break;
+                                engine.steps.push({ line: lineNum, type: 'loop', updates: { [iterVar]: item }, idx: limit-1 });
+                                currentVars[iterVar] = item;
+                                nextI = execBlock(bodyStart, currentIndent + 1);
+                            }
+                        }
+                        
+                        if(!iterable || iterable.length === 0) {
+                             while(nextI < lines.length) {
+                                 if(lines[nextI].search(/\S|$/) <= currentIndent && lines[nextI].trim() !== '') break;
+                                 nextI++;
+                             }
+                        }
+                        i = nextI;
+                        continue;
+                    }
+
+                    // WHILE LOOP
+                    else if (trimLine.startsWith('while ')) {
+                        const match = trimLine.match(/while\s+(.+):/);
+                        const condRaw = match[1];
+                        
+                        if(!engine.loopKind) {
+                            engine.loopKind = 'while';
+                            engine.condition = condRaw;
+                        }
+
+                        let bodyStart = i + 1;
+                        let nextI = bodyStart;
+                        let limit = 0;
+
+                        while(limit < 50) {
+                            const res = evalCond(condRaw, currentVars);
+                            engine.steps.push({ line: lineNum, type: 'check', res: res });
+                            
+                            if(!res) {
+                                if(limit === 0) {
+                                     while(nextI < lines.length) {
+                                         if(lines[nextI].search(/\S|$/) <= currentIndent && lines[nextI].trim() !== '') break;
+                                         nextI++;
+                                     }
+                                }
+                                break; 
+                            }
+                            nextI = execBlock(bodyStart, currentIndent + 1);
+                            limit++;
+                        }
+                        i = nextI;
+                        continue;
+                    }
+
+                    // ASSIGNMENT
+                    else if (trimLine.includes('=')) {
+                        executeAssignment(trimLine, currentVars, lineNum);
+                    }
+
+                    // PRINT
+                    else if (trimLine.startsWith('print(')) {
+                        const content = trimLine.slice(6, -1);
+                        let output = evaluateComplexPrint(content, currentVars);
+                        engine.steps.push({ line: lineNum, type: 'print', msg: output });
+                    }
+
+                    i++;
+                }
+                return i;
+            }
+
+            execBlock(loopStartLine !== -1 ? loopStartLine : 0, 0);
+        }
+
+        // --- HELPERS ---
+
+        function runLine(line, scope) {
+            line = line.split('#')[0].trim();
+            if(!line) return;
+            const [k, v] = line.split('=').map(s=>s.trim());
+            scope[k] = evaluateExpr(v, scope);
+        }
+
+        function executeAssignment(line, scope, lineNum) {
+            let k, v, op = '=';
+            if(line.includes('+=')) { [k, v] = line.split('+='); op = '+='; }
+            else if(line.includes('-=')) { [k, v] = line.split('-='); op = '-='; }
+            else if(line.includes('*=')) { [k, v] = line.split('*='); op = '*='; }
+            else { [k, v] = line.split('='); }
+
+            k = k.trim();
+            // FIX: Use evaluateExpr instead of direct parsing to handle variables in RHS
+            let val = evaluateExpr(v.trim(), scope);
+
+            if(op === '+=') scope[k] += val;
+            else if(op === '-=') scope[k] -= val;
+            else if(op === '*=') scope[k] *= val;
+            else scope[k] = val;
+
+            engine.steps.push({
+                line: lineNum,
+                type: 'assign',
+                updates: { [k]: scope[k] }
+            });
+        }
+
+        function evaluateExpr(expr, scope) {
+            // 1. Literal Numbers
+            if (!isNaN(Number(expr))) return Number(expr);
+            
+            // 2. Strings
+            if (expr.startsWith('"') || expr.startsWith("'")) return expr.slice(1, -1);
+
+            // 3. Variables (The fix for "math not working")
+            // If the expression is just a variable name "i", return its value
+            if (scope.hasOwnProperty(expr)) return scope[expr];
+
+            // 4. Range
+            if (expr.startsWith('range(')) {
+                const inner = expr.slice(6, -1);
+                const args = inner.split(',').map(arg => {
+                    const a = arg.trim();
+                    if(!isNaN(Number(a))) return Number(a);
+                    if(scope[a] !== undefined) return scope[a];
+                    return 0;
+                });
+                
+                let start=0, stop=0, step=1;
+                if(args.length === 1) { stop = args[0]; }
+                else if(args.length === 2) { start = args[0]; stop = args[1]; }
+                else { start = args[0]; stop = args[1]; step = args[2]; }
+                
+                let arr = [];
+                if(step > 0) for(let j=start; j<stop; j+=step) arr.push(j);
+                else for(let j=start; j>stop; j+=step) arr.push(j);
+                return arr;
+            }
+
+            // 5. Lists
+            if (expr.startsWith('[')) {
+                try { return JSON.parse(expr.replace(/'/g, '"')); } catch { return []; }
+            }
+            
+            // 6. Math Support (x + y)
+            if(expr.includes('+') || expr.includes('*') || expr.includes('-') || expr.includes('/')) {
+                let evalStr = expr;
+                for(let [k,v] of Object.entries(scope)) {
+                    // Only replace whole words (variables)
+                    // If v is string, quote it
+                    let val = typeof v === 'string' ? `"${v}"` : v;
+                    evalStr = evalStr.replace(new RegExp(`\\b${k}\\b`, 'g'), val);
+                }
+                try { return eval(evalStr); } catch { return 0; }
+            }
+
+            return null;
+        }
+
+        function evaluateComplexPrint(content, scope) {
+            // Simplified print handling
+            let evalStr = content;
+            for(let [k,v] of Object.entries(scope)) {
+                let val = typeof v === 'string' ? `"${v}"` : v;
+                evalStr = evalStr.replace(new RegExp(`\\b${k}\\b`, 'g'), val);
+            }
+            // If str() exists, handle it loosely
+            evalStr = evalStr.replace(/str\(([^)]+)\)/g, "$1"); 
+            try { return eval(evalStr); } catch { return content; }
+        }
+
+        function evalCond(str, scope) {
+            let evalStr = str;
+            for(let [k,v] of Object.entries(scope)) {
+                evalStr = evalStr.replace(new RegExp(`\\b${k}\\b`,'g'), v);
+            }
+            try { return eval(evalStr); } catch { return false; }
+        }
+
+        // --- STEPPER ---
+
+        function step() {
+            if(engine.stepIdx >= engine.steps.length) {
+                document.getElementById('btn-step').innerText = "Finished";
+                document.getElementById('btn-step').disabled = true;
+                return;
+            }
+
+            const s = engine.steps[engine.stepIdx];
+
+            // Highlight Line
+            document.querySelectorAll('.exec-line').forEach(el => el.classList.remove('active-line'));
+            const lineEl = document.getElementById(`line-${s.line}`);
+            if(lineEl) {
+                lineEl.classList.add('active-line');
+                lineEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
+
+            // Update Vars
+            if(s.updates) {
+                for(let [k,v] of Object.entries(s.updates)) updateVarCard(k, v);
+            }
+
+            // Visuals
+            if(s.type === 'loop' && engine.loopKind === 'for') {
+                document.querySelectorAll('.seq-node').forEach(n => n.classList.remove('active'));
+                const node = document.getElementById(`node-${s.idx}`);
+                if(node) node.classList.add('active');
+            }
+            if(s.type === 'check' && engine.loopKind === 'while') {
+                const box = document.getElementById('orbit-box');
+                if(box) box.className = s.res ? 'orbit-box true' : 'orbit-box false';
+            }
+
+            // Terminal
+            if(s.type === 'print') {
+                const term = document.getElementById('terminal');
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                div.innerText = s.msg;
+                term.appendChild(div);
+                term.scrollTop = term.scrollHeight;
+            }
+
+            engine.stepIdx++;
+        }
+
+        // --- RENDERERS ---
+
+        function updateVarCard(k, v) {
+            let card = document.getElementById(`card-${k}`);
+            if(!card) {
+                const grid = document.getElementById('var-grid');
+                if(grid.innerHTML.includes('Waiting')) grid.innerHTML = '';
+                card = document.createElement('div');
+                card.className = 'var-card';
+                card.id = `card-${k}`;
+                card.innerHTML = `<div class="v-name">${k}</div><div class="v-val" id="val-${k}"></div>`;
+                grid.appendChild(card);
+            }
+            const valEl = document.getElementById(`val-${k}`);
+            valEl.innerText = formatVal(v);
+            card.classList.add('updated');
+            setTimeout(() => card.classList.remove('updated'), 500);
+        }
+
+        function renderVars(varsObj) {
+            const grid = document.getElementById('var-grid');
+            grid.innerHTML = '';
+            if(Object.keys(varsObj).length === 0) {
+                grid.innerHTML = '<div style="color:#64748b; font-size:0.8rem">No variables yet...</div>';
+                return;
+            }
+            for(let [k,v] of Object.entries(varsObj)) {
+                const card = document.createElement('div');
+                card.className = 'var-card';
+                card.id = `card-${k}`;
+                card.innerHTML = `<div class="v-name">${k}</div><div class="v-val" id="val-${k}">${formatVal(v)}</div>`;
+                grid.appendChild(card);
+            }
+        }
+
+        function renderForStage(list) {
+            const stage = document.getElementById('stage');
+            if(Array.isArray(list) || typeof list === 'string') {
+                const arr = typeof list === 'string' ? list.split('') : list;
+                stage.innerHTML = `<div class="seq-row">${arr.map((n,i) => `<div class="seq-node" id="node-${i}">${formatVal(n)}</div>`).join('')}</div>`;
+            }
+        }
+
+        function renderWhileStage(cond) {
+            document.getElementById('stage').innerHTML = `
+                <div class="orbit-box" id="orbit-box">
+                    <div style="font-size:0.7rem; color:#94a3b8; font-weight:bold;">WHILE</div>
+                    <div style="font-size:1rem; font-weight:bold; color:white;">${cond}</div>
+                </div>`;
+        }
+
+        function formatVal(v) { return Array.isArray(v) ? `[${v.join(', ')}]` : v; }
+        function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+        loadEx('basic');
+
+    </script>
+</body>
+</html>

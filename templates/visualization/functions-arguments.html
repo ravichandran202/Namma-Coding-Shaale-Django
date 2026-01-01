@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Argument Mapper (Step-by-Step)</title>
+    <style>
+        /* --- CLEAN DARK THEME --- */
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --primary: #3b82f6; --accent: #8b5cf6;
+            --success: #10b981; --error: #ef4444; --warn: #f59e0b;
+            --text: #f8fafc; --muted: #94a3b8;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+
+        h1 { margin-bottom: 5px; background: linear-gradient(to right, #3b82f6, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--muted); margin-bottom: 30px; font-size: 0.9rem; }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            width: 100%; max-width: 900px;
+            display: grid; grid-template-columns: 1fr; gap: 20px;
+        }
+
+        /* --- INPUT AREA --- */
+        .input-box {
+            background: var(--card); padding: 20px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1); display: grid; gap: 15px;
+        }
+        
+        .code-row { display: flex; align-items: center; gap: 10px; font-family: var(--font-code); font-size: 1.1rem; }
+        .label { color: var(--warn); font-weight: bold; width: 60px; }
+        
+        input {
+            background: rgba(0,0,0,0.3); border: 1px solid #475569; color: white;
+            padding: 10px 15px; border-radius: 6px; flex-grow: 1; font-family: inherit; font-size: 1rem;
+        }
+        input:focus { border-color: var(--primary); outline: none; }
+
+        /* --- VISUAL STAGE --- */
+        .stage {
+            background: var(--card); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+            min-height: 400px; position: relative; padding: 40px;
+            display: flex; justify-content: space-between;
+        }
+
+        /* COLUMNS */
+        .col { display: flex; flex-direction: column; gap: 20px; width: 45%; position: relative; z-index: 2; }
+        .col-title { text-align: center; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 10px; font-size: 0.8rem; }
+
+        /* ITEMS (Args & Params) */
+        .item {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1); text-align: center;
+            font-family: var(--font-code); transition: all 0.3s; position: relative;
+        }
+        
+        /* Connector Dots */
+        .dot {
+            width: 12px; height: 12px; background: var(--muted); border-radius: 50%;
+            position: absolute; top: 50%; transform: translateY(-50%); transition: 0.3s;
+        }
+        .dot-left { right: -6px; } /* For Call Args */
+        .dot-right { left: -6px; } /* For Def Params */
+
+        /* States */
+        .matched { border-color: var(--success); background: rgba(16, 185, 129, 0.1); }
+        .matched .dot { background: var(--success); box-shadow: 0 0 10px var(--success); }
+        
+        .default-used { border-color: var(--warn); background: rgba(245, 158, 11, 0.1); }
+        
+        .error-item { border-color: var(--error); background: rgba(239, 68, 68, 0.1); }
+
+        /* SVG LINES */
+        #svg-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
+        }
+
+        /* --- TUTOR BOX (BOTTOM) --- */
+        .tutor-box {
+            background: #000; border: 1px solid #334155; border-radius: 12px; padding: 20px;
+            font-family: var(--font-code); color: #cbd5e1; min-height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .explanation { font-size: 0.95rem; line-height: 1.5; }
+        .hl { color: var(--accent); font-weight: bold; }
+
+        /* CONTROLS */
+        .controls { display: flex; gap: 10px; }
+        button {
+            padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;
+            transition: all 0.2s; font-size: 0.9rem;
+        }
+        .btn-next { background: var(--primary); color: white; }
+        .btn-next:hover { background: #2563eb; }
+        .btn-reset { background: #334155; color: white; }
+        .btn-reset:hover { background: #475569; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Preset Chips */
+        .chips { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .chip { 
+            background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 15px; 
+            font-size: 0.8rem; cursor: pointer; color: var(--muted); border: 1px solid transparent; 
+        }
+        .chip:hover { border-color: var(--primary); color: white; }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Python Argument Mapper</h1>
+    <div class="subtitle">Step-by-step visualization of how Python matches values to variables</div>
+
+    <div class="chips">
+        <div class="chip" onclick="loadPreset(1)">Basic Positional</div>
+        <div class="chip" onclick="loadPreset(2)">Keyword Args</div>
+        <div class="chip" onclick="loadPreset(3)">Defaults</div>
+        <div class="chip" onclick="loadPreset(4)">*Args (Tuple)</div>
+        <div class="chip" onclick="loadPreset(5)">**Kwargs (Dict)</div>
+        <div class="chip" onclick="loadPreset(6)">Error Case</div>
+    </div>
+
+    <div class="container">
+        
+        <div class="input-box">
+            <div class="code-row">
+                <span class="label">DEF:</span>
+                <span style="color:#8b5cf6">def func(</span>
+                <input type="text" id="def-in" value="a, b, c=10">
+                <span style="color:#8b5cf6">):</span>
+            </div>
+            <div class="code-row">
+                <span class="label">CALL:</span>
+                <span style="color:#3b82f6">func(</span>
+                <input type="text" id="call-in" value="5, c=99, b=2">
+                <span style="color:#3b82f6">)</span>
+            </div>
+            <button class="btn-reset" style="width:100%" onclick="init()">Load & Reset</button>
+        </div>
+
+        <div class="stage">
+            <svg id="svg-layer"></svg>
+
+            <div class="col">
+                <div class="col-title">Values Passed (The Luggage)</div>
+                <div id="args-container"></div>
+            </div>
+
+            <div class="col">
+                <div class="col-title">Function Variables (The Slots)</div>
+                <div id="params-container"></div>
+            </div>
+        </div>
+
+        <div class="tutor-box">
+            <div class="explanation" id="tutor-text">Click "Next Step" to start mapping...</div>
+            <div class="controls">
+                <button class="btn-reset" onclick="init()">Restart</button>
+                <button class="btn-next" id="btn-next" onclick="nextStep()">Next Step →</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- STATE ---
+        let params = [];
+        let args = [];
+        let currentStep = 0;
+        let steps = [];
+        let isComplete = false;
+
+        // --- PRESETS ---
+        const PRESETS = {
+            1: { def: "a, b, c", call: "10, 20, 30" },
+            2: { def: "name, age", call: "age=25, name='Sri'" },
+            3: { def: "x, y=5, z=10", call: "100, z=50" },
+            4: { def: "a, *rest", call: "1, 2, 3, 4" },
+            5: { def: "a, **options", call: "1, color='red', size='big'" },
+            6: { def: "a, b", call: "10" } // Error
+        };
+
+        function loadPreset(id) {
+            document.getElementById('def-in').value = PRESETS[id].def;
+            document.getElementById('call-in').value = PRESETS[id].call;
+            init();
+        }
+
+        // --- INITIALIZATION ---
+        function init() {
+            const defStr = document.getElementById('def-in').value;
+            const callStr = document.getElementById('call-in').value;
+
+            // Reset UI
+            document.getElementById('svg-layer').innerHTML = '';
+            document.getElementById('tutor-text').innerText = "Ready. Python interprets arguments in specific order. Click Next.";
+            document.getElementById('btn-next').disabled = false;
+            document.getElementById('btn-next').innerText = "Next Step →";
+            
+            // Parse
+            params = parseDef(defStr);
+            args = parseCall(callStr);
+            
+            // Calculate Logic Steps
+            steps = calculateBindingSteps(params, args);
+            currentStep = 0;
+            isComplete = false;
+
+            // Render Boxes
+            renderBoxes();
+        }
+
+        // --- LOGIC ENGINE ---
+        function calculateBindingSteps(params, args) {
+            let plan = [];
+            let usedParams = new Set();
+            let usedArgs = new Set();
+            let extraPos = [];
+            let extraKw = [];
+
+            // 1. Positional Arguments
+            let pIdx = 0;
+            for(let i=0; i<args.length; i++) {
+                if(args[i].isKw) continue; // Skip keywords for now
+
+                // Find next available positional param
+                // Skip any *kwargs or **kwargs in param list logic (simplified)
+                if(pIdx < params.length) {
+                    if(params[pIdx].isStar) {
+                        // Found *args, it eats remaining positionals
+                        let collected = [];
+                        for(let j=i; j<args.length; j++) {
+                            if(!args[j].isKw) {
+                                collected.push(j);
+                                usedArgs.add(j);
+                            }
+                        }
+                        plan.push({ type: 'star', pIdx: pIdx, aIndices: collected });
+                        usedParams.add(pIdx);
+                        break; // *args consumes all remaining pos
+                    } 
+                    else if(params[pIdx].isKwStar) {
+                        // Should not happen in pos matching usually unless misordered def
+                        pIdx++; i--; continue;
+                    } 
+                    else {
+                        // Regular match
+                        plan.push({ type: 'pos', pIdx: pIdx, aIdx: i });
+                        usedParams.add(pIdx);
+                        usedArgs.add(i);
+                        pIdx++;
+                    }
+                } else {
+                    // Too many args
+                    plan.push({ type: 'error', msg: `TypeError: Too many positional arguments (Value: ${args[i].val})` });
+                    return plan;
+                }
+            }
+
+            // 2. Keyword Arguments
+            for(let i=0; i<args.length; i++) {
+                if(!args[i].isKw) continue;
+
+                let found = -1;
+                for(let j=0; j<params.length; j++) {
+                    if(params[j].name === args[i].key) {
+                        found = j;
+                        break;
+                    }
+                }
+
+                if(found !== -1) {
+                    if(usedParams.has(found)) {
+                        plan.push({ type: 'error', msg: `TypeError: Multiple values for argument '${params[found].name}'` });
+                        return plan;
+                    }
+                    plan.push({ type: 'kw', pIdx: found, aIdx: i });
+                    usedParams.add(found);
+                    usedArgs.add(i);
+                } else {
+                    // Check for **kwargs
+                    let kwStarIdx = params.findIndex(p => p.isKwStar);
+                    if(kwStarIdx !== -1) {
+                        // We will group these later or add one by one. Let's add one by one for visual.
+                        plan.push({ type: 'kwstar', pIdx: kwStarIdx, aIdx: i });
+                        // Don't mark kwStar as fully used yet, it can take more
+                    } else {
+                        plan.push({ type: 'error', msg: `TypeError: Unexpected keyword argument '${args[i].key}'` });
+                        return plan;
+                    }
+                }
+            }
+
+            // 3. Defaults
+            params.forEach((p, idx) => {
+                if(!usedParams.has(idx) && !p.isStar && !p.isKwStar) {
+                    if(p.defaultVal) {
+                        plan.push({ type: 'default', pIdx: idx });
+                        usedParams.add(idx);
+                    } else {
+                        plan.push({ type: 'error', msg: `TypeError: Missing required argument '${p.name}'` });
+                    }
+                }
+            });
+
+            // 4. Empty *args if unused
+            let starIdx = params.findIndex(p => p.isStar);
+            if(starIdx !== -1 && !usedParams.has(starIdx)) {
+                plan.push({ type: 'star_empty', pIdx: starIdx });
+            }
+            
+            // 5. Empty **kwargs if unused (visual only, logic handles it)
+            // (Skipped for simplicity, implied)
+
+            plan.push({ type: 'success', msg: "All arguments mapped successfully!" });
+            return plan;
+        }
+
+        function nextStep() {
+            if(currentStep >= steps.length) return;
+
+            const step = steps[currentStep];
+            const tutor = document.getElementById('tutor-text');
+
+            if(step.type === 'error') {
+                tutor.innerHTML = `<span style="color:var(--error)">${step.msg}</span>`;
+                document.getElementById('btn-next').disabled = true;
+                return;
+            }
+
+            if(step.type === 'success') {
+                tutor.innerHTML = `<span style="color:var(--success)">${step.msg} Execution begins...</span>`;
+                document.getElementById('btn-next').innerText = "Done";
+                document.getElementById('btn-next').disabled = true;
+                return;
+            }
+
+            // Execute Visuals
+            if(step.type === 'pos') {
+                const p = params[step.pIdx];
+                const a = args[step.aIdx];
+                drawCurve(`arg-${step.aIdx}`, `param-${step.pIdx}`, 'var(--success)');
+                markMatched(`param-${step.pIdx}`, a.val);
+                tutor.innerHTML = `Taking value <span class="hl">${a.val}</span> and mapping it to <span class="hl">${p.name}</span> because it is the <b>next available slot</b>.`;
+            }
+            
+            if(step.type === 'kw') {
+                const p = params[step.pIdx];
+                const a = args[step.aIdx];
+                drawCurve(`arg-${step.aIdx}`, `param-${step.pIdx}`, 'var(--accent)');
+                markMatched(`param-${step.pIdx}`, a.val);
+                tutor.innerHTML = `Found matching name! Mapping key <span class="hl">${a.key}</span> to parameter <span class="hl">${p.name}</span>.`;
+            }
+
+            if(step.type === 'default') {
+                const p = params[step.pIdx];
+                markDefault(`param-${step.pIdx}`);
+                tutor.innerHTML = `No value provided for <span class="hl">${p.name}</span>. Using default value <span class="hl">${p.defaultVal}</span>.`;
+            }
+
+            if(step.type === 'star') {
+                const p = params[step.pIdx];
+                const vals = step.aIndices.map(i => args[i].val).join(', ');
+                
+                step.aIndices.forEach(ai => {
+                    drawCurve(`arg-${ai}`, `param-${step.pIdx}`, 'var(--warn)');
+                });
+                markMatched(`param-${step.pIdx}`, `(${vals})`);
+                tutor.innerHTML = `<span class="hl">*${p.name}</span> collects all remaining positional arguments into a <b>Tuple</b>.`;
+            }
+
+            if(step.type === 'kwstar') {
+                const p = params[step.pIdx];
+                const a = args[step.aIdx];
+                drawCurve(`arg-${step.aIdx}`, `param-${step.pIdx}`, 'var(--warn)');
+                // We append to existing text or set new
+                const el = document.getElementById(`param-${step.pIdx}`);
+                // Simple visual hack for visualizer
+                let current = el.getAttribute('data-val') || '{}';
+                if(current === '{}') current = `{ '${a.key}': ${a.val} }`;
+                else current = current.replace(' }', `, '${a.key}': ${a.val} }`);
+                
+                markMatched(`param-${step.pIdx}`, current);
+                el.setAttribute('data-val', current);
+                
+                tutor.innerHTML = `<span class="hl">**${p.name}</span> collects unknown keyword <span class="hl">${a.key}</span> into the <b>Dictionary</b>.`;
+            }
+            
+            if(step.type === 'star_empty') {
+                const p = params[step.pIdx];
+                markMatched(`param-${step.pIdx}`, `()`);
+                tutor.innerHTML = `<span class="hl">*${p.name}</span> found no extras. Assigning empty Tuple <b>()</b>.`;
+            }
+
+            currentStep++;
+        }
+
+        // --- RENDERERS ---
+
+        function renderBoxes() {
+            const ac = document.getElementById('args-container');
+            const pc = document.getElementById('params-container');
+            ac.innerHTML = '';
+            pc.innerHTML = '';
+
+            args.forEach((a, i) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.id = `arg-${i}`;
+                div.innerHTML = a.isKw 
+                    ? `<span style="color:#94a3b8">${a.key}=</span><span style="color:white; font-weight:bold">${a.val}</span>`
+                    : `<span style="color:white; font-weight:bold">${a.val}</span>`;
+                
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = 'dot dot-left';
+                div.appendChild(dot);
+                
+                ac.appendChild(div);
+            });
+
+            params.forEach((p, i) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.id = `param-${i}`;
+                
+                let content = `<span style="color:var(--accent); font-weight:bold">${p.name}</span>`;
+                if(p.isStar) content = `<span style="color:var(--warn); font-weight:bold">*${p.name}</span>`;
+                if(p.isKwStar) content = `<span style="color:var(--warn); font-weight:bold">**${p.name}</span>`;
+                
+                if(p.defaultVal) content += `<div style="font-size:0.7rem; color:#64748b">def: ${p.defaultVal}</div>`;
+                
+                div.innerHTML = content;
+                
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = 'dot dot-right';
+                div.appendChild(dot);
+
+                pc.appendChild(div);
+            });
+        }
+
+        function markMatched(id, val) {
+            const el = document.getElementById(id);
+            el.classList.add('matched');
+            // Append Value
+            const vDiv = document.createElement('div');
+            vDiv.style.color = '#10b981';
+            vDiv.style.fontWeight = 'bold';
+            vDiv.style.marginTop = '5px';
+            vDiv.innerText = `= ${val}`;
+            el.appendChild(vDiv);
+        }
+
+        function markDefault(id) {
+            const el = document.getElementById(id);
+            el.classList.add('default-used');
+            // Move default text to bold
+            el.innerHTML += `<div style="color:#f59e0b; font-weight:bold; margin-top:5px">Used Default</div>`;
+        }
+
+        function drawCurve(startId, endId, color) {
+            const startEl = document.getElementById(startId).querySelector('.dot');
+            const endEl = document.getElementById(endId).querySelector('.dot');
+            const svg = document.getElementById('svg-layer');
+            const stage = document.querySelector('.stage').getBoundingClientRect();
+
+            const r1 = startEl.getBoundingClientRect();
+            const r2 = endEl.getBoundingClientRect();
+
+            const x1 = r1.left + r1.width/2 - stage.left;
+            const y1 = r1.top + r1.height/2 - stage.top;
+            const x2 = r2.left + r2.width/2 - stage.left;
+            const y2 = r2.top + r2.height/2 - stage.top;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            
+            // Bezier Control Points
+            const midX = (x1 + x2) / 2;
+            const d = `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`;
+
+            path.setAttribute('d', d);
+            path.setAttribute('stroke', color);
+            path.setAttribute('stroke-width', '3');
+            path.setAttribute('fill', 'none');
+            
+            // Animation
+            const len = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+            path.style.strokeDasharray = len;
+            path.style.strokeDashoffset = len;
+            path.style.transition = "stroke-dashoffset 0.8s ease-in-out";
+            
+            svg.appendChild(path);
+            
+            // Trigger animation
+            setTimeout(() => path.style.strokeDashoffset = '0', 10);
+        }
+
+        // --- PARSING HELPERS ---
+        function parseDef(str) {
+            return str.split(',').filter(s=>s.trim()).map(s => {
+                s=s.trim();
+                let p = { name: s, isStar:false, isKwStar:false, defaultVal: null };
+                if(s.startsWith('**')) { p.isKwStar = true; p.name = s.substring(2); }
+                else if(s.startsWith('*')) { p.isStar = true; p.name = s.substring(1); }
+                else if(s.includes('=')) {
+                    const parts = s.split('=');
+                    p.name = parts[0].trim();
+                    p.defaultVal = parts[1].trim();
+                }
+                return p;
+            });
+        }
+
+        function parseCall(str) {
+            // Rough CSV split that respects strings slightly better would be nice,
+            // but for a visualizer, basic split is usually fine unless input is complex.
+            // We'll stick to basic split for robustness on mobile typing.
+            return str.split(',').filter(s=>s.trim()).map(s => {
+                s=s.trim();
+                if(s.includes('=')) {
+                    const parts = s.split('=');
+                    return { key: parts[0].trim(), val: parts[1].trim(), isKw: true };
+                }
+                return { val: s, isKw: false };
+            });
+        }
+
+        // Init
+        init();
+
+    </script>
+</body>
+</html>

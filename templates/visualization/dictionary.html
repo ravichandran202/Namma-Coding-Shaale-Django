@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Dictionary Master</title>
+    <style>
+        /* --- THEME SYSTEM --- */
+        :root {
+            --bg-body: #0f172a;
+            --bg-panel: #1e293b;
+            --primary: #3b82f6;
+            --accent: #a855f7;
+            --key-color: #fbbf24;
+            --val-color: #22d3ee;
+            --danger: #ef4444;
+            --success: #10b981;
+            --muted: #64748b;
+            --text: #f8fafc;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            background: linear-gradient(to right, #fbbf24, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* --- LAYOUT --- */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: start;
+        }
+
+        /* --- DICT PANEL (LEFT) --- */
+        .dict-panel {
+            background: var(--bg-panel);
+            border: var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .dict-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: var(--border);
+        }
+
+        .var-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .items-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        /* --- DICT ROW ITEM --- */
+        .dict-row {
+            display: grid;
+            grid-template-columns: auto auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .dict-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--primary);
+        }
+
+        .key-cell {
+            font-family: 'Fira Code', monospace;
+            color: var(--key-color);
+            font-weight: bold;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .val-cell {
+            font-family: 'Fira Code', monospace;
+            color: var(--val-color);
+            background: rgba(34, 211, 238, 0.1);
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .val-cell:hover::after {
+            content: '✎';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.6rem;
+            background: var(--bg-panel);
+            padding: 2px;
+            border-radius: 50%;
+        }
+
+        .sep {
+            color: var(--muted);
+            font-weight: bold;
+        }
+
+        .btn-del {
+            color: var(--muted);
+            cursor: pointer;
+            padding: 4px;
+            transition: 0.2s;
+        }
+
+        .btn-del:hover {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 4px;
+        }
+
+        /* Animations & Highlights */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .flash-update {
+            animation: flashBlue 0.6s;
+        }
+
+        .flash-add {
+            animation: flashGreen 0.6s;
+        }
+
+        @keyframes flashBlue {
+            0% {
+                background: rgba(59, 130, 246, 0.3);
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0.03);
+            }
+        }
+
+        @keyframes flashGreen {
+            0% {
+                background: rgba(16, 185, 129, 0.3);
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0.03);
+            }
+        }
+
+        .hl-key .key-cell {
+            background: var(--key-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--key-color);
+        }
+
+        .hl-val .val-cell {
+            background: var(--val-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--val-color);
+        }
+
+        /* --- CONTROLS (RIGHT) --- */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-group {
+            background: var(--bg-panel);
+            border: var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .group-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+            margin-bottom: 5px;
+        }
+
+        /* Inputs */
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #475569;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .btn-blue {
+            background: var(--primary);
+        }
+
+        .btn-blue:hover {
+            background: #2563eb;
+        }
+
+        .btn-green {
+            background: var(--success);
+        }
+
+        .btn-green:hover {
+            background: #059669;
+        }
+
+        .btn-red {
+            background: var(--danger);
+        }
+
+        .btn-red:hover {
+            background: #dc2626;
+        }
+
+        .btn-purple {
+            background: var(--accent);
+        }
+
+        .btn-purple:hover {
+            background: #9333ea;
+        }
+
+        .btn-gray {
+            background: #475569;
+        }
+
+        .btn-gray:hover {
+            background: #64748b;
+        }
+
+        /* --- CONSOLE --- */
+        .console {
+            background: #000;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            height: 140px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            color: #cbd5e1;
+        }
+
+        .log-line {
+            margin-bottom: 4px;
+            border-bottom: 1px solid #111;
+            padding-bottom: 2px;
+            line-height: 1.4;
+        }
+
+        .log-ret {
+            color: var(--val-color);
+        }
+
+        .log-err {
+            color: var(--danger);
+        }
+
+        @media (max-width: 900px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Python Dict Master</h1>
+        <div class="subtitle">Complete Method Visualizer • Python 3.10+</div>
+    </header>
+
+    <div class="app-grid">
+
+        <div class="dict-panel">
+            <div class="dict-header">
+                <span class="var-label">my_dict = {</span>
+                <span class="badge" id="len-badge">len: 0</span>
+            </div>
+
+            <div class="items-container" id="dict-list">
+            </div>
+
+            <div style="font-family:'Fira Code'; font-size:1.2rem; margin-top:10px; color:#cbd5e1"> }
+            </div>
+
+            <div class="control-group" style="flex-grow:1; min-height:200px; margin-top: 5rem;">
+                <div class="group-header">Interactive Console</div>
+                <div class="console" id="console">
+                    <div class="log-line"># Ready. Type commands...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+
+            <div class="control-group">
+                <div class="group-header">Add / Update / SetDefault</div>
+                <div class="input-row">
+                    <input type="text" id="key-in" placeholder="Key (k)">
+                    <input type="text" id="val-in" placeholder="Value (v)">
+                </div>
+                <div class="btn-grid">
+                    <button class="btn-green" onclick="doAssign()">d[k] = v</button>
+                    <button class="btn-blue" onclick="doUpdate()">.update()</button>
+                    <button class="btn-purple" onclick="doSetDefault()" style="grid-column:span 2">.setdefault(k,
+                        v)</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="group-header">Access & Views</div>
+                <div class="input-row">
+                    <input type="text" id="get-key" placeholder="Key to find">
+                    <input type="text" id="get-def" placeholder="Default (opt)">
+                </div>
+                <div class="btn-grid">
+                    <button class="btn-blue" onclick="doGet()">.get(k,d)</button>
+                    <button class="btn-gray" onclick="doCopy()">.copy()</button>
+                </div>
+                <div class="input-row" style="margin-top:5px">
+                    <button class="btn-purple" style="flex:1" onclick="showView('keys')">.keys()</button>
+                    <button class="btn-purple" style="flex:1" onclick="showView('values')">.values()</button>
+                    <button class="btn-purple" style="flex:1" onclick="showView('items')">.items()</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="group-header">Delete & Batch Create</div>
+                <div class="input-row">
+                    <input type="text" id="del-key" placeholder="Key to remove">
+                </div>
+                <div class="btn-grid">
+                    <button class="btn-red" onclick="doPop()">.pop(k)</button>
+                    <button class="btn-red" onclick="doPopItem()">.popitem()</button>
+                </div>
+                <div class="input-row"
+                    style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px">
+                    <input type="text" id="from-keys" placeholder="a,b,c (csv)">
+                    <button class="btn-gray" onclick="doFromKeys()">.fromkeys()</button>
+                </div>
+                <button class="btn-red" style="width:100%; margin-top:5px" onclick="doClear()">.clear()</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- DATA MODEL ---
+        // Array of objects {key, val} to preserve order
+        let data = [
+            { key: 'name', val: 'Sri' },
+            { key: 'age', val: 25 },
+            { key: 'role', val: 'Dev' }
+        ];
+
+        // --- DOM ---
+        const listEl = document.getElementById('dict-list');
+        const consoleEl = document.getElementById('console');
+        const lenEl = document.getElementById('len-badge');
+
+        // Initial Render
+        render();
+
+        // --- CORE RENDERER ---
+        function render() {
+            listEl.innerHTML = '';
+            lenEl.innerText = `len: ${data.length}`;
+
+            if (data.length === 0) {
+                listEl.innerHTML = '<div style="text-align:center; padding:30px; color:#475569; font-style:italic">Empty Dictionary</div>';
+                return;
+            }
+
+            data.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'dict-row';
+                row.id = `row-${item.key}`;
+
+                // Format: Quote strings
+                const kDisp = typeof item.key === 'string' ? `'${item.key}'` : item.key;
+                const vDisp = typeof item.val === 'string' ? `'${item.val}'` : item.val;
+
+                row.innerHTML = `
+                    <div class="key-cell">${kDisp}</div>
+                    <div class="sep">:</div>
+                    <div class="val-cell" onclick="editVal('${item.key}')">${vDisp}</div>
+                    <div class="btn-del" onclick="quickDel('${item.key}')">✕</div>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+
+        // --- METHOD IMPLEMENTATIONS ---
+
+        // 1. d[k] = v (Assignment)
+        function doAssign() {
+            const inputs = getInputs('key-in', 'val-in');
+            if (!inputs) return;
+            const { key, val } = inputs;
+
+            const idx = data.findIndex(i => i.key == key);
+            if (idx >= 0) {
+                data[idx].val = val;
+                log(`my_dict['${key}'] = ${fmt(val)} <span style="color:#64748b"># Updated</span>`);
+                render();
+                highlight(key, 'update');
+            } else {
+                data.push({ key, val });
+                log(`my_dict['${key}'] = ${fmt(val)} <span style="color:#64748b"># Added</span>`);
+                render();
+                highlight(key, 'add');
+            }
+            clearInputs('key-in', 'val-in');
+        }
+
+        // 2. update({k:v})
+        function doUpdate() {
+            const inputs = getInputs('key-in', 'val-in');
+            if (!inputs) return;
+            const { key, val } = inputs;
+
+            // Logic same as assign, but log reflects method call
+            const idx = data.findIndex(i => i.key == key);
+            if (idx >= 0) {
+                data[idx].val = val;
+                highlight(key, 'update');
+            } else {
+                data.push({ key, val });
+                highlight(key, 'add'); // will trigger after render
+            }
+            log(`my_dict.update({'${key}': ${fmt(val)}})`);
+            render();
+            clearInputs('key-in', 'val-in');
+        }
+
+        // 3. setdefault(k, v)
+        function doSetDefault() {
+            const inputs = getInputs('key-in', 'val-in');
+            if (!inputs) return;
+            const { key, val } = inputs;
+
+            const existing = data.find(i => i.key == key);
+            if (existing) {
+                log(`my_dict.setdefault('${key}', ${fmt(val)}) <span class="log-ret"># Returns ${fmt(existing.val)} (Exists)</span>`);
+                highlight(key, 'read'); // Just highlight
+            } else {
+                data.push({ key, val });
+                log(`my_dict.setdefault('${key}', ${fmt(val)}) <span class="log-ret"># Returns ${fmt(val)} (Added)</span>`);
+                render();
+                highlight(key, 'add');
+            }
+            clearInputs('key-in', 'val-in');
+        }
+
+        // 4. get(k, default)
+        function doGet() {
+            const kRaw = document.getElementById('get-key').value.trim();
+            const dRaw = document.getElementById('get-def').value.trim();
+            if (!kRaw) return;
+
+            const key = parse(kRaw);
+            const defVal = dRaw ? parse(dRaw) : 'None';
+
+            const item = data.find(i => i.key == key);
+            if (item) {
+                log(`my_dict.get('${key}', ${dRaw || 'None'}) <span class="log-ret"># Returns ${fmt(item.val)}</span>`);
+                highlight(key, 'read');
+            } else {
+                log(`my_dict.get('${key}', ${dRaw || 'None'}) <span class="log-ret"># Returns ${fmt(defVal)}</span>`);
+            }
+        }
+
+        // 5. pop(k)
+        function doPop() {
+            const kRaw = document.getElementById('del-key').value.trim();
+            if (!kRaw) return;
+            const key = parse(kRaw);
+
+            const idx = data.findIndex(i => i.key == key);
+            if (idx >= 0) {
+                const val = data[idx].val;
+                data.splice(idx, 1);
+                log(`my_dict.pop('${key}') <span class="log-ret"># Returns ${fmt(val)}</span>`);
+                render();
+            } else {
+                log(`KeyError: '${key}'`, true);
+            }
+            document.getElementById('del-key').value = '';
+        }
+
+        // 6. popitem()
+        function doPopItem() {
+            if (data.length === 0) return log(`KeyError: 'popitem(): dictionary is empty'`, true);
+
+            const item = data.pop();
+            log(`my_dict.popitem() <span class="log-ret"># Returns (${fmt(item.key)}, ${fmt(item.val)})</span>`);
+            render();
+        }
+
+        // 7. clear()
+        function doClear() {
+            data = [];
+            log('my_dict.clear()');
+            render();
+        }
+
+        // 8. copy()
+        function doCopy() {
+            log(`new_dict = my_dict.copy() <span style="color:#64748b"># Shallow copy created in memory</span>`);
+        }
+
+        // 9. fromkeys(seq, val)
+        function doFromKeys() {
+            const rawKeys = document.getElementById('from-keys').value.trim();
+            if (!rawKeys) return;
+
+            const keys = rawKeys.split(',').map(k => parse(k.trim()));
+            // Default value for fromkeys is None if not provided (we'll assume None for visual simplicity or a static 'None')
+
+            data = []; // fromkeys creates a NEW dict usually, we simulate replacing the current one
+            keys.forEach(k => {
+                data.push({ key: k, val: null });
+            });
+
+            log(`my_dict = dict.fromkeys([${keys.join(', ')}], None)`);
+            render();
+        }
+
+        // 10. Views (.keys, .values, .items)
+        function showView(type) {
+            document.querySelectorAll('.dict-row').forEach(row => {
+                row.classList.remove('hl-key', 'hl-val');
+                if (type === 'keys' || type === 'items') row.classList.add('hl-key');
+                if (type === 'values' || type === 'items') row.classList.add('hl-val');
+            });
+
+            let output = '';
+            if (type === 'keys') output = `dict_keys([${data.map(i => fmt(i.key)).join(', ')}])`;
+            if (type === 'values') output = `dict_values([${data.map(i => fmt(i.val)).join(', ')}])`;
+            if (type === 'items') output = `dict_items([${data.map(i => `(${fmt(i.key)}, ${fmt(i.val)})`).join(', ')}])`;
+
+            log(`my_dict.${type}() <span class="log-ret"># ${output}</span>`);
+            setTimeout(() => {
+                document.querySelectorAll('.dict-row').forEach(r => r.classList.remove('hl-key', 'hl-val'));
+            }, 1500);
+        }
+
+        // --- HELPERS ---
+
+        function quickDel(key) {
+            const idx = data.findIndex(i => i.key == key);
+            if (idx >= 0) {
+                data.splice(idx, 1);
+                log(`del my_dict['${key}']`);
+                render();
+            }
+        }
+
+        function editVal(key) {
+            const idx = data.findIndex(i => i.key == key);
+            if (idx < 0) return;
+            const newValRaw = prompt(`Enter new value for '${key}':`, data[idx].val);
+            if (newValRaw !== null) {
+                const val = parse(newValRaw);
+                data[idx].val = val;
+                log(`my_dict['${key}'] = ${fmt(val)}`);
+                render();
+                highlight(key, 'update');
+            }
+        }
+
+        function getInputs(kId, vId) {
+            const kRaw = document.getElementById(kId).value.trim();
+            const vRaw = document.getElementById(vId).value.trim();
+            if (!kRaw) return null;
+            return { key: parse(kRaw), val: parse(vRaw) };
+        }
+
+        function clearInputs(...ids) { ids.forEach(id => document.getElementById(id).value = ''); }
+
+        // Simple parser (converts "123" -> 123, leaves "abc" -> "abc")
+        function parse(str) {
+            if (!isNaN(str) && str !== '') return Number(str);
+            if (str === 'null' || str === 'None') return null;
+            if (str === 'true' || str === 'True') return true;
+            if (str === 'false' || str === 'False') return false;
+            return str;
+        }
+
+        function fmt(val) {
+            if (typeof val === 'string') return `'${val}'`;
+            if (val === null) return 'None';
+            return val;
+        }
+
+        function log(msg, isErr) {
+            const d = document.createElement('div');
+            d.className = 'log-line';
+            if (isErr) d.classList.add('log-err');
+            d.innerHTML = `> ${msg}`;
+            consoleEl.prepend(d);
+        }
+
+        function highlight(key, type) {
+            // Wait for render
+            setTimeout(() => {
+                const row = document.getElementById(`row-${key}`);
+                if (row) {
+                    if (type === 'add') row.classList.add('flash-add');
+                    if (type === 'update') row.classList.add('flash-update');
+                    if (type === 'read') {
+                        row.classList.add('hl-val');
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    setTimeout(() => row.classList.remove('flash-add', 'flash-update', 'hl-val'), 800);
+                }
+            }, 50);
+        }
+
+    </script>
+</body>
+
+</html>

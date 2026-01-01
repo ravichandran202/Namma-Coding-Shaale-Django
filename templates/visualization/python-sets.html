@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Set Pro • Visualizer</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-term: #0f172a;
+            
+            --set-a: #3b82f6;   /* Blue */
+            --set-b: #ec4899;   /* Pink */
+            --result: #10b981;  /* Green */
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            gap: 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: var(--border);
+        }
+        h1 { margin: 0; background: linear-gradient(to right, var(--set-a), var(--set-b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- THE STAGE (Visual Sets) --- */
+        .stage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .set-box {
+            background: var(--bg-card);
+            border: var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 250px;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .set-a-style { border-top: 4px solid var(--set-a); }
+        .set-b-style { border-top: 4px solid var(--set-b); }
+
+        .set-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .set-content {
+            flex: 1;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 10px;
+            min-height: 150px;
+        }
+
+        /* Items (Bubbles) */
+        .item {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: default;
+            transition: all 0.3s;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .item.in-a { color: var(--set-a); border-color: rgba(59, 130, 246, 0.3); }
+        .item.in-b { color: var(--set-b); border-color: rgba(236, 72, 153, 0.3); }
+        .item.in-res { color: var(--result); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1); }
+
+        /* Highlight States for Operations */
+        .item.dim { opacity: 0.2; filter: grayscale(100%); transform: scale(0.9); }
+        .item.highlight { 
+            background: white; 
+            color: #000; 
+            box-shadow: 0 0 15px rgba(255,255,255,0.5); 
+            transform: scale(1.1); 
+            z-index: 10;
+        }
+
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+
+        /* --- CONTROLS --- */
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+        }
+
+        .panel-col {
+            background: var(--bg-card);
+            border: var(--border);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .col-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 5px;
+        }
+
+        .input-group { display: flex; gap: 8px; margin-bottom: 8px; }
+        
+        input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            width: 100%;
+            font-family: 'Fira Code', monospace;
+        }
+        input:focus { border-color: var(--set-a); }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        button:hover { background: rgba(255,255,255,0.2); }
+        
+        /* Math Ops Buttons */
+        .btn-op { display: block; width: 100%; margin-bottom: 8px; text-align: left; position: relative; }
+        .btn-op:hover { padding-left: 16px; color: var(--result); }
+        .op-symbol { float: right; opacity: 0.5; }
+
+        /* --- RESULT TERMINAL --- */
+        .terminal {
+            grid-column: 1 / -1;
+            background: var(--bg-term);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .term-line { display: flex; gap: 10px; align-items: flex-start; }
+        .prompt { color: var(--text-muted); }
+        .cmd { color: #fff; }
+        .comment { color: #64748b; font-style: italic; }
+        
+        .res-set { color: var(--result); }
+        .res-bool-true { color: var(--result); font-weight: bold; }
+        .res-bool-false { color: #ef4444; font-weight: bold; }
+
+        /* Error Toast */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Python Set Operations</h1>
+            <div style="font-size:0.9rem; color:var(--text-muted)">Unordered Collections & Venn Logic</div>
+        </div>
+        <div>
+            <button onclick="resetAll()">Reset All</button>
+        </div>
+    </header>
+
+    <div class="stage-grid">
+        <div class="set-box set-a-style">
+            <div class="set-header">
+                <span style="color:var(--set-a)">Set A</span>
+                <span style="font-size:0.8rem; opacity:0.6" id="len-a">len: 0</span>
+            </div>
+            <div class="set-content" id="view-a"></div>
+        </div>
+
+        <div class="set-box set-b-style">
+            <div class="set-header">
+                <span style="color:var(--set-b)">Set B</span>
+                <span style="font-size:0.8rem; opacity:0.6" id="len-b">len: 0</span>
+            </div>
+            <div class="set-content" id="view-b"></div>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        
+        <div class="panel-col">
+            <div class="col-title">Modify Set A</div>
+            
+            <div class="input-group">
+                <input type="text" id="input-add-a" placeholder="Element (e.g. 5)" onkeypress="handleEnter(event, 'btn-add-a')">
+                <button id="btn-add-a" onclick="modifyA('add')" style="background:var(--set-a)">Add</button>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:10px;">
+                <button onclick="modifyA('remove')">.remove(x)</button>
+                <button onclick="modifyA('discard')">.discard(x)</button>
+                <button onclick="modifyA('pop')">.pop()</button>
+                <button onclick="modifyA('clear')" style="color:#ef4444">.clear()</button>
+            </div>
+            <div style="margin-top:10px; font-size:0.75rem; color:var(--text-muted)">
+                *Pop removes arbitrary item
+            </div>
+        </div>
+
+        <div class="panel-col">
+            <div class="col-title">Mathematical Operations (Returns New Set)</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div>
+                    <button class="btn-op" onclick="doMath('union')">A.union(B) <span class="op-symbol">|</span></button>
+                    <button class="btn-op" onclick="doMath('intersection')">A.intersection(B) <span class="op-symbol">&</span></button>
+                </div>
+                <div>
+                    <button class="btn-op" onclick="doMath('difference')">A.difference(B) <span class="op-symbol">-</span></button>
+                    <button class="btn-op" onclick="doMath('symmetric_difference')">A.sym_diff(B) <span class="op-symbol">^</span></button>
+                </div>
+            </div>
+            
+            <div class="col-title" style="margin-top:15px;">Boolean Checks</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
+                <button onclick="checkBool('issubset')">A &lt;= B</button>
+                <button onclick="checkBool('issuperset')">A &gt;= B</button>
+                <button onclick="checkBool('isdisjoint')">Disjoint?</button>
+            </div>
+        </div>
+
+        <div class="panel-col">
+            <div class="col-title">Modify Set B</div>
+             <div class="input-group">
+                <input type="text" id="input-add-b" placeholder="Element" onkeypress="handleEnter(event, 'btn-add-b')">
+                <button id="btn-add-b" onclick="modifyB('add')" style="background:var(--set-b)">Add</button>
+            </div>
+            <div style="margin-top:10px;">
+                <button style="width:100%" onclick="modifyB('clear')">B.clear()</button>
+            </div>
+            <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+                 <button style="width:100%" onclick="quickFill()">⚡ Quick Fill Demo</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="terminal" id="terminal">
+        <div class="term-line">
+            <span class="prompt">>>></span>
+            <span class="comment"># Results appear here...</span>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast">Error Message</div>
+
+<script>
+    // --- STATE ---
+    // Note: We use Arrays internally to manage rendering easily, but Logic mimics Sets
+    let setA = new Set([1, 2, 3, 4]);
+    let setB = new Set([3, 4, 5, 6]);
+
+    // --- DOM ---
+    const viewA = document.getElementById('view-a');
+    const viewB = document.getElementById('view-b');
+    const term = document.getElementById('terminal');
+    const toast = document.getElementById('toast');
+
+    // --- INIT ---
+    render();
+
+    function render() {
+        renderSet(setA, viewA, 'in-a');
+        renderSet(setB, viewB, 'in-b');
+        document.getElementById('len-a').innerText = `len: ${setA.size}`;
+        document.getElementById('len-b').innerText = `len: ${setB.size}`;
+    }
+
+    function renderSet(setObj, container, cls) {
+        container.innerHTML = '';
+        if(setObj.size === 0) {
+            container.innerHTML = '<span style="color:rgba(255,255,255,0.1); font-style:italic;">set()</span>';
+            return;
+        }
+        
+        // Convert to array and sort for visual stability (Sets are unordered, but UI needs order)
+        const arr = Array.from(setObj).sort(); 
+        
+        arr.forEach(val => {
+            const el = document.createElement('div');
+            el.className = `item ${cls}`;
+            el.innerText = typeof val === 'string' ? `'${val}'` : val;
+            el.dataset.val = val; // For highlighting logic
+            container.appendChild(el);
+        });
+    }
+
+    // --- MODIFICATION METHODS ---
+
+    function modifyA(method) {
+        const input = document.getElementById('input-add-a');
+        const val = parseValue(input.value);
+        
+        // Log setup
+        let cmdStr = '';
+        let comment = '';
+
+        try {
+            if (method === 'add') {
+                if(input.value.trim() === '') return;
+                setA.add(val);
+                cmdStr = `A.add(${fmt(val)})`;
+                input.value = '';
+            } 
+            else if (method === 'remove') {
+                if(input.value.trim() === '') return;
+                cmdStr = `A.remove(${fmt(val)})`;
+                if (!setA.has(val)) throw new Error(`KeyError: ${val}`);
+                setA.delete(val);
+                input.value = '';
+            } 
+            else if (method === 'discard') {
+                if(input.value.trim() === '') return;
+                cmdStr = `A.discard(${fmt(val)})`;
+                setA.delete(val); // No error if missing
+                input.value = '';
+            } 
+            else if (method === 'pop') {
+                cmdStr = `A.pop()`;
+                if (setA.size === 0) throw new Error("KeyError: 'pop from an empty set'");
+                // Simulate arbitrary pop (first item in iterator)
+                const item = setA.values().next().value;
+                setA.delete(item);
+                comment = `# Removed ${fmt(item)}`;
+            } 
+            else if (method === 'clear') {
+                cmdStr = `A.clear()`;
+                setA.clear();
+            }
+
+            log(cmdStr, comment);
+            render();
+
+        } catch (e) {
+            showError(e.message);
+            log(cmdStr, `# Error: ${e.message}`);
+        }
+    }
+
+    function modifyB(method) {
+        const input = document.getElementById('input-add-b');
+        const val = parseValue(input.value);
+
+        if (method === 'add') {
+            if(input.value.trim() === '') return;
+            setB.add(val);
+            log(`B.add(${fmt(val)})`);
+            input.value = '';
+        } else if (method === 'clear') {
+            setB.clear();
+            log(`B.clear()`);
+        }
+        render();
+    }
+
+    // --- MATH OPERATIONS ---
+
+    function doMath(op) {
+        // Visual Reset
+        clearHighlights();
+
+        let res = new Set();
+        let cmd = '';
+        let operator = '';
+
+        // Logic
+        if (op === 'union') {
+            res = new Set([...setA, ...setB]);
+            cmd = 'A.union(B)';
+            operator = '|';
+            // Highlight All
+            highlightAll(viewA);
+            highlightAll(viewB);
+        } 
+        else if (op === 'intersection') {
+            res = new Set([...setA].filter(x => setB.has(x)));
+            cmd = 'A.intersection(B)';
+            operator = '&';
+            // Highlight Matches
+            highlightMatches(viewA, res);
+            highlightMatches(viewB, res);
+            dimNonMatches(viewA, res);
+            dimNonMatches(viewB, res);
+        } 
+        else if (op === 'difference') {
+            res = new Set([...setA].filter(x => !setB.has(x)));
+            cmd = 'A.difference(B)';
+            operator = '-';
+            // Highlight Unique in A
+            highlightMatches(viewA, res);
+            dimMatches(viewA, setB); // Dim intersection
+            dimAll(viewB); // B is irrelevant in result
+        } 
+        else if (op === 'symmetric_difference') {
+            // (A - B) | (B - A)
+            const aDiff = [...setA].filter(x => !setB.has(x));
+            const bDiff = [...setB].filter(x => !setA.has(x));
+            res = new Set([...aDiff, ...bDiff]);
+            cmd = 'A.symmetric_difference(B)';
+            operator = '^';
+            
+            highlightMatches(viewA, new Set(aDiff));
+            highlightMatches(viewB, new Set(bDiff));
+            dimMatches(viewA, setB); // Dim overlap
+            dimMatches(viewB, setA); // Dim overlap
+        }
+
+        // Render Result in Terminal
+        const resStr = `{${Array.from(res).map(fmt).join(', ')}}`;
+        const logHtml = `
+            <div class="term-line">
+                <span class="prompt">>>></span>
+                <span class="cmd">${cmd}</span>
+                <span class="comment"># or A ${operator} B</span>
+            </div>
+            <div class="term-line">
+                <span class="res-set">${resStr}</span>
+            </div>
+        `;
+        appendLog(logHtml);
+        
+        // Auto clear highlights after delay
+        setTimeout(clearHighlights, 2000);
+    }
+
+    // --- BOOLEAN CHECKS ---
+
+    function checkBool(check) {
+        let res = false;
+        let cmd = '';
+        let op = '';
+
+        if (check === 'issubset') {
+            // Every el in A is in B
+            res = [...setA].every(x => setB.has(x));
+            cmd = 'A.issubset(B)';
+            op = '<=';
+        } 
+        else if (check === 'issuperset') {
+            // Every el in B is in A
+            res = [...setB].every(x => setA.has(x));
+            cmd = 'A.issuperset(B)';
+            op = '>=';
+        } 
+        else if (check === 'isdisjoint') {
+            // No common elements
+            res = ![...setA].some(x => setB.has(x));
+            cmd = 'A.isdisjoint(B)';
+        }
+
+        const resClass = res ? 'res-bool-true' : 'res-bool-false';
+        const logHtml = `
+            <div class="term-line">
+                <span class="prompt">>>></span>
+                <span class="cmd">${cmd}</span>
+                <span class="comment">${op ? '# or A ' + op + ' B' : ''}</span>
+            </div>
+            <div class="term-line">
+                <span class="${resClass}">${res}</span>
+            </div>
+        `;
+        appendLog(logHtml);
+    }
+
+    // --- VISUAL EFFECTS ---
+
+    function highlightAll(container) {
+        Array.from(container.children).forEach(el => el.classList.add('highlight'));
+    }
+    
+    function dimAll(container) {
+        Array.from(container.children).forEach(el => el.classList.add('dim'));
+    }
+
+    function highlightMatches(container, matchSet) {
+        Array.from(container.children).forEach(el => {
+            // Convert dataset val back to type if needed, strict comparison usually fine for strings/nums here
+            // Simplified: compare strings
+            const valStr = el.innerText.replace(/'/g, ''); 
+            // Check if valStr exists in matchSet (converted to strings for safe compare)
+            const match = [...matchSet].some(x => String(x) === valStr);
+            if(match) el.classList.add('highlight');
+        });
+    }
+
+    function dimNonMatches(container, keepSet) {
+         Array.from(container.children).forEach(el => {
+            const valStr = el.innerText.replace(/'/g, ''); 
+            const match = [...keepSet].some(x => String(x) === valStr);
+            if(!match) el.classList.add('dim');
+        });
+    }
+
+    function dimMatches(container, dimSet) {
+        Array.from(container.children).forEach(el => {
+            const valStr = el.innerText.replace(/'/g, ''); 
+            const match = [...dimSet].some(x => String(x) === valStr);
+            if(match) el.classList.add('dim');
+        });
+    }
+
+    function clearHighlights() {
+        document.querySelectorAll('.item').forEach(el => {
+            el.classList.remove('highlight', 'dim');
+        });
+    }
+
+    // --- UTILS ---
+
+    function parseValue(str) {
+        const trimmed = str.trim();
+        if (!isNaN(trimmed) && trimmed !== '') return Number(trimmed);
+        return trimmed;
+    }
+
+    function fmt(val) {
+        return typeof val === 'string' ? `'${val}'` : val;
+    }
+
+    function log(cmd, comment = '') {
+        const html = `
+            <div class="term-line">
+                <span class="prompt">>>></span>
+                <span class="cmd">${cmd}</span>
+                <span class="comment">${comment}</span>
+            </div>
+        `;
+        appendLog(html);
+    }
+
+    function appendLog(html) {
+        term.innerHTML += html;
+        term.scrollTop = term.scrollHeight;
+    }
+
+    function showError(msg) {
+        toast.innerText = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 3000);
+    }
+
+    function handleEnter(e, btnId) {
+        if(e.key === 'Enter') document.getElementById(btnId).click();
+    }
+
+    function resetAll() {
+        setA = new Set();
+        setB = new Set();
+        render();
+        term.innerHTML = '';
+        log('# Reset complete');
+    }
+
+    function quickFill() {
+        setA = new Set([1, 2, 3, 4, 'apple']);
+        setB = new Set([3, 4, 5, 6, 'apple']);
+        render();
+        log('# Sets populated for demo');
+    }
+
+</script>
+</body>
+</html>
