@@ -2,627 +2,802 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Python Visualizer v18 (Fixed)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python List Pro • Visualizer</title>
     <style>
-        /* --- PREMIUM THEME --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
-            --bg-deep: #020617;
-            --bg-panel: #0f172a;
-            --border: 1px solid rgba(255, 255, 255, 0.1);
-            --primary: #6366f1; 
-            --accent: #d946ef;
-            --success: #10b981;
-            --danger: #ef4444;
-            --text: #f1f5f9;
-            --muted: #64748b;
-            --font-code: 'JetBrains Mono', monospace;
+            /* Palette: Modern Dark Theme */
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-terminal: #1e1e1e;
+            
+            --primary: #3b82f6;   /* Blue */
+            --accent: #8b5cf6;    /* Purple */
+            --success: #10b981;   /* Green */
+            --danger: #ef4444;    /* Red */
+            --warning: #f59e0b;   /* Amber */
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; outline: none; }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: var(--bg-deep); color: var(--text);
-            margin: 0; padding: 20px; height: 100vh;
-            display: flex; flex-direction: column; overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden; /* Prevent body scroll from large elements */
         }
 
-        h1 { margin: 0; font-size: 1.5rem; text-align: center; color: var(--text); letter-spacing: -0.5px; }
-        .subtitle { text-align: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 20px; }
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding-bottom: 50px;
+        }
 
-        /* --- LAYOUT --- */
-        .workspace {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-            width: 100%; max-width: 1400px; flex-grow: 1; overflow: hidden;
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border: var(--glass-border);
+            white-space: nowrap;
+        }
+
+        /* --- VISUALIZATION STAGE --- */
+        .stage {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 24px;
+            min-height: 220px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            /* Scroll Handling */
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        /* Custom Scrollbar */
+        .stage::-webkit-scrollbar { height: 10px; }
+        .stage::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .stage::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .stage::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        .list-track {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 0 auto; /* Center content if small */
+            min-width: min-content; /* Ensure scroll works */
+            padding-right: 40px; /* Space for end bracket */
+        }
+
+        .bracket {
+            font-size: 5rem;
+            color: rgba(255,255,255,0.1);
+            font-family: 'Fira Code', monospace;
+            font-weight: 300;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        /* --- CARD ITEM --- */
+        .node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* CRITICAL FIX: Prevents items from squishing */
+            flex-shrink: 0; 
+        }
+
+        .node-card {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #2a3b55, #1e293b);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem; /* Adjusted for longer text */
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: transform 0.2s;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .node-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(145deg, var(--primary), #2563eb);
+        }
+
+        .idx-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 6px;
+            position: absolute;
+            transition: color 0.2s;
+        }
+        
+        .idx-pos { top: -25px; color: var(--success); opacity: 0.8; }
+        .idx-neg { bottom: -25px; color: var(--danger); opacity: 0.8; }
+
+        /* Animation States */
+        .node-enter { opacity: 0; transform: scale(0.5) translateY(20px); }
+        .node-highlight { border: 2px solid var(--warning); box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); }
+        .node-dim { opacity: 0.3; filter: grayscale(100%); }
+
+        /* --- CONTROL DASHBOARD --- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .panel {
-            background: var(--bg-panel); border: var(--border); border-radius: 12px;
-            display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--bg-card);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
         }
 
-        /* --- EDITOR PANE --- */
-        .editor-container { padding: 15px; display: flex; flex-direction: column; gap: 10px; height: 100%; }
-
-        .toolbar { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
-        .chip {
-            background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 20px;
-            font-size: 0.75rem; color: var(--muted); cursor: pointer; white-space: nowrap; border: 1px solid transparent;
+        .panel-header {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .chip:hover { border-color: var(--primary); color: white; background: rgba(99,102,241,0.1); }
+        .panel-header::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+        .p-green::before { background: var(--success); }
+        .p-red::before { background: var(--danger); }
+        .p-blue::before { background: var(--primary); }
 
-        .editor-stack {
-            flex-grow: 1; position: relative; border-radius: 8px; overflow: hidden;
-            border: 1px solid #334155; background: #0b0f19;
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .code-editor, .execution-view {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            font-family: var(--font-code); font-size: 0.9rem; line-height: 1.6;
-            padding: 15px; border: none; background: transparent; white-space: pre;
+        /* --- INPUTS & BUTTONS --- */
+        input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .code-editor { color: #e2e8f0; resize: none; z-index: 2; }
-        .execution-view { z-index: 1; pointer-events: none; overflow: hidden; display: none; }
-        
-        .exec-line { display: flex; }
-        .ln-num { width: 25px; color: #475569; text-align: right; margin-right: 15px; }
-        .ln-code { color: #cbd5e1; }
-        
-        .active-line { background: rgba(99, 102, 241, 0.2); border-left: 3px solid var(--primary); }
-        .active-line .ln-num { color: var(--primary); font-weight: bold; }
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
 
-        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        input.w-sm { width: 60px; text-align: center; }
+
         button {
-            padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
-            font-family: var(--font-code); font-size: 0.85rem; transition: 0.2s;
-        }
-        .btn-load { background: var(--primary); color: white; }
-        .btn-load:hover { background: #4f46e5; }
-        .btn-step { background: var(--success); color: #020617; }
-        .btn-reset { background: #334155; color: white; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
-
-        /* --- VISUALIZER PANE --- */
-        .visual-container { padding: 20px; display: flex; flex-direction: column; gap: 20px; height: 100%; overflow-y: auto; }
-
-        .section-title {
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: bold;
-            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; margin-bottom: 10px;
-        }
-
-        /* Var Grid */
-        .var-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
-        .var-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
-            padding: 10px; border-radius: 8px; text-align: center; transition: 0.3s;
-        }
-        .v-name { color: var(--muted); font-size: 0.7rem; font-family: var(--font-code); }
-        .v-val { font-size: 1.1rem; font-weight: bold; color: var(--text); font-family: var(--font-code); margin-top: 4px; }
-        .updated { border-color: var(--accent); background: rgba(217, 70, 239, 0.15); transform: scale(1.05); }
-
-        /* Matrix Stage */
-        .stage-area {
-            flex-grow: 1; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; min-height: 250px;
-            padding: 20px; overflow: auto; flex-direction: column;
+            border: none;
+            border-radius: 8px;
+            padding: 0 16px;
+            font-family: 'Fira Code', monospace; /* Use code font for method names */
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
-        .matrix-grid { display: grid; gap: 8px; transition: all 0.3s; }
-        .cell {
-            width: 50px; height: 50px; background: #1e293b; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-code); font-weight: bold; color: #64748b;
-            border: 2px solid #334155; transition: 0.3s; font-size: 1rem; position: relative;
-        }
-        .cell::before { content: attr(data-idx); position: absolute; top: -15px; left: 0; font-size: 0.6rem; opacity: 0; }
-        .cell.active { 
-            background: var(--primary); color: white; border-color: var(--primary); 
-            transform: scale(1.1); z-index: 10; box-shadow: 0 10px 20px rgba(99,102,241,0.4);
+        button:active { transform: scale(0.96); }
+
+        .btn-primary { background: var(--primary); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        .btn-primary:hover { background: #2563eb; }
+
+        .btn-danger { background: var(--danger); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-accent { background: var(--accent); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+        .btn-accent:hover { background: #7c3aed; }
+
+        .btn-ghost { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); color: white; }
+
+        /* --- TERMINAL --- */
+        .terminal {
+            background: var(--bg-terminal);
+            border-radius: 12px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            height: 150px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        /* Terminal */
-        .output-area {
-            flex-grow: 1; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px;
-            font-family: var(--font-code); font-size: 0.85rem; color: #cbd5e1; overflow-y: auto;
-            border: 1px dashed #334155; min-height: 120px;
+        .terminal-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 25px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            gap: 6px;
         }
-        .log-entry { margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
-        @media (max-width: 800px) {
-            .workspace { grid-template-columns: 1fr; overflow-y: auto; }
-            body { padding: 10px; height: auto; }
-            .panel { min-height: 400px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .d-red { background: #ff5f56; }
+        .d-yellow { background: #ffbd2e; }
+        .d-green { background: #27c93f; }
+
+        .terminal-content { margin-top: 20px; }
+        
+        .log-line {
+            margin: 4px 0;
+            line-height: 1.4;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Syntax Highlighting */
+        .hl-method { color: #61afef; } 
+        .hl-str { color: #98c379; }    
+        .hl-num { color: #d19a66; }    
+        .hl-kw { color: #c678dd; }     
+        .hl-comment { color: #5c6370; font-style: italic; }
+        .hl-err { color: #e06c75; }    
+
+        /* --- TOAST --- */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: rgba(30, 41, 59, 0.95);
+            border-left: 4px solid var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            animation: slideIn 0.3s ease-out forwards;
+            min-width: 250px;
+        }
+        .toast.error { border-left-color: var(--danger); }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* --- REFERENCE TABLE --- */
+        .ref-section {
+            background: var(--bg-card);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 10px;
+        }
+        
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .ref-card {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .ref-title {
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .ref-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1>Python Nested Loop Visualizer</h1>
-    <div class="subtitle">Supports: Variables in Range, Matrix, Nested Loops</div>
+    <div class="app-container">
+        <header>
+            <div>
+                <h1>Python List Pro</h1>
+                <div style="font-size:0.9rem; color:var(--text-muted); margin-top:5px;">Interactive Memory Visualizer</div>
+            </div>
+            <div style="text-align: right;">
+                <span class="badge" id="len-badge">len(list): 0</span>
+            </div>
+        </header>
 
-    <div class="workspace">
-        
-        <div class="panel">
-            <div class="editor-container">
-                <div class="toolbar">
-                    <div class="chip" onclick="loadEx('nested')">Nested (i, j)</div>
-                    <div class="chip" onclick="loadEx('matrix')">Matrix Grid</div>
-                    <div class="chip" onclick="loadEx('pyramid')">Star Pyramid</div>
-                    <div class="chip" onclick="loadEx('mult')">Multiplication</div>
-                </div>
-
-                <div class="editor-stack">
-                    <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="Write python code here..."></textarea>
-                    <div id="execution-view" class="execution-view"></div>
-                </div>
-
-                <div class="actions">
-                    <button class="btn-load" id="btn-load" onclick="parseAndLock()">Load Logic</button>
-                    <button class="btn-step" id="btn-step" onclick="step()" disabled>Step Into</button>
-                    <button class="btn-reset" onclick="resetEditor()" style="grid-column: span 2">Edit Code</button>
-                </div>
-                <div id="err-msg" style="color:#ef4444; font-size:0.8rem; text-align:center; min-height:1rem;"></div>
+        <div class="stage" id="stage-el">
+            <div class="list-track">
+                <div class="bracket">[</div>
+                <div id="visual-list" style="display:flex; gap:16px;">
+                    </div>
+                <div class="bracket">]</div>
             </div>
         </div>
 
-        <div class="panel">
-            <div class="visual-container">
-                <div>
-                    <div class="section-title">Variables</div>
-                    <div class="var-grid" id="var-grid">
-                        <div style="color:#64748b; font-size:0.8rem">Waiting...</div>
-                    </div>
+        <div class="dashboard">
+            
+            <div class="panel">
+                <div class="panel-header p-green">Add Items</div>
+                <div class="action-row">
+                    <input type="text" id="append-val" placeholder="Value (e.g. 'A')" onkeypress="handleEnter(event, 'btn-append')">
+                    <button class="btn-primary" id="btn-append" onclick="execAppend()">.append(x)</button>
                 </div>
-
-                <div style="flex-grow:1; display:flex; flex-direction:column;">
-                    <div class="section-title">Grid / Stage</div>
-                    <div class="stage-area" id="stage">
-                        <div style="color:rgba(255,255,255,0.1); font-weight:800; font-size:2rem; text-transform:uppercase;">Stage</div>
-                    </div>
+                <div class="action-row">
+                    <input type="number" id="insert-idx" class="w-sm" placeholder="i">
+                    <input type="text" id="insert-val" placeholder="x">
+                    <button class="btn-primary" onclick="execInsert()">.insert(i,x)</button>
                 </div>
+                <div class="action-row">
+                    <input type="text" id="extend-val" placeholder="a, b, c">
+                    <button class="btn-primary" onclick="execExtend()">.extend(iter)</button>
+                </div>
+            </div>
 
-                <div style="flex-grow:1; display:flex; flex-direction:column;">
-                    <div class="section-title">Terminal Output</div>
-                    <div class="output-area" id="terminal">
-                        <div style="color:#64748b">Ready.</div>
-                    </div>
+            <div class="panel">
+                <div class="panel-header p-red">Remove Items</div>
+                <div class="action-row">
+                    <button class="btn-danger" style="width:100%" onclick="execPop()">.pop()</button>
+                </div>
+                <div class="action-row">
+                    <input type="number" id="pop-idx" class="w-sm" placeholder="i">
+                    <button class="btn-danger" style="flex:1" onclick="execPopIdx()">.pop(i)</button>
+                </div>
+                <div class="action-row">
+                    <input type="text" id="remove-val" placeholder="x">
+                    <button class="btn-danger" onclick="execRemove()">.remove(x)</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header p-blue">Operations</div>
+                <div class="action-row">
+                    <input type="text" id="slice-str" placeholder="start:end (e.g. 1:3)">
+                    <button class="btn-accent" onclick="execSlice()">[i:j]</button>
+                </div>
+                <div class="action-row">
+                    <input type="text" id="index-val" placeholder="x">
+                    <button class="btn-accent" onclick="execIndex()">.index(x)</button>
+                </div>
+                <div class="action-row" style="margin-top:20px; gap:8px;">
+                    <button class="btn-ghost" style="flex:1" onclick="execSort()">.sort()</button>
+                    <button class="btn-ghost" style="flex:1" onclick="execReverse()">.reverse()</button>
+                    <button class="btn-ghost" style="flex:1; color:#ef4444;" onclick="execClear()">.clear()</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-bar">
+                <div class="dot d-red"></div>
+                <div class="dot d-yellow"></div>
+                <div class="dot d-green"></div>
+                <span style="margin-left:10px; color:#aaa; font-size:0.75rem;">zsh — python3</span>
+            </div>
+            <div class="terminal-content" id="terminal-out">
+                <div class="log-line"><span class="hl-comment"># Interactive Python Session</span></div>
+                <div class="log-line"><span class="hl-kw">my_list</span> = [<span class="hl-str">'Py'</span>, <span class="hl-str">'JS'</span>, <span class="hl-str">'C++'</span>]</div>
+            </div>
+        </div>
+
+        <div class="ref-section">
+            <div class="panel-header">Method Reference</div>
+            <div class="ref-grid">
+                <div class="ref-card">
+                    <div class="ref-title">list.append(x)</div>
+                    <div class="ref-desc">Adds an item <code>x</code> to the end of the list.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">list.insert(i, x)</div>
+                    <div class="ref-desc">Inserts item <code>x</code> at a given position <code>i</code>.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">list.pop([i])</div>
+                    <div class="ref-desc">Removes and returns item at position <code>i</code>. Default is last item.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">list.remove(x)</div>
+                    <div class="ref-desc">Removes the first item from the list whose value is equal to <code>x</code>.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">list.extend(iterable)</div>
+                    <div class="ref-desc">Extends list by appending all items from the iterable (e.g., another list).</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">list.sort()</div>
+                    <div class="ref-desc">Sorts the items of the list in place (modifies original).</div>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <div id="toast-container"></div>
+
     <script>
-        // --- PRESETS ---
-        const EXAMPLES = {
-            nested: `limit = 3
-for i in range(limit):
-    print("Outer i=" + str(i))
-    for j in range(2):
-        print("  Inner j=" + str(j))
-print("Done")`,
-            matrix: `grid = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9]
-]
-total = 0
-for r in range(3):
-    for c in range(3):
-        val = grid[r][c]
-        total += val
-        print(total)`,
-            pyramid: `rows = 4
-for i in range(1, rows + 1):
-    line = ""
-    for j in range(i):
-        line += "*"
-    print(line)`,
-            mult: `for i in range(1, 4):
-    for j in range(1, 4):
-        val = i * j
-        print(str(i) + "x" + str(j) + "=" + str(val))`
-        };
+        // --- LOGIC ---
+        let myList = ['Py', 'JS', 'C++'];
+        
+        // DOM Elements
+        const visualList = document.getElementById('visual-list');
+        const terminalOut = document.getElementById('terminal-out');
+        const lenBadge = document.getElementById('len-badge');
 
-        // --- ENGINE STATE ---
-        let engine = {
-            lines: [],
-            steps: [], 
-            stepIdx: 0,
-            vars: {},
-            initialVars: {},
-            matrixName: null
-        };
+        init();
 
-        function loadEx(key) {
-            document.getElementById('code-editor').value = EXAMPLES[key];
-            resetEditor(); 
+        function init() {
+            render();
         }
 
-        function resetEditor() {
-            document.getElementById('code-editor').style.display = 'block';
-            document.getElementById('execution-view').style.display = 'none';
-            document.getElementById('btn-load').style.display = 'block';
-            document.getElementById('btn-step').disabled = true;
-            document.getElementById('err-msg').innerText = '';
-            
-            document.getElementById('var-grid').innerHTML = '<div style="color:#64748b; font-size:0.8rem">Waiting...</div>';
-            document.getElementById('terminal').innerHTML = '<div style="color:#64748b">Ready.</div>';
-            document.getElementById('stage').innerHTML = '<div style="color:rgba(255,255,255,0.1); font-weight:800; font-size:2rem; text-transform:uppercase;">Stage</div>';
-        }
+        // --- RENDER ENGINE ---
+        function render() {
+            visualList.innerHTML = '';
+            lenBadge.innerText = `len(list): ${myList.length}`;
 
-        function parseAndLock() {
-            const rawCode = document.getElementById('code-editor').value;
-            if(!rawCode.trim()) return;
-
-            try {
-                engine = { lines: rawCode.split('\n'), steps: [], stepIdx: 0, vars: {}, initialVars: {}, matrixName: null };
-
-                // 2. Simulate
-                simulateExecution(rawCode);
-
-                // 3. Switch UI
-                document.getElementById('code-editor').style.display = 'none';
-                const execView = document.getElementById('execution-view');
-                execView.style.display = 'block';
-                document.getElementById('btn-load').style.display = 'none';
-                document.getElementById('btn-step').disabled = false;
-
-                // Render Lines
-                execView.innerHTML = '';
-                engine.lines.forEach((line, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'exec-line';
-                    div.id = `line-${i}`;
-                    div.innerHTML = `<span class="ln-num">${i+1}</span><span class="ln-code">${escapeHtml(line)}</span>`;
-                    execView.appendChild(div);
-                });
-
-                // Render Initial State
-                engine.vars = JSON.parse(JSON.stringify(engine.initialVars));
-                renderVars(engine.vars);
-                
-                // Detect Matrix for Stage
-                for(let [k,v] of Object.entries(engine.vars)) {
-                    if(Array.isArray(v) && v.length > 0 && Array.isArray(v[0])) {
-                        engine.matrixName = k;
-                        renderMatrix(v);
-                        break;
-                    }
-                }
-
-                document.getElementById('terminal').innerHTML = '<div style="color:#10b981">> Simulation Started</div>';
-
-            } catch(e) {
-                document.getElementById('err-msg').innerText = e.message;
-            }
-        }
-
-        // --- SIMULATION ENGINE ---
-
-        function simulateExecution(code) {
-            const lines = code.split('\n');
-            let currentVars = {}; 
-
-            // 1. Initial Scan (Pre-Loop)
-            let loopStartLine = -1;
-            let i = 0;
-            // Handle multi-line arrays before execution
-            let parsedLines = [];
-            
-            // Simple pre-processor to join multi-line lists [ ... ]
-            while(i < lines.length) {
-                let line = lines[i];
-                if(line.includes('=') && line.includes('[') && !line.includes(']')) {
-                    let merged = line;
-                    let j = i + 1;
-                    while(j < lines.length) {
-                        merged += " " + lines[j].trim();
-                        if(lines[j].includes(']')) { i = j; break; }
-                        j++;
-                    }
-                    parsedLines.push({ text: merged, originalIdx: i }); // Map to end line roughly
-                } else {
-                    parsedLines.push({ text: line, originalIdx: i });
-                }
-                i++;
-            }
-
-            // Execute logic
-            for(let k=0; k<parsedLines.length; k++) {
-                const lineObj = parsedLines[k];
-                const line = lineObj.text.trim();
-                
-                if(line.startsWith('for ') || line.startsWith('while ')) {
-                    if(loopStartLine === -1) loopStartLine = k;
-                } else if(line.includes('=') && loopStartLine === -1) {
-                    runLine(line, currentVars);
-                }
-            }
-            engine.initialVars = JSON.parse(JSON.stringify(currentVars));
-
-            // Recursive Parser
-            function execBlock(startK, indentLevel) {
-                let k = startK;
-                while(k < parsedLines.length) {
-                    const lineObj = parsedLines[k];
-                    const line = lineObj.text;
-                    const lineNum = lineObj.originalIdx;
-                    
-                    if (line.trim() === '') { k++; continue; }
-                    const currentIndent = line.search(/\S|$/); 
-                    if (currentIndent < indentLevel) return k; 
-
-                    const trimLine = line.trim();
-
-                    // FOR LOOP
-                    if (trimLine.startsWith('for ')) {
-                        const match = trimLine.match(/for\s+(\w+)\s+in\s+(.+):/);
-                        if(!match) throw new Error(`Syntax Error`);
-                        
-                        const iterVar = match[1];
-                        const sourceExpr = match[2];
-                        // FIX: Pass currentVars to evaluateExpr so variables like 'limit' work
-                        let iterable = evaluateExpr(sourceExpr, currentVars);
-
-                        let bodyStart = k + 1;
-                        let nextK = bodyStart;
-                        let limit = 0;
-                        
-                        if (Array.isArray(iterable) || typeof iterable === 'string') {
-                            for (let item of iterable) {
-                                if(limit++ > 100) break;
-                                engine.steps.push({
-                                    line: lineNum,
-                                    type: 'loop',
-                                    updates: { [iterVar]: item }
-                                });
-                                currentVars[iterVar] = item;
-                                nextK = execBlock(bodyStart, currentIndent + 1);
-                            }
-                        }
-                        k = nextK;
-                        continue;
-                    }
-
-                    // ASSIGNMENT
-                    else if (trimLine.includes('=')) {
-                        executeAssignment(trimLine, currentVars, lineNum);
-                    }
-
-                    // PRINT
-                    else if (trimLine.startsWith('print(')) {
-                        const content = trimLine.slice(6, -1);
-                        let output = evaluateComplexPrint(content, currentVars);
-                        
-                        // Check for Matrix Access [i][j] to highlight
-                        let highlight = null;
-                        const matMatch = content.match(/(\w+)\[(\w+)\]\[(\w+)\]/);
-                        if(matMatch && engine.matrixName === matMatch[1]) {
-                            const r = currentVars[matMatch[2]];
-                            const c = currentVars[matMatch[3]];
-                            if(r !== undefined && c !== undefined) highlight = {r, c};
-                        }
-
-                        engine.steps.push({
-                            line: lineNum,
-                            type: 'print',
-                            msg: output,
-                            highlight: highlight
-                        });
-                    }
-
-                    k++;
-                }
-                return k;
-            }
-
-            if(loopStartLine !== -1) execBlock(loopStartLine, 0);
-        }
-
-        // --- HELPERS ---
-
-        function runLine(line, scope) {
-            const parts = line.split('=');
-            const k = parts[0].trim();
-            const v = parts.slice(1).join('=').trim();
-            scope[k] = evaluateExpr(v, scope);
-        }
-
-        function executeAssignment(line, scope, lineNum) {
-            let k, v, op = '=';
-            if(line.includes('+=')) { [k, v] = line.split('+='); op = '+='; }
-            else { [k, v] = line.split('='); }
-
-            k = k.trim();
-            let val = evaluateExpr(v.trim(), scope);
-
-            if(op === '+=') scope[k] += val;
-            else scope[k] = val;
-
-            // Matrix assignment check? Not implemented in visuals yet, just vars
-            engine.steps.push({
-                line: lineNum,
-                type: 'assign',
-                updates: { [k]: scope[k] }
-            });
-        }
-
-        function evaluateExpr(expr, scope) {
-            if (!isNaN(Number(expr))) return Number(expr);
-            if (expr.startsWith('"') || expr.startsWith("'")) return expr.slice(1, -1);
-            if (scope.hasOwnProperty(expr)) return scope[expr];
-
-            // Range
-            if (expr.startsWith('range(')) {
-                const inner = expr.slice(6, -1);
-                const args = inner.split(',').map(arg => {
-                    const a = arg.trim();
-                    if(!isNaN(Number(a))) return Number(a);
-                    if(scope[a] !== undefined) return scope[a]; // Look up var!
-                    return 0;
-                });
-                
-                let start=0, stop=0, step=1;
-                if(args.length === 1) { stop = args[0]; }
-                else if(args.length === 2) { start = args[0]; stop = args[1]; }
-                else { start = args[0]; stop = args[1]; step = args[2]; }
-                
-                let arr = [];
-                if(step > 0) for(let j=start; j<stop; j+=step) arr.push(j);
-                return arr;
-            }
-
-            // Matrix Access: grid[r][c]
-            const matMatch = expr.match(/(\w+)\[(\w+)\]\[(\w+)\]/);
-            if(matMatch) {
-                const m = scope[matMatch[1]];
-                const r = scope[matMatch[2]];
-                const c = scope[matMatch[3]];
-                if(m && m[r] !== undefined) return m[r][c];
-            }
-
-            // List
-            if (expr.startsWith('[')) {
-                try { return JSON.parse(expr.replace(/'/g, '"')); } catch { return []; }
-            }
-
-            return null;
-        }
-
-        function evaluateComplexPrint(content, scope) {
-            const parts = content.split('+');
-            let result = "";
-            parts.forEach(p => {
-                p = p.trim();
-                if(p.startsWith('"') || p.startsWith("'")) result += p.slice(1, -1);
-                else if (p.startsWith('str(')) {
-                    const varName = p.slice(4, -1);
-                    result += (scope[varName] !== undefined ? scope[varName] : "??");
-                } else if (scope[p] !== undefined) result += scope[p];
-                else result += (evaluateExpr(p, scope) || "");
-            });
-            return result;
-        }
-
-        // --- STEPPER ---
-
-        function step() {
-            if(engine.stepIdx >= engine.steps.length) {
-                document.getElementById('btn-step').innerText = "Finished";
-                document.getElementById('btn-step').disabled = true;
+            if (myList.length === 0) {
+                visualList.innerHTML = `<span style="color:rgba(255,255,255,0.2); font-style:italic;">Empty List []</span>`;
                 return;
             }
 
-            const s = engine.steps[engine.stepIdx];
-
-            // Highlight Line
-            document.querySelectorAll('.exec-line').forEach(el => el.classList.remove('active-line'));
-            const lineEl = document.getElementById(`line-${s.line}`);
-            if(lineEl) {
-                lineEl.classList.add('active-line');
-                lineEl.scrollIntoView({behavior: 'smooth', block: 'center'});
-            }
-
-            // Update Vars
-            if(s.updates) {
-                for(let [k,v] of Object.entries(s.updates)) updateVarCard(k, v);
-            }
-
-            // Update Matrix Highlight
-            if(s.highlight) {
-                document.querySelectorAll('.cell').forEach(c => c.classList.remove('active'));
-                const cell = document.getElementById(`cell-${s.highlight.r}-${s.highlight.c}`);
-                if(cell) cell.classList.add('active');
-            }
-
-            // Terminal
-            if(s.type === 'print') {
-                const term = document.getElementById('terminal');
-                const div = document.createElement('div');
-                div.className = 'log-entry';
-                div.innerText = s.msg;
-                term.appendChild(div);
-                term.scrollTop = term.scrollHeight;
-            }
-
-            engine.stepIdx++;
-        }
-
-        // --- RENDERERS ---
-
-        function updateVarCard(k, v) {
-            if(k === engine.matrixName) return; 
-            let card = document.getElementById(`card-${k}`);
-            if(!card) {
-                const grid = document.getElementById('var-grid');
-                if(grid.innerHTML.includes('Waiting')) grid.innerHTML = '';
-                card = document.createElement('div');
-                card.className = 'var-card';
-                card.id = `card-${k}`;
-                card.innerHTML = `<div class="v-name">${k}</div><div class="v-val" id="val-${k}"></div>`;
-                grid.appendChild(card);
-            }
-            const valEl = document.getElementById(`val-${k}`);
-            valEl.innerText = formatVal(v);
-            card.classList.add('updated');
-            setTimeout(() => card.classList.remove('updated'), 500);
-        }
-
-        function renderVars(varsObj) {
-            const grid = document.getElementById('var-grid');
-            grid.innerHTML = '';
-            for(let [k,v] of Object.entries(varsObj)) {
-                if(k === engine.matrixName) continue;
+            myList.forEach((val, i) => {
+                const node = document.createElement('div');
+                node.className = 'node-wrapper node-enter';
+                node.style.animationDelay = `${i * 0.05}s`;
+                node.id = `node-${i}`;
+                
+                // Card
                 const card = document.createElement('div');
-                card.className = 'var-card';
-                card.id = `card-${k}`;
-                card.innerHTML = `<div class="v-name">${k}</div><div class="v-val" id="val-${k}">${formatVal(v)}</div>`;
-                grid.appendChild(card);
-            }
-        }
+                card.className = 'node-card';
+                card.innerText = val;
+                
+                // Click to Rename
+                card.onclick = () => {
+                    const newVal = prompt(`my_list[${i}] = ?`, val);
+                    if (newVal !== null && newVal !== val) {
+                        myList[i] = newVal;
+                        log(`my_list[<span class="hl-num">${i}</span>] = <span class="hl-str">'${newVal}'</span>`);
+                        render();
+                        showToast('Item updated');
+                    }
+                };
 
-        function renderMatrix(matrix) {
-            const stage = document.getElementById('stage');
-            stage.innerHTML = '';
-            if(!matrix || !matrix.length) return;
+                // Indices
+                const idxPos = document.createElement('div');
+                idxPos.className = 'idx-pill idx-pos';
+                idxPos.innerText = i;
 
-            const grid = document.createElement('div');
-            grid.className = 'matrix-grid';
-            grid.style.display = 'grid';
-            grid.style.gap = '8px';
-            grid.style.gridTemplateColumns = `repeat(${matrix[0].length}, 1fr)`;
+                const idxNeg = document.createElement('div');
+                idxNeg.className = 'idx-pill idx-neg';
+                idxNeg.innerText = -(myList.length - i);
 
-            matrix.forEach((row, r) => {
-                row.forEach((val, c) => {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    cell.id = `cell-${r}-${c}`;
-                    cell.innerText = val;
-                    // Add coordinate tooltips
-                    cell.title = `[${r}][${c}]`;
-                    grid.appendChild(cell);
-                });
+                node.appendChild(idxPos);
+                node.appendChild(card);
+                node.appendChild(idxNeg);
+                
+                visualList.appendChild(node);
             });
-            stage.appendChild(grid);
+            
+            // Remove animation class after run
+            setTimeout(() => {
+                document.querySelectorAll('.node-wrapper').forEach(el => el.classList.remove('node-enter'));
+            }, 500);
         }
 
-        function formatVal(v) {
-            if(Array.isArray(v)) {
-                if(v.length > 0 && Array.isArray(v[0])) return `Matrix[${v.length}x${v[0].length}]`;
-                return `[${v.join(', ')}]`;
+        // --- OPERATIONS ---
+
+        function execAppend() {
+            const el = document.getElementById('append-val');
+            const val = el.value.trim();
+            if(!val) return shake(el);
+            
+            myList.push(val);
+            logCmd('append', `'${val}'`);
+            render();
+            el.value = '';
+            scrollToRight();
+        }
+
+        function execExtend() {
+            const el = document.getElementById('extend-val');
+            const val = el.value.trim();
+            if(!val) return shake(el);
+
+            const items = val.split(',').map(item => item.trim()).filter(item => item);
+            if(items.length === 0) return;
+
+            myList.push(...items);
+            logCmd('extend', `[${items.map(i => `'${i}'`).join(', ')}]`);
+            render();
+            el.value = '';
+            scrollToRight();
+        }
+
+        function execInsert() {
+            const iEl = document.getElementById('insert-idx');
+            const vEl = document.getElementById('insert-val');
+            
+            if(!iEl.value || !vEl.value) return showToast('Missing inputs', true);
+            
+            const idx = parseInt(iEl.value);
+            myList.splice(idx, 0, vEl.value);
+            logCmd('insert', `${idx}, '${vEl.value}'`);
+            render();
+            
+            iEl.value = ''; vEl.value = '';
+        }
+
+        function execPop() {
+            if(myList.length === 0) return showError('IndexError: pop from empty list');
+            
+            const val = myList.pop();
+            logCmd('pop', '', `'${val}'`);
+            render();
+        }
+
+        function execPopIdx() {
+            const el = document.getElementById('pop-idx');
+            if(!el.value) return shake(el);
+            
+            const idx = parseInt(el.value);
+            if(idx < 0 || idx >= myList.length) return showError('IndexError: pop index out of range');
+            
+            const val = myList.splice(idx, 1)[0];
+            logCmd('pop', idx, `'${val}'`);
+            render();
+            el.value = '';
+        }
+
+        function execRemove() {
+            const el = document.getElementById('remove-val');
+            const val = el.value.trim();
+            if(!val) return shake(el);
+            
+            const idx = myList.indexOf(val);
+            if(idx === -1) return showError(`ValueError: list.remove(x): x not in list`);
+            
+            myList.splice(idx, 1);
+            logCmd('remove', `'${val}'`);
+            render();
+            el.value = '';
+        }
+
+        function execSlice() {
+            const el = document.getElementById('slice-str');
+            const raw = el.value.trim();
+            
+            let start = 0;
+            let end = myList.length;
+            
+            if (raw.includes(':')) {
+                const parts = raw.split(':');
+                if (parts[0] !== '') start = parseInt(parts[0]);
+                if (parts[1] !== '') end = parseInt(parts[1]);
+            } else {
+                return showToast("Syntax: start:end", true);
             }
-            return v;
+            
+            // Normalize for Visualization Highlight
+            // (Note: Python slicing is complex, this is a visual approximation for simple positive/negative slices)
+            let actualStart = start < 0 ? Math.max(0, myList.length + start) : Math.max(0, start);
+            let actualEnd = end < 0 ? Math.max(0, myList.length + end) : Math.min(myList.length, end);
+            
+            // Generate visual feedback
+            const wrappers = document.querySelectorAll('.node-wrapper');
+            const cards = document.querySelectorAll('.node-card');
+            
+            cards.forEach(c => c.classList.remove('node-highlight'));
+            wrappers.forEach(w => w.classList.remove('node-dim'));
+
+            let resultSlice = [];
+
+            myList.forEach((val, i) => {
+                if (i >= actualStart && i < actualEnd) {
+                    cards[i].classList.add('node-highlight');
+                    resultSlice.push(val);
+                } else {
+                    wrappers[i].classList.add('node-dim');
+                }
+            });
+
+            log(`my_list[<span class="hl-num">${raw}</span>] <span class="hl-comment"># -> ['${resultSlice.join("', '")}']</span>`);
+            
+            setTimeout(() => {
+                cards.forEach(c => c.classList.remove('node-highlight'));
+                wrappers.forEach(w => w.classList.remove('node-dim'));
+            }, 2500);
         }
 
-        function escapeHtml(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+        function execIndex() {
+            const el = document.getElementById('index-val');
+            const val = el.value.trim();
+            if(!val) return shake(el);
 
-        loadEx('nested');
+            const idx = myList.indexOf(val);
+            logCmd('index', `'${val}'`);
+
+            if(idx === -1) {
+                showError(`ValueError: '${val}' is not in list`);
+            } else {
+                log(`<span class="hl-num">${idx}</span>`);
+                const card = document.querySelector(`#node-${idx} .node-card`);
+                if(card) {
+                    card.classList.add('node-highlight');
+                    setTimeout(() => card.classList.remove('node-highlight'), 1500);
+                }
+            }
+        }
+
+        function execSort() {
+            myList.sort();
+            logCmd('sort');
+            render();
+        }
+
+        function execReverse() {
+            myList.reverse();
+            logCmd('reverse');
+            render();
+        }
+
+        function execClear() {
+            myList = [];
+            logCmd('clear');
+            render();
+        }
+
+        // --- UTILS ---
+
+        function logCmd(method, args = '', result = null) {
+            let html = `<span class="hl-kw">my_list</span>.<span class="hl-method">${method}</span>(${args})`;
+            if(result) html += ` <span class="hl-comment"># -> ${result}</span>`;
+            log(html);
+        }
+
+        function log(html) {
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            line.innerHTML = `>>> ${html}`;
+            terminalOut.appendChild(line);
+            terminalOut.scrollTop = terminalOut.scrollHeight;
+        }
+
+        function showError(msg) {
+            log(`<span class="hl-err">${msg}</span>`);
+            showToast(msg, true);
+        }
+
+        function showToast(msg, isError = false) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.innerText = msg;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease-in reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function shake(el) {
+            el.style.borderColor = 'var(--danger)';
+            el.style.transform = 'translateX(5px)';
+            setTimeout(() => {
+                el.style.transform = 'translateX(-5px)';
+            }, 100);
+            setTimeout(() => {
+                el.style.transform = 'translateX(0)';
+                el.style.borderColor = 'rgba(255,255,255,0.1)';
+            }, 300);
+        }
+        
+        function scrollToRight() {
+            // Need a slight delay to allow DOM to update width
+            setTimeout(() => {
+                const stage = document.getElementById('stage-el');
+                stage.scrollTo({ left: stage.scrollWidth, behavior: 'smooth' });
+            }, 100);
+        }
+
+        function handleEnter(e, btnId) {
+            if(e.key === 'Enter') document.getElementById(btnId).click();
+        }
 
     </script>
 </body>
