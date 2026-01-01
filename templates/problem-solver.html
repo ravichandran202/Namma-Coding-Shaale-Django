@@ -1,1359 +1,671 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <title>Sum of Two Numbers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <title>Problem Solver</title>
+
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --row-hover: #f1f5f9;
-            --meter-background: #e2e8f0;
-            --meter-fill: #3b82f6;
-            --sidebar-width: 280px;
-            --sidebar-bg: #ffffff;
-            --sidebar-text: #1e293b;
-            --sidebar-active-bg: #f1f5f9;
-            --sidebar-hover-bg: #f8fafc;
-            --console-bg: #1e293b;
-            --console-text: #e2e8f0;
+            --bg-body: #ffffff;
+            --bg-gray: #f7f8fa;
+            --bg-tab-bar: #f2f3f5;
+
+            --border: #e5e5e5;
+            --border-hover: #d1d5db;
+
+            --text-main: #262626;
+            --text-muted: #5c5c5c;
+            --text-faint: #a3a3a3;
+
+            --brand-green: #2cbb5d;
+            --brand-red: #ef4743;
+            --accent-blue: #0a84ff;
+
+            --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+
+            --header-h: 52px;
         }
-    
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
+            outline: none;
         }
-    
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            font-weight: 400;
-            line-height: 1.5;
+            margin: 0;
+            background: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            font-size: 14.5px;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-    
-        #main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            flex-direction: column;
-        }
-    
-        @media (min-width: 769px) {
-            #main {
-                flex-direction: row;
-            }
-        }
-    
-        /* PREMIUM PROBLEM SECTION */
-        #problem-section {
-            width: 100%;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border-right: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 2.5rem;
-            overflow-y: auto;
-            border-radius: 20px;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.06),
-                0 2px 8px rgba(0, 0, 0, 0.03),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
-            margin: 1rem;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-    
-        #problem-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-            border-radius: 20px 20px 0 0;
-        }
-    
-        #problem-section::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-            border-radius: 20px;
-        }
-    
-        /* Premium Header Styles */
-        #problem-section h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: #1e293b;
-            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-    
-        #problem-section h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            border-radius: 2px;
-        }
-    
-        /* Premium Problem Meta */
-        .problem-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem 1.25rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        }
-    
-        .difficulty {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .difficulty.easy {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-        
-        .difficulty.medium {
-            background-color: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-        
-        .difficulty.hard {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-    
-        /* Premium Section Headers */
-        #problem-section h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
-            position: relative;
-            padding-left: 1rem;
-        }
-    
-        #problem-section h2::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 20px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border-radius: 2px;
-        }
-    
-        #problem-section h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 1.75rem;
-            margin-bottom: 0.75rem;
-            color: #334155;
-            padding-left: 0.75rem;
-            border-left: 3px solid #cbd5e1;
-        }
-    
-        /* Premium Paragraphs */
-        #problem-section p {
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #475569;
-            text-align: justify;
-        }
-    
-        /* Premium Code Blocks */
-    #problem-section pre {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        overflow-x: auto;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 0.85rem;
-        margin-bottom: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 
-            0 4px 16px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        position: relative;
-        color: rgb(188, 187, 187);
-    }
-    
-    #problem-section pre::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        border-radius: 12px 12px 0 0;
-    }
-    
-    #problem-section pre code {
-        background: none;
-        padding: 0;
-        border-radius: 0;
-        color: #e2e8f0 !important;
-        font-weight: 400;
-        font-family: 'Courier New', Courier, monospace !important;
-    }
-    
-        /* Premium Inline Code */
-        #problem-section code:not(pre code) {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: #475569;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-    
-        /* Premium Constraints Section */
-        .constraints {
-            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
-            padding: 1.75rem;
-            border-radius: 16px;
-            border-left: 4px solid #f59e0b;
-            margin-top: 2rem;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            position: relative;
             overflow: hidden;
         }
-    
-        .constraints::before {
-            content: '⚠️';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            opacity: 0.1;
-        }
-    
-        /* .constraints h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: #92400e;
-            border-left: none;
-            padding-left: 0;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        } */
-    
-        .constraints h3::before {
-            content: '📋';
-            font-size: 1.1rem;
-        }
-    
-        .constraints ul {
-            margin-left: 0;
-            list-style-type: none;
-        }
-    
-        .constraints li {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            color: #92400e;
-            line-height: 1.5;
-        }
-    
-        .constraints li::before {
-            content: "•";
-            color: #f59e0b;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-            margin-right: 0.5rem;
-            font-size: 1.2rem;
-        }
-    
-        /* Premium Examples Section */
 
-        #problem-section code:not(pre code) {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            color: #475569 !important;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-    
-        /* Premium Lists */
-        #problem-section ul, #problem-section ol {
-            margin-left: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-    
-        #problem-section li {
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-            color: #475569;
-            line-height: 1.6;
-            position: relative;
-        }
-    
-        #problem-section ul li::before {
-            content: '▸';
-            color: #3b82f6;
-            font-weight: bold;
-            position: absolute;
-            left: -1rem;
-        }
-    
-        #problem-section ol {
-            counter-reset: list-counter;
-        }
-    
-        #problem-section ol li {
-            counter-increment: list-counter;
-            padding-left: 0.5rem;
-        }
-    
-        #problem-section ol li::before {
-            content: counter(list-counter) '.';
-            color: #3b82f6;
-            font-weight: 600;
-            position: absolute;
-            left: -1.5rem;
-        }
-    
-        /* Premium Follow-up Section */
-    
-        #problem-section h2:last-of-type + p {
-            color: var(--text);
-            font-weight: 500;
-        }
-    
-        /* Premium Scrollbar Styling */
-        #problem-section::-webkit-scrollbar {
-            width: 6px;
-        }
-    
-        #problem-section::-webkit-scrollbar-track {
-            background: rgba(241, 245, 249, 0.5);
-            border-radius: 3px;
-        }
-    
-        #problem-section::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
-            border-radius: 3px;
-        }
-    
-        #problem-section::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #94a3b8, #64748b);
-        }
-    
-        @media (min-width: 769px) {
-            #problem-section {
-                width: 40%;
-                padding: 2.5rem;
-            }
-        }
-    
-        @media (max-width: 768px) {
-            #problem-section {
-                padding: 1.5rem;
-                margin: 0.5rem;
-                border-radius: 12px;
-            }
-            
-            #problem-section h1 {
-                font-size: 1.5rem;
-            }
-            
-            .problem-meta {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-        }
-    
-        /* Premium Hover Effects */
-        #problem-section pre:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-    
-        .constraints:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
-        }
-    
-    
-        /* Original Editor Section Styles */
-        #editor-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            height: 60vh;
-            margin: 1rem;
-        }
-    
-        @media (min-width: 769px) {
-            #editor-wrapper {
-                width: 60%;
-                height: auto;
-            }
-        }
-    
-        #controls {
-            background-color: white;
-            padding: 0.75rem 1rem;
+        /* --- LAYOUT --- */
+        nav {
+            height: var(--header-h);
             border-bottom: 1px solid var(--border);
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            border-radius: 8px 8px 0 0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 0 16px;
+            background: #fff;
+            flex-shrink: 0;
         }
-    
-        @media (min-width: 769px) {
-            #controls {
-                padding: 0.75rem 1rem;
-                gap: 0.5rem;
-            }
-        }
-    
-        .control-group {
+
+        .nav-brand {
+            font-weight: 600;
+            font-size: 16px;
             display: flex;
-            gap: 0.5rem;
             align-items: center;
-            flex-wrap: wrap;
+            gap: 8px;
         }
-    
-        select,
-        button {
-            padding: 0.5rem 0.75rem;
+
+        .nav-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            border: none;
+            padding: 7px 14px;
             border-radius: 6px;
-            border: 1px solid var(--border);
-            background-color: white;
-            color: var(--text);
+            font-size: 13.5px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            font-family: 'Inter', sans-serif;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-ui);
         }
-    
-        select {
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 14px;
-            padding-right: 30px;
+
+        .btn-run {
+            background: #f0f0f0;
+            color: var(--text-main);
         }
-    
-        button.primary {
-            background-color: var(--primary);
+
+        .btn-run:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-submit {
+            background: var(--brand-green);
             color: white;
-            border-color: var(--primary);
         }
-    
-        button.primary:hover {
-            background-color: var(--primary-hover);
+
+        .btn-submit:hover {
+            filter: brightness(1.05);
         }
-    
-        button.secondary {
-            background-color: white;
-            color: var(--primary);
-            border-color: var(--primary);
+
+        #workspace {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - var(--header-h));
+            overflow: hidden;
         }
-    
-        button:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            min-width: 0;
         }
-    
-        button:active {
-            transform: translateY(0);
+
+        #pane-left {
+            width: 42%;
+            border-right: 1px solid var(--border);
         }
-    
+
+        #pane-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- TABS SYSTEM --- */
+        .tabs-bar {
+            height: 40px;
+            background: var(--bg-tab-bar);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-end;
+            padding: 0 4px;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            height: 36px;
+            /* Sits on bottom */
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: -1px;
+            /* Overlap border */
+            border: 1px solid transparent;
+            border-bottom: none;
+            transition: background 0.1s;
+        }
+
+        .tab:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ACTIVE TAB: High Visibility */
+        .tab.active {
+            background: #fff;
+            color: var(--text-main);
+            font-weight: 600;
+            border-color: var(--border);
+            border-bottom-color: #fff;
+            /* Blend with content */
+            z-index: 2;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .tab svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        .tab.active svg {
+            opacity: 1;
+            color: var(--accent-blue);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            background: #fff;
+        }
+
+        /* --- PROBLEM DESC --- */
+        .problem-container {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .p-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .tag-easy {
+            color: #00b8a3;
+            background: rgba(0, 184, 163, 0.1);
+        }
+
+        .tag-medium {
+            color: #ffc01e;
+            background: rgba(255, 192, 30, 0.1);
+        }
+
+        .tag-hard {
+            color: #ff375f;
+            background: rgba(255, 55, 95, 0.1);
+        }
+
+        .prose {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #262626;
+        }
+
+        .prose p {
+            margin-bottom: 16px;
+        }
+
+        .prose pre {
+            background: #f7f8fa;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 13.5px;
+            border: 1px solid var(--border);
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        .prose code {
+            background: #f7f8fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: var(--font-code);
+            font-size: 13.5px;
+            border: 1px solid #e5e5e5;
+        }
+
+        /* --- EDITOR --- */
+        .editor-tools {
+            height: 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            background: #fff;
+        }
+
+        .lang-select {
+            border: 1px solid transparent;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            background: transparent;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .lang-select:hover {
+            background: var(--bg-gray);
+            color: var(--text-main);
+        }
+
         #editor-container {
             flex: 1;
-            min-height: 100px;
-            background-color: white;
+            min-height: 0;
         }
-    
-        #resizer {
-            height: 6px;
+
+        /* Flex min-height fix */
+
+        /* --- SPLITTER & DRAG --- */
+        #splitter {
+            height: 10px;
+            background: #fff;
+            border-top: 1px solid var(--border);
             cursor: row-resize;
-            background: var(--border);
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            flex-shrink: 0;
+            margin-top: -1px;
         }
-    
-        #resizer::before {
+
+        #splitter:hover {
+            background: #f5f5f5;
+        }
+
+        #splitter::after {
             content: "";
-            position: absolute;
-            top: 1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
+            width: 36px;
             height: 4px;
-            border-top: 1px solid var(--text-light);
-            border-bottom: 1px solid var(--text-light);
-            opacity: 0.3;
+            background: #e0e0e0;
+            border-radius: 2px;
         }
-    
-        #output-container {
+
+        #drag-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            cursor: row-resize;
+            display: none;
+        }
+
+        /* --- OUTPUT PANEL --- */
+        #pane-output {
+            height: 240px;
+            /* Initial Height */
             display: flex;
             flex-direction: column;
-            height: 200px;
-            background-color: white;
-            border-top: 1px solid var(--border);
-            position: relative;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-    
-        #output-tabs {
-            display: flex;
-            background-color: #f1f5f9;
-            border-bottom: 1px solid var(--border);
-        }
-    
-        .output-tab {
-            padding: 0.75rem 1rem;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border-right: 1px solid var(--border);
-            color: var(--text-light);
-            position: relative;
-            font-family: 'Inter', sans-serif;
-        }
-    
-        .output-tab.active {
-            background-color: white;
-            color: var(--primary);
-            font-weight: 500;
-        }
-    
-        .output-tab-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    
-        #output-content {
-            flex: 1;
-            overflow-y: auto;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            background-color: white;
-        }
-    
-        .tab-content {
-            height: 100%;
-            display: none;
-            padding: 1rem;
-        }
-    
-        #test-results {
-            padding: 1rem;
-        }
-    
-        #console {
-            background-color: var(--console-bg);
-            color: var(--console-text);
-            padding: 1rem;
-            white-space: pre-wrap;
-            font-family: 'Courier New', Courier, monospace;
-        }
-    
-        #submissions {
-            padding: 1rem;
-            overflow-y: auto;
-        }
-    
-        .test-case {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-    
-        .test-case:last-child {
-            border-bottom: none;
-        }
-    
-        .test-case-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-    
-        .test-case-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-    
-        .test-case-result {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-    
-        .passed {
-            color: var(--success);
-        }
-    
-        .failed {
-            color: var(--danger);
-        }
-    
-        .test-case-details {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-    
-        .test-case-input,
-        .test-case-output,
-        .test-case-expected {
-            margin-top: 0.25rem;
-        }
-    
-        .summary {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background-color: #f1f5f9;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-    
-        .summary.passed {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-    
-        .summary.failed {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-    
-        .execution-time {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-    
-        /* Original Typography */
-        h1 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-            font-weight: 600;
-        }
-    
-        h2 {
-            font-size: 1.1rem;
-            color: var(--text);
-            margin-top: 2rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-    
-        h3 {
-            font-size: 1rem;
-            color: var(--text);
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-    
-        p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: var(--text);
-        }
-    
-        code {
-            background-color: #f1f5f9;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            color: var(--text);
-        }
-    
-        ul,
-        ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-    
-        li {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-    
-        /* Enhanced Test Cases */
-        .test-case {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: white;
-        }
-    
-        .test-case:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-    
-        .test-case-passed {
-            border-left: 4px solid var(--success);
-        }
-    
-        .test-case-failed {
-            border-left: 4px solid var(--danger);
-        }
-    
-        .test-case-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background-color: #f8fafc;
-            border-bottom: 1px solid var(--border);
-        }
-    
-        .test-case-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-    
-        .test-case-icon {
-            font-size: 1.2rem;
-        }
-    
-        .test-case-title {
-            font-weight: 600;
-            color: var(--text);
-            font-size: 1rem;
-        }
-    
-        .test-case-status {
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-    
-        .status-passed {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-    
-        .status-failed {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-    
-        .test-case-content {
-            padding: 1.5rem;
-        }
-    
-        .test-case-section {
-            margin-bottom: 1.25rem;
-        }
-    
-        .test-case-section:last-child {
-            margin-bottom: 0;
-        }
-    
-        .section-title {
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-    
-        .section-content {
-            background-color: #f8fafc;
-            border-radius: 8px;
-            padding: 1rem;
-            border: 1px solid #e2e8f0;
-        }
-    
-        .input-params {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-    
-        .param-name {
-            color: var(--primary);
-            font-weight: 600;
-        }
-    
-        .param-value {
-            color: var(--text);
-            background-color: white;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-        }
-    
-        .expected-output,
-        .actual-output {
-            background-color: white;
-            padding: 0.75rem;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-    
-        .actual-output.output-correct {
-            border-color: var(--success);
-            background-color: rgba(16, 185, 129, 0.05);
-        }
-    
-        .actual-output.output-incorrect {
-            border-color: var(--danger);
-            background-color: rgba(239, 68, 68, 0.05);
-        }
-    
-        .error-section .section-title {
-            color: var(--danger);
-        }
-    
-        .error-message {
-            background-color: rgba(239, 68, 68, 0.05);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            margin: 0;
-        }
-    
-        .comparison-hint {
-            color: var(--text);
-            font-size: 0.9rem;
-            text-align: center;
-            padding: 0.5rem;
-        }
-    
-        .comparison-hint strong {
-            color: var(--danger);
-        }
-    
-        /* Other Components */
-        .console-line {
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-            font-size: 0.85rem;
-        }
-    
-        .console-error {
-            color: #f48771;
-        }
-    
-        .console-warning {
-            color: #e5c07b;
-        }
-    
-        .console-info {
-            color: #56b6c2;
-        }
-    
-        .console-success {
-            color: #98c379;
-        }
-    
-        .submission {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-    
-        .submission-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-    
-        .submission-result {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-    
-        .submission-passed {
-            color: var(--success);
-        }
-    
-        .submission-failed {
-            color: var(--danger);
-        }
-    
-        .submission-meta {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-    
-        .submission-actions {
-            margin-top: 0.5rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-    
-        .submission-actions button {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.8rem;
-        }
-    
-        .hidden {
-            display: none;
-        }
-    
-        .minimized {
-            height: 30px !important;
-            overflow: hidden;
-        }
-    
-        .output-pre {
-            white-space: pre-wrap;
-            background: #f8fafc;
-            padding: 0.5rem;
-            border-radius: 4px;
-            margin-top: 0.25rem;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            border-left: 2px solid var(--border);
-            max-height: 200px;
-            overflow-y: auto;
-        }
-    
-        .test-results-failure {
-            text-align: center;
-            padding: 2rem;
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        
-        .failure-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .failure-icon {
-            font-size: 2rem;
-        }
-        
-        .failure-header h3 {
-            color: #dc2626;
-            margin: 0;
-        }
-        
-        .failure-summary {
-            margin-bottom: 1.5rem;
-        }
-        
-        .failure-summary p {
-            margin: 0.5rem 0;
-            color: #374151;
-        }
-        
-        .failure-message {
-            color: #dc2626 !important;
-            font-weight: 500;
-        }
-        
-        .failure-actions {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .failure-actions button {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .failure-actions button.primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .failure-actions button.primary:hover {
-            background-color: var(--primary-hover);
-        }
-        
-        .failure-actions button.secondary {
-            background-color: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-        
-        .failure-actions button.secondary:hover {
-            background-color: var(--sidebar-hover-bg);
-        }
-        
-        .execution-time {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            text-align: center;
-        }
-    
-        .progress-container {
+            background: #fff;
+            flex-shrink: 0;
+            /* Important for manual sizing */
+        }
+
+        /* Progress Bar */
+        #progress-container {
             width: 100%;
-            background-color: var(--meter-background);
-            border-radius: 10px;
-            margin: 1rem 0;
+            height: 3px;
+            background: transparent;
+            position: relative;
             overflow: hidden;
+            display: none;
         }
-    
-        .progress-bar {
-            height: 20px;
-            background-color: var(--primary);
-            border-radius: 10px;
+
+        #progress-fill {
+            height: 100%;
             width: 0%;
-            transition: width 0.3s ease;
-            color: #e2e8f0;
+            background: var(--brand-green);
+            transition: width 0.3s ease-out;
+            box-shadow: 0 0 10px rgba(44, 187, 93, 0.5);
+        }
+
+        /* Console Area */
+        .console-wrap {
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-header {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-faint);
+            text-transform: uppercase;
+        }
+
+        .code-area {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 14px;
+            background: var(--bg-gray);
+            resize: none;
+            flex: 1;
+            color: var(--text-main);
+        }
+
+        .code-area:focus {
+            border-color: var(--accent-blue);
+            background: #fff;
+        }
+
+        /* Results */
+        .res-wrapper {
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .status-block {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-title {
+            font-size: 18px;
             font-weight: 700;
         }
-    
-        .progress-text {
-            text-align: center;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
+
+        .st-green {
+            color: var(--brand-green);
         }
-    
-        .test-case-progress {
+
+        .st-red {
+            color: var(--brand-red);
+        }
+
+        .cases-pills {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 8px;
+            margin-bottom: 16px;
         }
-    
-        .test-case-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--border);
-        }
-    
-        .test-case-indicator.passed {
-            background-color: var(--success);
-        }
-    
-        .test-case-indicator.failed {
-            background-color: var(--danger);
-        }
-    
-        .test-case-indicator.running {
-            background-color: var(--primary);
-            animation: pulse 1.5s infinite;
-        }
-    
-        .check-solution-link {
-            color: var(--success);
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 8px;
-            padding: 4px 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            border-color: #10b981;
-            transition: all 0.2s ease;
+
+        .pill {
+            background: var(--bg-gray);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
             cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
         }
-    
-        .check-solution-link:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
+
+        .pill:hover {
+            background: #e5e5e5;
+            color: var(--text-main);
         }
-    
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+
+        .pill.active {
+            background: #e6f4ea;
+            color: var(--brand-green);
+            font-weight: 600;
         }
-    
-        /* Mobile optimizations */
+
+        .pill.fail-active {
+            background: #fde8e8;
+            color: var(--brand-red);
+            font-weight: 600;
+        }
+
+        .res-box {
+            background: var(--bg-gray);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+        }
+
+        /* Loading */
+        .loader {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--text-muted);
+        }
+
+        .spin {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e5e5;
+            border-top-color: var(--text-muted);
+            border-radius: 50%;
+            animation: rot 0.8s infinite linear;
+        }
+
+        @keyframes rot {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
-            body {
-                padding: 0rem;
-                font-size: 0.9rem;
-            }
-    
-            #problem-section,
-            #editor-wrapper {
-                margin: 0rem;
-            }
-    
-            #editor-container {
-                height: 300px;
-            }
-    
-            #console {
-                height: 150px;
-            }
-    
-            .test-case-header {
+            #workspace {
                 flex-direction: column;
-                gap: 0.75rem;
-                align-items: flex-start;
             }
-            
-            .test-case-content {
-                padding: 1rem;
+
+            #pane-left {
+                width: 100%;
+                height: 40%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
             }
-            
-            .input-params {
-                flex-direction: column;
-                gap: 0.25rem;
+
+            #pane-right {
+                height: 60%;
             }
-        }
-    
-        /* Focus states for accessibility */
-        #problem-section *:focus {
-            outline: 2px solid #3b82f6;
-            outline-offset: 2px;
-        }
-    
-        /* Animation for smooth transitions */
-        #problem-section * {
-            transition: all 0.3s ease;
+
+            .nav-brand span {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- <header>
-  <div>Sum of Two Numbers</div>
-  <div class="header-actions">
-    <button class="secondary" onclick="resetCode()">Reset Code</button>
-  </div>
-</header> -->
+    <div id="drag-mask"></div>
 
-    <div id="main">
-        <!-- LEFT SIDE: PROBLEM DESCRIPTION -->
-        <div id="problem-section">
-            <h1>Sum of Two Numbers</h1>
+    <nav>
+        <div class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffa116" stroke-width="2">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+            </svg>
+            <span>Namma Coding Shaale</span>
+        </div>
+        <div class="nav-controls">
+            <button class="btn btn-run" onclick="runCode(false)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Run
+            </button>
+            <button class="btn btn-submit" onclick="submitCode()">Submit</button>
+        </div>
+    </nav>
 
-            <span class="difficulty easy">Easy</span>
-
-            <h3>Description</h3>
-            <p>Write a function <code>sum_two_numbers(a, b)</code> that returns the sum of two integers.</p>
-            <p>This is a basic problem to test your understanding of function implementation and arithmetic operations.
-            </p>
-
-            <h3>Function Signature</h3>
-            <pre><b>Python:</b> def sum_two_numbers(a, b):</pre>
-            <pre><b>Java:</b> public static int sumTwoNumbers(int a, int b)</pre>
-            <pre><b>JavaScript:</b> function sumTwoNumbers(a, b)</pre>
-            <pre><b>C++:</b> int sumTwoNumbers(int a, int b)</pre>
-
-            <h2>Examples</h2>
-            <h3>Example 1</h3>
-            <pre>Input: a = 1, b = 2
-Output: 3</pre>
-
-            <h3>Example 2</h3>
-            <pre>Input: a = -1, b = 5
-Output: 4</pre>
-
-            <div class="constraints">
-                <h3>Constraints</h3>
-                <ul>
-                    <li>-2<sup>31</sup> ≤ a, b ≤ 2<sup>31</sup> - 1</li>
-                    <li>The sum will not exceed 32-bit integer range</li>
-                </ul>
+    <div id="workspace">
+        <div id="pane-left" class="panel">
+            <div class="tabs-bar">
+                <div class="tab active" onclick="switchLeft(this, 'desc')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    Description
+                </div>
+                <!-- <div class="tab" onclick="switchLeft(this, 'subs')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+                    Submissions
+                </div> -->
             </div>
 
-            <h2>Follow-up</h2>
-            <p>Can you implement this without using the + operator?</p>
+            <div id="tab-desc" class="panel-content problem-container">
+                <div id="loader" class="loader">Loading...</div>
+                <div id="p-content" style="display:none;">
+                    <div id="p-title" class="p-title"></div>
+                    <div class="tags"><span id="p-diff" class="tag"></span></div>
+                    <div id="p-body" class="prose"></div>
+                </div>
+            </div>
+
+            <div id="tab-subs" class="panel-content" style="display:none;">
+                <div id="subs-list" style="padding: 24px; text-align: center; color: var(--text-muted);">No submissions
+                    yet</div>
+            </div>
         </div>
 
-        <!-- RIGHT SIDE: EDITOR + OUTPUT -->
-        <div id="editor-wrapper">
-            <div id="controls">
-                <div class="control-group">
-                    <select id="languageSelect" onchange="changeLanguage()">
-                        <option value="python">Python</option>
-                        <option value="java">Java</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="c++">C++</option>
-                    </select>
-                    <button class="secondary" onclick="showHint()">💡 Hint</button>
+        <div id="pane-right">
+            <div class="tabs-bar">
+                <div class="tab active" style="cursor: default;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                    Code
                 </div>
-                <div class="control-group">
-                    <button class="secondary" onclick="runCode()">▶ Run Code</button>
-                    <button class="primary" onclick="submitCode()">✅ Submit</button>
-                </div>
+                <div style="flex:1;"></div>
+                <select id="langSelect" class="lang-select" onchange="changeLanguage()">
+                    <option value="python">Python 3</option>
+                    <option value="java">Java</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="c++">C++</option>
+                </select>
             </div>
 
             <div id="editor-container"></div>
-            <div id="resizer"></div>
 
-            <div id="output-container">
-                <div id="output-tabs">
-                    <div class="output-tab active" onclick="switchTab('test-results')">
-                        Test Results
-                        <span id="test-results-badge" class="output-tab-badge" style="display: none;"></span>
+            <div id="splitter"></div>
+
+            <div id="pane-output">
+                <div id="progress-container"><div id="progress-fill"></div></div>
+            
+                <div class="tabs-bar">
+                    <div id="tab-case" class="tab" onclick="switchRight(this, 'cases')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        Testcase
                     </div>
-                    <div class="output-tab" onclick="switchTab('console')">
-                        Console Output
-                        <span id="console-badge" class="output-tab-badge" style="display: none;"></span>
+                    <div id="tab-res" class="tab active" onclick="switchRight(this, 'results')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        Test Result
                     </div>
-                    <div class="output-tab" onclick="switchTab('submissions')">
-                        Submissions
-                        <span id="submissions-badge" class="output-tab-badge" style="display: none;"></span>
+                    <div style="flex:1;"></div>
+                    <div class="tab" onclick="toggleConsole()" style="padding:0 10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                     </div>
                 </div>
-                <div id="output-content">
-                    <div id="test-results" class="tab-content">
-                        <p>Run your code to see test results...</p>
+            
+                <div class="panel-content">
+                    <div id="out-cases" class="console-wrap" style="display:none;">
+                        <div class="input-group">
+                            <span class="input-header">Testcase Input</span>
+                            <textarea id="custom-area" class="code-area" placeholder="Enter input here..."></textarea>
+                        </div>
                     </div>
-                    <div id="console" class="tab-content" style="display:none;">
-                        <p>Console output will appear here...</p>
-                    </div>
-                    <div id="submissions" class="tab-content" style="display:none;">
-                        <p>No submissions yet.</p>
+            
+                    <div id="out-results" class="res-wrapper">
+                        <div id="empty-res" class="loader">Run code to see results</div>
+                        <div id="loading-res" class="loader" style="display:none;"><div class="spin"></div> Running...</div>
+            
+                        <div id="res-content" style="display:none;">
+                            <div class="status-block">
+                                <div id="res-title" class="status-title"></div>
+                                <div id="res-sub" style="color:var(--text-muted); font-size:13px;"></div>
+                            </div>
+                            
+                            <div class="cases-pills" id="res-tabs"></div>
+                            <div id="res-details"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JS Converter -->
     {{ saved_code|json_script:"codeData" }}
 
-    <!-- Monaco Editor -->
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
     <script>
-        // Configuration and state
-        let editor;
-        let currentProblem = 'sum-two-numbers';
-        let language = 'python';
-        let submissionHistory = [];
-        let startTime;
-        let consoleOutput = [];
-        let testResults = [];
-        let isRunning = false;
-        let isOutputMinimized = false;
-
-        // Rate limiting
-        let lastExecutionTime = 0;
-        const EXECUTION_DELAY = 500;
-        const MAX_RETRIES = 2;
-
-        // Problem registry
+        // --- CONFIG ---
+        let editor, language = 'python', isRunning = false;
         const problems = {};
-        const problemList = ['sum-two-numbers', 'sum-three-numbers', 'square', 'amstrong-number'];
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentProblemId = urlParams.get('id') || 'sum-two-numbers';
 
-        // Initialize Monaco Editor
         require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
         require(['vs/editor/editor.main'], async function () {
             editor = monaco.editor.create(document.getElementById('editor-container'), {
@@ -1361,1091 +673,436 @@ Output: 4</pre>
                 language: language,
                 theme: 'vs',
                 automaticLayout: true,
-                fontSize: 14,
-                minimap: { enabled: true },
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 15,
+                lineHeight: 24,
+                minimap: { enabled: false },
+                padding: { top: 16, bottom: 16 },
                 scrollBeyondLastLine: false,
-                roundedSelection: true,
-                renderWhitespace: 'selection',
-                wordWrap: 'on',
-                wrappingIndent: 'indent'
+                renderLineHighlight: 'line'
             });
-
-            // Load initial problem
-            await loadProblem(currentProblem);
-            createProblemSelector();
+            await loadProblem(currentProblemId);
         });
 
-        // Load problem definition
-        async function loadProblem(problemId) {
+        // --- PROBLEM LOGIC ---
+        async function loadProblem(id) {
             try {
-                if (problems[problemId]) {
-                    currentProblem = problemId;
-                    updateProblemUI();
-                    return true;
-                }
-
-                const response = await fetch("{% static 'problems/' %}" + problemId + ".js?ver=" + Date.now());
-                if (!response.ok) throw new Error('Problem not found');
-
-                var problemCode = await response.text();
-
-                const problemModule = {};
-                new Function('module', problemCode)(problemModule);
-
-                problems[problemId] = problemModule.exports;
-                currentProblem = problemId;
-
-                updateProblemUI();
-                return true;
-            } catch (error) {
-                console.error(`Failed to load problem ${problemId}:`, error);
-                alert(`Failed to load problem: ${problemId}`);
-                return false;
-            }
+                const res = await fetch("{% static 'problems/' %}" + id + ".js?ver=" + Date.now());
+                if (!res.ok) throw new Error("Problem not found");
+                const text = await res.text();
+                const mod = {}; new Function('module', text)(mod);
+                problems[id] = mod.exports;
+                renderProblem(id);
+            } catch (e) { document.getElementById('loader').innerText = "Failed to load problem."; }
         }
 
-        // Create problem selector dropdown
-        function createProblemSelector() {
-            const controls = document.getElementById('controls');
-            const select = document.createElement('select');
+        function renderProblem(id) {
+            const p = problems[id];
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('p-content').style.display = 'block';
+            document.getElementById('p-title').innerText = p.title;
 
-            const redirected_problem = urlParams.get('id');
+            const badge = document.getElementById('p-diff');
+            badge.className = `tag tag-${p.difficulty}`;
+            badge.innerText = p.difficulty;
 
-            select.id = 'problemSelect';
-            switchProblem(redirected_problem);
-
-            problemList.forEach(problemId => {
-                const option = document.createElement('option');
-                option.value = problemId;
-                option.textContent = problemId.split('-').map(word =>
-                    word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                option.selected = problemId === currentProblem;
-                select.appendChild(option);
-            });
-
-            const group = document.createElement('div');
-            group.className = 'control-group';
-            // group.innerHTML = '<label for="problemSelect">Problem:</label>';
-            // group.appendChild(select);
-            // controls.insertBefore(group, controls.firstChild);
-        }
-
-        // Switch between problems
-        async function switchProblem(problemId) {
-            if (isRunning) {
-                addConsoleMessage("Please wait for current execution to complete", "warning");
-                document.getElementById('problemSelect').value = currentProblem;
-                return;
-            }
-            if (await loadProblem(problemId)) {
-                addConsoleMessage(`Loaded problem: ${problems[problemId].title}`, "info");
-            }
-        }
-
-        // Update UI with current problem
-        function updateProblemUI() {
-            const problem = problems[currentProblem];
-            if (!problem) return;
-
-            // document.querySelector('header div:first-child').textContent = 
-            //   `${problem.title}`;
-
-            document.getElementById('problem-section').innerHTML = `
-            <h1>${problem.title}</h1>
-            <span class="difficulty ${problem.difficulty}">${problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}</span>
-
-            <h2>Description</h2>
-            ${problem.description}
-
-
-            ${problem.examples}
-
-            ${
-                problem.constraints
-                    ? `
-                    <div class="constraints">
-                        <h3>Constraints</h3>
-                        <pre>${problem.constraints}</pre>
-                    </div>
-                    `
-                    : ''
-            }
-
-            ${
-                problem.conditions
-                    ? `
-
-                    <h3>Conditions</h3>
-                    <div>${problem.conditions}<div>
-
-                    `
-                    : ''
-            }
-
-            ${problem.followUp ? `<h2>Follow-up</h2><p>${problem.followUp}</p>` : ''}
+            document.getElementById('p-body').innerHTML = `
+                ${p.description}
+                <br><h3 style="font-size:16px;">Examples</h3>
+                ${p.examples}
+                ${p.conditions ? `<br><h3 style="font-size:16px;">Constraints</h3><ul>${p.conditions}</ul>` : ''}
             `;
 
-            //get Saved code from Backend, if not set default
-            const savedCode = `{{ saved_code|escapejs }}`;
-            console.log("SAVED CODE : ", savedCode)
-            editor.setValue(problem.templates[language] || '');
-
+            const savedEl = document.getElementById('codeData');
+            let code = p.templates[language] || '';
+            if (savedEl && savedEl.textContent) {
+                try {
+                    const saved = JSON.parse(savedEl.textContent);
+                    if (saved) code = saved;
+                } catch (e) { }
+            }
+            editor.setValue(code);
             monaco.editor.setModelLanguage(editor.getModel(), language);
-
-            updateTestResultsTab('Run your code to see test results...');
-            updateConsoleTab('Console output will appear here...');
         }
 
-        // Change programming language
         function changeLanguage() {
-            if (isRunning) {
-                addConsoleMessage("Please wait for current execution to complete", "warning");
-                document.getElementById('languageSelect').value = language;
-                return;
-            }
-            language = document.getElementById('languageSelect').value;
-            monaco.editor.setModelLanguage(editor.getModel(), language);
-
-            const problem = problems[currentProblem];
-            if (problem) {
-                editor.setValue(problem.templates[language] || '');
-            }
-
-            updateTestResultsTab('Run your code to see test results...');
-            updateConsoleTab('Console output will appear here...');
-        }
-
-        // Reset code to template
-        function resetCode() {
-            if (isRunning) {
-                addConsoleMessage("Please wait for current execution to complete", "warning");
-                return;
-            }
-            if (confirm("Are you sure you want to reset your code to the default template?")) {
-                const problem = problems[currentProblem];
-                if (problem) {
-                    editor.setValue(problem.templates[language] || '');
-                }
-                addConsoleMessage("Code reset to default template.", "info");
+            if (isRunning) return;
+            language = document.getElementById('langSelect').value;
+            const p = problems[currentProblemId];
+            if (p) {
+                editor.setValue(p.templates[language] || '');
+                monaco.editor.setModelLanguage(editor.getModel(), language);
             }
         }
 
-        // Show hint for current problem
-        function showHint() {
-            const problem = problems[currentProblem];
-            if (!problem) return;
+        // --- EXECUTION ---
+        function submitCode() { runCode(true); }
 
-            const hints = {
-                python: "Remember that Python can handle very large integers automatically.",
-                java: "In Java, make sure to declare the correct return type.",
-                javascript: "JavaScript uses the + operator for both addition and concatenation.",
-                "c++": "In C++, watch out for integer overflow."
-            };
+        async function runCode(isSubmit = false) {
+            if (isRunning) return;
 
-            alert(problem.followUp || hints[language] || "Try implementing the basic operation.");
-        }
+            // Get Tabs by ID for robustness
+            const tabCase = document.getElementById('tab-case');
+            const tabRes = document.getElementById('tab-res');
 
-        // Format code using Monaco's formatter
-        function formatCode() {
-            if (isRunning) {
-                addConsoleMessage("Please wait for current execution to complete", "warning");
-                return;
-            }
-            editor.getAction('editor.action.formatDocument').run();
-            addConsoleMessage("Code formatted successfully.", "success");
-        }
-
-        // Submit code (run all test cases)
-        function submitCode() {
-            runCode(true);
-        }
-
-        // Main execution function - modified to show progress bar
-        async function runCode(isSubmission = false) {
-            if (isRunning) {
-                addConsoleMessage("Already running code. Please wait...", "warning");
-                return;
-            }
+            // Determine Custom Run: Not submit AND user is currently on the Testcase tab
+            const isCustom = !isSubmit && tabCase.classList.contains('active');
 
             isRunning = true;
-            startTime = performance.now();
+
+            // UI States: Switch to Results tab regardless of mode
+            switchRight(tabRes, 'results');
+            document.getElementById('empty-res').style.display = 'none';
+            document.getElementById('res-content').style.display = 'none';
+            document.getElementById('loading-res').style.display = 'flex';
+            document.getElementById('res-tabs').innerHTML = ''; // Clear previous pills
+
+            // Progress Bar: Strictly controlled by isSubmit
+            if (isSubmit) {
+                document.getElementById('progress-container').style.display = 'block';
+                document.getElementById('progress-fill').style.width = '10%';
+            } else {
+                document.getElementById('progress-container').style.display = 'none';
+                document.getElementById('progress-fill').style.width = '0%';
+            }
+
             const code = editor.getValue();
-            const problem = problems[currentProblem];
+            const p = problems[currentProblemId];
 
-            console.log(problem.testCases)
+            // Custom Execution Path
+            if (isCustom) {
+                const inputVal = document.getElementById('custom-area').value;
+                try {
+                    const res = await executePiston(code, inputVal, p);
+                    renderSingleResult(res.output, res.error, "Custom Output");
+                } catch (e) { renderSingleResult(null, e.message, "Error"); }
 
-            if (!problem) {
-                addConsoleMessage("No problem loaded", "error");
                 isRunning = false;
+                document.getElementById('loading-res').style.display = 'none';
                 return;
             }
 
-            if (isSubmission) {
-                submissionHistory.unshift({
-                    code: code,
-                    language: language,
-                    timestamp: new Date().toISOString(),
-                    results: null,
-                    problem: currentProblem
-                });
-                updateSubmissionsTab();
-                switchTab('test-results');
-                
-                // Show progress bar for submission
-                showProgressBar(problem.testCases.length);
-            } else {
-                switchTab('console');
-            }
-
+            // Standard Execution Path (Run Sample or Submit)
             try {
-                if (isSubmission) {
-                    const results = await executeAllTestCasesWithProgress(code, problem.testCases);
-                    const endTime = performance.now();
-                    const executionTime = (endTime - startTime).toFixed(2);
+                const cases = isSubmit ? p.testCases : p.testCases.slice(0, 2);
+                const results = [];
+                let passed = 0;
 
-                    testResults = results;
-                    const passedCount = results.filter(r => r.passed).length;
-                    updateTestResults(code, results, passedCount, executionTime);
+                for (let i = 0; i < cases.length; i++) {
+                    const tc = cases[i];
+                    const res = await executePiston(code, tc.stdinput, p);
 
-                    submissionHistory[0].results = {
-                        passed: passedCount,
-                        total: problem.testCases.length,
-                        time: executionTime
-                    };
-                    updateSubmissionsTab();
-                    updateBadge('submissions-badge', submissionHistory.length);
+                    const cleanOut = (res.output || '').replace(/\r\n/g, '\n').trim();
+                    const cleanExp = (tc.expected || '').replace(/\r\n/g, '\n').trim();
+                    const isPass = !res.error && (cleanOut === cleanExp);
+                    if (isPass) passed++;
 
-                    addConsoleMessage(`Test execution completed in ${executionTime} ms`, "info");
-                } else {
-                    // For Run button, just execute the first 2 test cases
-                    const testCasesToRun = problem.testCases.slice(0, 2);
-                    const results = [];
+                    results.push({ ...res, tc, isPass });
 
-                    for (const tc of testCasesToRun) {
-                        const result = await executeTestCase(code, tc, problem);
-                        results.push(result);
+                    // Update progress only if Submitting
+                    if (isSubmit) {
+                        const pct = ((i + 1) / cases.length) * 100;
+                        document.getElementById('progress-fill').style.width = `${pct}%`;
                     }
-
-                    const endTime = performance.now();
-                    const executionTime = (endTime - startTime).toFixed(2);
-
-                    clearConsole();
-                    results.forEach((result, index) => {
-                        const tc = testCasesToRun[index];
-                        
-                        if (result.error) {
-                            addConsoleMessage(`Test case ${tc.id} failed: ${result.error}`, "error");
-                        } else {
-                            // Use stdinput with line breaks
-                            const formattedInput = tc.stdinput.replace(/\n/g, '<br>');
-                            const message = `<pre>Test case ${tc.id}:
-Input:\n${formattedInput}
-Output:\n ${result.output}
-Expected:\n ${tc.expected}</pre>`;
-                
-                            addConsoleMessage(message, result.passed ? "success" : "error");
-                        }
-                    });
-
-                    addConsoleMessage(`Execution completed in ${executionTime} ms`, "info");
                 }
-            } catch (error) {
-                updateTestResultsTab(`<p style="color: var(--error)">Error: ${error.message}</p>`);
-                addConsoleMessage(`Execution error: ${error.message}`, "error");
-                console.error(error);
+
+                renderTabbedResults(results, isSubmit ? p.testCases.length : 2);
+
+                if (isSubmit) {
+                    await submitCodeToBackend(code, results.length - passed);
+                    addToHistory(passed, results.length);
+                }
+            } catch (e) {
+                renderSingleResult(null, e.message, "System Error");
             } finally {
                 isRunning = false;
-                // Hide progress bar when done
-                hideProgressBar();
+                document.getElementById('loading-res').style.display = 'none';
+
+                // Hide Progress bar with delay ONLY if it was shown (isSubmit)
+                if (isSubmit) {
+                    setTimeout(() => {
+                        document.getElementById('progress-container').style.display = 'none';
+                        document.getElementById('progress-fill').style.width = '0%';
+                    }, 1000);
+                }
             }
         }
 
-        // Show progress bar for test cases
-        function showProgressBar(totalTestCases) {
-            const testResultsDiv = document.getElementById('test-results');
-            testResultsDiv.innerHTML = `
-                <h3>Running Test Cases</h3>
-                <div class="progress-container">
-                    <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" >  </div>
-                </div>
-                <div class="progress-text" id="progress-text">0/${totalTestCases} test cases completed</div>
-                <div class="test-case-progress" id="test-case-indicators"></div>
+        async function executePiston(code, stdin, problem) {
+            const langMap = { python: 'python', java: 'java', javascript: 'javascript', "c++": 'c++' };
+            const verMap = { python: '3.10.0', java: '15.0.2', javascript: '16.13.0', "c++": '10.2.0' };
+            const finalCode = problem.wrapCode ? problem.wrapCode(language, code, []) : code;
+
+            const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    language: langMap[language], version: verMap[language],
+                    files: [{ content: finalCode }], stdin: stdin || ""
+                })
+            });
+            const data = await res.json();
+            if (data.compile?.stderr) return { output: null, error: data.compile.stderr };
+            return { output: data.run.output?.trimEnd() || '', error: data.run.stderr };
+        }
+
+        // --- RESULTS UI ---
+        function renderTabbedResults(results, total) {
+            document.getElementById('res-content').style.display = 'block';
+            const passed = results.filter(r => r.isPass).length;
+            const isSuccess = passed === total;
+
+            const titleEl = document.getElementById('res-title');
+            titleEl.className = `status-title ${isSuccess ? 'st-green' : 'st-red'}`;
+            titleEl.innerText = isSuccess ? "Accepted" : "Wrong Answer";
+            document.getElementById('res-sub').innerText = `${passed}/${total} testcases passed`;
+
+            const nav = document.getElementById('res-tabs');
+            nav.innerHTML = '';
+            results.forEach((r, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `pill ${r.isPass ? '' : 'fail-active'} ${idx === 0 ? (r.isPass ? 'active' : 'fail-active') : ''}`;
+                btn.innerText = `Case ${idx + 1}`;
+                btn.onclick = () => showCase(idx, results);
+                nav.appendChild(btn);
+            });
+
+            showCase(0, results);
+        }
+
+        function showCase(idx, results) {
+            const btns = document.getElementById('res-tabs').children;
+            const r = results[idx];
+            Array.from(btns).forEach((b, i) => {
+                const isFail = !results[i].isPass;
+                b.className = `pill ${isFail ? (i === idx ? 'fail-active' : '') : (i === idx ? 'active' : '')}`;
+            });
+
+            const content = document.getElementById('res-details');
+            const errorHtml = r.error ?
+                `<div class="input-header" style="color:var(--brand-red); margin-top:10px;">Error</div><div class="res-box" style="color:var(--brand-red); background:#fef2f2;">${r.error}</div>` : '';
+
+            content.innerHTML = `
+                <div class="input-header">Input</div><div class="res-box">${r.tc.stdinput}</div>
+                <div class="input-header">Output</div><div class="res-box">${r.output || 'N/A'}</div>
+                <div class="input-header">Expected</div><div class="res-box">${r.tc.expected}</div>
+                ${errorHtml}
             `;
-
-            // Create indicators for each test case
-            const indicatorsDiv = document.getElementById('test-case-indicators');
-            for (let i = 0; i < totalTestCases; i++) {
-                const indicator = document.createElement('div');
-                indicator.className = 'test-case-indicator';
-                indicator.id = `test-case-${i}`;
-                indicatorsDiv.appendChild(indicator);
-            }
         }
 
-        // Update progress bar
-        function updateProgressBar(current, total, testCaseId, passed) {
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            const percentage = (current / total) * 100;
-            
-            progressBar.style.width = `${percentage}%`;
-            progressBar.textContent = Math.round(percentage) + "%";
-            progressText.textContent = `${current}/${total} test cases completed`;
-            
-            // Update test case indicator
-            const indicator = document.getElementById(`test-case-${testCaseId}`);
-            if (indicator) {
-                indicator.classList.remove('running');
-                if (passed) {
-                    indicator.classList.add('passed');
-                } else {
-                    indicator.classList.add('failed');
-                }
-            }
-            
-            // Set next test case as running
-            if (current < total) {
-                const nextIndicator = document.getElementById(`test-case-${current}`);
-                if (nextIndicator) {
-                    nextIndicator.classList.add('running');
-                }
-            }
+        function renderSingleResult(output, error, title) {
+            document.getElementById('res-content').style.display = 'block';
+            document.getElementById('res-tabs').innerHTML = ''; // Clear tabs for single custom result
+
+            const titleEl = document.getElementById('res-title');
+            titleEl.className = `status-title ${error ? 'st-red' : ''}`;
+            titleEl.innerText = title;
+            document.getElementById('res-sub').innerText = '';
+
+            const content = document.getElementById('res-details');
+            content.innerHTML = error
+                ? `<div class="res-box" style="color:var(--brand-red); background:#fef2f2;">${error}</div>`
+                : `<div class="input-header">Output</div><div class="res-box">${output}</div>`;
         }
 
-        // Hide progress bar
-        function hideProgressBar() {
-            // Progress bar will be replaced by test results
-        }
-
-        // Execute all test cases with progress updates
-        async function executeAllTestCasesWithProgress(code, testCases) {
-            const results = [];
-            let passedCount = 0;
-
-            // Set first test case as running
-            const firstIndicator = document.getElementById('test-case-0');
-            if (firstIndicator) {
-                firstIndicator.classList.add('running');
-            }
-
-            for (let i = 0; i < testCases.length; i++) {
-                const tc = testCases[i];
-                let result;
-                let retries = 0;
-                let lastError = null;
-
-                while (retries <= MAX_RETRIES) {
-                    try {
-                        const now = Date.now();
-                        const timeSinceLast = now - lastExecutionTime;
-                        if (timeSinceLast < EXECUTION_DELAY) {
-                            const delay = EXECUTION_DELAY - timeSinceLast;
-                            addConsoleMessage(`Waiting ${delay}ms to avoid rate limiting...`, "info");
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                        }
-
-                        lastExecutionTime = Date.now();
-                        result = await executeTestCase(code, tc, problems[currentProblem]);
-                        break;
-                    } catch (error) {
-                        lastError = error;
-                        retries++;
-                        if (retries <= MAX_RETRIES) {
-                            addConsoleMessage(`Retrying test case ${tc.id} (attempt ${retries}/${MAX_RETRIES})...`, "warning");
-                            await new Promise(resolve => setTimeout(resolve, EXECUTION_DELAY * retries));
-                        }
-                    }
-                }
-
-                if (retries > MAX_RETRIES && !result) {
-                    result = {
-                        output: null,
-                        passed: false,
-                        error: lastError?.message || "Max retries exceeded"
-                    };
-                    addConsoleMessage(`Test case ${tc.id} failed after ${MAX_RETRIES} retries`, "error");
-                }
-
-                results.push(result);
-                if (result.passed) passedCount++;
-                
-                // Update progress bar
-                updateProgressBar(i + 1, testCases.length, i, result.passed);
-                
-                // Small delay to make progress visible
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-
-            return results;
-        }
-
-        // Execute all test cases with rate limiting
-        async function executeAllTestCases(code, testCases) {
-            const results = [];
-            let passedCount = 0;
-
-            updateTestResultsTab("<p>Running tests...</p>");
-            clearConsole();
-            addConsoleMessage("Compiling and running code...", "info");
-
-            for (const tc of testCases) {
-                let result;
-                let retries = 0;
-                let lastError = null;
-
-                while (retries <= MAX_RETRIES) {
-                    try {
-                        const now = Date.now();
-                        const timeSinceLast = now - lastExecutionTime;
-                        if (timeSinceLast < EXECUTION_DELAY) {
-                            const delay = EXECUTION_DELAY - timeSinceLast;
-                            addConsoleMessage(`Waiting ${delay}ms to avoid rate limiting...`, "info");
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                        }
-
-                        lastExecutionTime = Date.now();
-                        result = await executeTestCase(code, tc, problems[currentProblem]);
-                        break;
-                    } catch (error) {
-                        lastError = error;
-                        retries++;
-                        if (retries <= MAX_RETRIES) {
-                            addConsoleMessage(`Retrying test case ${tc.id} (attempt ${retries}/${MAX_RETRIES})...`, "warning");
-                            await new Promise(resolve => setTimeout(resolve, EXECUTION_DELAY * retries));
-                        }
-                    }
-                }
-
-                if (retries > MAX_RETRIES && !result) {
-                    result = {
-                        output: null,
-                        passed: false,
-                        error: lastError?.message || "Max retries exceeded"
-                    };
-                    addConsoleMessage(`Test case ${tc.id} failed after ${MAX_RETRIES} retries`, "error");
-                }
-
-                results.push(result);
-                if (result.passed) passedCount++;
-                var faliedCount = updateTestResults(code, results, passedCount, passedCount);
-
-                console.log("POST Response : ", submitCodeToBackend(code, faliedCount))
-
-            }
-
-            return results;
-        }
-
-        // Execute single test case
-        async function executeTestCase(code, testCase, problem) {
-            // Try local execution for JavaScript
-            if (language === 'javascript') {
-                try {
-                    const localResult = executeJSLocally(code, testCase.input, problem);
-                    if (localResult) {
-                        addConsoleMessage(`Test case ${testCase.id} executed locally`, "info");
-                        return localResult;
-                    }
-                } catch (e) {
-                    addConsoleMessage(`Local execution failed: ${e.message}`, "warning");
-                }
-            }
-
-            const wrappedCode = problem.wrapCode(language, code, testCase.input);
-            const langMap = {
-                python: 'python',
-                java: 'java',
-                javascript: 'javascript',
-                "c++": 'c++'
-            };
-            const versionMap = {
-                python: '3.10.0',
-                java: '15.0.2',
-                javascript: '16.13.0',
-                "c++": '10.2.0'
-            };
-
+        // --- BACKEND ---
+        function getCSRFToken() { return document.querySelector('meta[name="csrf-token"]').getAttribute('content'); }
+        async function submitCodeToBackend(code, failed) {
             try {
-                console.log("INPUT : ", testCase.stdinput)
-                const res = await fetch("https://emkc.org/api/v2/piston/execute", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        language: langMap[language],
-                        version: versionMap[language],
-                        files: [{
-                            name: getFileName(language),
-                            content: wrappedCode
-                        }],
-                        stdin: testCase.stdinput
-                    })
+                await fetch('https://nammacodingshaale.in/api/save-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRFToken() },
+                    body: new URLSearchParams({ problem_id: currentProblemId, course_id: "{{ course_id|escapejs }}", code: code, failed_count: failed })
                 });
+            } catch (e) { }
+        }
 
-                if (!res.ok) {
-                    if (res.status === 429) {
-                        throw new Error("API rate limit exceeded - please wait a moment and try again");
-                    }
-                    throw new Error(`API request failed with status ${res.status}`);
-                }
+        function addToHistory(passed, total) {
+            const list = document.getElementById('subs-list');
+            if (list.innerText.includes('No submissions')) list.innerHTML = '';
 
-                const data = await res.json();
+            const item = document.createElement('div');
+            item.style = "padding:12px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;";
+            const isWin = passed === total;
+            item.innerHTML = `
+                <div>
+                    <div style="font-weight:600; color:${isWin ? 'var(--brand-green)' : 'var(--brand-red)'}">${isWin ? 'Accepted' : 'Failed'}</div>
+                    <div style="font-size:12px; color:var(--text-muted);">${new Date().toLocaleTimeString()}</div>
+                </div>
+                <div style="font-size:13px; font-weight:500;">${passed}/${total}</div>
+            `;
+            list.prepend(item);
+        }
 
-                if (!data || !data.run) {
-                    throw new Error("Invalid API response structure");
-                }
+        // --- UI UTILS & DRAG FIX ---
+        function switchLeft(el, id) {
+            document.querySelectorAll('#pane-left .tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('tab-desc').style.display = id === 'desc' ? 'block' : 'none';
+            document.getElementById('tab-subs').style.display = id === 'subs' ? 'block' : 'none';
+        }
+        function switchRight(el, id) {
+            document.querySelectorAll('#pane-right .tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('out-cases').style.display = id === 'cases' ? 'block' : 'none';
+            document.getElementById('out-results').style.display = id === 'results' ? 'block' : 'none';
+        }
+        function toggleConsole() {
+            const panel = document.getElementById('pane-output');
+            panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+            editor.layout();
+        }
 
-                if (data.run.stdout) {
-                    addConsoleMessage(data.run.stdout, "info");
-                }
-                if (data.run.stderr) {
-                    addConsoleMessage(data.run.stderr, "error");
-                }
+        // --- ROBUST DRAG IMPLEMENTATION ---
+        const splitter = document.getElementById('splitter');
+        const outputPanel = document.getElementById('pane-output');
+        const overlay = document.getElementById('drag-mask');
+        let startY, startHeight;
 
-                if (data.compile && data.compile.stderr) {
-                    return {
-                        output: null,
-                        passed: false,
-                        error: data.compile.stderr
-                    };
-                }
+        splitter.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            startY = e.clientY;
+            startHeight = outputPanel.offsetHeight;
+            overlay.style.display = 'block'; // Prevents iframe interference
+            document.body.style.cursor = 'row-resize';
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDrag);
+        });
 
-                const output = data.run.output ? data.run.output.trimEnd() : '';
-                let parsedOutput = output;
+        function onDrag(e) {
+            const delta = startY - e.clientY;
+            const newHeight = startHeight + delta;
 
-                if (language === 'java' || language === 'c++') {
-                    const match = output.match(/-?\d+/);
-                    if (match) parsedOutput = match[0];
-                }
-
-                const passed = problem.compareOutput
-                    ? problem.compareOutput(output, testCase.expected)
-                    : parsedOutput === testCase.expected.toString();
-
-
-                return {
-                    output: parsedOutput || 'No output',
-                    passed: passed,
-                    error: data.run.stderr || null
-                };
-            } catch (error) {
-                throw error;
+            // Constraints (Min 40px, Max window height - 100px)
+            if (newHeight > 40 && newHeight < window.innerHeight - 100) {
+                outputPanel.style.height = `${newHeight}px`;
+                editor.layout();
             }
         }
 
-        // Execute JavaScript locally
-        function executeJSLocally(code, input, problem) {
-            try {
-                const funcName = problem.templates.javascript.match(/function (\w+)/)[1];
-                const func = new Function('a', 'b', 'c', `
-                try {
-                ${code}
-                return ${funcName}(a, b, c);
-                } catch (e) {
-                return { error: e.message };
-                }
-            `);
-
-                const result = func(...input);
-
-                if (result && typeof result === 'object' && result.error) {
-                    return {
-                        output: null,
-                        passed: false,
-                        error: result.error
-                    };
-                }
-
-                return {
-                    output: String(result),
-                    passed: String(result) === String(input.reduce((a, b) => a + b, 0)),
-                    error: null
-                };
-            } catch (e) {
-                return {
-                    output: null,
-                    passed: false,
-                    error: e.message
-                };
-            }
+        function stopDrag() {
+            overlay.style.display = 'none';
+            document.body.style.cursor = 'default';
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', stopDrag);
         }
 
-        // Get filename for language
-        function getFileName(lang) {
-            switch (lang) {
-                case 'java': return 'Main.java';
-                case 'python': return 'main.py';
-                case 'javascript': return 'main.js';
-                case 'c++': return 'main.cpp';
-                default: return 'main';
-            }
+
+        function enableSecurity() {
+    const descPanel = document.getElementById('tab-desc');
+
+    // --- 1. CSS FORCE: Make text physically unselectable ---
+    // We inject a style tag to force this behavior, making it harder to override.
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #tab-desc, #tab-desc * {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-touch-callout: none !important;
         }
+    `;
+    document.head.appendChild(style);
 
-        // Update test results display
-    function updateTestResults(code, results, passedCount, executionTime) {
-         const problem = problems[currentProblem];
-         if (!problem) return;
-     
-         const totalTestCases = problem.testCases.length;
-         const failedCount = totalTestCases - passedCount;
-
-         console.log("POST Response : ", submitCodeToBackend(code, failedCount))
-         
-         // If any test case failed, show failure message
-         if (failedCount > 0) {
-             const successRate = Math.round((passedCount / totalTestCases) * 100);
-             const html = `
-                 <div class="test-results-failure">
-                     <div class="failure-header">
-                         <span class="failure-icon">❌</span>
-                         <h3>Test Cases Failed</h3>
-                     </div>
-                     <div class="failure-summary">
-                         <p>${passedCount} of ${totalTestCases} test cases passed (${successRate}%)</p>
-                         <p class="failure-message">Please review your code logic and try again.</p>
-                     </div>
-                     ${executionTime ? `<div class="execution-time">Execution time: ${executionTime} ms</div>` : ''}
-                     <div class="failure-actions">
-                         <button class="primary" onclick="switchTab('console')">View Console Output</button>
-                         <button class="secondary" onclick="showHint()">Get Hint</button>
-                     </div>
-                 </div>
-             `;
-             updateTestResultsTab(html);
-             updateBadge('test-results-badge', failedCount);
-         } else {
-             // All test cases passed - show detailed results
-    let html = '';
-
-    results.forEach((result, index) => {
-    const tc = problem.testCases[index];
-    // const inputParams = tc.stdinput.map((v, i) => 
-    //     `<span class="param-name">${String.fromCharCode(97 + i)}</span> = <span class="param-value">${v}</span>`
-    // ).join(', ');
+    // --- 2. SELECTION KILLER: Clear selection immediately ---
+    // If CSS fails and they somehow select text, we deselect it instantly on mouseup.
+    if (descPanel) {
+        descPanel.addEventListener('mouseup', () => {
+            window.getSelection().removeAllRanges();
+        });
         
-        html += `
-            <div class="test-case ${result.passed ? 'test-case-passed' : 'test-case-failed'}">
-                <div class="test-case-header">
-                    <div class="test-case-info">
-                        <span class="test-case-icon">${result.passed ? '✅' : '❌'}</span>
-                        <span class="test-case-title">Test Case ${index + 1}</span>
-                    </div>
-                    <span class="test-case-status ${result.passed ? 'status-passed' : 'status-failed'}">
-                        ${result.passed ? 'PASSED' : 'FAILED'}
-                    </span>
-                </div>
-                
-                <div class="test-case-content">
-                    <div class="test-case-section">
-                        <div class="section-title">Input</div>
-                        <div class="section-content">
-                            <div class="input-params"><pre>${tc.stdinput}</pre></div>
-                        </div>
-                    </div>
-                    
-                    <div class="test-case-section">
-                        <div class="section-title">Expected Output</div>
-                        <div class="section-content">
-                            <pre class="expected-output">${tc.expected}</pre>
-                        </div>
-                    </div>
-                    
-                    <div class="test-case-section">
-                        <div class="section-title">Your Output</div>
-                        <div class="section-content">
-                            <pre class="actual-output ${result.passed ? 'output-correct' : 'output-incorrect'}">${result.output || 'No output'}</pre>
-                        </div>
-                    </div>
-                    
-                    ${result.error ? `
-                    <div class="test-case-section error-section">
-                        <div class="section-title error-title">Error</div>
-                        <div class="section-content">
-                            <pre class="error-message">${result.error}</pre>
-                        </div>
-                    </div>
-                    ` : ''}
-                    
-                    ${!result.passed && !result.error ? `
-                    <div class="test-case-section comparison-section">
-                        <div class="section-title">Comparison</div>
-                        <div class="section-content">
-                            <div class="comparison-hint">
-                                Expected: <strong>${tc.expected}</strong> | Got: <strong>${result.output || 'No output'}</strong>
-                            </div>
-                        </div>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-        `;
-    });
-        const successRate = Math.round((passedCount / totalTestCases) * 100);
-        html += `
-            <div class="summary ${passedCount === totalTestCases ? 'passed' : 'failed'}">
-                ${passedCount === totalTestCases ? 
-                    '<a class="check-solution-link btnbtn-sm" href="#" ">Check Solution</a> All test cases passed!' :
-                    `${passedCount} of ${totalTestCases} test cases passed (${successRate}%)`
-                }
-            </div>
-            ${executionTime ? `<div class="execution-time">Execution time: ${executionTime} ms</div>` : ''}
-        `;
-
-        updateTestResultsTab(html);
+        // Prevent Context Menu (Right Click)
+        descPanel.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
     }
 
-    return failedCount;
-}
+    // --- 3. CLIPBOARD INTERCEPTOR (The Critical Fix) ---
+    // This runs WHEN they press Ctrl+C. We intercept the data package 
+    // and force it to be an empty string.
+    document.addEventListener('copy', (e) => {
+        const selection = window.getSelection();
         
-        // Switch between tabs
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.style.display = 'none';
-            });
-
-            document.querySelectorAll('.output-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            document.getElementById(tabId).style.display = 'block';
-            document.querySelector(`.output-tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
-
-            if (tabId === 'test-results') {
-                document.getElementById('test-results-badge').style.display = 'none';
-            } else if (tabId === 'console') {
-                document.getElementById('console-badge').style.display = 'none';
-            }
-        }
-
-        // Update test results tab content
-        function updateTestResultsTab(content) {
-            document.getElementById('test-results').innerHTML = content;
-        }
-
-        // Update console tab content
-        function updateConsoleTab(content) {
-            document.getElementById('console').innerHTML = content;
-        }
-
-        // Clear console
-        function clearConsole() {
-            consoleOutput = [];
-            updateConsoleTab('');
-        }
-
-        // Add message to console
-        function addConsoleMessage(message, type = 'info') {
-            const timestamp = new Date().toLocaleTimeString();
-            consoleOutput.push({ message, type, timestamp });
-
-            let html = '';
-            consoleOutput.forEach(msg => {
-                html += `<div class="console-line console-${msg.type}">[${msg.timestamp}] ${msg.message}</div>`;
-            });
-
-            updateConsoleTab(html);
-            document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;
-
-            if (document.getElementById('console').style.display === 'none') {
-                updateBadge('console-badge', consoleOutput.length);
-            }
-        }
-
-        // Update submissions tab
-        function updateSubmissionsTab() {
-            const submissionsDiv = document.getElementById('submissions');
-            if (submissionHistory.length === 0) {
-                submissionsDiv.innerHTML = '<p>No submissions yet.</p>';
-                return;
-            }
-
-            let html = '<h3>Your Submissions</h3>';
-            submissionHistory.forEach((sub, index) => {
-                const date = new Date(sub.timestamp).toLocaleString();
-                const results = sub.results ?
-                    `${sub.results.passed}/${sub.results.total} passed (${sub.results.time} ms)` :
-                    'Not executed';
-                const resultClass = sub.results ?
-                    (sub.results.passed === sub.results.total ? 'submission-passed' : 'submission-failed') : '';
-                const problemTitle = problems[sub.problem]?.title || sub.problem;
-
-                html += `
-                <div class="submission">
-                <div class="submission-header">
-                    <div><strong>#${index + 1}</strong> - ${problemTitle} (${sub.language})</div>
-                    <div class="submission-result ${resultClass}">${results}</div>
-                </div>
-                <div class="submission-meta">${date}</div>
-                <div class="submission-actions">
-                    <button onclick="viewSubmission(${index})">View Code</button>
-                    <button onclick="rerunSubmission(${index})">Run Again</button>
-                </div>
-                </div>
-            `;
-            });
-
-            submissionsDiv.innerHTML = html;
-            updateBadge('submissions-badge', submissionHistory.length);
-        }
-
-        // Update badge count
-        function updateBadge(badgeId, count) {
-            const badge = document.getElementById(badgeId);
-            if (count > 0) {
-                badge.textContent = count;
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        // View submission code
-        function viewSubmission(index) {
-            if (isRunning) {
-                addConsoleMessage("Please wait for current execution to complete", "warning");
-                return;
-            }
-            if (index >= 0 && index < submissionHistory.length) {
-                const submission = submissionHistory[index];
-                editor.setValue(submission.code);
-                document.getElementById('languageSelect').value = submission.language;
-                language = submission.language;
-                monaco.editor.setModelLanguage(editor.getModel(), language);
-
-                if (submission.problem !== currentProblem) {
-                    loadProblem(submission.problem);
-                }
-
-                addConsoleMessage(`Loaded submission #${index + 1} from ${new Date(submission.timestamp).toLocaleString()}`, "info");
-                switchTab('console');
-            }
-        }
-
-        // Rerun submission
-        function rerunSubmission(index) {
-            if (index >= 0 && index < submissionHistory.length) {
-                const submission = submissionHistory[index];
-                editor.setValue(submission.code);
-                document.getElementById('languageSelect').value = submission.language;
-                language = submission.language;
-                monaco.editor.setModelLanguage(editor.getModel(), language);
-
-                if (submission.problem !== currentProblem) {
-                    loadProblem(submission.problem);
-                }
-
-                runCode();
-                addConsoleMessage(`Re-running submission #${index + 1}`, "info");
-            }
-        }
-
-        // Resizer functionality
-        const resizer = document.getElementById('resizer');
-        const outputContainer = document.getElementById('output-container');
-
-        let isDragging = false;
-        resizer.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            document.body.style.cursor = 'row-resize';
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-        });
-
-        function handleMouseMove(e) {
-            if (!isDragging) return;
-            const containerRect = outputContainer.parentElement.getBoundingClientRect();
-            const newHeight = containerRect.bottom - e.clientY;
-            outputContainer.style.height = `${Math.max(30, newHeight)}px`;
-        }
-
-        function handleMouseUp() {
-            isDragging = false;
-            document.body.style.cursor = 'default';
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        }
-
-        function showMobileBlocker() {
-            if (window.innerWidth > 768) return;
-
-            // Create overlay
-            const overlay = document.createElement('div');
-            overlay.id = 'simple-mobile-overlay';
-            overlay.innerHTML = `
-            <div class="simple-message">
-                <p>For the best experience, please use a desktop or tablet.</p>
-            </div>
-            `;
-
-            // Apply minimal styles
-            const style = document.createElement('style');
-            style.textContent = `
-            #simple-mobile-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(255, 255, 255, 0.95);
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                padding: 20px;
-                box-sizing: border-box;
-            }
+        // Check if the selection starts or ends inside our Description Panel
+        if (descPanel && (descPanel.contains(selection.anchorNode) || descPanel.contains(selection.focusNode))) {
             
-            .simple-message {
-                max-width: 400px;
-                padding: 24px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                border: 1px solid #e0e0e0;
-            }
-            
-            .simple-message p {
-                margin: 0;
-                color: #333;
-                font-size: 16px;
-                line-height: 1.5;
-            }
-            `;
-
-            document.head.appendChild(style);
-            document.body.appendChild(overlay);
-
-            // Auto-dismiss after 5 seconds
-            setTimeout(() => {
-                overlay.style.opacity = '0';
-                overlay.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => overlay.remove(), 300);
-            }, 2000);
-        }
-
-        window.addEventListener('load', showMobileBlocker);
-        window.addEventListener('resize', showMobileBlocker);
-
-        // Get CSRF token from meta tag
-        function getCSRFToken() {
-            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        }
-
-        // Send form-style data with CSRF
-        async function submitCodeToBackend(code, failedCount) {
-            const problemId = urlParams.get('id');
-            const url = 'https://nammacodingshaale.in/api/save-code';
-
-            const formData = new URLSearchParams();
-            formData.append('problem_id', problemId);
-            formData.append('course_id', "{{ course_id|escapejs }}");
-            formData.append('code', code);
-            formData.append('failed_count', failedCount);
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': getCSRFToken()
-                    },
-                    credentials: 'include',
-                    body: formData.toString()
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                }
-
-                const responseData = await response.json();
-                console.log('Submission successful:', responseData);
-
-                return responseData;
-            } catch (error) {
-                console.error('Error posting data:', error);
-                throw error;
-            }
-        }
-
-        document.addEventListener('contextmenu', function(e) {
+            // STOP the default copy
             e.preventDefault();
-        });
+            e.stopPropagation();
+
+            // FORCE write empty string to the clipboard event data
+            if (e.clipboardData) {
+                e.clipboardData.setData('text/plain', ''); 
+            }
             
-        document.addEventListener('keydown', function(e) {
-            // Ctrl+C, Ctrl+A, Ctrl+X, etc.
-            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65 || e.keyCode === 88)) {
-                e.preventDefault();
-            }
-        });
+            // Clear the visual highlight
+            selection.removeAllRanges();
+            return false;
+        }
+    });
 
-        // Store the last focused element
-        let lastFocusedElement = null;
-
-        document.addEventListener('visibilitychange', async function() {
-            if (document.hidden) {
-                console.log('Tab switched - preparing to clear clipboard');
-                // alert("Tab switched")
-                // Store the currently focused element
-                lastFocusedElement = document.activeElement;
+    // --- 4. KEYBOARD BLOCKER ---
+    // Block Ctrl+A (Select All) and Ctrl+C specifically in the description area
+    document.addEventListener('keydown', (e) => {
+        const isCtrl = e.ctrlKey || e.metaKey; // Windows or Mac
+        
+        // If Description tab is visible/active
+        if (descPanel && descPanel.offsetParent !== null) { 
+            // Check if Ctrl+C (Copy) or Ctrl+A (Select All) or Ctrl+P (Print)
+            if (isCtrl && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'p')) {
+                // Only block if focus is NOT in the Code Editor (Right side)
+                // We assume Code Editor has class 'monaco-editor' or is inside #pane-right
+                const activeEl = document.activeElement;
+                const rightPane = document.getElementById('pane-right');
                 
-                // Create and focus a hidden input to regain focus
-                const focusKeeper = document.createElement('input');
-                focusKeeper.style.position = 'fixed';
-                focusKeeper.style.opacity = 0;
-                focusKeeper.style.pointerEvents = 'none';
-                document.body.appendChild(focusKeeper);
-                focusKeeper.focus();
-                
-                // Small delay to ensure focus is established
-                await new Promise(resolve => setTimeout(resolve, 50));
-                
-                try {
-                    // Now attempt clipboard operation
-                    await navigator.clipboard.writeText(' ');
-                    console.log('Clipboard cleared successfully');
-                } catch (error) {
-                    console.error('Clipboard clearing failed:', error);
-                    fallbackClearClipboard();
-                } finally {
-                    // Clean up
-                    document.body.removeChild(focusKeeper);
-                    if (lastFocusedElement) lastFocusedElement.focus();
+                // If the user is NOT focused on the right pane (editor), block these keys
+                if (!rightPane.contains(activeEl)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
                 }
-            }
-        });
-
-        // Improved fallback method
-        function fallbackClearClipboard() {
-            try {
-                // Create hidden textarea
-                const textarea = document.createElement('textarea');
-                textarea.value = ' ';
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = 0;
-                document.body.appendChild(textarea);
-                
-                // Select and copy
-                textarea.select();
-                if (navigator.userAgent.match(/ipad|iphone|android/i)) {
-                    textarea.setSelectionRange(0, 9999);
-                }
-                document.execCommand('copy');
-                
-                // Immediate second attempt to ensure clearing
-                setTimeout(() => {
-                    textarea.value = '';
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                }, 100);
-            } catch (e) {
-                console.error('Fallback clipboard clearing failed:', e);
             }
         }
-    </script>
+    });
 
+    // --- 5. WINDOW SWITCHING (Alert Only) ---
+    // Note: Browsers block clipboard clearing here for security, so we rely on the Alert.
+    
+    let alertTriggered = false;
+
+    const punishUser = () => {
+        if (alertTriggered) return;
+        alertTriggered = true;
+
+        // Show Alert
+        alert("Warning: Switching windows is not allowed!");
+
+        // Reset flag after a delay to allow them to close the alert
+        setTimeout(() => {
+            alertTriggered = false;
+        }, 1000);
+    };
+
+    // Trigger when tab visibility changes (Switching Tabs)
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            punishUser();
+        }
+    });
+
+    // Trigger when window loses focus (Alt+Tab)
+    window.addEventListener('blur', () => {
+        // Ignore if focus went to an iframe (common in editors)
+        if (document.activeElement && document.activeElement.tagName === "IFRAME") return;
+        punishUser();
+    });
+}
+
+// Enable Immediately
+enableSecurity();
+    </script>
 </body>
 
 </html>
