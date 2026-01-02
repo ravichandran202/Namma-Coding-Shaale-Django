@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump Statements | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+        h5 { font-size: 1.1rem; }
+
+        #header-name {
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code, py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background-color: var(--primary); border-color: var(--primary); }
+        .btn-primary:hover { background-color: var(--primary-hover); border-color: var(--primary-hover); }
+        .btn-success { background-color: var(--success); border-color: var(--success); }
+        .btn-danger { background-color: var(--danger); border-color: var(--danger); color: white; }
+
+        .exercise-solution { display: none; margin-top: 1.5rem; }
+        
+        .skip-pointer { list-style: none; padding: 0; margin: 0; }
+        
+        /* Table Styles */
+        .table-primary { background-color: rgba(67, 97, 238, 0.1); }
+        
+        .diagram-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .content-card .card-body { padding: 1.25rem; }
+            h1 { font-size: 1.5rem; }
+            pre { padding: .5rem; font-size: 0.85em; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Jump Statements (Break, Continue, Pass)</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Jump statements are used to alter the normal flow of a loop. They allow you to terminate a loop prematurely, skip the current iteration, or define empty placeholders.</b></p>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Keyword</th>
+                                <th>Action</th>
+                                <th>Common Analogy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>break</code></td>
+                                <td>Terminates the loop entirely</td>
+                                <td>"Emergency Stop Button"</td>
+                            </tr>
+                            <tr>
+                                <td><code>continue</code></td>
+                                <td>Skips current iteration, goes to next</td>
+                                <td>"Skip Song Button"</td>
+                            </tr>
+                            <tr>
+                                <td><code>pass</code></td>
+                                <td>Does nothing (null operation)</td>
+                                <td>"To Be Done Later"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pt-3">
+                    <h3 class="subsection-title">1. The 'break' Statement</h3>
+                    <p>The <code>break</code> statement is used to exit a loop immediately when a specific condition is met, regardless of whether the loop has finished iterating over all items.</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Program to find a number and stop searching
+numbers = [10, 20, 30, 40, 50]
+search_for = 30
+
+for num in numbers:
+    if num == search_for:
+        print("Found it!")
+        break  # Stops the loop here
+    print(f"Checking {num}...")
+
+print("Loop finished.")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Checking 10...
+Checking 20...
+Found it!
+Loop finished.</code></pre>
+                    </div>
+
+                    <div class="note-box note-important mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-stop-circle"></i>
+                            Observation
+                        </div>
+                        <div class="note-content">
+                            Notice that 40 and 50 were never checked. Once the <code>break</code> statement executed, the program "jumped" out of the loop completely.
+                        </div>
+                    </div>
+
+                    <div class="content-subsection mt-4">
+                        <h5 class="subsection-title">Flow of 'break'</h5>
+                        <div class="bg-light p-4 rounded text-center">
+                            <div class="mermaid">
+                                graph TD;
+                                A[Start Loop] --> B{Condition for break?};
+                                B -->|Yes| C[Exit Loop Immediately];
+                                B -->|No| D[Execute Code];
+                                D --> A;
+                                C --> E[Continue rest of program];
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="pt-3">
+                    <h3 class="subsection-title">2. The 'continue' Statement</h3>
+                    <p>The <code>continue</code> statement skips the rest of the code inside the current loop iteration and jumps back to the top of the loop for the next item.</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Program to print only odd numbers
+for i in range(1, 6):
+    if i % 2 == 0:     # If number is even
+        continue       # Skip printing, go to next number
+    print(i)</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">1
+3
+5</code></pre>
+                    </div>
+
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-forward"></i>
+                            Step-by-Step
+                        </div>
+                        <div class="note-content">
+                            <ul>
+                                <li><strong>i = 1:</strong> Odd. Prints 1.</li>
+                                <li><strong>i = 2:</strong> Even. <code>continue</code> triggers. Skips print.</li>
+                                <li><strong>i = 3:</strong> Odd. Prints 3.</li>
+                                <li><strong>i = 4:</strong> Even. <code>continue</code> triggers. Skips print.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-subsection mt-4">
+                        <h5 class="subsection-title">Flow of 'continue'</h5>
+                        <div class="bg-light p-4 rounded text-center">
+                            <div class="mermaid">
+                                graph TD;
+                                A[Start Iteration] --> B{Condition for continue?};
+                                B -->|Yes| A;
+                                B -->|No| D[Execute Code];
+                                D --> A;
+                            </div>
+                             <div class="diagram-caption">The 'continue' statement creates a shortcut back to the start of the loop</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="pt-3">
+                    <h3 class="subsection-title">3. The 'pass' Statement</h3>
+                    <p>The <code>pass</code> statement is a null operation. Nothing happens when it executes. It is useful as a placeholder when syntax requires a statement but you have no code to write yet.</p>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Using pass for empty functions or loops
+for i in range(5):
+    pass  # TODO: Write logic here later
+
+def my_future_function():
+    pass  # Prevents IndentationError
+
+print("Code runs without errors!")</code></pre>
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <h3 class="subsection-title">Common Mistakes with Jump Statements</h3>
+
+                    <ol class="skip-pointer">
+
+                        <li class="pt-3">
+                            <h5>1. Unreachable Code</h5>
+                            <p>Placing code immediately after <code>break</code> or <code>continue</code> in the same block. This code will never run.</p>
+
+                            <div class="code-container mt-4">
+                                <pre><code class="language-python"># Incorrect: Code after continue is dead
+for i in range(3):
+    if i == 1:
+        continue
+        print("This will never print") # Warning: Unreachable code
+    print(i)</code></pre>
+                            </div>
+
+                            <div class="note-box note-danger mt-3">
+                                <div class="note-header">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Logic Error
+                                </div>
+                                <div class="note-content">
+                                    Any lines indented directly under a <code>break</code> or <code>continue</code> statement will never be executed. Move them before the jump statement if they need to run.
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="pt-3">
+                            <h5>2. Using 'break' outside a loop</h5>
+                            <p>You cannot use <code>break</code> or <code>continue</code> inside a standalone <code>if</code> statement that isn't inside a loop.</p>
+
+                            <div class="code-container mt-4">
+                                <pre><code class="language-python">x = 10
+if x > 5:
+    break  # SyntaxError: 'break' outside loop</code></pre>
+                            </div>
+                        </li>
+
+                    </ol>
+                </div>
+
+                <div class="exercise-container mt-4">
+                    <h5 class="subsection-title">Practice Exercise</h5>
+                    <div class="exercise-problem">
+                        <p><strong>Scenario:</strong> You are processing a list of order statuses. 
+                        <br>1. If the status is "Cancelled", skip it.
+                        <br>2. If the status is "Error", stop the entire process immediately.
+                        <br>3. Otherwise, print "Processing...".</p>
+                        
+                        <p>Fix the bugs in the code below:</p>
+                        <div class="code-container">
+                            <pre><code class="language-python"># Buggy code
+orders = ["Confirmed", "Cancelled", "Confirmed", "Error", "Pending"]
+
+for status in orders:
+    if status == "Cancelled":
+        break          # BUG 1: Should this stop everything?
+    elif status == "Error":
+        continue       # BUG 2: Should this just skip?
+    
+    print(f"Processing order: {status}")</code></pre>
+                        </div>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python"># Corrected code
+orders = ["Confirmed", "Cancelled", "Confirmed", "Error", "Pending"]
+
+for status in orders:
+    if status == "Cancelled":
+        continue       # Fix 1: Use continue to skip ONLY this item
+    elif status == "Error":
+        print("Critical Error found! Stopping.")
+        break          # Fix 2: Use break to stop the loop entirely
+    
+    print(f"Processing order: {status}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Processing order: Confirmed
+Processing order: Confirmed
+Critical Error found! Stopping.</code></pre>
+                        </div>
+                        <div class="note-box note-tip mt-3">
+                            <div class="note-header">
+                                <i class="fas fa-wrench"></i>
+                                Correction Analysis
+                            </div>
+                            <div class="note-content">
+                                <ul>
+                                    <li><strong>"Cancelled":</strong> We used <code>continue</code> because we want to ignore this one bad order but keep processing the rest.</li>
+                                    <li><strong>"Error":</strong> We used <code>break</code> because a system error implies we should stop processing everything immediately to prevent issues.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+    </script>
+</body>
+
+</html>

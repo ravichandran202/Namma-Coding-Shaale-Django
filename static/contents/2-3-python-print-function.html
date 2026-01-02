@@ -512,6 +512,18 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
+        /* CSS specifically for the blinking cursor effect in this example */
+        .blink {
+                animation: blinker 1s linear infinite;
+                border-right: 2px solid white;
+            }
+
+            @keyframes blinker {
+                50% {
+                    opacity: 0;
+                }
+            }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .content-card .card-body {
@@ -537,7 +549,7 @@
 <body>
     <div class="container py-4">
         <div class="content-card mb-4">
-            
+
             <div class="card-header">
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <h1 class="mb-0 text-white" id="header-name">
@@ -550,21 +562,24 @@
             </div>
 
             <div class="card-body">
-                <p class="lead">The <code>print()</code> function is your primary tool for seeing results. It sends data to the standard output device (your screen).</p>
+                <p class="lead">The <code>print()</code> function is your primary tool for seeing results. It sends data
+                    to the standard output device (your screen).</p>
 
                 <div class="note-box note-important">
                     <div class="note-header">
                         <i class="fas fa-info-circle"></i> Key Concept
                     </div>
                     <div class="note-content">
-                        In Python 3, <code>print()</code> is a <strong>function</strong>, meaning it requires parentheses <code>()</code>. In older Python 2 code, it was a statement (no parentheses needed).
+                        In Python 3, <code>print()</code> is a <strong>function</strong>, meaning it requires
+                        parentheses <code>()</code>. In older Python 2 code, it was a statement (no parentheses needed).
                     </div>
                 </div>
 
                 <div class="content-subsection pt-3">
                     <h3 class="section-title">Syntax & Parameters</h3>
-                    <p>While you usually just print variables, understanding the optional parameters gives you full control over formatting.</p>
-                    
+                    <p>While you usually just print variables, understanding the optional parameters gives you full
+                        control over formatting.</p>
+
                     <pre><code class="language-python">print(*objects, sep=' ', end='\n')</code></pre>
 
                     <div class="table-responsive mt-3">
@@ -626,7 +641,8 @@ Apple -> Banana -> Cherry</code></pre>
 
                 <div class="content-subsection pt-3">
                     <h4 class="subsection-title">3. Controlling Line Breaks (<code>end</code>)</h4>
-                    <p>By default, Python goes to a new line after printing. You can stop this by setting <code>end=""</code>.</p>
+                    <p>By default, Python goes to a new line after printing. You can stop this by setting
+                        <code>end=""</code>.</p>
                     <pre><code class="language-python">print("Loading", end="...")
 print("Done!")</code>
 <i class="fas fa-terminal text-muted small"></i> <strong class="small text-uppercase text-muted">Output</strong>
@@ -635,13 +651,13 @@ print("Done!")</code>
 
                 <div class="quiz-container mt-5">
                     <h4 class="mb-4"><i class="fas fa-clipboard-check me-2 text-primary"></i>Knowledge Check</h4>
-                    
+
                     <div class="quiz-question">
                         <p class="fw-medium">What will be the output of the following code?</p>
                         <div class="bg-light p-2 rounded mb-3 border">
                             <code>print("A", "B", sep="#", end="!")</code>
                         </div>
-                        
+
                         <div class="quiz-options">
                             <label class="quiz-option">
                                 <input type="radio" name="q1" data-correct="false">
@@ -656,12 +672,14 @@ print("Done!")</code>
                                 <span class="quiz-option-label ms-2"><code>A#B</code> (with a new line)</span>
                             </label>
                         </div>
-                        
+
                         <div class="quiz-feedback correct-feedback">
-                            <i class="fas fa-check-circle"></i> Correct! The separator <code>#</code> goes between A and B, and <code>!</code> is at the end.
+                            <i class="fas fa-check-circle"></i> Correct! The separator <code>#</code> goes between A and
+                            B, and <code>!</code> is at the end.
                         </div>
                         <div class="quiz-feedback incorrect-feedback">
-                            <i class="fas fa-times-circle"></i> Incorrect. Remember: <code>sep</code> is between items, <code>end</code> is at the very end.
+                            <i class="fas fa-times-circle"></i> Incorrect. Remember: <code>sep</code> is between items,
+                            <code>end</code> is at the very end.
                         </div>
                     </div>
 
@@ -674,15 +692,17 @@ print("Done!")</code>
                 <div class="exercise-container mt-4 border-top pt-4">
                     <h4 class="subsection-title"><i class="fas fa-laptop-code me-2"></i>Coding Challenge</h4>
                     <div class="exercise-problem">
-                        <p>Write a single <code>print()</code> statement that displays the date in this exact format:</p>
+                        <p>Write a single <code>print()</code> statement that displays the date in this exact format:
+                        </p>
                         <div class="p-3 bg-light rounded font-monospace mb-3">25-12-2025</div>
-                        <p><strong>Requirements:</strong> Pass the numbers as three separate arguments and use the <code>sep</code> parameter.</p>
+                        <p><strong>Requirements:</strong> Pass the numbers as three separate arguments and use the
+                            <code>sep</code> parameter.</p>
                     </div>
-                    
+
                     <button class="btn btn-success" id="showSolutionBtn">
                         <i class="fas fa-eye me-1"></i> Show Solution
                     </button>
-                    
+
                     <div class="exercise-solution mt-3">
                         <pre><code class="language-python"># Pass the numbers as arguments and use hyphen as separator
 print(25, 12, 2025, sep="-")</code></pre>
@@ -691,6 +711,220 @@ print(25, 12, 2025, sep="-")</code></pre>
 
             </div>
         </div>
+
+        <div class="content-card mb-4">
+    
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0 text-white" id="header-name">
+                        <i class="fab fa-python me-2"></i>Python input() Function
+                    </h1>
+                    <span class="badge bg-white text-primary rounded-pill px-3 py-2">
+                        <i class="fas fa-signal me-1"></i> Beginner
+                    </span>
+                </div>
+            </div>
+        
+            <div class="card-body">
+                <p class="lead">While <code>print()</code> sends data <em>out</em> to the screen, the <code>input()</code> function gets data <em>in</em> from the user. It allows your program to pause and wait for the user to type something.</p>
+        
+                <div class="note-box note-warning">
+                    <div class="note-header">
+                        <i class="fas fa-exclamation-triangle"></i> The Golden Rule of Input
+                    </div>
+                    <div class="note-content">
+                        The <code>input()</code> function <strong>ALWAYS returns a string</strong> (text), even if the user types a number. If you need to do math, you must convert it first!
+                    </div>
+                </div>
+        
+                <div class="content-subsection pt-3">
+                    <h3 class="section-title">Syntax & Parameters</h3>
+                    <pre><code class="language-python">variable_name = input(prompt)</code></pre>
+        
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover border rounded overflow-hidden">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20%">Parameter</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>prompt</code></td>
+                                    <td>(Optional) A string that is displayed to the user before they type. It tells them what you want them to enter.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-subsection pt-4 mt-4 border-top">
+                    <h3 class="section-title">The "Prompt" Parameter: Why use it?</h3>
+                    <p>The text inside the parentheses <code>input("...")</code> is called the <strong>prompt</strong>. It is optional, but without it, your program runs "silently."</p>
+                
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100 border-warning border-start border-4 bg-light">
+                                <div class="card-body">
+                                    <h5 class="text-warning"><i class="fas fa-eye-slash me-2"></i>Without Prompt</h5>
+                                    <p class="small text-muted mb-2">The user sees a blank screen and doesn't know what to do.</p>
+                                    
+                                    <pre class="mb-2"><code class="language-python"># Confusing for the user
+name = input() 
+print("Hi " + name)</code></pre>
+                                    
+                                    <div class="p-2 bg-dark rounded mt-3">
+                                        <div class="text-white font-monospace small">
+                                            <span class="blink">|</span> <span class="text-secondary">(Blinking cursor only)</span>
+                                        </div>
+                                    </div>
+                                    <p class="image-caption text-start mt-1">Result: The program waits, but looks "frozen".</p>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100 border-success border-start border-4">
+                                <div class="card-body">
+                                    <h5 class="text-success"><i class="fas fa-comment-dots me-2"></i>With Prompt</h5>
+                                    <p class="small text-muted mb-2">The user gets clear instructions on what to type.</p>
+                                    
+                                    <pre class="mb-2"><code class="language-python"># Clear instructions
+name = input("Enter name: ")
+print("Hi " + name)</code></pre>
+                                    
+                                    <div class="p-2 bg-dark rounded mt-3">
+                                        <div class="text-white font-monospace small">
+                                            Enter name: <span class="blink">|</span>
+                                        </div>
+                                    </div>
+                                    <p class="image-caption text-start mt-1">Result: User knows exactly what to type.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="note-box note-tip mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-magic"></i> Pro Tip: The "Space" Trick
+                        </div>
+                        <div class="note-content">
+                            Notice how we added a space at the end of the string: <code>"Enter name: "</code>. 
+                            <br>Without that space, the user's typing will be stuck directly to the text (e.g., <code>Enter name:Arjun</code>), which looks messy. Always add a space or a colon!
+                        </div>
+                    </div>
+                </div>
+                
+                <style>
+                    /* CSS specifically for the blinking cursor effect in this example */
+                    .blink {
+                        animation: blinker 1s linear infinite;
+                        border-right: 2px solid white;
+                    }
+                    @keyframes blinker {
+                        50% { opacity: 0; }
+                    }
+                </style>
+        
+                <hr class="my-5 opacity-25">
+        
+                <h3 class="section-title">Practical Examples</h3>
+        
+                <div class="content-subsection pt-3">
+                    <h4 class="subsection-title">1. Basic Text Input</h4>
+                    <p>Asking the user for their name and storing it in a variable.</p>
+                    <pre><code class="language-python">name = input("What is your name? ")
+        print("Hello", name)</code>
+<i class="fas fa-keyboard text-muted small"></i> <strong class="small text-uppercase text-muted">User Types:</strong> <code class="language-plaintext">Arjun</code>
+<i class="fas fa-terminal text-muted small"></i> <strong class="small text-uppercase text-muted">Output:</strong> <code class="language-plaintext">Hello Arjun</code></pre>
+                </div>
+        
+                <div class="content-subsection pt-3">
+                    <h4 class="subsection-title">2. Taking Number Inputs (Type Casting)</h4>
+                    <p>Since input is always a string, we wrap it inside <code>int()</code> or <code>float()</code> to use it as a number.</p>
+                    <pre><code class="language-python"># incorrect way (causes error or string concatenation)
+age = input("Enter your age: ") 
+
+# CORRECT way
+age = int(input("Enter your age: "))
+next_year = age + 1
+
+print("Next year you will be", next_year)</code></pre>
+                </div>
+        
+                <div class="quiz-container mt-5">
+                    <h4 class="mb-4"><i class="fas fa-clipboard-check me-2 text-primary"></i>Knowledge Check</h4>
+                    
+                    <div class="quiz-question">
+                        <p class="fw-medium">What will be the output if the user types <strong>5</strong> for the following code?</p>
+                        <div class="bg-light p-2 rounded mb-3 border">
+                            <code>
+                                x = input("Enter a number: ")<br>
+                                print(x * 2)
+                            </code>
+                        </div>
+                        
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q_input" data-correct="false">
+                                <span class="quiz-option-label ms-2"><code>10</code> (The number 5 multiplied by 2)</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q_input" data-correct="true">
+                                <span class="quiz-option-label ms-2"><code>55</code> (The string "5" repeated twice)</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q_input" data-correct="false">
+                                <span class="quiz-option-label ms-2"><code>Error</code></span>
+                            </label>
+                        </div>
+                        
+                        <div class="quiz-feedback correct-feedback">
+                            <i class="fas fa-check-circle"></i> Correct! Since <code>x</code> is a string "5", multiplying it by 2 repeats the string ("55").
+                        </div>
+                        <div class="quiz-feedback incorrect-feedback">
+                            <i class="fas fa-times-circle"></i> Incorrect. Remember, <code>input()</code> returns a string. In Python, <code>"5" * 2</code> results in "55", not 10.
+                        </div>
+                    </div>
+        
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-primary check-answers-btn">Check Answer</button>
+                        <button class="btn btn-outline-secondary reset-quiz-btn">Reset</button>
+                    </div>
+                </div>
+        
+                <div class="exercise-container mt-4 border-top pt-4">
+                    <h4 class="subsection-title"><i class="fas fa-laptop-code me-2"></i>Coding Challenge</h4>
+                    <div class="exercise-problem">
+                        <p>Write a program that:</p>
+                        <ol>
+                            <li>Asks the user for the <strong>price</strong> of an item (e.g., 50).</li>
+                            <li>Asks the user for the <strong>quantity</strong> they want to buy (e.g., 2).</li>
+                            <li>Prints the total cost.</li>
+                        </ol>
+                        <p><strong>Hint:</strong> Don't forget to convert your inputs to integers!</p>
+                    </div>
+                    
+                    <button class="btn btn-success" id="showSolutionBtn">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    
+                    <div class="exercise-solution mt-3">
+                        <pre><code class="language-python"># Get input and convert to integer immediately
+        price = int(input("Enter price: "))
+        qty = int(input("Enter quantity: "))
+        
+        # Calculate total
+        total = price * qty
+        
+        print("Total cost is:", total)</code></pre>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -781,10 +1015,10 @@ print(25, 12, 2025, sep="-")</code></pre>
                 setupQuiz(quiz);
             });
         });
-        
+
         // Global Reset Button (if exists)
         const globalResetBtn = document.getElementById('resetQuizBtn');
-        if(globalResetBtn) {
+        if (globalResetBtn) {
             globalResetBtn.addEventListener('click', function () {
                 document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
                     input.checked = false;
