@@ -583,6 +583,34 @@ float price = 3.14; // 'price' is a float variable
 char letter = 'A';  // 'letter' is a character variable</code></pre>
                     </div>
                 </div>
+
+                <div class="mt-3 pt-3">
+                    <h5 class="subsection-title">Example Multiple Assignment</h5>
+                    <p>Python allows you to assign values to multiple variables in a single line. This is not just a shortcut; it’s an efficient way to handle data.</p>
+                    
+                    <pre><code class="language-python"># Assigning different values to multiple variables
+a, b = 10, 20
+
+# Assigning the same value to multiple variables
+x = y = z = 100</code></pre>
+                
+                    <ul>
+                        <li>
+                            <p><b>How it works:</b> Python evaluates the expressions on the right side first, puts them in a temporary structure (a tuple), and then assigns them to the variables on the left.</p>
+                        </li>
+                        <li>
+                            <p><b>Memory Impact:</b> In <code>a, b = 10, 20</code>, two distinct objects are created in memory, and the symbol table is updated so <code>a</code> points to 10 and <code>b</code> points to 20.</p>
+                        </li>
+                    </ul>
+                
+                    <div class="note-box note-tip">
+                        <div class="note-header"><i class="fas fa-lightbulb"></i> Pro Tip: Swapping Values</div>
+                        <div class="note-content">
+                            In many languages, you need a <code>temp</code> variable to swap two values. In Python, you can simply do: 
+                            <code>a, b = b, a</code>.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -684,6 +712,57 @@ b = a  # 'b' now points to the same value as 'a'
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card mb-4">
+            <div class="card-body">
+                <h2 class="section-title">Three Ways to Swap Variables</h2>
+                <p>Swapping means interchanging the values of two variables. For example, if <code>a = 5</code> and <code>b = 10</code>, after swapping, <code>a</code> should be 10 and <code>b</code> should be 5.</p>
+        
+                <div class="content-subsection pt-3">
+                    <h5 class="subsection-title">1. Using a Temporary Variable (Classic Way)</h5>
+                    <p>This is the most common method used in languages like C or Java. It uses a "third person" (temp) to hold a value during the swap.</p>
+                    <pre><code class="language-python">a = 5
+b = 10
+
+temp = a  # temp now holds 5
+a = b     # a now holds 10
+b = temp  # b now holds 5 (from temp)</code></pre>
+                </div>
+        
+                <div class="content-subsection pt-3">
+                    <h5 class="subsection-title">2. Using Arithmetic (No Extra Space)</h5>
+                    <p>You can swap numbers without a third variable by using addition and subtraction. This is a clever logic trick.</p>
+                    <pre><code class="language-python">a = 5
+b = 10
+
+a = a + b  # a becomes 15
+b = a - b  # b becomes 5 (15 - 10)
+a = a - b  # a becomes 10 (15 - 5)</code></pre>
+                </div>
+        
+                <div class="content-subsection pt-3">
+                    <h5 class="subsection-title">3. The Pythonic Way (Multiple Assignment)</h5>
+                    <p>Python makes this incredibly simple in a single line using <b>tuple unpacking</b>. This is the recommended way in Python.</p>
+                    <pre><code class="language-python">a = 5
+b = 10
+
+# The Magic Line
+a, b = b, a
+
+print(a) # Output: 10
+print(b) # Output: 5</code></pre>
+                </div>
+        
+                
+        
+                <div class="note-box note-important">
+                    <div class="note-header"><i class="fas fa-info-circle"></i> Why Method 3 is best?</div>
+                    <div class="note-content">
+                        The Pythonic method (<code>a, b = b, a</code>) is not just shorter; it is also safer. It evaluates the right-hand side (the values) before assigning them to the left-hand side, preventing the data-loss issues you might face if you write manual logic incorrectly.
                     </div>
                 </div>
             </div>
