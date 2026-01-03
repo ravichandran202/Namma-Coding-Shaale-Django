@@ -41,7 +41,7 @@ Output: ['Tom']</pre>
     { "id": 4, "input": [], "expected": "['A', 'B', 'C']", "stdinput": "A B C D E F" },
     { "id": 5, "input": [], "expected": "['X']", "stdinput": "X Y" },
     { "id": 6, "input": [], "expected": "[]", "stdinput": "Single" },
-    { "id": 7, "input": [], "expected": "['John', 'Paul', 'George']", "stdinput": "John Paul George Ringo" },
+    { "id": 7, "input": [], "expected": "['John', 'Paul']", "stdinput": "John Paul George Ringo" },
     { "id": 8, "input": [], "expected": "['Math', 'Science']", "stdinput": "Math Science English History Art" },
     { "id": 9, "input": [], "expected": "['One', 'Two', 'Three', 'Four']", "stdinput": "One Two Three Four Five Six Seven Eight" }
   ],
