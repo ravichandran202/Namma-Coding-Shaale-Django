@@ -4,21 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
-    <!-- Bootstrap CSS -->
+    <title>String Indexing & Slicing | ನಮ್ಮ CODING ಶಾಲೆ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
         rel="stylesheet">
-    <!-- Highlight.js -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
-    <!-- Custom CSS -->
     <style>
         :root {
             --primary: #4361ee;
@@ -576,237 +571,250 @@
             </div>
 
             <div class="card-body">
-                <!-- Indexing Basics -->
                 <div class="pt-3">
-                    <h3 class="section-title">1. String Indexing (Single Characters)</h3>
-                    <p class="lead">Indexing allows you to access individual characters in a string directly by using a
-                        numeric value</p>
-                    <p>Note : <strong>Index always starts at 0</strong> (not 1!)</p>
-
-                    <div class="code-container mt-4">
-                        <pre><code class="language-python"># Our example string
-word = "HELLO SAM"</code></pre>
+                    <h3 class="section-title">1. Introduction to String Indexing</h3>
+                    <p class="lead">In Python, a string is an ordered sequence of characters. Indexing allows you to access a specific character by its position.</p>
+                    
+                    <div class="note-box note-important mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-circle"></i>
+                            The Golden Rule of Python Indexing
+                        </div>
+                        <div class="note-content">
+                            <p class="mb-0">Counting always starts from <strong>0</strong> (zero), not 1. The first character is at index 0.</p>
+                        </div>
                     </div>
 
-                    <!-- Index Visualization -->
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Example string for our visualization
+word = "PYTHON"</code></pre>
+                    </div>
+
                     <div class="note-box note-info mt-4">
                         <div class="note-header">
                             <i class="fas fa-table"></i>
-                            Index Positions for "HELLO SAM"
+                            Visual Index Map: "PYTHON"
                         </div>
                         <div class="note-content">
-                            <table class="table table-bordered text-center">
-                                <tr class="table-primary">
-                                    <th>Character</th>
-                                    <th>H</th>
-                                    <th>E</th>
-                                    <th>L</th>
-                                    <th>L</th>
-                                    <th>O</th>
-                                    <th> </th>
-                                    <th>S</th>
-                                    <th>A</th>
-                                    <th>M</th>
-                                </tr>
-                                <tr>
-                                    <td><strong>Positive Index</strong></td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
-                                    <td>6</td>
-                                    <td>7</td>
-                                    <td>8</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Negative Index</strong></td>
-                                    <td>-9</td>
-                                    <td>-8</td>
-                                    <td>-7</td>
-                                    <td>-6</td>
-                                    <td>-5</td>
-                                    <td>-4</td>
-                                    <td>-3</td>
-                                    <td>-2</td>
-                                    <td>-1</td>
-                                </tr>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center align-middle">
+                                    <tr class="table-primary">
+                                        <th style="width: 150px;">Character</th>
+                                        <th>P</th>
+                                        <th>Y</th>
+                                        <th>T</th>
+                                        <th>H</th>
+                                        <th>O</th>
+                                        <th>N</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-primary">Positive Index</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold text-danger">Negative Index</td>
+                                        <td>-6</td>
+                                        <td>-5</td>
+                                        <td>-4</td>
+                                        <td>-3</td>
+                                        <td>-2</td>
+                                        <td>-1</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <small class="text-muted d-block text-center mt-2">Notice how Positive indices count forward (0 to 5) and Negative indices count backward (-1 to -6).</small>
                         </div>
                     </div>
 
-                    <!-- Positive Indexing -->
                     <div class="mt-5">
-                        <h4 class="subsection-title">Positive Indexing (Left to Right)</h4>
-                        <p>This is the most straightforward way. You use positive numbers (0, 1, 2, 3...) to get
-                            characters from the start of the string.</p>
+                        <h4 class="subsection-title">Method A: Positive Indexing (Left to Right)</h4>
+                        <p>Use positive integers [0, 1, 2...] to access characters starting from the beginning of the string.</p>
                         <div class="code-container mt-3">
-                            <pre><code class="language-python">word = "HELLO SAM"
-print(word[0])  # 'H' - first character
-print(word[1])  # 'E' - second character  
-print(word[2])  # 'L' - third character
-print(word[5])  # ' ' - space at position 5</code> 
+                            <pre><code class="language-python">word = "PYTHON"
+
+first_letter = word[0]  # Accesses 'P'
+third_letter = word[2]  # Accesses 'T'
+
+print(first_letter)
+print(third_letter)</code> 
 <i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">H
-E
-L
+<code class="language-python">P
+T
  </code></pre>
                         </div>
                     </div>
 
-                    <!-- Negative Indexing -->
                     <div class="mt-5">
-                        <h4 class="subsection-title">Negative Indexing (Right to Left)</h4>
-                        <p>In Python, negative indexing allows you to access characters from the end of the string. The
-                            last element has index -1, the second last has index -2, and so on</p>
-                        <div class="code-container mt-3">
-                            <pre><code class="language-python">word = "HELLO SAM"
-print(word[-1])  # 'M' - last character
-print(word[-2])  # 'A' - second last
-print(word[-3])  # 'S' - third last
-print(word[-4])  # ' ' - space from end</code> 
+                        <h4 class="subsection-title">Method B: Negative Indexing (Right to Left)</h4>
+                        <p>Python has a special feature called <strong>Negative Indexing</strong>. This allows you to access characters starting from the <strong>end</strong> of the string.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="note-box note-danger h-100">
+                                    <div class="note-header">
+                                        <i class="fas fa-bolt"></i> Why use it?
+                                    </div>
+                                    <div class="note-content">
+                                        Imagine you have a very long string and you just want the last character. You don't need to count the length! Just use <code>-1</code>.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><code>index -1</code> refers to the <strong>Last</strong> item.</li>
+                                    <li class="list-group-item"><code>index -2</code> refers to the <strong>Second to last</strong> item.</li>
+                                    <li class="list-group-item">and so on...</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-container mt-4">
+                            <pre><code class="language-python">word = "PYTHON"
+
+print(word[-1])  # 'N' (The very last character)
+print(word[-2])  # 'O' (The second to last character)
+print(word[-6])  # 'P' (Going all the way back to start)</code> 
 <i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">M
-A
-S
+<code class="language-python">N
+O
+P
  </code></pre>
                         </div>
                     </div>
-
-                                    <!-- Summary -->
-                <div class="note-box note-success mt-4">
-                    <div class="note-header">
-                        <i class="fas fa-check"></i>
-                        Remember
-                    </div>
-                    <div class="note-content">
-                        <ul>
-                            <li>The index of the <code>Nth</code> element is always <code>N-1</code>. </li>
-                            <li>Python will raise an <code>IndexError</code> If you try to access an index greater than or equal to the length of the string</li>
-                        </ul>
-                    </div>
-                </div>
                 </div>
 
-                <!-- String Slicing -->
-                <div class="pt-5">
-                    <h3 class="section-title">2. String Slicing (Get Parts of Strings)</h3>
-                    <p class="lead"><b>String slicing lets you extract a portion (substring) of a string.</b></p>
+                <hr class="my-5">
 
-                    <p>Syntax: <code>string[start:end:step]</code></p>
+                <div class="pt-2">
+                    <h3 class="section-title">2. String Slicing (Extracting Substrings)</h3>
+                    <p class="lead">Slicing returns a range of characters. It works like a cookie cutter, extracting a piece of the original string.</p>
+
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h5 class="font-monospace text-center mb-0">Syntax: <code>string[ start : stop : step ]</code></h5>
+                        </div>
+                    </div>
                 
-                    <div class="note-box note-tip">
-                        <div class="note-header">
-                            <i class="fas fa-lightbulb"></i>
-                            Slicing Rules
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="note-box note-tip h-100">
+                                <strong>1. Start</strong><br>
+                                The index where the slice begins. This is <strong>Included</strong>.
+                            </div>
                         </div>
-                        <div class="note-content">
-                            <ul>
-                                <li><strong>start</strong>: Where to start (included)</li>
-                                <li><strong>end</strong>: Where to stop (excluded)</li>
-                                <li><strong>step</strong>: How many to skip (default 1)</li>
-                            </ul>
+                        <div class="col-md-4">
+                            <div class="note-box note-warning h-100">
+                                <strong>2. Stop</strong><br>
+                                The index where the slice ends. This is <strong>Excluded</strong> (upto, but not including).
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="note-box note-info h-100">
+                                <strong>3. Step</strong> (Optional)<br>
+                                The jump size. Default is 1 (take every character).
+                            </div>
                         </div>
                     </div>
 
-                    <div class="code-container mt-4">
-                        <pre><code class="language-python">word = "HELLO SAM"
+                    <h4 class="subsection-title">Basic Slicing Examples</h4>
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python">text = "PROGRAMMING"
 
-# Get "HELLO" (index 0 to 4)
-print(word[0:5])</code> 
+# Get "PRO" (Indices 0, 1, 2)
+# We stop at 3, because 3 is excluded
+print(text[0:3])
+
+# Get "GRAM" (Indices 3, 4, 5, 6)
+print(text[3:7])</code> 
 <i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">HELLO</code></pre>
+<code class="language-python">PRO
+GRAM</code></pre>
                     </div>
 
-                    <div class="code-container mt-4">
-                        <pre><code class="language-python"># Get "SAM" (index 6 to 8)
-word = "HELLO SAM"
-print(word[6:9])</code> 
+                    <h4 class="subsection-title mt-5">Negative Slicing (Slicing from the End)</h4>
+                    <p>You can use negative numbers to slice the string relative to the end. This is extremely useful for removing suffixes or grabbing the last few characters.</p>
+
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python">text = "PROGRAMMING"
+
+# Example 1: Get the last 3 characters
+# Start at -3 (M) and go to the end (:)
+print(text[-3:])
+
+# Example 2: Remove the last 3 characters
+# Start at beginning (:) and stop at -3 (excluding last 3)
+print(text[:-3])
+
+# Example 3: Get "GRAM" using negative indices
+# "GRAM" corresponds to indices -8 to -4
+print(text[-8:-4])</code> 
 <i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">SAM</code></pre>
+<code class="language-python">ING
+PROGRAMM
+GRAM</code></pre>
                     </div>
 
-                    <div class="code-container mt-4">
-                        <pre><code class="language-python"># Shortcuts
-word = "HELLO SAM"
-print(word[:5])   # From start to index 4
-print(word[6:])   # From index 6 to end
-print(word[:])    # Entire string</code> 
-<i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">HELLO
-SAM
-HELLO SAM</code></pre>
-                    </div>
+                    <h4 class="subsection-title mt-4">Using the 'Step' Argument</h4>
+                    <p>The third number defines the "jump".</p>
+                    <div class="code-container mt-3">
+                        <pre><code class="language-python">numbers = "0123456789"
 
-                    <div class="code-container mt-4">
-                        <pre><code class="language-python"># With steps
-word = "HELLO SAM"
-print(word[::2])    # Every 2nd character
-print(word[1::2])   # Every 2nd character starting from index 1
-print(word[::-1])   # Reverse the string</code> 
-<i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">HLOSM
-EL A
-MAS OLLEH</code></pre>
+print(numbers[::2])   # Take every 2nd character (0, 2, 4, 6, 8)
+print(numbers[::3])   # Take every 3rd character (0, 3, 6, 9)
+
+# THE COOLEST TRICK: REVERSING A STRING
+# By using a negative step (-1), we walk backwards!
+print(numbers[::-1])  # "9876543210"</code></pre>
                     </div>
                 </div>
 
-                <!-- Quick Reference -->
-                <div class="note-box note-info mt-4">
+                <div class="note-box note-success mt-5">
                     <div class="note-header">
-                        <i class="fas fa-book"></i>
-                        Quick Reference
+                        <i class="fas fa-check-double"></i>
+                        Summary Cheat Sheet
                     </div>
                     <div class="note-content">
-                        <table class="table table-bordered">
-                            <tr class="table-primary">
-                                <th>Operation</th>
-                                <th>Example</th>
-                                <th>Result</th>
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td width="30%"><code>s[0]</code></td>
+                                <td>First character</td>
                             </tr>
                             <tr>
-                                <td>Get first character</td>
-                                <td><code>word[0]</code></td>
-                                <td>'H'</td>
+                                <td><code>s[-1]</code></td>
+                                <td>Last character</td>
                             </tr>
                             <tr>
-                                <td>Get last character</td>
-                                <td><code>word[-1]</code></td>
-                                <td>'M'</td>
+                                <td><code>s[-3:]</code></td>
+                                <td>Last 3 characters</td>
                             </tr>
                             <tr>
-                                <td>Get first 5 chars</td>
-                                <td><code>word[0:5]</code></td>
-                                <td>'HELLO'</td>
+                                <td><code>s[:-1]</code></td>
+                                <td>Everything except the last character</td>
                             </tr>
                             <tr>
-                                <td>Get from index 6</td>
-                                <td><code>word[6:]</code></td>
-                                <td>'SAM'</td>
-                            </tr>
-                            <tr>
-                                <td>Reverse string</td>
-                                <td><code>word[::-1]</code></td>
-                                <td>'MAS OLLEH'</td>
+                                <td><code>s[::-1]</code></td>
+                                <td>Reverses the string</td>
                             </tr>
                         </table>
                     </div>
                 </div>
 
-                <!-- Practice Exercise -->
-                <div class="exercise-container mt-4">
+                <div class="exercise-container mt-5">
                     <h5 class="subsection-title">Try It Yourself</h5>
                     <div class="exercise-problem">
-                        <p>Use this string: <code>text = "PYTHON ROCKS"</code></p>
-                        <p>Write code to get:</p>
+                        <p>Given the string: <code>code = "DATA SCIENCE"</code></p>
+                        <p>Write Python code to solve these challenges:</p>
                         <ol>
-                            <li>First character</li>
-                            <li>Last character</li>
-                            <li>Word "PYTHON"</li>
-                            <li>Word "ROCKS"</li>
-                            <li>Every 2nd character</li>
-                            <li>String backwards</li>
+                            <li>Print the first letter <code>D</code>.</li>
+                            <li>Print the last letter <code>E</code> using a negative index.</li>
+                            <li>Slice out the word <code>DATA</code>.</li>
+                            <li>Slice out the word <code>SCIENCE</code> using negative slicing (e.g., from -7 to end).</li>
+                            <li>Reverse the whole string to get <code>ECNEICS ATAD</code>.</li>
                         </ol>
                     </div>
                     <button id="showSolutionBtn" class="btn btn-success">
@@ -814,53 +822,39 @@ MAS OLLEH</code></pre>
                     </button>
                     <div class="exercise-solution mt-3">
                         <div class="code-container">
-                            <pre><code class="language-python">text = "PYTHON ROCKS"
+                            <pre><code class="language-python">code = "DATA SCIENCE"
 
-print("1. First char:", text[0])
-print("2. Last char:", text[-1])
-print("3. 'PYTHON':", text[0:6])
-print("4. 'ROCKS':", text[7:])
-print("5. Every 2nd:", text[::2])
-print("6. Backwards:", text[::-1])</code> 
+# 1. First letter
+print(code[0])
+
+# 2. Last letter (Negative Index)
+print(code[-1])
+
+# 3. Slice 'DATA' (Indices 0 to 3, so stop at 4)
+print(code[0:4])
+
+# 4. Slice 'SCIENCE' (Negative slicing)
+print(code[-7:])
+
+# 5. Reverse String
+print(code[::-1])</code> 
 <i class="fas fa-terminal"></i> <strong>Output</strong>
-<code class="language-python">1. First char: P
-2. Last char: S
-3. 'PYTHON': PYTHON
-4. 'ROCKS': ROCKS
-5. Every 2nd: PTO OK
-6. Backwards: SKCOR NOHTYP</code></pre>
+<code class="language-python">D
+E
+DATA
+SCIENCE
+ECNEICS ATAD</code></pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Summary -->
-                <div class="note-box note-success mt-4">
-                    <div class="note-header">
-                        <i class="fas fa-check"></i>
-                        Remember
-                    </div>
-                    <div class="note-content">
-                        <ul>
-                            <li><strong>Indexing starts at 0</strong> (not 1!)</li>
-                            <li>Use <code>[ ]</code> for single characters</li>
-                            <li>Use <code>[start:end]</code> for slices</li>
-                            <li><strong>End index is NOT included</strong> in the slice</li>
-                            <li>Use <code>[-1]</code> for last character</li>
-                            <li>Use <code>[::-1]</code> to reverse strings</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <!-- Mermaid.js -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <!-- Custom JS -->
     <script>
         // Initialize Highlight.js
         document.addEventListener('DOMContentLoaded', (event) => {
