@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break & Continue | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        #header-name {
+            color: #d7e3fc;
+            font-size: 1.7rem;
+        }
+
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip { border-left-color: var(--success); background-color: rgba(6, 214, 160, 0.05); }
+        .note-warning { border-left-color: var(--warning); background-color: rgba(255, 209, 102, 0.05); }
+        .note-important { border-left-color: var(--primary); background-color: rgba(67, 97, 238, 0.05); }
+        .note-danger { border-left-color: var(--danger); background-color: rgba(239, 71, 111, 0.05); }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .note-header i { margin-right: 0.75rem; }
+
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-solution { display: none; margin-top: 1.5rem; }
+        
+        .btn-primary { background-color: var(--primary); border-color: var(--primary); }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-success { background-color: var(--success); border-color: var(--success); }
+
+        /* Tables */
+        .table-responsive { border-radius: 8px; overflow: hidden; }
+        .table th { background-color: rgba(67, 97, 238, 0.1); color: var(--primary); }
+        
+        .diagram-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Break and Continue</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="lead"><b>Control flow statements alter the normal flow of execution. Two key statements, <code>break</code> and <code>continue</code>, allow us to precisely control loops in Python.</b></p>
+
+                <div class="pt-2">
+                    <h3 class="subsection-title">1. The Break Statement</h3>
+                    
+                    <div class="note-box note-important">
+                        <div class="note-header">
+                            <i class="fas fa-stop-circle"></i>
+                            What is Break?
+                        </div>
+                        <div class="note-content">
+                            <p class="mb-0">The <code>break</code> statement terminates the loop containing it. Control of the program flows immediately to the statement <strong>after</strong> the body of the loop.</p>
+                        </div>
+                    </div>
+
+                    <div class="note-box note-tip">
+                        <div class="note-header">
+                            <i class="fas fa-lightbulb"></i>
+                            Real World Analogy
+                        </div>
+                        <div class="note-content">
+                            <p class="mb-0">Imagine you are looking for a specific book in a stack. Once you find it, you <strong>stop looking</strong> (break) and walk away. You don't check the remaining books.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Program to find a specific number
+numbers = [1, 3, 5, 7, 8, 9, 11]
+
+for num in numbers:
+    if num == 8:
+        print("Found 8! Stopping the loop.")
+        break  # Exit the loop immediately
+    print(f"Checking {num}...")
+
+print("Loop finished.")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Checking 1...
+Checking 3...
+Checking 5...
+Checking 7...
+Found 8! Stopping the loop.
+Loop finished.</code></pre>
+                    </div>
+
+                    <div class="content-subsection mt-4 mb-5">
+                        <h5 class="subsection-title">Break Flow Logic</h5>
+                        <div class="bg-light p-4 rounded text-center">
+                            <div class="mermaid">
+                                flowchart TD
+                                    A["Start Loop"] --> B{"Items left?"}
+                                    B -- No --> E["End Loop"]
+                                    B -- Yes --> C{"Is Condition Met?"}
+                                    C -- "Yes (Break)" --> E
+                                    C -- No --> D["Execute Loop Body"]
+                                    D --> B
+                            </div>
+                            <div class="diagram-caption">When the break condition is met, the loop terminates immediately.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="pt-2">
+                    <h3 class="subsection-title">2. The Continue Statement</h3>
+                    
+                    <div class="note-box note-important">
+                        <div class="note-header">
+                            <i class="fas fa-forward"></i>
+                            What is Continue?
+                        </div>
+                        <div class="note-content">
+                            <p class="mb-0">The <code>continue</code> statement skips the rest of the code inside the loop for the <strong>current iteration only</strong>. The loop does not terminate but continues with the next iteration.</p>
+                        </div>
+                    </div>
+
+                    <div class="note-box note-tip">
+                        <div class="note-header">
+                            <i class="fas fa-music"></i>
+                            Real World Analogy
+                        </div>
+                        <div class="note-content">
+                            <p class="mb-0">Imagine listening to a playlist. If a song comes on that you don't like, you hit "Skip" (continue). The playlist doesn't stop; it just moves to the <strong>next song</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python"># Program to print only odd numbers
+for i in range(1, 6):
+    if i % 2 == 0:
+        print(f"Skipping even number: {i}")
+        continue  # Skip the rest of this iteration
+    print(f"Printing odd number: {i}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Printing odd number: 1
+Skipping even number: 2
+Printing odd number: 3
+Skipping even number: 4
+Printing odd number: 5</code></pre>
+                    </div>
+
+                    <div class="content-subsection mt-4">
+                        <h5 class="subsection-title">Continue Flow Logic</h5>
+                        <div class="bg-light p-4 rounded text-center">
+                            <div class="mermaid">
+                                flowchart TD
+                                    A["Start Loop"] --> B{"Items left?"}
+                                    B -- No --> E["End Loop"]
+                                    B -- Yes --> C{"Is Condition Met?"}
+                                    C -- "Yes (Continue)" --> B
+                                    C -- No --> D["Execute Loop Body"]
+                                    D --> B
+                            </div>
+                            <div class="diagram-caption">When continue runs, it jumps back to the start (next item) immediately.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <h3 class="subsection-title">Break vs Continue</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Break <i class="fas fa-stop text-danger"></i></th>
+                                    <th>Continue <i class="fas fa-forward text-primary"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Action</strong></td>
+                                    <td>Terminates the loop completely.</td>
+                                    <td>Terminates the current iteration only.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Next Step</strong></td>
+                                    <td>Executes code <em>outside</em> the loop.</td>
+                                    <td>Executes the <em>next iteration</em> of the loop.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Analogy</strong></td>
+                                    <td>Emergency Stop Button.</td>
+                                    <td>Skip/Next Button.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <h3 class="subsection-title">Common Mistakes</h3>
+                    
+                    <ol class="skip-pointer">
+                        <li class="pt-3">
+                            <h5>1. The Infinite While Loop</h5>
+                            <p>Using <code>continue</code> in a while loop without updating the counter often leads to infinite loops.</p>
+                            
+                            <div class="code-container mt-3">
+                                <pre><code class="language-python"># DANGER: Infinite Loop
+i = 0
+while i < 5:
+    if i == 3:
+        continue  # i never increments! Stuck at 3 forever.
+    print(i)
+    i += 1</code></pre>
+                            </div>
+                            
+                            <div class="note-box note-danger">
+                                <div class="note-header">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    How to fix
+                                </div>
+                                <div class="note-content">
+                                    Ensure you increment your control variable <strong>before</strong> the continue statement inside a <code>while</code> loop.
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="pt-3">
+                            <h5>2. Unreachable Code</h5>
+                            <p>Any code placed immediately after <code>break</code> or <code>continue</code> inside the same block will never run.</p>
+                            <div class="code-container mt-3">
+                                <pre><code class="language-python">for i in range(3):
+    break
+    print("This will never print") # Dead code</code></pre>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="exercise-container mt-4">
+                    <h5 class="subsection-title"><i class="fas fa-code me-2 text-primary"></i>Practice Challenge</h5>
+                    <div class="exercise-problem">
+                        <p><strong>Scenario:</strong> You are processing a list of product prices. 
+                        <ul>
+                            <li>The list: <code>prices = [10, 50, 0, 200, 150, 0, 30]</code></li>
+                            <li>If the price is <strong>0</strong>, it's invalid data: <strong>skip it</strong>.</li>
+                            <li>If the price is <strong>above 100</strong>, it's too expensive: <strong>stop processing completely</strong>.</li>
+                            <li>Print all valid, affordable prices.</li>
+                        </ul>
+                        Write the loop.</p>
+                    </div>
+                    
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Solution
+                    </button>
+                    
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">prices = [10, 50, 0, 200, 150, 0, 30]
+
+for price in prices:
+    if price == 0:
+        continue  # Skip invalid data
+        
+    if price > 100:
+        print("Price too high! Stopping.")
+        break  # Stop processing
+        
+    print(f"Processing price: ${price}")</code> 
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Processing price: $10
+Processing price: $50
+Price too high! Stopping.</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            securityLevel: 'loose'
+        });
+
+        // Show/Hide Solution Logic
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.replace('btn-success', 'btn-danger');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.replace('btn-danger', 'btn-success');
+            }
+        });
+    </script>
+</body>
+</html>
