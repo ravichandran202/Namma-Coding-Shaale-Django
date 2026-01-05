@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Operators | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --primary-light: #d7e3fc;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #212529;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+            --code-bg: #1a1a1a;
+            --code-text: #f8f8f2;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        #header-name {
+            color: #ffffff;
+            font-size: 1.7rem;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.35em;
+            height: 0.7em;
+            width: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Cards and Containers */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+
+        code,
+        py-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .highlight {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        pre code,
+        pre py-code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Code Tabs */
+        .code-tabs {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-tabs .nav-tabs {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .code-tabs .nav-link {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+        }
+
+        .code-tabs .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .code-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: white;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .code-tabs .tab-content {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        /* Images and Visuals */
+        .content-image {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Notes */
+        .note-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-tip {
+            border-left-color: var(--success);
+            background-color: rgba(6, 214, 160, 0.05);
+        }
+
+        .note-warning {
+            border-left-color: var(--warning);
+            background-color: rgba(255, 209, 102, 0.05);
+        }
+
+        .note-important {
+            border-left-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .note-danger {
+            border-left-color: var(--danger);
+            background-color: rgba(239, 71, 111, 0.05);
+        }
+
+        .note-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+
+        .note-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+        }
+
+        .note-content {
+            color: black !important;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-options {
+            padding-left: 0;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: var(--bg);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .quiz-option-label {
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .quiz-feedback i {
+            margin-right: 0.5rem;
+        }
+
+        .correct-feedback {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: #06a17e;
+        }
+
+        .incorrect-feedback {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: #d43a63;
+        }
+
+        /* Exercise */
+        .exercise-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .exercise-problem {
+            margin-bottom: 1.5rem;
+        }
+
+        .exercise-problem ol,
+        .exercise-problem ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .exercise-problem li {
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-solution {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: #05b78e;
+            border-color: #05b78e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.8em;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .badge-danger {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        .badge-secondary {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+        }
+
+        .badge-info {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: #17a2b8;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skip-pointer {
+            list-style: none;
+            /* removes numbering */
+            padding: 0;
+            /* removes left space */
+            margin: 0;
+            /* optional */
+        }
+
+
+        /* Difficulty Indicators */
+        .difficulty-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(255, 209, 102, 0.1);
+            color: #d4a847;
+        }
+
+        .difficulty-hard {
+            background-color: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+        }
+
+        /* Completion Status */
+        .completion-status {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        code {
+            font-variant-ligatures: none;
+            font-feature-settings: "liga" 0, "clig" 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-card .card-body {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            pre {
+                padding: .5rem;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-2">
+        <div class="content-card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h1 class="mb-0" id="header-name">Nested Dictionaries</h1>
+                </div>
+            </div>
+    
+            <div class="card-body">
+                <p class="lead"><b>Learn how to manage complex data structures by storing dictionaries inside other dictionaries.</b></p>
+    
+                <div class="pt-3">
+                    <h4 class="subsection-title">1. Structure of Nested Dictionaries</h4>
+                    <p>A nested dictionary is simply a dictionary where the values are themselves dictionaries. This is commonly used to represent structured data like JSON APIs, databases, or configuration files.</p>
+    
+                    <div class="method-item mt-4">
+                        <h6>Basic Syntax</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python"># A dictionary of students
+# Keys are student IDs, Values are dictionaries of details
+class_records = {
+    "student_01": {
+        "name": "Alice",
+        "age": 12,
+        "grades": {"math": 90, "science": 85}
+    },
+    "student_02": {
+        "name": "Bob",
+        "age": 13,
+        "grades": {"math": 75, "science": 92}
+    }
+}
+
+print(class_records)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">{'student_01': {'name': 'Alice', 'age': 12, 'grades': {'math': 90, 'science': 85}}, 'student_02': {'name': 'Bob', 'age': 13, 'grades': {'math': 75, 'science': 92}}}</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="pt-3">
+                    <h4 class="subsection-title">2. Accessing Nested Elements</h4>
+                    <p>To access data inside a nested dictionary, you chain the square brackets <code>[]</code> or <code>get()</code> methods.</p>
+    
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">my_family = {
+  "child1": {"name": "Emil", "year": 2004},
+  "child2": {"name": "Tobias", "year": 2007},
+  "child3": {"name": "Linus", "year": 2011}
+}
+
+# 1. Access the dictionary for child2
+print(my_family["child2"])
+
+# 2. Access specifically the name of child2
+name = my_family["child2"]["name"]
+print("Child 2 Name:", name)
+
+# 3. Access using .get() (Safer)
+year = my_family.get("child3").get("year")
+print("Child 3 Year:", year)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">{'name': 'Tobias', 'year': 2007}
+Child 2 Name: Tobias
+Child 3 Year: 2011</code></pre>
+                    </div>
+    
+                    <div class="note-box note-important mt-3">
+                        <div class="note-header">
+                            <i class="fas fa-info-circle"></i>
+                            Visualization
+                        </div>
+                        <div class="note-content">
+                            <p>Think of it like a file path: <code>dictionary -> key -> sub_key -> value</code>. <br>
+                            <code>my_family["child2"]["name"]</code> means: Go to <i>my_family</i>, find <i>child2</i>, then inside that, find <i>name</i>.</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="pt-3">
+                    <h4 class="subsection-title">3. Modifying Nested Data</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6>Adding and Updating</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">products = {
+    "laptop": {"price": 1000, "stock": 5},
+    "mouse": {"price": 20, "stock": 10}
+}
+
+# 1. Update a value inside a nested dictionary
+products["laptop"]["price"] = 950  # Sale price!
+products["laptop"]["stock"] -= 1   # Sold one
+
+# 2. Add a new key-value pair to a nested dictionary
+products["mouse"]["color"] = "black"
+
+# 3. Add a completely new nested item
+products["keyboard"] = {"price": 50, "stock": 8}
+
+print(products)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">{
+    'laptop': {'price': 950, 'stock': 4}, 
+    'mouse': {'price': 20, 'stock': 10, 'color': 'black'}, 
+    'keyboard': {'price': 50, 'stock': 8}
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="pt-3">
+                    <h4 class="subsection-title">4. Iterating Nested Dictionaries</h4>
+    
+                    <div class="method-item mt-4">
+                        <h6>Looping through complex data</h6>
+                        <div class="code-container">
+                            <pre><code class="language-python">people = {
+    1: {'name': 'John', 'age': '27', 'sex': 'Male'},
+    2: {'name': 'Marie', 'age': '22', 'sex': 'Female'}
+}
+
+for p_id, p_info in people.items():
+    print(f"\nPerson ID: {p_id}")
+    
+    # p_info is the inner dictionary
+    for key in p_info:
+        print(f"{key}: {p_info[key]}")</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Person ID: 1
+name: John
+age: 27
+sex: Male
+
+Person ID: 2
+name: Marie
+age: 22
+sex: Female</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="exercise-container mt-4">
+                    <h4 class="subsection-title">Try It Yourself</h4>
+                    <div class="exercise-problem">
+                        <p>You have a dictionary representing a library system:</p>
+                        <pre><code class="language-python">library = {
+    "Harry Potter": {"author": "J.K. Rowling", "available": True},
+    "The Hobbit": {"author": "Tolkien", "available": False}
+}</code></pre>
+                        <p>Perform the following operations:</p>
+                        <ol>
+                            <li>Print the author of "Harry Potter".</li>
+                            <li>Change the availability of "The Hobbit" to <code>True</code>.</li>
+                            <li>Add a new book "1984" with author "Orwell" and available <code>True</code>.</li>
+                            <li>Write a loop to print only the books that are currently <code>available</code>.</li>
+                        </ol>
+                    </div>
+                    <button id="showSolutionBtn" class="btn btn-success">
+                        <i class="fas fa-eye me-1"></i> Show Answers
+                    </button>
+                    <div class="exercise-solution mt-3">
+                        <div class="code-container">
+                            <pre><code class="language-python">library = {
+    "Harry Potter": {"author": "J.K. Rowling", "available": True},
+    "The Hobbit": {"author": "Tolkien", "available": False}
+}
+
+# 1. Print Author
+print("1. Author of HP:", library["Harry Potter"]["author"])
+
+# 2. Change Availability
+library["The Hobbit"]["available"] = True
+print("\n2. Hobbit is now available.")
+
+# 3. Add new book
+library["1984"] = {"author": "Orwell", "available": True}
+print("\n3. Library updated.")
+
+# 4. Loop for available books
+print("\n4. Available books:")
+for book, details in library.items():
+    if details["available"] == True:
+        print(f"- {book} by {details['author']}")</code>
+    <i class="fas fa-terminal"></i> <strong>Output</strong>
+    <code class="language-python">1. Author of HP: J.K. Rowling
+
+2. Hobbit is now available.
+
+3. Library updated.
+
+4. Available books:
+- Harry Potter by J.K. Rowling
+- The Hobbit by Tolkien
+- 1984 by Orwell</code></pre>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="note-box note-success mt-4">
+                    <div class="note-header">
+                        <i class="fas fa-check"></i>
+                        Nested Dictionary Summary
+                    </div>
+                    <div class="note-content">
+                        <table class="table table-bordered">
+                            <tr class="table-primary">
+                                <th>Operation</th>
+                                <th>Syntax Example</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>Access Depth 1</td>
+                                <td><code>dict["key1"]</code></td>
+                                <td>Returns the inner dictionary</td>
+                            </tr>
+                            <tr>
+                                <td>Access Depth 2</td>
+                                <td><code>dict["key1"]["key2"]</code></td>
+                                <td>Returns the specific value</td>
+                            </tr>
+                            <tr>
+                                <td>Modify Nested</td>
+                                <td><code>dict["key1"]["key2"] = val</code></td>
+                                <td>Updates inner value</td>
+                            </tr>
+                            <tr>
+                                <td>Add Nested</td>
+                                <td><code>dict["new_key"] = { ... }</code></td>
+                                <td>Adds a new dictionary entry</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Initialize Highlight.js
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        // Show/hide exercise solution
+        document.getElementById('showSolutionBtn').addEventListener('click', function () {
+            const solution = document.querySelector('.exercise-solution');
+            if (solution.style.display === 'none' || !solution.style.display) {
+                solution.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash me-1"></i> Hide Solution';
+                this.classList.add('btn-danger');
+                this.classList.remove('btn-success');
+            } else {
+                solution.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye me-1"></i> Show Solution';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-danger');
+            }
+        });
+    </script>
+</body>
+
+</html>
