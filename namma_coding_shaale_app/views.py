@@ -405,6 +405,84 @@ def list_problems(request, course_id):
     return render(request, "list-problems.html", context)
 
 @login_required(login_url="login")
+def list_content(request, course_id):
+    if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        return redirect("home")
+
+    # Sidebar logic (excludes single 'PROBLEM' but keeps 'PROBLEMS')
+    roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
+
+    # Fetch Content: We exclude single 'PROBLEM' types (IDE), 
+    # but we KEEP 'PROBLEMS' (lists/practice sets) matches your sidebar logic.
+    course_contents = CourseContent.objects.filter(
+        course_id=course_id
+    ).exclude(
+        content__type='PROBLEM' 
+    ).select_related('content').order_by('sequence_number')
+
+    user_progress_map = {
+        p.content_id: p 
+        for p in UserContentProgress.objects.filter(user=request.user, course_id=course_id)
+    }
+
+    sections_map = {}
+    
+    for cc in course_contents:
+        section_title = cc.section_title
+        if section_title not in sections_map:
+            sections_map[section_title] = {
+                "id": section_title.lower().replace(" ", "-"),
+                "title": section_title,
+                "contents": []
+            }
+
+        # Status Logic
+        status = 'pending'
+        progress = user_progress_map.get(cc.content.id)
+        if progress:
+            if progress.is_completed: status = 'completed'
+            elif progress.is_locked: status = 'locked'
+        
+        # --- TYPE MAPPING ---
+        content_type = cc.content.type 
+        frontend_type = 'article' # default fallback
+        duration_text = "5 min"
+
+        if content_type == 'VIDEO':
+            frontend_type = 'video'
+            duration_text = "10 min"
+        elif content_type == 'QUIZ':
+            frontend_type = 'quiz'
+            duration_text = "Assessment"
+        elif content_type == 'PROBLEMS':  # <--- HERE IS THE NEW TYPE
+            frontend_type = 'problems'    # This string is sent to JS
+            duration_text = "Practice"
+        
+        sections_map[section_title]["contents"].append({
+            "id": cc.content.id,
+            "title": cc.content.title,
+            "type": frontend_type,
+            "status": status,
+            "duration": duration_text,
+            "url": f"/content/{course_id}/{cc.content.file_name}/" 
+        })
+
+    sections = []
+    for idx, (title, data) in enumerate(sections_map.items(), 1):
+        data["title"] = f"{idx}. {title}"
+        sections.append(data)
+
+    context = {
+        "is_freemium": False,
+        "roadmap": roadmap,
+        "course_id": course_id,
+        "content_js_json": json.dumps(sections)
+    }
+    
+    return render(request, "course_content.html", context)
+
+
+@login_required(login_url="login")
 def checkout(request, course_id):
     if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
             return redirect("my-courses")

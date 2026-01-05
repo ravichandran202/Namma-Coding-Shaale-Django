@@ -1,0 +1,731 @@
+  {% load static %}
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Content Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+      /* =================================================================
+        1. GLOBAL & SIDEBAR STYLES (STRICTLY UNCHANGED)
+        ================================================================= */
+      :root {
+        --primary: #3b82f6;
+        --primary-hover: #2563eb;
+        --primary-light: #93c5fd;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --bg: #f8fafc;
+        --text: #1e293b;
+        --text-light: #64748b;
+        --border: #e2e8f0;
+        --row-hover: #f1f5f9;
+        --meter-background: #e2e8f0;
+        --meter-fill: #3b82f6;
+        --sidebar-width: 280px;
+        --sidebar-bg: #ffffff;
+        --sidebar-text: #1e293b;
+        --sidebar-active-bg: #f1f5f9;
+        --sidebar-hover-bg: #f8fafc;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        font-weight: 400;
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+
+      /* Top Bar Styles */
+      .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
+      .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
+      .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
+      .top-bar-menu-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+      /* Sidebar Styles */
+      .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-width); background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.08); z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; }
+      .sidebar.active { transform: translateX(0); }
+      .sidebar-overlay { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+      .sidebar-overlay.active { opacity: 1; visibility: visible; }
+      .sidebar-header { padding: 1rem; margin-bottom: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 10; display: flex; align-items: center; justify-content: center; }
+      .sidebar-header h3 { font-weight: 700; margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+      .sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
+      .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+      .sidebar-menu li { margin-bottom: 0.25rem; }
+      .sidebar-menu a { display: flex; align-items: center; padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
+      .sidebar-menu a:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
+      .sidebar-menu a.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
+      .sidebar-menu a i { margin-right: 0.75rem; width: 20px; text-align: center; }
+      .sidebar-footer { position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); background: rgba(15, 23, 42, 0.98); }
+      .sidebar-title { font-family: 'Playfair Display', serif; margin: 0; font-size: 1rem; }
+      .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
+      .sidebar-section { margin-bottom: 1.5rem; }
+      .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); margin: 1rem 0 0.5rem 1rem; font-weight: 600; }
+      .sidebar-submenu { list-style: none; padding-left: 1.5rem; margin: 0.25rem 0; }
+      .sidebar-submenu li { margin-bottom: 0.1rem; }
+      .sidebar-submenu a { padding: 0.5rem 1rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+
+      /* =================================================================
+        2. PREMIUM CONTENT STYLES (SAME AS PROBLEM TRACKER)
+        ================================================================= */
+
+      .main-content {
+        padding: 2rem;
+        transition: transform 0.3s ease;
+        height: 100%;
+        background-color: #f8fafc;
+      }
+
+      .premium-card {
+          background: #ffffff;
+          border-radius: 16px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+          border: 1px solid rgba(226, 232, 240, 0.8);
+          overflow: hidden;
+          margin-bottom: 24px;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .progress-card-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(to right, #ffffff, #fafafa);
+      }
+
+      .progress-card-title {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #0f172a;
+          margin: 0;
+          letter-spacing: -0.02em;
+      }
+
+      .progress-card-icon {
+          width: 42px;
+          height: 42px;
+          background: rgba(59, 130, 246, 0.1);
+          color: var(--primary);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+      }
+
+      .progress-card-body { padding: 2rem; }
+
+      /* Radial Chart Polish */
+      .radial-circle { width: 160px; height: 160px; position: relative; }
+      .circle-bg { stroke: #f1f5f9; stroke-width: 2.5; }
+      .circle-fill { stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3)); transition: stroke-dasharray 0.5s ease; }
+      .radial-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.5rem; font-weight: 800; color: #0f172a; letter-spacing: -1px; }
+      .radial-total { font-size: 0.9rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+      /* Search Bar */
+      .search-container { position: relative; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); border-radius: 12px; }
+      .search-input {
+          padding: 0.8rem 1rem 0.8rem 2.8rem;
+          font-size: 0.95rem;
+          border-radius: 12px;
+          border: 1px solid #e2e8f0;
+          background-color: white;
+          transition: all 0.2s;
+      }
+      .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+      .search-icon-overlay { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+
+      /* Filter Buttons */
+      .filter-buttons .btn {
+          border-radius: 20px;
+          padding: 0.4rem 1.2rem;
+          font-weight: 600;
+          font-size: 0.85rem;
+          border: 1px solid #e2e8f0;
+          background: white;
+          color: #64748b;
+          transition: all 0.2s;
+      }
+      .filter-buttons .btn:hover { background-color: #f1f5f9; color: #334155; }
+      .filter-buttons .btn.active {
+          background-color: #0f172a;
+          color: white;
+          border-color: #0f172a;
+          box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+      }
+
+      /* Section Headers */
+      .section-header {
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-left: 4px solid var(--primary);
+          padding: 1.2rem 1.5rem;
+          border-radius: 12px;
+          margin: 1.5rem 0 0.5rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .section-header:hover { transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+      .section-header h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; color: #1e293b; margin: 0; font-weight: 700; }
+      .section-toggle-icon { color: #cbd5e1; transition: transform 0.3s; }
+      .section-header.active .section-toggle-icon { transform: rotate(180deg); }
+
+      /* Table Styling */
+      .problems-table-wrapper {
+          background: white;
+          border-radius: 0 0 12px 12px;
+          border: 1px solid #e2e8f0;
+          border-top: none;
+          overflow: hidden;
+          margin-bottom: 1.5rem;
+      }
+      
+      .table { margin-bottom: 0; }
+      .table thead th {
+          background-color: #f8fafc;
+          color: #64748b;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.05em;
+          padding: 1rem 1.5rem;
+          border-bottom: 1px solid #e2e8f0;
+      }
+      .table tbody td {
+          padding: 1rem 1.5rem;
+          vertical-align: middle;
+          border-bottom: 1px solid #f1f5f9;
+          color: #334155;
+          font-size: 0.95rem;
+      }
+      .table tbody tr:last-child td { border-bottom: none; }
+      .table tbody tr:hover { background-color: #fcfcfc; }
+
+      /* Type Badges (Adapted from Difficulty) */
+      .type-badge {
+          font-weight: 600;
+          font-size: 0.75rem;
+          padding: 6px 12px;
+          border-radius: 6px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          min-width: 90px;
+          justify-content: center;
+      }
+      .type-video { background-color: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+      .type-article { background-color: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+      .type-quiz { background-color: #f5f3ff; color: #7c3aed; border: 1px solid #ede9fe; }
+
+      /* Status Indicator (Dot) */
+      .status-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          display: inline-block;
+          position: relative;
+      }
+      .status-completed { background-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+      .status-pending { background-color: #e2e8f0; border: 2px solid #cbd5e1; }
+      .status-pending { background-color: #e2e8f0; border: 2px solid #cbd5e1; }
+      
+      /* Action Button */
+      .btn-action {
+          background-color: #0f172a;
+          color: white;
+          border-radius: 8px;
+          padding: 0.5rem 1.2rem;
+          font-size: 0.85rem;
+          font-weight: 500;
+          transition: all 0.2s;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+      }
+      .btn-action:hover {
+          background-color: var(--primary);
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+      }
+      
+      .btn-action-quiz {
+          background-color: white;
+          color: #0f172a;
+          border: 1px solid #e2e8f0;
+      }
+      .btn-action-quiz:hover {
+          background-color: #f8fafc;
+          color: var(--primary);
+      }
+      .type-problems { 
+          background-color: #e0e7ff; 
+          color: #4338ca; 
+          border: 1px solid #c7d2fe; 
+      }
+
+      /* Add this inside your <style> tag with the other badges */
+        .type-problem { background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+
+      /* Responsive Adjustments */
+      @media (min-width: 992px) {
+        .top-bar { display: none; }
+        .sidebar { top: 0; height: 100vh; transform: translateX(0); }
+        .sidebar-overlay { display: none; }
+        .main-content { margin-left: var(--sidebar-width); padding-top: 2rem; }
+      }
+
+      @media (max-width: 768px) {
+        .main-content { padding: 1rem; margin-top: 56px; }
+        .progress-card-body { padding: 1.5rem; }
+        .radial-circle { width: 140px; height: 140px; }
+        .radial-value { font-size: 2rem; }
+        .filter-buttons { overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
+        .section-header { padding: 1rem; }
+        .section-header h3 { font-size: 1rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="top-bar" id="topBar">
+      <button class="top-bar-menu-btn" id="topBarMenuBtn"><i class="fas fa-bars"></i></button>
+      <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span></h3>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-section">
+          <p class="sidebar-section-title">Main Menu</p>
+          <ul class="sidebar-menu">
+            <li><a href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
+            <li><a href="#" class="active"><i class="fas fa-book-open"></i> Course Content</a></li>
+            <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
+            <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
+          </ul>
+        </div>
+  
+        {% if not is_freemium %}
+        {% for section in roadmap %}
+        <div class="sidebar-section">
+          <p class="sidebar-section-title">{{ section.title }}</p>
+          <ul class="sidebar-menu">
+            {% if section.has_submenu %}
+            <li class="has-submenu">
+              <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
+                <i class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                {{ section.title }}
+              </a>
+              <ul class="sidebar-submenu">
+                {% for content in section.contents %}
+                <li>
+                  <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}">
+                    <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                    {{ content.title }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
+                <i class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                {{ section.contents.0.title }}
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  
+    <div class="main-content" id="mainContent">
+      <div class="container-fluid p-0" style="max-width: 1200px; margin: 0 auto;">
+  
+        <div class="premium-progress-dashboard mb-5">
+          <div class="premium-card position-relative">
+            <div class="progress-card-header">
+              <div>
+                <h3 class="progress-card-title">Course Progress</h3>
+                <p class="text-muted small mb-0 mt-1">Track your learning journey</p>
+              </div>
+              <div class="progress-card-icon"><i class="fas fa-chart-line"></i></div>
+            </div>
+            <div class="progress-card-body">
+              <div class="row align-items-center">
+                <div class="col-lg-4 border-end-lg pe-lg-5 mb-4 mb-lg-0 d-flex flex-column align-items-center">
+                  <div class="radial-circle">
+                    <svg viewBox="0 0 36 36" style="width:100%; height:100%;">
+                      <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                      <path class="circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                    </svg>
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                      <div class="radial-value" id="total-completion-percent">0%</div>
+                      <div class="radial-total">Completed</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8 ps-lg-5">
+                  <div class="d-flex flex-column gap-4">
+                    <div>
+                      <div class="d-flex justify-content-between mb-2">
+                          <span class="fw-semibold text-dark fs-6"><span class="badge bg-primary bg-opacity-10 text-primary me-2"><i class="fas fa-play me-1"></i> Videos</span></span>
+                          <span class="text-muted small fw-bold"><span id="video-count">0</span> / <span id="video-total">0</span></span>
+                      </div>
+                      <div class="progress" style="height: 8px; background: #f1f5f9; border-radius: 4px;"><div id="video-progress-bar" class="progress-bar bg-primary" style="width: 0%"></div></div>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between mb-2">
+                          <span class="fw-semibold text-dark fs-6"><span class="badge bg-success bg-opacity-10 text-success me-2"><i class="fas fa-book-open me-1"></i> Reading</span></span>
+                          <span class="text-muted small fw-bold"><span id="article-count">0</span> / <span id="article-total">0</span></span>
+                      </div>
+                      <div class="progress" style="height: 8px; background: #f1f5f9; border-radius: 4px;"><div id="article-progress-bar" class="progress-bar bg-success" style="width: 0%"></div></div>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between mb-2">
+                          <span class="fw-semibold text-dark fs-6"><span class="badge text-white me-2" style="background-color: #7c3aed;"><i class="fas fa-question me-1"></i> Quizzes</span></span>
+                          <span class="text-muted small fw-bold"><span id="quiz-count">0</span> / <span id="quiz-total">0</span></span>
+                      </div>
+                      <div class="progress" style="height: 8px; background: #f1f5f9; border-radius: 4px;"><div id="quiz-progress-bar" class="progress-bar" style="background: #7c3aed; width: 0%"></div></div>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between mb-2">
+                          <span class="fw-semibold text-dark fs-6"><span class="badge text-white me-2" style="background-color: #4338ca;"><i class="fas fa-list-check me-1"></i> Problems</span></span>
+                          <span class="text-muted small fw-bold"><span id="problems-count">0</span> / <span id="problems-total">0</span></span>
+                      </div>
+                      <div class="progress" style="height: 8px; background: #f1f5f9; border-radius: 4px;"><div id="problems-progress-bar" class="progress-bar" style="background: #4338ca; width: 0%"></div></div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="d-flex flex-column flex-md-row gap-3 mb-4 justify-content-between align-items-md-center">
+          <div class="search-container flex-grow-1" style="max-width: 400px;">
+              <i class="fas fa-search search-icon-overlay"></i>
+              <input type="text" class="form-control search-input" id="searchInput" placeholder="Search topics...">
+          </div>
+          <div class="filter-buttons d-flex gap-2">
+              <button class="btn active" data-filter="all">All</button>
+              <button class="btn" data-filter="video">Videos</button>
+              <button class="btn" data-filter="article">Reading</button>
+              <button class="btn" data-filter="quiz">Quizzes</button>
+              <button class="btn" data-filter="problems">Problems</button>
+              <button class="btn" id="resetBtn"><i class="fas fa-undo me-1"></i> Reset</button>
+          </div>
+        </div>
+  
+        <div id="content-container"></div>
+      </div>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+    <script type="application/json" id="course-data">
+      {{ content_js_json|safe }}
+    </script>
+  
+    <script>
+      const CourseData = (() => {
+        const sections = JSON.parse(document.getElementById('course-data').textContent);
+        const getAllContents = () => sections.flatMap(section => section.contents);
+        const getFilteredContents = (filter, search) => {
+          let filtered = getAllContents();
+          if (search) {
+            const searchTerm = search.toLowerCase();
+            filtered = filtered.filter(item => item.title.toLowerCase().includes(searchTerm));
+          }
+          if (filter !== 'all') {
+               filtered = filtered.filter(item => item.type === filter);
+          }
+          return filtered;
+        };
+        const getProgressStats = () => {
+          const allItems = getAllContents();
+          const calc = (items) => {
+              const total = items.length;
+              const completed = items.filter(i => i.status === 'completed').length;
+              return { count: completed, total: total, percent: total ? Math.round((completed/total)*100) : 0 };
+          };
+          return {
+            total: calc(allItems),
+            video: calc(allItems.filter(p => p.type === 'video')),
+            article: calc(allItems.filter(p => p.type === 'article')),
+            quiz: calc(allItems.filter(p => p.type === 'quiz')),
+            problems: calc(allItems.filter(p => p.type === 'problems')) 
+          };
+        };
+        return { sections, getAllContents, getFilteredContents, getProgressStats };
+      })();
+  
+      const UIController = (() => {
+        const DOMStrings = {
+          searchInput: '#searchInput',
+          filterButtons: '.filter-buttons button',
+          resetBtn: '#resetBtn',
+          container: '#content-container',
+          progressElements: {
+            total: { text: '#total-completion-percent' },
+            video: { count: '#video-count', total: '#video-total', bar: '#video-progress-bar' },
+            article: { count: '#article-count', total: '#article-total', bar: '#article-progress-bar' },
+            quiz: { count: '#quiz-count', total: '#quiz-total', bar: '#quiz-progress-bar' },
+            problems: { count: '#problems-count', total: '#problems-total', bar: '#problems-progress-bar' } // <--- ADD THIS LINE
+          }
+        };
+  
+        const saveSectionState = (id, expanded) => {
+          const states = JSON.parse(localStorage.getItem('courseSectionStates') || '{}');
+          states[id] = expanded;
+          localStorage.setItem('courseSectionStates', JSON.stringify(states));
+        };
+        const getSectionState = (id) => {
+          const states = JSON.parse(localStorage.getItem('courseSectionStates') || '{}');
+          return states[id] !== undefined ? states[id] : true;
+        };
+  
+        const renderContents = (contents) => {
+          const container = document.querySelector(DOMStrings.container);
+          container.innerHTML = '';
+          const contentsBySection = {};
+          contents.forEach(item => {
+            const section = CourseData.sections.find(s => s.contents.some(c => c.id === item.id));
+            if (section) {
+              if (!contentsBySection[section.id]) contentsBySection[section.id] = { section: section, items: [] };
+              contentsBySection[section.id].items.push(item);
+            }
+          });
+  
+          if (Object.keys(contentsBySection).length === 0) {
+              container.innerHTML = '<div class="text-center p-5 text-muted">No content found matching your filters.</div>';
+              return;
+          }
+  
+          for (const sectionId in contentsBySection) {
+            const { section, items } = contentsBySection[sectionId];
+            const isExpanded = getSectionState(sectionId);
+            const completedInSection = items.filter(i => i.status === 'completed').length;
+  
+            const sectionHTML = `
+              <div class="mb-4">
+                <div class="section-header ${isExpanded ? 'active' : ''}" data-section-id="${sectionId}">
+                  <div class="d-flex align-items-center gap-3">
+                      <div class="bg-primary bg-opacity-10 text-primary rounded p-2 d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                        <i class="fas fa-folder-open"></i>
+                      </div>
+                      <div>
+                          <h3>${section.title}</h3>
+                          <div class="text-muted" style="font-size: 0.8rem;">${completedInSection}/${items.length} Completed</div>
+                      </div>
+                  </div>
+                  <i class="fas fa-chevron-down section-toggle-icon"></i>
+                </div>
+  
+                <div class="section-content" style="display: ${isExpanded ? 'block' : 'none'};">
+                  <div class="problems-table-wrapper">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 60px; text-align:center;">Status</th>
+                            <th>Topic Title</th>
+                            <th style="width: 120px;">Type</th>
+                            <th style="width: 100px; text-align:center;">Duration</th>
+                            <th style="width: 140px; text-align:end;">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${items.map((item, index) => {
+                              let typeIcon = 'fa-play', typeClass = 'type-video', btnText = 'Watch';
+                              if(item.type === 'article') { typeIcon = 'fa-book-open'; typeClass = 'type-article'; btnText = 'Read'; }
+                              if(item.type === 'quiz') { typeIcon = 'fa-question'; typeClass = 'type-quiz'; btnText = 'Start'; }
+                              if(item.type === 'problems') { typeIcon = 'fa-list-check'; typeClass = 'type-problems'; btnText = 'Solve'; }
+  
+                              // Check Status
+                              const isLocked = item.status === 'locked';
+                              const isCompleted = item.status === 'completed';
+                              
+                              // Visuals for Locked/Completed Status DOT
+                              let statusIconHtml = '';
+                              if (isCompleted) {
+                                  statusIconHtml = '<i class="fas fa-check text-white" style="font-size: 7px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+                              } else if (isLocked) {
+                                  statusIconHtml = '<i class="fas fa-lock text-secondary" style="font-size: 14px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+                              }
+  
+                              // Visuals for Locked State in TITLE
+                              const titleClass = isLocked ? 'text-muted' : 'fw-semibold text-dark';
+                              const titleIcon = isLocked ? '<i class="fas fa-lock ms-2 small text-muted"></i>' : '';
+                              
+                              // Action Button Logic
+                              let actionButtonHtml;
+                              if (isLocked) {
+                                  // Locked: Disabled button, no href
+                                  actionButtonHtml = `
+                                      <button class="btn btn-sm btn-light text-muted border" disabled style="width: 100%; opacity: 0.7; cursor: not-allowed;">
+                                          <i class="fas fa-lock me-1"></i> Locked
+                                      </button>
+                                  `;
+                              } else {
+                                  // Unlocked: Normal link
+                                  actionButtonHtml = `
+                                      <a href="${item.url}" class="btn-action ${item.type === 'quiz' ? 'btn-action-quiz' : ''}">
+                                          ${btnText} <i class="fas fa-arrow-right"></i>
+                                      </a>
+                                  `;
+                              }
+  
+                              return `
+                            <tr>
+                              <td class="text-muted fw-bold">${index + 1}</td>
+                              <td class="text-center">
+                                  <div class="status-dot status-${item.status}" title="${item.status}">
+                                      ${statusIconHtml}
+                                  </div>
+                              </td>
+                              <td>
+                                <div class="${titleClass}">
+                                  ${item.title} ${titleIcon}
+                                </div>
+                              </td>
+                              <td>
+                                <span class="type-badge ${typeClass}"><i class="fas ${typeIcon}"></i> ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+                              </td>
+                              <td class="text-center text-muted small"><i class="far fa-clock me-1"></i> ${item.duration}</td>
+                              <td class="text-end" style="width: 140px;">
+                                  ${actionButtonHtml}
+                              </td>
+                            </tr>
+                          `}).join('')}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            container.insertAdjacentHTML('beforeend', sectionHTML);
+          }
+  
+          document.querySelectorAll('.section-header').forEach(header => {
+              header.addEventListener('click', function() {
+                  const content = this.nextElementSibling;
+                  const isHidden = content.style.display === 'none';
+                  content.style.display = isHidden ? 'block' : 'none';
+                  this.classList.toggle('active');
+                  saveSectionState(this.dataset.sectionId, isHidden);
+              });
+          });
+        };
+  
+        const updateProgressStats = () => {
+          const stats = CourseData.getProgressStats();
+          const elems = DOMStrings.progressElements;
+          const circle = document.querySelector('.circle-fill');
+          if(circle) {
+              const r = 15.9155; const c = 2 * Math.PI * r;
+              circle.style.strokeDasharray = `${(stats.total.percent / 100) * c} ${c}`;
+          }
+          document.querySelector(elems.total.text).textContent = `${stats.total.percent}%`;
+          ['video', 'article', 'quiz', 'problems'].forEach(type => { 
+              document.querySelector(elems[type].count).textContent = stats[type].count;
+              document.querySelector(elems[type].total).textContent = stats[type].total;
+              document.querySelector(elems[type].bar).style.width = `${stats[type].percent}%`;
+          });
+        };
+  
+        const updateActiveFilter = (activeFilter) => {
+          document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
+              btn.classList.remove('active');
+              if(btn.dataset.filter === activeFilter) btn.classList.add('active');
+          });
+        };
+  
+        const clearSearch = () => { document.querySelector(DOMStrings.searchInput).value = ''; };
+        const getSearchInput = () => document.querySelector(DOMStrings.searchInput).value.trim();
+  
+        return { DOMStrings, renderContents, updateProgressStats, updateActiveFilter, clearSearch, getSearchInput };
+      })();
+  
+      const AppController = ((CourseData, UIController) => {
+        const setupEventListeners = () => {
+          document.querySelector(UIController.DOMStrings.searchInput).addEventListener('input', updateView);
+          document.querySelectorAll(UIController.DOMStrings.filterButtons).forEach(btn => {
+              if(btn.id !== 'resetBtn') {
+                  btn.addEventListener('click', () => {
+                      UIController.updateActiveFilter(btn.dataset.filter);
+                      updateView();
+                  });
+              }
+          });
+          document.querySelector(UIController.DOMStrings.resetBtn).addEventListener('click', () => {
+              UIController.clearSearch();
+              UIController.updateActiveFilter('all');
+              updateView();
+          });
+        };
+  
+        const updateView = () => {
+          const search = UIController.getSearchInput();
+          const filter = document.querySelector('.filter-buttons .active').dataset.filter;
+          const contents = CourseData.getFilteredContents(filter, search);
+          UIController.renderContents(contents);
+        };
+  
+        const init = () => {
+          setupEventListeners();
+          updateView();
+          UIController.updateProgressStats();
+        };
+        return { init };
+      })(CourseData, UIController);
+  
+      const topBarMenuBtn = document.getElementById('topBarMenuBtn');
+      const topBarCloseBtn = document.getElementById('topBarCloseBtn');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      topBarMenuBtn.addEventListener('click', () => { sidebar.classList.add('active'); sidebarOverlay.classList.add('active'); topBarMenuBtn.style.display = 'none'; topBarCloseBtn.style.display = 'block'; });
+      topBarCloseBtn.addEventListener('click', () => { sidebar.classList.remove('active'); sidebarOverlay.classList.remove('active'); topBarMenuBtn.style.display = 'block'; topBarCloseBtn.style.display = 'none'; });
+      sidebarOverlay.addEventListener('click', () => { sidebar.classList.remove('active'); sidebarOverlay.classList.remove('active'); topBarMenuBtn.style.display = 'block'; topBarCloseBtn.style.display = 'none'; });
+      
+      document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          const parentLi = this.closest('li');
+          if (parentLi.classList.contains('has-submenu')) {
+            parentLi.classList.toggle('active');
+            const icon = this.querySelector('.toggle-icon');
+            icon.style.transform = parentLi.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
+          }
+        });
+      });
+  
+      document.addEventListener('DOMContentLoaded', AppController.init);
+    </script>
+  </body>
+  </html>

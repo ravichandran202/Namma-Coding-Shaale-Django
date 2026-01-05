@@ -13,6 +13,7 @@ urlpatterns = [
     path("code-editor/<int:course_id>",views.code_editor,name="code-editor"),
     path("code-editor",views.code_editor_freemium,name="code-editor-freemium"),
     path("list-problems/<int:course_id>",views.list_problems,name="list-problems"),
+    path("list-contents/<int:course_id>",views.list_content,name="list-contents"),
     path("problem-solver/<int:course_id>",views.problem_solver,name="problem-solver"),
 
     path("api/save-code",views.save_code,name="save-code"),
