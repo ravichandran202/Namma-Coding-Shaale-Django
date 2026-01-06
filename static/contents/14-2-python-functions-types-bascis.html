@@ -658,6 +658,74 @@ Total: 40</code></pre>
                     </div>
 
                 </div>
+
+                <div class="pt-3">
+                    <h4 class="subsection-title">5. The Mystery of 'None'</h4>
+                    <p class="text-muted">What happens if you try to print or store the result of a function that has no return statement?</p>
+
+                    <div class="note-box note-warning">
+                        <div class="note-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Important Concept
+                        </div>
+                        <div class="note-content">
+                            If a function does not have a <code>return</code> keyword, Python automatically returns a special value called <code>None</code>. It represents "nothing" or "empty".
+                        </div>
+                    </div>
+                    
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">def say_hi(name):
+    # This function prints, but DOES NOT return
+    print(f"Hi {name}")
+
+# This looks correct:
+say_hi("Raju")
+
+# But look what happens here:
+result = say_hi("Raju") 
+print("The stored value is:", result)</code>
+<i class="fas fa-terminal"></i> <strong>Output</strong>
+<code class="language-python">Hi Raju
+The stored value is: None</code></pre>
+                    </div>
+                </div>
+
+                <div class="pt-3">
+                    <h4 class="subsection-title">6. Common Error: Argument Mismatch</h4>
+                    <p class="text-muted">You must provide exactly the number of inputs the function expects.</p>
+
+                    <p>If a function defines <strong>2 parameters</strong>, you cannot send 1, and you cannot send 3. You must send exactly 2.</p>
+                    
+                    
+
+                    <div class="code-container mt-4">
+                        <pre><code class="language-python">def subtract(a, b):
+    print(a - b)
+
+# Case 1: Too few arguments (Missing one)
+subtract(10)  
+
+# Case 2: Too many arguments (Extra one)
+subtract(10, 5, 2)</code>
+<i class="fas fa-terminal"></i> <strong>Output (Errors)</strong>
+<code class="language-python"># Error for Case 1:
+TypeError: subtract() missing 1 required positional argument: 'b'
+
+# Error for Case 2:
+TypeError: subtract() takes 2 positional arguments but 3 were given</code></pre>
+                    </div>
+
+                    <div class="note-box note-danger">
+                        <div class="note-header">
+                            <i class="fas fa-bug"></i>
+                            Debugging Tip
+                        </div>
+                        <div class="note-content">
+                            When you see a <code>TypeError</code> related to arguments, count how many variables are inside the function definition <code>def name(...)</code> and make sure your function call <code>name(...)</code> has the same amount.
+                        </div>
+                    </div>
+                </div>
     
                 <!-- Summary Table -->
                 <div class="note-box note-info mt-4">
