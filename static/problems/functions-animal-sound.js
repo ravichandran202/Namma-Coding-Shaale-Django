@@ -79,35 +79,35 @@ Woof!</pre>
     { 
       "id": 5, 
       "input": [], 
-      "expected": "Moo!\nWoof!\nCat!", 
+      "expected": "Moo!\nWoof!\nMeow!",
       "stdinput": "cow\ndog\ncat",
       "explanation": "Calls cow_sound(), dog_sound(), cat_sound()" 
     },
     { 
       "id": 6, 
       "input": [], 
-      "expected": "Cat!\nMoo!\nDog!", 
+      "expected": "Meow!\nMoo!\nWoof!",
       "stdinput": "cat\ncow\ndog",
       "explanation": "Calls cat_sound(), cow_sound(), dog_sound()" 
     },
     { 
       "id": 7, 
       "input": [], 
-      "expected": "Dog!\nCat!\nCat!", 
+      "expected": "Woof!\nMeow!\nMeow!", 
       "stdinput": "dog\ncat\ncat",
       "explanation": "Calls dog_sound(), cat_sound(), cat_sound()" 
     },
     { 
       "id": 8, 
       "input": [], 
-      "expected": "Moo!\nDog!\nMoo!", 
+      "expected": "Moo!\nWoof!\nMoo!", 
       "stdinput": "cow\ndog\ncow",
       "explanation": "Calls cow_sound(), dog_sound(), cow_sound()" 
     },
     { 
       "id": 9, 
       "input": [], 
-      "expected": "Cat!\nMoo!\nDog!", 
+      "expected": "Meow!\nMoo!\nWoof!", 
       "stdinput": "cat\ncow\ndog",
       "explanation": "Calls cat_sound(), cow_sound(), dog_sound()" 
     }

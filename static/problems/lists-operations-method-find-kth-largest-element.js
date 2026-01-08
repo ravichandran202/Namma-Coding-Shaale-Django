@@ -39,9 +39,9 @@ Output: 50</pre>
     { "id": 2, "input": [], "expected": "50", "stdinput": "5\n10 20 30 40 50\n1" },
     { "id": 3, "input": [], "expected": "7", "stdinput": "4\n7 7 7 7\n3" },
     { "id": 4, "input": [], "expected": "100", "stdinput": "5\n100 200 300 400 500\n5" },
-    { "id": 5, "input": [], "expected": "25", "stdinput": "7\n10 15 20 25 30 35 40\n5" },
+    { "id": 5, "input": [], "expected": "20", "stdinput": "7\n10 15 20 25 30 35 40\n5" },
     { "id": 6, "input": [], "expected": "-5", "stdinput": "4\n-10 -5 0 5\n3" },
-    { "id": 7, "input": [], "expected": "88", "stdinput": "8\n10 20 30 40 50 60 70 88\n2" },
+    { "id": 7, "input": [], "expected": "70", "stdinput": "8\n10 20 30 40 50 60 70 88\n2" },
     { "id": 8, "input": [], "expected": "999", "stdinput": "6\n100 200 300 400 500 999\n1" },
     { "id": 9, "input": [], "expected": "3", "stdinput": "5\n1 2 3 4 5\n3" }
   ],
