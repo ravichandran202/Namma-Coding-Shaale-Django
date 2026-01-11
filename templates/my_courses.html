@@ -657,16 +657,36 @@
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                  {% if course.is_premium %}
-                    <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-premium-gold">
-                      <i class="fas fa-crown me-1"></i> Continue Learning
-                    </a>
+                  {% if course.is_course_unlocked %}
+                
+                    {% if course.is_premium %}
+                      <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
+                         class="btn btn-premium-gold">
+                        <i class="fas fa-crown me-1"></i> Continue Learning
+                      </a>
+                    {% else %}
+                      <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
+                         class="btn btn-premium">
+                        <i class="fas fa-book me-1"></i> Continue Learning
+                      </a>
+                    {% endif %}
+                
                   {% else %}
-                  <a href="{% url 'content' course_id=course.course.id  content_file_id=course.user_course.current_content.file_name %}" class="btn btn-premium">
-                    <i class="fas fa-book me-1"></i> Continue Learning
-                  </a>
+                    <!-- Locked state -->
+                     {% if course.is_premium %}
+                         <a href="#"
+                            class="btn btn-premium-gold">
+                           <i class="fas fa-crown me-1"></i> Starts on {{ course.course_start_date|date:"d M Y" }}
+                         </a>
+                       {% else %}
+                         <a href="#"
+                            class="btn btn-premium">
+                           <i class="fas fa-book me-1"></i> Starts on {{ course.course_start_date|date:"d M Y" }}
+                         </a>
+                       {% endif %}
                   {% endif %}
                 </div>
+                
 
                 {% if course.is_course_completed %}
                 <div class="d-flex justify-content-between align-items-center mt-4">

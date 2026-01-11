@@ -686,7 +686,13 @@ def my_courses(request):
                 user_course.certificate_id = generate_certificate_id(request.user.id, user_course.course_id)
                 user_course.completion_date = datetime.now()
                 user_course.save()
-
+        
+        # check if the course is unlocked
+        batch = getattr(user_course, "batch", None)
+        now = timezone.now()
+        
+        is_unlocked = bool(batch and batch.start_date <= now)
+        
         courses_data.append({
             'course': course,
             'user_course': user_course,
@@ -698,7 +704,9 @@ def my_courses(request):
             'solved_problems': solved_problems,
             'is_premium': course.is_premium,
             'is_course_completed' : is_course_completed,
-            'certificate_id' : user_course.certificate_id
+            'certificate_id' : user_course.certificate_id,
+            "is_course_unlocked": is_unlocked,
+            "course_start_date" : batch.start_date if batch else None,
         })
     
     return render(request, 'my_courses.html', {'courses': courses_data})
