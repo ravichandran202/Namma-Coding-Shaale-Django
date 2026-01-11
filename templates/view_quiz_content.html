@@ -499,6 +499,16 @@
             </div>
 
         </div>
+        
+        <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
+
+        {% if messages %}
+        <div id="django-messages-data" style="display: none;">
+            {% for message in messages %}
+                <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+            {% endfor %}
+        </div>
+       {% endif %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -980,6 +990,71 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Find the hidden messages from Django
+        const messageData = document.getElementById('django-messages-data');
+        
+        // 2. If messages exist, loop through them and show toasts
+        if (messageData) {
+            Array.from(messageData.children).forEach(msgDiv => {
+                // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
+                // msgDiv.dataset.msg will be "This course doesn't have any content yet."
+                showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+            });
+        }
+    });
+    
+  // --- The Helper Function ---
+  function showToast(message, type) {
+    const toastContainer = document.getElementById('toastContainer');
+    
+    // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
+    if (type === 'error') type = 'danger';
+
+    // Map types to Bootstrap colors
+    const bgClass = {
+        'success': 'text-bg-success',
+        'danger':  'text-bg-danger',
+        'warning': 'text-bg-warning',
+        'info':    'text-bg-info',
+    }[type] || 'text-bg-primary';
+
+    const icon = {
+        'success': 'fas fa-check-circle',
+        'danger':  'fas fa-exclamation-circle',
+        'warning': 'fas fa-exclamation-triangle',
+        'info':    'fas fa-info-circle',
+    }[type] || 'fas fa-bell';
+
+    // Build Toast HTML
+    const toastHtml = `
+        <div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="${icon} me-2"></i> ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+
+    // Append and Show
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = toastHtml;
+    const toastElement = wrapper.firstElementChild;
+    
+    toastContainer.appendChild(toastElement);
+    const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+    toast.show();
+    
+    // Remove from DOM after it fades out
+    toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+   }
+  
     </script>
 </body>
 </html>
