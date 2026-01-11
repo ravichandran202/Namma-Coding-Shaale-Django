@@ -472,22 +472,30 @@
 
                 <div class="action-box">
                     {% if not progress.is_completed %}
-                    <form method="post">
-                        {% csrf_token %}
-
-                        {% if not is_next_drip_locked %}
-                        <button type="submit" name="mark_completed" class="btn-complete">
-                            Complete Lesson
-                        </button>
+                
+                        {% if quiz_passed %}
+                            <form method="post">
+                                {% csrf_token %}
+                
+                                {% if not is_next_drip_locked %}
+                                    <button type="submit" name="mark_completed" class="btn-complete">
+                                        Complete Lesson
+                                    </button>
+                                {% endif %}
+                            </form>
+                        {% else %}
+                            <div class="completed-badge">
+                                <i class="fas fa-check-circle text-danger"></i> Pass the Quiz
+                            </div>
                         {% endif %}
-
-                    </form>
+                
                     {% else %}
-                    <div class="completed-badge">
-                        <i class="fas fa-check-circle"></i> Done
-                    </div>
+                        <div class="completed-badge">
+                            <i class="fas fa-check-circle"></i> Done
+                        </div>
                     {% endif %}
                 </div>
+                
             </div>
 
         </div>
