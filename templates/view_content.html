@@ -364,6 +364,24 @@
             color: #10b981;
         }
 
+        .btn-complete:disabled,
+        .btn-complete.btn-locked {
+            background-color: #f59e0b; /* Amber/Orange for warning */
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
+        .btn-complete.btn-locked:hover {
+            background-color: #d97706;
+        }
+        
+        .time-remaining {
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin-left: 5px;
+            opacity: 0.9;
+        }
+        
         /* Mobile optimizations */
         @media (max-width: 992px) {
             body {
@@ -550,43 +568,54 @@
             </div>
 
             <div class="lesson-completion-card">
-              <div class="completion-content">
-                  <div class="icon-box">
-                      <i class="fas {% if progress.is_completed %}fa-check{% else %}fa-flag{% endif %}"></i>
-                  </div>
-                  <div class="text-content">
-                      <h5>
-                          {% if progress.is_completed %}
-                              Lesson Completed!
-                          {% else %}
-                              Mark as Completed
-                          {% endif %}
-                      </h5>
-                      <p>
-                          {% if progress.is_completed %}
-                              Good job! You can move on to the next topic.
-                          {% else %}
-                              Finished reading? Click the button to track your progress.
-                          {% endif %}
-                      </p>
-                  </div>
-              </div>
-              
-              <div class="action-box">
-                  {% if not progress.is_completed %}
-                  <form method="post">
-                      {% csrf_token %}
-                      <button type="submit" name="mark_completed" class="btn-complete">
-                          Complete Lesson
-                      </button>
-                  </form>
-                  {% else %}
-                  <div class="completed-badge">
-                      <i class="fas fa-check-circle"></i> Done
-                  </div>
-                  {% endif %}
-              </div>
-          </div>
+                <div class="completion-content">
+                    <div class="icon-box"
+                        style="{% if is_next_drip_locked and not progress.is_completed %}background-color: #fffbeb; color: #f59e0b;{% endif %}">
+                        <i
+                            class="fas {% if progress.is_completed %}fa-check{% elif is_next_drip_locked %}fa-clock{% else %}fa-flag{% endif %}"></i>
+                    </div>
+                    <div class="text-content">
+                        <h5>
+                            {% if progress.is_completed %}
+                            Lesson Completed!
+                            {% elif is_next_drip_locked %}
+                            Next Lesson Locked
+
+                            {% else %}
+                            Mark as Completed
+                            {% endif %}
+                        </h5>
+                        <p>
+                            {% if progress.is_completed %}
+                            Good job! You can move on to the next topic.
+                            {% elif is_next_drip_locked %}
+                            The next content will be available on {{ next_unlock_date|timeuntil }}.
+                            {% else %}
+                            Finished reading? Click the button to track your progress.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action-box">
+                    {% if not progress.is_completed %}
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if not is_next_drip_locked %}
+                        <button type="submit" name="mark_completed" class="btn-complete">
+                            Complete Lesson
+                        </button>
+                        {% endif %}
+
+                    </form>
+                    {% else %}
+                    <div class="completed-badge">
+                        <i class="fas fa-check-circle"></i> Done
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
 
         </div>
     </div>

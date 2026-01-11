@@ -28,11 +28,12 @@ from http import HTTPMethod
 import random
 import string
 import secrets
+# Make sure CourseBatch is imported
 from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission, Order, Batch
 import logging
 import json
 import ast
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 
 from django.db import transaction
@@ -635,8 +636,6 @@ def my_courses(request):
     #         "user" : request.user
     #     })
 
-    batch = Batch.objects.filter(course_id=101)
-    print(batch)
 
     # Get all enrolled courses with progress annotations
     enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
@@ -764,31 +763,56 @@ def view_content(request, course_id, content_file_id):
         course = get_object_or_404(Course, id=course_id)
         content = get_object_or_404(Content, file_name=content_file_id)
 
-        # Check if user is enrolled in the course
         if not UserCourse.objects.filter(user=request.user, course=course).exists():
             return render(request, "index.html")
-
-        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
         
-        # Verify content belongs to course
-        course_content = get_object_or_404(
+        # Get user enrollment for batch/date info
+        user_enrollment = UserCourse.objects.get(user=request.user, course=course)
+
+        # Get Current Course Content object
+        current_course_content = get_object_or_404(
             CourseContent, 
             course=course, 
             content=content
         )
         
-        # Get or create user course progress
+        # Determine the reference start date
+        if user_enrollment.batch:
+            start_date = user_enrollment.batch.start_date.date()
+        else:
+            start_date = user_enrollment.enrollment_date.date()
+
+        # --- LOGIC TO CHECK NEXT CONTENT LOCK STATUS ---
+        # Find the next content in the sequence
+        next_content_obj = CourseContent.objects.filter(
+            course=course,
+            sequence_number__gt=current_course_content.sequence_number,
+        ).exclude(content__type='PROBLEM').order_by('sequence_number').first()
+
+        is_next_drip_locked = False
+        next_unlock_date = None
+
+        if next_content_obj:
+            # Calculate when the NEXT content opens
+            next_unlock_date = start_date + timedelta(days=next_content_obj.unlock_days)
+            today = timezone.now().date()
+            # Check if we are currently BEFORE that date
+            if next_unlock_date > today:
+                is_next_drip_locked = True
+        # -----------------------------------------------
+        
+
+        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
+        
         user_course, _ = UserCourse.objects.get_or_create(
             user=request.user,
             course=course,
             defaults={'current_content': content}
         )
 
-        #update current content
         user_course.current_content = content
         user_course.save()
         
-        # Get or create content progress
         progress, _ = UserContentProgress.objects.get_or_create(
             user=request.user,
             course=course,
@@ -801,112 +825,47 @@ def view_content(request, course_id, content_file_id):
         
         # Handle POST request to mark as completed
         if request.method == 'POST' and 'mark_completed' in request.POST:
-            #clear the cache 
-            memorycache_sidebar[request.user.id+course_id] = None
-            print(f"CACHE CLEARED : for id {request.user.id+course_id}")
-
+            
+            # 1. Mark CURRENT content as completed (Always allowed)
             progress.is_completed = True
             progress.completed_at = timezone.now()
             progress.save()
             
-            # Get next content in sequence
-            next_content = CourseContent.objects.filter(
-                course=course,
-                sequence_number__gt=course_content.sequence_number,
-            ).exclude(content__type='PROBLEM').order_by('sequence_number').first()
+            # Clear sidebar cache
+            memorycache_sidebar[str(request.user.id)+str(course_id)] = None
             
-            if next_content:
-                # Update user's current content
-                user_course.current_content = next_content.content
+            # 2. Handle Navigation to Next
+            if next_content_obj:
+                # If next content is strictly TIME-LOCKED, we don't move the user there
+                if is_next_drip_locked:
+                    messages.info(request, f"Great job! The next lesson unlocks on {next_unlock_date.strftime('%B %d')}.")
+                    # Stay on current page, but with completed status
+                    return redirect(reverse('content', kwargs={
+                        'course_id': course.id,
+                        'content_file_id': content.file_name 
+                    }))
+                
+                # If NOT locked, unlock it and move user
+                user_course.current_content = next_content_obj.content
                 user_course.save()
                 
-                # Unlock the next content
                 UserContentProgress.objects.update_or_create(
                     user=request.user,
                     course=course,
-                    content=next_content.content,
+                    content=next_content_obj.content,
                     defaults={'is_locked': False}
                 )
                 
                 return redirect(reverse('content', kwargs={
                     'course_id': course.id,
-                    'content_file_id': next_content.content.file_name 
+                    'content_file_id': next_content_obj.content.file_name 
                 }))
             
-            # If no next content, just stay on current page but mark as completed
+            # No next content (End of course)
             return redirect(reverse('content', kwargs={
                 'course_id': course.id,
                 'content_file_id': content.file_name 
             }))
-        
-        # Handle quiz submission
-        # elif 'quiz_submission' in request.POST:
-        #     try:
-        #         quiz_data = json.loads(request.POST.get('quiz_data'))
-        #         user_answers = json.loads(request.POST.get('user_answers'))
-        #         start_time = request.POST.get('start_time')
-                
-        #         # Calculate time taken
-        #         start_datetime = timezone.datetime.fromisoformat(start_time)
-        #         time_taken = (timezone.now() - start_datetime).seconds
-                
-        #         # Calculate score
-        #         correct_count = 0
-        #         for question in quiz_data['questions']:
-        #             user_answer = user_answers.get(str(question['id']))
-                    
-        #             if question['type'] == 'multiple-choice':
-        #                 correct = user_answer == question['correctAnswer']
-        #             elif question['type'] == 'single-choice':
-        #                 correct = set(user_answer or []) == set(question['correctAnswers'])
-        #             else:  # text or code questions
-        #                 correct_answers = question.get('correctAnswers', [question['correctAnswer']])
-        #                 correct = any(user_answer.lower() == ans.lower() for ans in correct_answers)
-                    
-        #             if correct:
-        #                 correct_count += 1
-                
-        #         total_questions = len(quiz_data['questions'])
-        #         score = round((correct_count / total_questions) * 100, 2)
-        #         passed = score >= quiz_data.get('passingScore', 70)
-                
-        #         # Get attempt number
-        #         attempt_number = QuizSubmission.objects.filter(
-        #             user=request.user,
-        #             content=content
-        #         ).count() + 1
-                
-        #         # Save quiz submission
-        #         QuizSubmission.objects.create(
-        #             user=request.user,
-        #             content=content,
-        #             course=course,
-        #             quiz_data=quiz_data,
-        #             user_answers=user_answers,
-        #             score=score,
-        #             passed=passed,
-        #             correct_answers=correct_count,
-        #             total_questions=total_questions,
-        #             started_at=start_datetime,
-        #             completed_at=timezone.now(),
-        #             time_taken=time_taken,
-        #             attempt_number=attempt_number
-        #         )
-                
-        #         # Mark content as completed if passed
-        #         if passed:
-        #             progress.is_completed = True
-        #             progress.completed_at = timezone.now()
-        #             progress.save()
-                
-            
-            # except Exception as e:
-            #     logger.error(f"Error saving quiz submission: {str(e)}")
-            #     messages.error(request, "Error saving quiz results. Please try again.")
-            #     return redirect(reverse('content', kwargs={
-            #         'course_id': course.id,
-            #         'content_file_id': content.file_name 
-            #     }))
         
         # Prepare context
         context = {
@@ -917,11 +876,15 @@ def view_content(request, course_id, content_file_id):
             'is_completed': progress.is_completed,
             'content_file_id': content.file_name,
             'roadmap': roadmap,
-            'course_id': course_id
+            'course_id': course_id,
+            # --- PASSING NEXT CONTENT INFO TO TEMPLATE ---
+            'is_next_drip_locked': is_next_drip_locked,
+            'next_unlock_date': next_unlock_date,
         }
 
+        print(context)
+
         if content.type.lower() == "quiz":
-            # Add previous quiz attempts to context if any exist
             quiz_submission = QuizSubmission.objects.get_or_create(
                 user=request.user,
                 content=content,
@@ -932,7 +895,6 @@ def view_content(request, course_id, content_file_id):
                     "correct_answers": 0
                 }
             )[0]
-            
             
             context['quiz_submission'] = quiz_submission
             context['quiz_data'] = json.dumps(content.quiz_data)
@@ -948,10 +910,8 @@ def view_content(request, course_id, content_file_id):
         
         if content.type.lower() == "problems":
             problem_ids = json.loads(content.content_text).get("problem_ids")
-            print("\n\ncontent text : ", problem_ids)
             contents = bulk_fetch_content_content(request.user, course, problem_ids)
             context["contents"] = contents
-            print(context["contents"], type(contents))
             return render(request, "view_problems_content.html", context)
         
     
@@ -1471,11 +1431,24 @@ def enroll_course(request, course_id):
         return 
     
     try:
+        # --- NEW: Batch Logic ---
+        # Find a batch starting in the future, or default to the latest one
+        current_batch = CourseBatch.objects.filter(
+            course=course,
+            start_date__gte=timezone.now()
+        ).order_by('start_date').first()
+        
+        # If no future batch, maybe get the most recent one? 
+        if not current_batch:
+            current_batch = CourseBatch.objects.filter(course=course).last()
+        # ------------------------
+
         # Create the UserCourse record
         user_course = UserCourse.objects.create(
             user=user,
             course=course,
             fees_paid=course.base_price,
+            batch=current_batch,
             payment_status='PAID'
         )
         
