@@ -690,9 +690,9 @@ def my_courses(request):
         # check if the course is unlocked
         batch = getattr(user_course, "batch", None)
         now = timezone.now()
-        
-        is_unlocked = bool(batch and batch.start_date <= now)
-        
+        start_date = batch.start_date if batch else user_course.enrollment_date
+        is_unlocked = start_date <= now
+
         courses_data.append({
             'course': course,
             'user_course': user_course,
@@ -706,7 +706,7 @@ def my_courses(request):
             'is_course_completed' : is_course_completed,
             'certificate_id' : user_course.certificate_id,
             "is_course_unlocked": is_unlocked,
-            "course_start_date" : batch.start_date if batch else None,
+            "course_start_date" : start_date,
         })
     
     return render(request, 'my_courses.html', {'courses': courses_data})
