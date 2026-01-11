@@ -574,6 +574,10 @@ def refund_policy(request):
 def contact_us(request):
     return render(request, "contact-us.html")
 
+def about_us(request):
+    return render(request, "about-us.html")
+
+
 @login_required(login_url="login")
 def problem_solver(request, course_id):
     problem_file_id = request.GET.get('id')

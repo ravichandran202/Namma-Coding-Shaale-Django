@@ -1584,6 +1584,190 @@
       z-index: 1;
     }
 
+    /* --- PREMIUM FOOTER STYLES --- */
+    .footer {
+      background-color: #0f172a; /* Darker, richer slate color */
+      color: #94a3b8; /* Softer text color for better readability */
+      padding: 5rem 0 0;
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Top Gradient Border */
+    .footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.5), transparent);
+    }
+
+    /* Background Glow Effect */
+    .footer-bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-about {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 300px;
+    }
+
+    .footer-heading {
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-light);
+      transform: translateX(5px);
+    }
+
+    .footer-links a i {
+        font-size: 0.8rem;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
+
+    /* Contact Info Styles */
+    .contact-list li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-list i {
+      color: var(--primary);
+      margin-top: 0.3rem;
+      margin-right: 0.75rem;
+    }
+
+    /* Newsletter Input */
+    .footer-input-group {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .footer-input {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      width: 100%;
+      transition: var(--transition);
+    }
+
+    .footer-input:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .footer-btn {
+      width: 100%;
+      padding: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    /* Social Icons */
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .social-btn:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      color: white;
+    }
+
+    /* Copyright Strip */
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 2rem 0;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+    
+    .copyright-links a {
+        color: #94a3b8;
+        text-decoration: none;
+        margin-left: 1.5rem;
+        transition: color 0.3s;
+    }
+    
+    .copyright-links a:hover {
+        color: white;
+    }
+
 
     /* Navbar scroll effect
     window.addEventListener('scroll', function() {
@@ -1762,6 +1946,15 @@
         padding: 0 15px;
         margin-bottom: 5rem !important;
       }
+
+      .footer-logo {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: white;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+      }
     }
 
     /* TABLET SPECIFIC OVERRIDES */
@@ -1897,19 +2090,19 @@
                     <i class="fas fa-star text-gold"></i>
                   </div> -->
                 </div>
-                <p class="course-desc text-light">Basic to Advanced Python with 100+ Coding problems and live classes
+                <p class="course-desc text-light">Basic to Advanced Python with 300+ Coding problems and live classes
                 </p>
 
                 <!-- Premium Features List -->
                 <ul class="premium-features mb-3">
                   <li><i class="fas fa-check-circle text-gold me-2"></i>Certificate of Completion</li>
                   <li><i class="fas fa-check-circle text-gold me-2"></i>1-on-1 Mentorship</li>
-                  <li><i class="fas fa-check-circle text-gold me-2"></i>100+ Coding Problems</li>
+                  <li><i class="fas fa-check-circle text-gold me-2"></i>300+ Coding Problems</li>
                   <li><i class="fas fa-check-circle text-gold me-2"></i>30hrs Live Classes</li>
                 </ul>
 
                 <div class="course-meta text-light">
-                  <span><i class="far fa-file-alt me-1"></i> 60 Modules</span>
+                  <span><i class="far fa-file-alt me-1"></i> 200+ Modules</span>
                   <span><i class="far fa-clock me-1"></i> 50+ Hours</span>
                 </div>
                 <div class="course-progress mt-3">
@@ -2402,7 +2595,7 @@
                     <i class="fas fa-laptop-code small"></i>
                   </div>
                   <div>
-                    <h6 class="mb-0">500+ Coding Exercises</h6>
+                    <h6 class="mb-0">300+ Coding Exercises</h6>
                     <p class="text-muted small mb-0">Hands-on practice with code editor</p>
                   </div>
                 </li>
@@ -2446,339 +2639,510 @@
 
             <div class="col-lg-7 p-4" style="max-height: 70vh; overflow-y: auto;">
               <div class="accordion accordion-flush" id="pythonProAccordion">
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod1">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod1">
                       <span class="me-3 fw-bold text-dark opacity-50">01</span>
-                      <span class="fw-bold">Introduction & Basics</span>
+                      <span class="fw-bold">Introduction to Python</span>
                     </button>
                   </h6>
                   <div id="proMod1" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Introduction to Programming & Python</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The
-                          Print Function & Comments</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Intro, Print(), Input()</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Python Print() Function
-                        </li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Programming</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Introduction To Programming</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Python Introduction</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> How Python Works</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | How Python Works</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The Print Function</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Print() Function</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Python Input() Function</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Python Comments</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Python Print() Function</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod2">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod2">
                       <span class="me-3 fw-bold text-dark opacity-50">02</span>
-                      <span class="fw-bold">Variables & Data Types</span>
+                      <span class="fw-bold">Identifiers and Variables</span>
                     </button>
                   </h6>
                   <div id="proMod2" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Identifiers, Variables & Data Types</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Numeric Types & Character Encoding (ASCII)</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Variables, Data Types, ASCII
-                        </li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Python Types & Numbers
-                        </li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Identifiers and Variables</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Identifiers</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Working with Variables</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Variables 1</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Variables 2</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod3">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod3">
                       <span class="me-3 fw-bold text-dark opacity-50">03</span>
-                      <span class="fw-bold">Operators</span>
+                      <span class="fw-bold">Data Types</span>
                     </button>
                   </h6>
                   <div id="proMod3" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Arithmetic, Relational & Assignment Operators</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Logical, Bitwise, Identity & Membership Operators</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Operator Precedence (BODMAS)</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 8+ Quizzes covering all Operator types
-                        </li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 8 Coding Challenges (Arithmetic,
-                          Relational, Logical, Assignment)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Python Data Types</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The Type Function</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Data Types</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod4">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod4">
                       <span class="me-3 fw-bold text-dark opacity-50">04</span>
-                      <span class="fw-bold">Control Flow: Conditionals</span>
+                      <span class="fw-bold">Python Numbers</span>
                     </button>
                   </h6>
                   <div id="proMod4" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          If-Else & Indentation Rules</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Conditionals, Match Case</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 6 Coding Problem Sets (Basic to
-                          Hard)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Numeric Data Types</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Python Types & Numbers</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod5">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod5">
                       <span class="me-3 fw-bold text-dark opacity-50">05</span>
-                      <span class="fw-bold">Mastering Loops & Patterns</span>
+                      <span class="fw-bold">Operators</span>
                     </button>
                   </h6>
                   <div id="proMod5" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          While Loop, For Loop, Range Function</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Nested Loops & Jump Statements</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 10 Quizzes: Loops, Nested Loops, Jumps
-                        </li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> 15+
-                          Pattern Printing Exercises (Triangle, Hollow, Alpha, Numeric)</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 10+ Loop Logic Problems (Basic to
-                          Advanced)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Overview of Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Arithmetic Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Arithmetic Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Arithmetic Operators 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Relational (Comparison) Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Relational Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Relational Operators 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Assignment Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Assignment Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Assignment Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Logical Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Logical Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Logical Operators 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Bitwise, Identity & Membership Operators</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Bitwise, Identity & Membership</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Operator Precedence (BODMAS)</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | BODMAS</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod6">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod6">
                       <span class="me-3 fw-bold text-dark opacity-50">06</span>
-                      <span class="fw-bold">Python Strings</span>
+                      <span class="fw-bold">Conditional Statements</span>
                     </button>
                   </h6>
                   <div id="proMod6" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Concatenation, Replication, f-strings</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Slicing, Indexing, Escape Characters</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          String Methods & Functions</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 9 Quizzes: Indexing, Methods,
-                          Formatting</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding Challenges: String
-                          Manipulation</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Conditional Statements (If-Else)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Conditional Statements</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Rules of Indentation</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Indentation</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Conditional Statments 1 - 4</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Character Encoding and ASCII</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | ASCII</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod7">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod7">
                       <span class="me-3 fw-bold text-dark opacity-50">07</span>
-                      <span class="fw-bold">Data Structures: Lists</span>
+                      <span class="fw-bold">Looping Statements</span>
                     </button>
                   </h6>
                   <div id="proMod7" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Introduction, Operations, Methods</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Lists vs Arrays, 2D (Nested) Lists</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 12 Quizzes: Operations, Methods, 2D
-                          Lists</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 11 Coding Sets: List Ops,
-                          Methods, Matrix Ops</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Loops</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The While Loop</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | While Loops 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | While Loop Basics, 1, 2 & Patterns</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The For Loop & Range Function</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | For Loops 1, 2 & 3</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | For Loop Basics, 1, 2, 3 & Patterns</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod8">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod8">
                       <span class="me-3 fw-bold text-dark opacity-50">08</span>
-                      <span class="fw-bold">Data Structures: Tuples & Sets</span>
+                      <span class="fw-bold">Nested Loops</span>
                     </button>
                   </h6>
                   <div id="proMod8" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Tuples: Operations, Methods, Immutability</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Sets: Operations, Methods, Comparison logic</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 9 Quizzes: Tuples, Sets, Errors,
-                          Comparisons</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 4 Coding Sets: Set Operations
-                        </li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Nested Loops</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Nested Loops 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Nested Loops - Patterns 1</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Nested Loops - Triangle Patterns</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Nested Loops - Number Patterns</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Nested Loops - Hollow Patterns</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod9">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod9">
                       <span class="me-3 fw-bold text-dark opacity-50">09</span>
-                      <span class="fw-bold">Data Structures: Dictionaries</span>
+                      <span class="fw-bold">Jump Statements</span>
                     </button>
                   </h6>
                   <div id="proMod9" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Key-Value Pairs, Operations, Methods</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Common Mistakes, Dict vs Lists</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 8 Quizzes: Ops, Methods, Nested Dicts
-                        </li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 6 Coding Sets: Dictionary
-                          Manipulation</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Jump Statements</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Jump Statements</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Jump Statements</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod10">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod10">
                       <span class="me-3 fw-bold text-dark opacity-50">10</span>
-                      <span class="fw-bold">Functions & Scope</span>
+                      <span class="fw-bold">Python Strings</span>
                     </button>
                   </h6>
                   <div id="proMod10" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Definition, Return Values, Execution Flow</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Args, Kwargs, Lambda, Recursion</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Global vs Local Scope</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> 15+ Quizzes covering all Function
-                          concepts</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> 7 Coding Sets: Logic, Recursion,
-                          Inbuilt Funcs</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Strings</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Strings</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> String Concatenation and Replication</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Concatenation and Replication</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> String Slicing and Indexing</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Strings Indexing 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> String Methods and Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Strings Methods 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> String Formatting (f-strings)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | F-String</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Escape Characters in Strings</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Escape Characters</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Strings</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod11">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod11">
                       <span class="me-3 fw-bold text-dark opacity-50">11</span>
-                      <span class="fw-bold">Object Oriented Programming (OOP)</span>
+                      <span class="fw-bold">Python Lists</span>
                     </button>
                   </h6>
                   <div id="proMod11" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i>
-                          Introduction & The 4 Pillars of OOP</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: OOP Concepts & Pillars</li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Real World Problems: Bank
-                          Management System, Railway Reservation</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Lists</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Lists 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> List Operations</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | List Operation 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Lists Operations 1, 2, 3 & 4</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> List Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | List Methods 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Lists Methods 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> 2D Lists (Nested Lists)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | 2D List 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | 2D Lists Operations 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Lists vs. Arrays</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | List vs Array</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#proMod12">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod12">
                       <span class="me-3 fw-bold text-dark opacity-50">12</span>
-                      <span class="fw-bold">File Handling & Exceptions</span>
+                      <span class="fw-bold">Python Tuples</span>
                     </button>
                   </h6>
                   <div id="proMod12" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> File
-                          Operations, Error Handling, Modules</li>
-                        <li class="py-2 border-bottom border-light"><i
-                            class="fas fa-question-circle text-warning me-3"></i> Quizzes: Files, Exceptions, Packages
-                        </li>
-                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding: Exception Handling</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Tuples</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Python Tuples</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Tuple Operations</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Tuple Operations</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Tuple Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Tuple Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Tuples vs. Lists</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Tuple vs List</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
-                    <button class="accordion-button bg-white border border-warning rounded px-3 py-3 collapsed"
-                      type="button" data-bs-toggle="collapse" data-bs-target="#proMod13">
-                      <span class="me-3 fw-bold text-warning">13</span>
-                      <span class="fw-bold text-dark">Capstone Projects</span>
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod13">
+                      <span class="me-3 fw-bold text-dark opacity-50">13</span>
+                      <span class="fw-bold">Python Sets</span>
                     </button>
                   </h6>
                   <div id="proMod13" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
                     <div class="accordion-body px-3 py-2">
                       <ul class="list-unstyled mb-0 small">
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
-                          Calculator (With Memory & File History)</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
-                          Fake News Generator</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
-                          Guess the Word & Madlibs Generator</li>
-                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i>
-                          Timed Math Problem Solver</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Sets</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Sets</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Set Operations</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Sets Operations 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Set Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Set Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Sets Operations 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Common Set Errors</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Errors in Sets</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Comparing Sets, Tuples, and Lists</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | List vs Tuple vs Set</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod14">
+                      <span class="me-3 fw-bold text-dark opacity-50">14</span>
+                      <span class="fw-bold">Python Dictionary</span>
+                    </button>
+                  </h6>
+                  <div id="proMod14" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Dictionaries</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Dictionaries</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Dictionary Operations</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Dictionary Operations 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Dictionaries Operations 1</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Dictionary Methods</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Dictionary Methods 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Common Dictionary Mistakes</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Dictionaries vs. Lists</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Dictionaries Operations 2, 3 & 6</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Nested Dictinory</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Nested Dictionary</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod15">
+                      <span class="me-3 fw-bold text-dark opacity-50">15</span>
+                      <span class="fw-bold">Python Functions</span>
+                    </button>
+                  </h6>
+                  <div id="proMod15" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Introduction to Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Functions 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Types of Functions: Basics</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Function Types 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Parameters and Arguments 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Function Return Values</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Types of Returns 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Functions 1, 2 & 3</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Execution Flow of Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Function Execution 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Built-in Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Built-in Functions 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | Inbuilt Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Arguments and Keyword Arguments</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Pass, *args & **kwargs 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Global and Local Variable Scopes</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Global and Local Scope 1 & 2</li>
+                        <li class="py-2"><i class="fas fa-file-alt text-muted me-3"></i> Lambda Functions (Anonymous)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod16">
+                      <span class="me-3 fw-bold text-dark opacity-50">16</span>
+                      <span class="fw-bold">Recursion</span>
+                    </button>
+                  </h6>
+                  <div id="proMod16" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Recursion in Functions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | Recursion 1 & 2</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Recursion Functions 1 & 2</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod17">
+                      <span class="me-3 fw-bold text-dark opacity-50">17</span>
+                      <span class="fw-bold">OOPS</span>
+                    </button>
+                  </h6>
+                  <div id="proMod17" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Object-Oriented Programming (OOP)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | OOPS 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> The Pillars of OOP</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quizzes | OOPS Pillers 1 & 2</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-code text-primary me-3"></i> Coding | OOPS - Bank Management</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | OOPS - Railway Reservation System</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod18">
+                      <span class="me-3 fw-bold text-dark opacity-50">18</span>
+                      <span class="fw-bold">File Handling and Operations</span>
+                    </button>
+                  </h6>
+                  <div id="proMod18" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> File Handling and Operations</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | File Operations</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod19">
+                      <span class="me-3 fw-bold text-dark opacity-50">19</span>
+                      <span class="fw-bold">Error Handling and Exceptions</span>
+                    </button>
+                  </h6>
+                  <div id="proMod19" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Error Handling and Exceptions</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Errors and Exceptions</li>
+                        <li class="py-2"><i class="fas fa-code text-primary me-3"></i> Coding | Exception Handling</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-light rounded px-3 py-3 collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#proMod20">
+                      <span class="me-3 fw-bold text-dark opacity-50">20</span>
+                      <span class="fw-bold">Modules and Packages</span>
+                    </button>
+                  </h6>
+                  <div id="proMod20" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> Modules and Packages</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | Modules & Packages</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-file-alt text-muted me-3"></i> random() Package</li>
+                        <li class="py-2"><i class="fas fa-question-circle text-warning me-3"></i> Quiz | random() Packages</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="accordion-item border-0 mb-3">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button bg-white border border-warning rounded px-3 py-3 collapsed" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#proMod21">
+                      <span class="me-3 fw-bold text-warning">21</span>
+                      <span class="fw-bold text-dark">Capstone Projects</span>
+                    </button>
+                  </h6>
+                  <div id="proMod21" class="accordion-collapse collapse" data-bs-parent="#pythonProAccordion">
+                    <div class="accordion-body px-3 py-2">
+                      <ul class="list-unstyled mb-0 small">
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i> Calculator (With Memory & File History)</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i> Fake News Generator</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i> Guess the Word & Madlibs Generator</li>
+                        <li class="py-2 border-bottom border-light"><i class="fas fa-gamepad text-success me-3"></i> Timed Math Problem Solver</li>
                         <li class="py-2"><i class="fas fa-gamepad text-success me-3"></i> Rock Paper Scissors</li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
+            
                 <div class="accordion-item border-0 mb-3">
                   <h6 class="accordion-header">
                     <button class="accordion-button bg-white border border-warning rounded px-3 py-3 collapsed">
-                      <span class="me-3 fw-bold text-warning">14</span>
+                      <span class="me-3 fw-bold text-warning">22</span>
                       <span class="fw-bold text-dark">Mock Interview</span>
                     </button>
                   </h6>
                 </div>
-
+            
               </div>
             </div>
           </div>
@@ -3682,55 +4046,92 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 mb-5 mb-lg-0">
-          <div class="footer-logo">
-            <span>
-              &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
-            </span>
-          </div>
-          <p class="footer-about">Master Coding through practical problem-solving and interview
-            preparation.</p>
+    <div class="footer-bg-glow"></div>
+    <div class="container footer-content">
+      <div class="row g-5">
+        
+        <div class="col-lg-4 col-md-12">
+          <a href="#" class="footer-logo text-decoration-none">
+            &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+          </a>
+          <p class="footer-about">
+            Empowering the next generation of developers with vernacular language support, industry-standard curriculum, and a commitment to affordable, high-quality education.
+          </p>
           <div class="social-links">
-            <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank"
-              rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-            <a href="mailto:nammacodingshaale@gmail.com?subject=Question&body=Hello, I have a question about..."
-              target="_blank" rel="noopener"><i class="fas fa-envelope"></i></a>
-            <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" rel="noopener"><i
-                class="fab fa-instagram"></i></a>
-            <!-- <a href="#" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a> -->
+            <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank" class="social-btn" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" class="social-btn" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:nammacodingshaale@gmail.com" class="social-btn" aria-label="Email">
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a href="#" class="social-btn" aria-label="Youtube">
+              <i class="fab fa-youtube"></i>
+            </a>
           </div>
         </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <h5 class="footer-heading">Quick Links</h5>
+
+        <div class="col-lg-2 col-md-4 col-6">
+          <h5 class="footer-heading">Top Courses</h5>
           <ul class="footer-links">
-            <li><a href="{% url 'contact_us' %}">Contact us</a></li>
-            <li><a href="{% url 'terms_and_conditions' %}">Terms & conditions</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-foundational-modal">Python Fundamentals</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-professional-modal">Python Professional</a></li>
+            <li><a href="#">DSA Mastery</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="{% url 'code-editor-freemium' %}">Online Code Editor</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6">
+          <h5 class="footer-heading">Company</h5>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="{% url 'contact_us' %}">Contact Support</a></li>
             <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+            <li><a href="{% url 'terms_and_conditions' %}">Terms of Service</a></li>
             <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
           </ul>
         </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <!-- <h5 class="footer-heading">Resources</h5> -->
-          <!-- <ul class="footer-links">
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Tutorials</a></li>
-            <li><a href="#">Interview Tips</a></li>
-            <li><a href="#">Community</a></li>
-          </ul> -->
-        </div>
-        <div class="col-lg-4">
-          <h5 class="footer-heading">Newsletter</h5>
-          <p class="footer-newsletter">Subscribe to get updates on new problems and coding tips.</p>
-          <form>
-            <input type="email" class="footer-input" placeholder="Your email">
-            <button class="btn btn-primary footer-btn" type="button">Subscribe</button>
+
+        <div class="col-lg-4 col-md-4">
+          <h5 class="footer-heading">Stay Updated</h5>
+          <p class="small mb-3">Get the latest coding challenges and tips directly to your inbox.</p>
+          <form class="mb-4">
+            <div class="footer-input-group">
+              <input type="email" class="footer-input" placeholder="Enter your email address" required>
+            </div>
+            <button class="btn btn-premium footer-btn" type="submit">
+              Subscribe Now
+            </button>
           </form>
+          
+          <ul class="contact-list list-unstyled">
+            <li>
+                <i class="fas fa-map-marker-alt"></i> 
+                <span>Bengaluru, Karnataka, India</span>
+            </li>
+            <li>
+                <i class="fas fa-shield-alt"></i>
+                <span>MSME Registered: UDYAM-KR-22-0128456</span>
+            </li>
+          </ul>
         </div>
       </div>
+
       <div class="copyright">
-        <p>&copy; 2025 ನಮ್ಮ Coding ಶಾಲೆ. All rights reserved.</p>
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <p class="mb-0">&copy; {% now "Y" %} ನಮ್ಮ CODING ಶಾಲೆ. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <div class="copyright-links">
+                <a href="#">Sitemap</a>
+                <a href="#">Cookies</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </footer>

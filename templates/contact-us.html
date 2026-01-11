@@ -450,21 +450,43 @@
     }
 
     /* Footer */
+    /* --- PREMIUM FOOTER STYLES --- */
     .footer {
-      background-color: var(--dark);
-      color: white;
-      padding: 5rem 0 2rem;
+      background-color: #0f172a; /* Darker, richer slate color */
+      color: #94a3b8; /* Softer text color for better readability */
+      padding: 5rem 0 0;
       position: relative;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
     }
 
+    /* Top Gradient Border */
     .footer:before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.5), transparent);
+    }
+
+    /* Background Glow Effect */
+    .footer-bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
     }
 
     .footer-logo {
@@ -472,75 +494,144 @@
       font-weight: 700;
       font-size: 1.5rem;
       color: white;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: inline-block;
       margin-bottom: 1.5rem;
     }
 
     .footer-about {
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.7;
       font-size: 0.95rem;
+      line-height: 1.8;
       margin-bottom: 2rem;
+      max-width: 300px;
+    }
+
+    .footer-heading {
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
     }
 
     .footer-links {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
 
     .footer-links li {
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
     }
 
     .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
+      color: #94a3b8;
       text-decoration: none;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       font-size: 0.95rem;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
     }
 
     .footer-links a:hover {
-      color: white;
+      color: var(--primary-light);
       transform: translateX(5px);
     }
 
-    .footer-heading {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: white;
-      position: relative;
-      display: inline-block;
+    .footer-links a i {
+        font-size: 0.8rem;
+        margin-right: 8px;
+        opacity: 0.7;
     }
 
-    .footer-heading:after {
-      content: '';
-      position: absolute;
-      bottom: -0.5rem;
-      left: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--primary);
+    /* Contact Info Styles */
+    .contact-list li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-list i {
+      color: var(--primary);
+      margin-top: 0.3rem;
+      margin-right: 0.75rem;
+    }
+
+    /* Newsletter Input */
+    .footer-input-group {
+      position: relative;
+      margin-bottom: 1rem;
     }
 
     .footer-input {
-      background-color: rgba(255, 255, 255, 0.1);
-      border: none;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
       width: 100%;
-      margin-bottom: 1rem;
       transition: var(--transition);
     }
 
     .footer-input:focus {
       outline: none;
-      background-color: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 0 2px var(--primary);
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .footer-btn {
+      width: 100%;
+      padding: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    /* Social Icons */
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .social-btn:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      color: white;
+    }
+
+    /* Copyright Strip */
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 2rem 0;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+    
+    .copyright-links a {
+        color: #94a3b8;
+        text-decoration: none;
+        margin-left: 1.5rem;
+        transition: color 0.3s;
+    }
+    
+    .copyright-links a:hover {
+        color: white;
     }
 
     .social-links {
@@ -800,11 +891,10 @@
           </div>
   
           <!-- Map Section -->
-          <div class="row mt-6">
+          <!-- <div class="row mt-6">
             <div class="col-12">
               <div class="map-card rounded-3 overflow-hidden shadow-lg">
                 <div class="map-container" style="height: 400px; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);">
-                  <!-- Google Maps Embed -->
                   <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.040641051015!2d76.59572227505238!3d12.837809987497982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba5b7b64f7a65b7%3A0x1e5e6a7c8f9e6f1e!2sMysuru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
                     width="100%" 
@@ -817,7 +907,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -876,59 +966,97 @@
   </script>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 mb-5 mb-lg-0">
-          <div class="footer-logo">
-            <span>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-bg-glow"></div>
+      <div class="container footer-content">
+        <div class="row g-5">
+          
+          <div class="col-lg-4 col-md-12">
+            <a href="#" class="footer-logo text-decoration-none">
               &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
-            </span>
+            </a>
+            <p class="footer-about">
+              Empowering the next generation of developers with vernacular language support, industry-standard curriculum, and a commitment to affordable, high-quality education.
+            </p>
+            <div class="social-links">
+              <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank" class="social-btn" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" class="social-btn" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="mailto:nammacodingshaale@gmail.com" class="social-btn" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="#" class="social-btn" aria-label="Youtube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
           </div>
-          <p class="footer-about">Master Coding through practical problem-solving and interview preparation.</p>
-          <div class="social-links">
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  
+          <div class="col-lg-2 col-md-4 col-6">
+            <h5 class="footer-heading">Top Courses</h5>
+            <ul class="footer-links">
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-foundational-modal">Python Fundamentals</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-professional-modal">Python Professional</a></li>
+              <li><a href="#">DSA Mastery</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="{% url 'code-editor-freemium' %}">Online Code Editor</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-2 col-md-4 col-6">
+            <h5 class="footer-heading">Company</h5>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="{% url 'contact_us' %}">Contact Support</a></li>
+              <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+              <li><a href="{% url 'terms_and_conditions' %}">Terms of Service</a></li>
+              <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-4 col-md-4">
+            <h5 class="footer-heading">Stay Updated</h5>
+            <p class="small mb-3">Get the latest coding challenges and tips directly to your inbox.</p>
+            <form class="mb-4">
+              <div class="footer-input-group">
+                <input type="email" class="footer-input" placeholder="Enter your email address" required>
+              </div>
+              <button class="btn btn-premium footer-btn" type="submit">
+                Subscribe Now
+              </button>
+            </form>
+            
+            <ul class="contact-list list-unstyled">
+              <li>
+                  <i class="fas fa-map-marker-alt"></i> 
+                  <span>Bengaluru, Karnataka, India</span>
+              </li>
+              <li>
+                  <i class="fas fa-shield-alt"></i>
+                  <span>MSME Registered: UDYAM-KR-22-0128456</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <h5 class="footer-heading">Quick Links</h5>
-          <ul class="footer-links">
-            <li><a href="{% url 'contact_us' %}">Contact us</a></li>
-            <li><a href="{% url 'terms_and_conditions' %}">Terms & conditions</a></li>
-            <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
-            <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
-          </ul>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-           
-          </ul>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-          <h5 class="footer-heading">Resources</h5>
-          <ul class="footer-links">
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Tutorials</a></li>
-            <li><a href="#">Interview Tips</a></li>
-            <li><a href="#">Community</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4">
-          <h5 class="footer-heading">Newsletter</h5>
-          <p class="footer-newsletter">Subscribe to get updates on new problems and coding tips.</p>
-          <form>
-            <input type="email" class="footer-input" placeholder="Your email" aria-label="Email for newsletter">
-            <button class="btn btn-primary footer-btn" type="button">Subscribe</button>
-          </form>
+  
+        <div class="copyright">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <p class="mb-0">&copy; {% now "Y" %} ನಮ್ಮ CODING ಶಾಲೆ. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <div class="copyright-links">
+                  <a href="#">Sitemap</a>
+                  <a href="#">Cookies</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="copyright">
-        <p>&copy; 2025 ನಮ್ಮ Coding ಶಾಲೆ. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

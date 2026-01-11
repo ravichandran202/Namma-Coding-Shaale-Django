@@ -1,0 +1,652 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python DSA Mastery Course - Learn with LeetCode-style Problems</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --primary-light: #93c5fd;
+      --secondary: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      --border: rgba(0, 0, 0, 0.08);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 12px;
+      /* Default padding for desktop */
+      --section-padding: 8rem 0; 
+      --container-max-width: 1200px;
+    }
+
+    /* RESPONSIVE ROOT VARIABLES */
+    @media (max-width: 991px) {
+      :root {
+        --section-padding: 5rem 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-padding: 4rem 0;
+      }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, .display-font {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Typography Responsive Adjustments */
+    @media (max-width: 768px) {
+      .display-4 {
+        font-size: 2.5rem; /* Smaller hero title on mobile */
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .display-5 {
+        font-size: 2rem; /* Smaller stats numbers */
+      }
+    }
+
+    .text-serif { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .text-sans { font-family: 'Inter', sans-serif; }
+    .text-uppercase { letter-spacing: 0.1em; }
+
+    /* Navigation */
+    .navbar {
+      padding: 1rem 0;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 0.75rem 0;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: white !important;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .brand-text { font-family: 'Playfair Display', serif; margin: 0 0.5rem; }
+    .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
+
+    .nav-link {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8) !important;
+      margin: 0 0.25rem;
+      padding: 0.75rem 1.25rem !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link:hover {
+      color: white !important;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+      color: white !important;
+      background: rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-premium {
+      background: linear-gradient(135deg, var(--primary), #7c3aed);
+      color: white !important;
+      border: none;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+      background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
+      color: white;
+    }
+
+    /* Navbar Toggler */
+    .navbar-toggler { border: none; padding: 0.5rem; }
+    .navbar-toggler:focus { box-shadow: none; }
+    .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
+
+    /* Section Styling */
+    .section { padding: var(--section-padding); }
+    .section-title {
+      font-size: 2.5rem; margin-bottom: 3rem; text-align: center; position: relative;
+    }
+    .section-title:after {
+      content: ''; display: block; width: 80px; height: 4px; background: var(--primary); margin: 1.5rem auto; border-radius: 2px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem; color: var(--gray); max-width: 700px; margin: 0 auto 4rem; text-align: center; line-height: 1.7;
+    }
+
+    /* About Hero Specific Styling for Responsiveness */
+    .about-hero-section {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding-top: 8rem; 
+        padding-bottom: 6rem;
+    }
+    
+    @media (max-width: 768px) {
+        .about-hero-section {
+            padding-top: 6rem; /* Less top padding on mobile */
+            padding-bottom: 4rem;
+        }
+        .section-title:after {
+            margin: 1rem auto; /* Tighten up underline margin */
+        }
+    }
+
+    /* Stats Strip Responsiveness */
+    .stat-col {
+        position: relative;
+        padding-bottom: 0;
+    }
+    
+    /* Desktop: Right border */
+    @media (min-width: 768px) {
+        .stat-col.border-desktop-end {
+            border-right: 1px solid var(--gray-light);
+        }
+    }
+
+    /* Mobile: Bottom border and spacing */
+    @media (max-width: 767px) {
+        .stat-col {
+            border-bottom: 1px solid var(--gray-light);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-col:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        /* Override negative margin on mobile so it doesn't overlap weirdly */
+        .stats-card-wrapper {
+            margin-top: -2rem !important; 
+        }
+    }
+
+    /* Course Cards */
+    .course-card {
+      background-color: white; border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); width: 320px; flex-shrink: 0; border: 1px solid rgba(37, 99, 235, 0.1); position: relative;
+    }
+    .course-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-xl); border-color: rgba(37, 99, 235, 0.3); }
+    .course-img-container { position: relative; height: 180px; overflow: hidden; }
+    .course-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .course-card:hover .course-img { transform: scale(1.05); }
+    .course-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.1) 100%); }
+    .course-badge { position: absolute; top: 1rem; left: 1rem; color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; z-index: 2; }
+    .course-level { position: absolute; bottom: 1rem; left: 1rem; display: flex; gap: 0.5rem; z-index: 2; }
+    .level-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.3); border: 1px solid white; }
+    .level-dot.active { background-color: white; }
+    .course-content { padding: 1.5rem; }
+    .course-title { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--dark); }
+    .premium-course-title { color: var(--light); font-size: 1.3rem; }
+    .course-desc { color: var(--gray); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; min-height: 60px; }
+    .course-meta { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem; }
+    .course-progress { height: 6px; background-color: var(--gray-light); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 3px; }
+
+    /* Footer Responsive */
+    .footer {
+      background-color: #0f172a; color: #94a3b8; padding: 5rem 0 0; position: relative; font-family: 'Inter', sans-serif; overflow: hidden;
+    }
+    .footer:before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.5), transparent); }
+    .footer-bg-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 70%); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 0; }
+    .footer-content { position: relative; z-index: 1; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.5rem; color: white; display: inline-block; margin-bottom: 1.5rem; }
+    .footer-about { font-size: 0.95rem; line-height: 1.8; margin-bottom: 2rem; max-width: 300px; }
+    .footer-heading { color: white; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 0.85rem; }
+    .footer-links a { color: #94a3b8; text-decoration: none; transition: all 0.3s ease; font-size: 0.95rem; display: inline-flex; align-items: center; }
+    .footer-links a:hover { color: var(--primary-light); transform: translateX(5px); }
+    .footer-links a i { font-size: 0.8rem; margin-right: 8px; opacity: 0.7; }
+    .contact-list li { display: flex; align-items: flex-start; margin-bottom: 1rem; font-size: 0.95rem; }
+    .contact-list i { color: var(--primary); margin-top: 0.3rem; margin-right: 0.75rem; }
+    .footer-input-group { position: relative; margin-bottom: 1rem; }
+    .footer-input { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.85rem 1rem; border-radius: 8px; width: 100%; transition: var(--transition); }
+    .footer-input:focus { outline: none; background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+    .footer-btn { width: 100%; padding: 0.85rem; font-weight: 600; border-radius: 8px; }
+    .social-links { display: flex; gap: 0.75rem; }
+    .social-btn { width: 40px; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .social-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4); color: white; }
+    .copyright { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem 0; margin-top: 4rem; font-size: 0.9rem; }
+    .copyright-links a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; transition: color 0.3s; }
+    .copyright-links a:hover { color: white; }
+    .text-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+
+    /* Animations */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { animation: fadeInUp 0.6s ease-out forwards; }
+
+    /* Misc Responsive Helpers */
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .nav-link { margin: 0.25rem 0; padding: 0.75rem !important; }
+        .btn-premium { margin-top: 0.5rem; width: 100%; justify-content: center; }
+        
+        /* Center content on tablet/mobile for mission section if text aligns better */
+        .mission-content {
+            text-align: center;
+        }
+        .mission-content .row .d-flex {
+            justify-content: center;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .mission-content {
+            text-align: left;
+        }
+    }
+  </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home me-1"></i> Home</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <a class="nav-link" href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap me-1"></i> My Courses</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <a class="btn btn-premium" href="{% url 'login' %}"><i class="fas fa-gem me-1"></i> Login Now</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  
+    <section class="section position-relative overflow-hidden about-hero-section">
+      <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1;"></div>
+      <div class="container position-relative z-1 text-center">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 animate">
+            <span class="badge bg-primary bg-opacity-10 border border-primary text-primary-light mb-3 px-3 py-2 rounded-pill">OUR STORY</span>
+            <h1 class="display-4 fw-bold mb-4 text-white">Bridging the Gap in <br><span class="text-gradient">Tech Education</span></h1>
+            <p class="lead text-white opacity-75 mb-0">
+              We are democratizing coding education in Karnataka by breaking language barriers and focusing on logic over syntax.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="card border-0 shadow-xl animate delay-1 stats-card-wrapper" style="margin-top: -3rem; position: relative; z-index: 10; border-radius: 16px;">
+            <div class="card-body p-4">
+              <div class="row align-items-center">
+                <div class="col-md-4 text-center stat-col border-desktop-end">
+                  <span class="d-block fw-bold text-dark display-5 mb-0">500+</span>
+                  <span class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">Problems Solved</span>
+                </div>
+                <div class="col-md-4 text-center stat-col border-desktop-end">
+                  <span class="d-block fw-bold text-primary display-5 mb-0">200+</span>
+                  <span class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">Students Trained</span>
+                </div>
+                <div class="col-md-4 text-center stat-col">
+                  <span class="d-block fw-bold text-success display-5 mb-0">100%</span>
+                  <span class="text-muted small text-uppercase fw-bold" style="letter-spacing: 1px;">Practical Learning</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <section class="section">
+      <div class="container">
+        <div class="row align-items-center g-5 mission-content">
+          <div class="col-lg-6 animate">
+            <div class="position-relative">
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary rounded-4" style="transform: rotate(-3deg); opacity: 0.1; z-index: 0;"></div>
+              <img src="{% static 'images/mission-image.jpg' %}" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'" alt="Our Mission" class="img-fluid rounded-4 shadow-lg position-relative z-1 w-100">
+            </div>
+          </div>
+          <div class="col-lg-6 animate delay-1">
+            <span class="text-uppercase text-primary fw-bold" style="letter-spacing: 3px;">Who We Are</span>
+            <h2 class="section-title mt-2 text-dark text-start-lg mx-auto mx-lg-0" style="text-align: inherit;">Democratizing Tech <span class="text-gradient">Education</span></h2>
+            <p class="text-muted mb-4" style="text-align: justify;">
+              At Namma Coding Shaale, we believe that talent is equally distributed, but opportunity is not. Many brilliant students in Karnataka struggle with programming simply because of the language barrier.
+            </p>
+            <p class="text-muted mb-4" style="text-align: justify;">
+              Our mission is to bridge this gap by teaching complex computer science concepts using <strong>Kannada and simple English</strong>. We focus on building strong logic rather than just memorizing syntax, empowering students from Tier-2 and Tier-3 cities to crack interviews at top product-based companies.
+            </p>
+            
+            <div class="row mt-4">
+              <div class="col-md-6 mb-3">
+                <div class="d-flex align-items-center p-3 rounded-3 bg-light border border-light">
+                  <i class="fas fa-language text-primary me-3 fs-4"></i>
+                  <div>
+                    <h6 class="mb-0 fw-bold text-dark">Vernacular Learning</h6>
+                    <small class="text-muted">Kannada + English Support</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="d-flex align-items-center p-3 rounded-3 bg-light border border-light">
+                  <i class="fas fa-briefcase text-success me-3 fs-4"></i>
+                  <div>
+                    <h6 class="mb-0 fw-bold text-dark">Industry Ready</h6>
+                    <small class="text-muted">Interview Focused</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="section" style="background-color: #f8fafc;">
+      <div class="container">
+        <div class="text-center mb-5 animate">
+          <span class="text-uppercase text-primary fw-bold" style="letter-spacing: 3px;">Leadership</span>
+          <h2 class="section-title mt-3 text-dark">Meet The <span class="text-gradient">Founders</span></h2>
+          <p class="section-subtitle">The visionaries behind the revolution in coding education.</p>
+        </div>
+  
+        <div class="row justify-content-center g-4">
+          
+          <div class="col-lg-5 col-md-6 animate delay-1">
+            <div class="card border-0 shadow-lg h-100 overflow-hidden" style="border-radius: 16px;">
+              <div class="card-body p-0 text-center">
+                <div class="p-5 position-relative" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                  <div class="mx-auto rounded-circle p-1 bg-white position-relative shadow" style="width: 140px; height: 140px; margin-bottom: -70px;">
+                    <img src="{% static 'images/ravichandran.jpg' %}" onerror="this.src='https://ui-avatars.com/api/?name=Ravichandran+T+S&background=2563eb&color=fff&size=150'" alt="Ravichandran T S" class="rounded-circle img-fluid w-100 h-100 object-fit-cover">
+                  </div>
+                </div>
+                <div class="pt-5 px-4 pb-5 mt-3">
+                  <h3 class="h4 fw-bold text-dark mb-1">Ravichandran T S</h3>
+                  <span class="badge bg-primary bg-opacity-10 text-primary mb-3 px-3 py-2 rounded-pill">Founder & Lead Instructor</span>
+                  
+                  <p class="text-muted mb-4 px-2" style="font-size: 0.95rem;">
+                    An experienced Software Engineer (ex-Allen Digital) with a deep passion for teaching. Ravichandran has cracked interviews at top tech product companies like Rippling and brings hands-on industry experience to the classroom. He specializes in Python, Backend Development, and System Design.
+                  </p>
+                  
+                  <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-outline-primary btn-sm rounded-circle" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-circle" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-envelope"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-lg-5 col-md-6 animate delay-2">
+            <div class="card border-0 shadow-lg h-100 overflow-hidden" style="border-radius: 16px;">
+              <div class="card-body p-0 text-center">
+                <div class="p-5 position-relative" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                  <div class="mx-auto rounded-circle p-1 bg-white position-relative shadow" style="width: 140px; height: 140px; margin-bottom: -70px;">
+                    <img src="{% static 'images/cofounder.jpg' %}" onerror="this.src='https://ui-avatars.com/api/?name=Co+Founder&background=10b981&color=fff&size=150'" alt="Co-Founder" class="rounded-circle img-fluid w-100 h-100 object-fit-cover">
+                  </div>
+                </div>
+                <div class="pt-5 px-4 pb-5 mt-3">
+                  <h3 class="h4 fw-bold text-dark mb-1">Co-Founder Name</h3>
+                  <span class="badge bg-success bg-opacity-10 text-success mb-3 px-3 py-2 rounded-pill">Co-Founder & Operations</span>
+                  
+                  <p class="text-muted mb-4 px-2" style="font-size: 0.95rem;">
+                    With a strong background in educational operations and student success management, they ensure that every student at Namma Coding Shaale gets a seamless learning experience. Dedicated to building a community where learning is interactive and support is always available.
+                  </p>
+                  
+                  <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-outline-primary btn-sm rounded-circle" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="btn btn-outline-dark btn-sm rounded-circle" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-envelope"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </section>
+  
+    <section class="section">
+      <div class="container">
+        <div class="bg-primary rounded-4 p-5 text-center position-relative overflow-hidden text-white shadow-lg animate">
+          <div class="position-relative z-1">
+            <h2 class="fw-bold mb-3">Join Our Growing Community</h2>
+            <p class="lead mb-4 opacity-90">Start your journey from basics to a high-paying tech job today.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <a href="{% url 'course-catalog' %}" class="btn btn-light btn-lg text-primary fw-bold" style="border-radius: 8px;">Explore Courses</a>
+              <a href="{% url 'contact_us' %}" class="btn btn-outline-light btn-lg fw-bold" style="border-radius: 8px;">Contact Us</a>
+            </div>
+          </div>
+          <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);"></div>
+          <div class="position-absolute bottom-0 end-0 p-5 opacity-25 d-none d-md-block">
+              <i class="fas fa-code" style="font-size: 15rem; transform: rotate(-15deg);"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <footer class="footer">
+      <div class="footer-bg-glow"></div>
+      <div class="container footer-content">
+        <div class="row g-5">
+          
+          <div class="col-lg-4 col-md-12">
+            <a href="#" class="footer-logo text-decoration-none">
+              &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+            </a>
+            <p class="footer-about">
+              Empowering the next generation of developers with vernacular language support, industry-standard curriculum, and a commitment to affordable, high-quality education.
+            </p>
+            <div class="social-links">
+              <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank" class="social-btn" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" class="social-btn" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="mailto:nammacodingshaale@gmail.com" class="social-btn" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="#" class="social-btn" aria-label="Youtube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+  
+          <div class="col-lg-2 col-md-4 col-6">
+            <h5 class="footer-heading">Top Courses</h5>
+            <ul class="footer-links">
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-foundational-modal">Python Fundamentals</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-professional-modal">Python Professional</a></li>
+              <li><a href="#">DSA Mastery</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="{% url 'code-editor-freemium' %}">Online Code Editor</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-2 col-md-4 col-6">
+            <h5 class="footer-heading">Company</h5>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="{% url 'contact_us' %}">Contact Support</a></li>
+              <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+              <li><a href="{% url 'terms_and_conditions' %}">Terms of Service</a></li>
+              <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-4 col-md-4">
+            <h5 class="footer-heading">Stay Updated</h5>
+            <p class="small mb-3" style="color: #94a3b8;">Get the latest coding challenges and tips directly to your inbox.</p>
+            <form class="mb-4">
+              <div class="footer-input-group">
+                <input type="email" class="footer-input" placeholder="Enter your email address" required>
+              </div>
+              <button class="btn btn-premium footer-btn" type="submit">
+                Subscribe Now
+              </button>
+            </form>
+            
+            <ul class="contact-list list-unstyled">
+              <li>
+                  <i class="fas fa-map-marker-alt"></i> 
+                  <span>Bengaluru, Karnataka, India</span>
+              </li>
+              <li>
+                  <i class="fas fa-shield-alt"></i>
+                  <span>MSME Registered: UDYAM-KR-22-0128456</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <div class="copyright">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              <p class="mb-0">© {% now "Y" %} ನಮ್ಮ CODING ಶಾಲೆ. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <div class="copyright-links">
+                  <a href="#">Sitemap</a>
+                  <a href="#">Cookies</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Navbar scroll effect
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+      });
+  
+      // Initialize animations
+      document.addEventListener('DOMContentLoaded', function() {
+        // Set initial state for animated elements
+        document.querySelectorAll('.animate').forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(20px)';
+          el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        });
+  
+        // Run animation check
+        animateOnScroll();
+        
+        // Initialize Particles if script is loaded
+        if (typeof particlesJS !== 'undefined') {
+          particlesJS('particles-js', {
+            "particles": {
+              "number": { "value": 80 },
+              "color": { "value": "#ffffff" },
+              "opacity": { "value": 0.1 },
+              "size": { "value": 3 },
+              "line_linked": { "enable": true, "color": "#ffffff", "opacity": 0.1 },
+              "move": { "enable": true, "speed": 1 }
+            }
+          });
+        }
+      });
+  
+      // Animation on scroll
+      function animateOnScroll() {
+        const elements = document.querySelectorAll('.animate');
+        elements.forEach(element => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.2;
+  
+          if (elementPosition < screenPosition) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }
+        });
+      }
+  
+      // Run on scroll
+      window.addEventListener('scroll', animateOnScroll);
+    </script>
+  </body>
+</html>
