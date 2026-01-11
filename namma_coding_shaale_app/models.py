@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 import random
 import string
+import json
 
 class OTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,8 +32,6 @@ class Course(models.Model):
         ('JAVASCRIPT', 'javascript'),
         ('JAVA', 'java'),
         ('CPP', 'cpp'),
-        # ('GO', 'Go'),
-        # ('RUST', 'Rust'),
     ]
     
     name = models.CharField(max_length=100)
@@ -45,6 +44,19 @@ class Course(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.get_language_display()})"
+
+class CourseBatch(models.Model):
+    """
+    Represents a specific cohort/batch for a course.
+    Used to calculate drip content unlocking based on start_date.
+    """
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='batches')
+    name = models.CharField(max_length=100) # e.g., "January 2026 Batch"
+    start_date = models.DateTimeField()
+    enrollment_end_date = models.DateTimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.course.name} - {self.name}"
 
 class Problem(models.Model):
     DIFFICULTY_CHOICES = [
@@ -97,6 +109,11 @@ class CourseContent(models.Model):
     sequence_number = models.PositiveIntegerField()
     is_unlocked_by_default = models.BooleanField(default=False)
     unlocks_next = models.BooleanField(default=True)
+    unlock_days = models.PositiveIntegerField(
+        default=0, 
+        help_text="Days after Batch Start Date to unlock this content. 0 means available on start date."
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -123,6 +140,8 @@ class UserCourse(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrolled_courses')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
+    # batch = models.ForeignKey(CourseBatch, on_delete=models.SET_NULL, null=True, blank=True)
+
     enrollment_date = models.DateTimeField(auto_now_add=True)
     completion_date = models.DateTimeField(blank=True, null=True)
     fees_paid = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -176,12 +195,6 @@ class UserContentProgress(models.Model):
     def __str__(self):
         status = "Completed" if self.is_completed else "In Progress"
         return f"{self.user.username} - {self.content.title} ({status})"
-    
-
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-import json
 
 class QuizSubmission(models.Model):
     """Tracks user submissions for quizzes"""
@@ -208,50 +221,10 @@ class QuizSubmission(models.Model):
     attempt_number = models.PositiveIntegerField(default=0)
     
     class Meta:
-        # ordering = ['-completed_at']
         unique_together = ['user', 'course', 'content']
     
     def __str__(self):
         return f"{self.user.username}'s quiz attempt #{self.attempt_number} ({self.score}%)"
-    
-    # def save(self, *args, **kwargs):
-    #     # Calculate time taken if not set
-    #     if self.started_at and self.completed_at and not self.time_taken:
-    #         self.time_taken = (self.completed_at - self.started_at).seconds
-        
-    #     # Calculate score if not set
-    #     if self.user_answers and not self.score:
-    #         self._calculate_score()
-        
-    #     super().save(*args, **kwargs)
-    
-    # def _calculate_score(self):
-        """Calculate score based on user answers"""
-        correct_count = 0
-        quiz_data = json.loads(self.quiz_data) if isinstance(self.quiz_data, str) else self.quiz_data
-        
-        for question in quiz_data['questions']:
-            user_answer = self.user_answers.get(str(question['id']))
-            
-            if question['type'] == 'multiple-choice':
-                correct = user_answer == question['correctAnswer']
-            elif question['type'] == 'single-choice':
-                correct = set(user_answer or []) == set(question['correctAnswers'])
-            else:  # text or code questions
-                correct_answers = question.get('correctAnswers', [question['correctAnswer']])
-                correct = any(user_answer.lower() == ans.lower() for ans in correct_answers)
-            
-            if correct:
-                correct_count += 1
-        
-        self.correct_answers = correct_count
-        self.total_questions = len(quiz_data['questions'])
-        self.score = round((correct_count / self.total_questions) * 100, 2)
-        self.passed = self.score >= quiz_data.get('passingScore', 70)
-
-from django.db import models
-from django.contrib.auth.models import User
-
 
 class Order(models.Model):
     STATUS_CHOICES = [
