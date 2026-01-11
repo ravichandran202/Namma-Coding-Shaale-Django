@@ -28,7 +28,6 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-# Make sure CourseBatch is imported
 from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission, Order, Batch
 import logging
 import json
@@ -1433,14 +1432,14 @@ def enroll_course(request, course_id):
     try:
         # --- NEW: Batch Logic ---
         # Find a batch starting in the future, or default to the latest one
-        current_batch = CourseBatch.objects.filter(
+        current_batch = Batch.objects.filter(
             course=course,
             start_date__gte=timezone.now()
         ).order_by('start_date').first()
         
         # If no future batch, maybe get the most recent one? 
         if not current_batch:
-            current_batch = CourseBatch.objects.filter(course=course).last()
+            current_batch = Batch.objects.filter(course=course).last()
         # ------------------------
 
         # Create the UserCourse record
