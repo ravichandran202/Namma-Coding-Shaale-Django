@@ -41,7 +41,7 @@ class CourseContentAdmin(admin.ModelAdmin):
 
 @admin.register(UserCourse)
 class UserCourseAdmin(admin.ModelAdmin):
-    list_display = ['user', 'course', 'enrollment_date', 'payment_status', 'fees_paid', 'current_content']
+    list_display = ['user', 'course', 'enrollment_date', 'payment_status', 'fees_paid', 'current_content', 'batch']
     list_filter = ['payment_status', 'enrollment_date', 'completion_date']
     search_fields = ['user__username', 'course__name']
     readonly_fields = ['enrollment_date']
@@ -73,3 +73,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter=['status','payment_status','payment_method','created_at'] 
     search_fields=['order_id','user__username','vendor__name']
     readonly_fields=['created_at','updated_at']
+
+@admin.register(Batch)
+class BatchAdmin(admin.ModelAdmin): 
+    list_display = ('name', 'course', 'start_date', 'enrollment_end_date')

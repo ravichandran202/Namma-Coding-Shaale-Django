@@ -28,7 +28,7 @@ from http import HTTPMethod
 import random
 import string
 import secrets
-from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission, Order
+from .models import OTP, CourseContent, UserContentProgress, UserCourse, ProblemSubmission, Content, Course, Problem, QuizSubmission, Order, Batch
 import logging
 import json
 import ast
@@ -635,6 +635,8 @@ def my_courses(request):
     #         "user" : request.user
     #     })
 
+    batch = Batch.objects.filter(course_id=101)
+    print(batch)
 
     # Get all enrolled courses with progress annotations
     enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')

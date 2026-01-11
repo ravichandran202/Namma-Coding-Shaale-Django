@@ -45,7 +45,7 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.name} ({self.get_language_display()})"
 
-class CourseBatch(models.Model):
+class Batch(models.Model):
     """
     Represents a specific cohort/batch for a course.
     Used to calculate drip content unlocking based on start_date.
@@ -140,7 +140,7 @@ class UserCourse(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrolled_courses')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
-    # batch = models.ForeignKey(CourseBatch, on_delete=models.SET_NULL, null=True, blank=True)
+    batch = models.ForeignKey(Batch, on_delete=models.CASCADE, null=True, blank=True)
 
     enrollment_date = models.DateTimeField(auto_now_add=True)
     completion_date = models.DateTimeField(blank=True, null=True)
