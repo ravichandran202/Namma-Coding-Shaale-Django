@@ -43,6 +43,7 @@ from django.db.models import F
 
 credentials = getattr(settings, 'CREDENTIALS', {})
 # Get an instance of a logger
+from namma_coding_shaale.otel.otel_utils import trace_span
 logger = logging.getLogger(__name__)
 
 memorycache_sidebar = {}
@@ -91,6 +92,7 @@ def send_course_enrollment_email(user, course, user_course, request):
         fail_silently=False
     )
 
+@trace_span
 @csrf_exempt
 def auth_receiver(request):
     """
@@ -166,7 +168,7 @@ def auth_receiver(request):
         print(f"Error during authentication: {e}")
         return HttpResponse('Authentication error', status=500)
 
-
+@trace_span
 def login(request):
     if request.method == HTTPMethod.POST:
 
@@ -236,7 +238,7 @@ def login(request):
     return render(request, "login.html")
 
 
-
+@trace_span
 def resend_otp(request):
     if request.method == HTTPMethod.POST:
         email = request.session.get('otp_email')
@@ -264,21 +266,23 @@ def resend_otp(request):
     
     return redirect('login')
 
-
+@trace_span
 @login_required(login_url="login")
 def logout(request):
     auth.logout(request)
     return redirect('login')
 
+@trace_span
 def home(request):
-    print("Home Page Called")
+    logger.info("Home page called..... Namma Coding Shaale")
     return render(request,"index.html")
 
+@trace_span
 def code_editor_freemium(request):
     print("Code Editor Freemium Page Called")
     return render(request,"code-editor-freemium.html")
 
-
+@trace_span
 @login_required(login_url="login")
 def code_editor(request, course_id):
     roadmap = None
@@ -299,6 +303,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import UserCourse, CourseContent, ProblemSubmission
 
+@trace_span
 @login_required(login_url="login")
 def profile_page(request, section=None):
     user = request.user
@@ -331,10 +336,12 @@ def profile_page(request, section=None):
     template_name = "profile-page-certificates.html" if section == "certificates" else "profile-page.html"
     return render(request, template_name, context)
 
+@trace_span
 @login_required(login_url="login")
 def certificate_page(request):
     return render(request, "profile-page-certificates.html")
 
+@trace_span
 @login_required(login_url="login")
 def list_problems(request, course_id):
     if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
@@ -404,6 +411,7 @@ def list_problems(request, course_id):
     }
     return render(request, "list-problems.html", context)
 
+@trace_span
 @login_required(login_url="login")
 def list_content(request, course_id):
     if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
@@ -481,7 +489,7 @@ def list_content(request, course_id):
     
     return render(request, "course_content.html", context)
 
-
+@trace_span
 @login_required(login_url="login")
 def checkout(request, course_id):
     if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
@@ -502,6 +510,7 @@ def checkout(request, course_id):
 
     return render(request, "checkout.html", context=context)
 
+@trace_span
 def payment_status(request):
     merchant_order_id = request.GET.get('txn_id')
 
@@ -540,6 +549,7 @@ def payment_status(request):
     
     return render(request, 'payment_status.html', context)
 
+@trace_span
 def show_certificate(request):
     certificate_id = request.GET.get('certificate_id')
     if certificate_id == ""  or certificate_id == None:
@@ -561,23 +571,27 @@ def show_certificate(request):
     }
     return render(request, 'certificate.html', context=context)
 
-
+@trace_span
 def terms_and_conditions(request):
     return render(request, "terms-and-conditions.html")
 
+@trace_span
 def privacy_policy(request):
     return render(request, "privacy-policy.html")
 
+@trace_span
 def refund_policy(request):
     return render(request, "refund-policy.html")
 
+@trace_span
 def contact_us(request):
     return render(request, "contact-us.html")
 
+@trace_span
 def about_us(request):
     return render(request, "about-us.html")
 
-
+@trace_span
 @login_required(login_url="login")
 def problem_solver(request, course_id):
     problem_file_id = request.GET.get('id')
@@ -629,7 +643,7 @@ def problem_solver(request, course_id):
     return render(request, "problem-solver.html", context)
 
 
-
+@trace_span
 @login_required
 def my_courses(request):
     #check eligibility for onboarding
@@ -715,6 +729,7 @@ def my_courses(request):
     
     return render(request, 'my_courses.html', {'courses': courses_data})
 
+@trace_span
 def generate_certificate_id(user_id, course_id):
     """
     Generate certificate ID in format: NCS-YYYY-MM-DD-{user_id}-{course_id}
@@ -722,6 +737,7 @@ def generate_certificate_id(user_id, course_id):
     today = timezone.now().date()
     return f"NCS-{today.year}-{today.month:02d}-{today.day:02d}-{user_id}-{course_id}"
 
+@trace_span
 @login_required
 def continue_course(request, course_id):
     # Get the user's course enrollment
@@ -767,6 +783,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import UserContentProgress, Content, Course, UserCourse
 
+@trace_span
 @login_required
 def view_content(request, course_id, content_file_id):
     with transaction.atomic():
@@ -928,6 +945,7 @@ def view_content(request, course_id, content_file_id):
     
         return render(request, "view_content.html", context)
 
+@trace_span
 def problems_catalog(request, course_id):
     # 1. Get the Course
     course = get_object_or_404(Course, id=course_id)
@@ -998,7 +1016,7 @@ def problems_catalog(request, course_id):
     
     return render(request, "problems_catalog.html", context)
 
-
+@trace_span
 def course_catalog(request):
     # 1. Fetch Courses
     # Changed 'course_content' to 'contents' based on your error message
@@ -1032,7 +1050,7 @@ def course_catalog(request):
     return render(request, 'course_catalog.html', context)
 
 
-
+@trace_span
 def bulk_fetch_content_content(user, course, problem_ids):
     """Optimized bulk fetch using prefetch_related"""
     
@@ -1066,6 +1084,7 @@ def bulk_fetch_content_content(user, course, problem_ids):
 '''
    HANDLERS
 '''
+@trace_span
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
     # cached_result = memorycache_sidebar.get(user_id+course_id)
@@ -1145,7 +1164,7 @@ def get_user_roadmap_html(user_id, course_id):
     return result
 
 
-
+@trace_span
 def get_user_roadmap(user_id, course_id):
     roadmap_data = (
         CourseContent.objects
@@ -1238,6 +1257,7 @@ def get_user_roadmap(user_id, course_id):
 '''
    INTERNAL APIS
 '''
+@trace_span
 @csrf_exempt
 @api_view(['POST', 'OPTIONS'])
 @permission_classes([AllowAny])
@@ -1319,6 +1339,7 @@ def save_code(request):
         )
 
 
+@trace_span
 @csrf_exempt
 @api_view(['POST', 'OPTIONS'])
 @permission_classes([AllowAny])
@@ -1426,11 +1447,12 @@ def save_quiz_data(request):
             return JsonResponse({"error": "Invalid JSON"}, status=400)
     return JsonResponse({"error": "Only POST method allowed"}, status=405)
 
+@trace_span
 def generate_password(length=8):
     alphabet = string.ascii_letters + string.digits  # ABC...XYZabc...xyz012...789
     return ''.join(secrets.choice(alphabet) for _ in range(length))
 
-
+@trace_span
 def enroll_course(request, course_id):
     # Get the course or return 404 if not found
     course = get_object_or_404(Course, id=course_id)
@@ -1492,7 +1514,7 @@ def enroll_course(request, course_id):
         messages.error(request, f'Error enrolling in course: {str(e)}')
         return 
 
-
+@trace_span
 def generate_txn_id(prefix="TXN"):
     """
     Generate a unique transaction ID
@@ -1507,6 +1529,7 @@ from phonepe.sdk.pg.payments.v2.models.request.standard_checkout_pay_request imp
 from phonepe.sdk.pg.common.models.request.meta_info import MetaInfo
 from phonepe.sdk.pg.env import Env
 
+@trace_span
 def setup_phonepe_client():
     client_secret = credentials.get('PHONE_PAY_CLIENT_SECRET')
     client_id = credentials.get('PHONE_PAY_CLIENT_ID')
@@ -1528,6 +1551,7 @@ def setup_phonepe_client():
     return client
 
 
+@trace_span
 def get_checkout_page_url(request, client, course):
     unique_order_id = str(generate_txn_id())
     redirection_uri = credentials.get('PHONE_PAY_REDIRECTION_URI')
@@ -1547,6 +1571,7 @@ def get_checkout_page_url(request, client, course):
     print("\n\n",checkout_page_url)
     return checkout_page_url, ui_redirect_url
 
+@trace_span
 def get_order_status(request, client, merchant_order_id):
     response = client.get_order_status(merchant_order_id, details=False)
     return response
