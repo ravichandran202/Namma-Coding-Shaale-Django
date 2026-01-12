@@ -193,32 +193,26 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
         },
     },
     'handlers': {
         'console': {
-            'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'verbose',
         },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'debug.log',
-            'formatter': 'verbose'
+        # We define this placeholder so we can reference it below, 
+        # but the actual OTel logic happens in otel.py or auto-instrumentation
+        'otel': {
+            'class': 'opentelemetry.sdk._logs.LoggingHandler',
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
-        'level': 'DEBUG',
+        'handlers': ['console', 'otel'],
+        'level': 'INFO',
     },
 }
+
 
 # We need these lines below to allow the Google sign in popup to work.
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
