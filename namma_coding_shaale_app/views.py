@@ -52,6 +52,7 @@ def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
 
 def send_otp_email(user, otp_code):
+    logger.info(f"Attempting to send OTP email to user: {user.username}")
     subject = 'Your OTP for Namma Coding Shaale'
     context = {
         'name': user.username,
@@ -64,13 +65,16 @@ def send_otp_email(user, otp_code):
     
     try:
         send_mail(subject, message, email_from, recipient_list, html_message=html_message)
+        logger.info(f"OTP email sent successfully to {user.email}")
         return True
     except Exception as e:
+        logger.error(f"Failed to send OTP email to {user.email}: {str(e)}", exc_info=True)
         print(f"Failed to send OTP email: {str(e)}")
         return False
 
 def send_course_enrollment_email(user, course, user_course, request):
     """Helper function to send course enrollment success email"""
+    logger.info(f"Sending course enrollment email for user {user.username}, course {course.name}")
     subject = f"Successfully Enrolled in {course.name} | Namma Coding Shaale"
     
     context = {
@@ -83,14 +87,18 @@ def send_course_enrollment_email(user, course, user_course, request):
     
     html_message = render_to_string('course_enrollment_email.html', context)
     
-    send_mail(
-        subject=subject,
-        message=strip_tags(html_message),
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[user.email],
-        html_message=html_message,
-        fail_silently=False
-    )
+    try:
+        send_mail(
+            subject=subject,
+            message=strip_tags(html_message),
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user.email],
+            html_message=html_message,
+            fail_silently=False
+        )
+        logger.info(f"Enrollment email sent to {user.email}")
+    except Exception as e:
+        logger.error(f"Failed to send enrollment email to {user.email}: {str(e)}", exc_info=True)
 
 @trace_span
 @csrf_exempt
@@ -98,12 +106,15 @@ def auth_receiver(request):
     """
     Google calls this URL after the user has signed in with their Google account.
     """
+    logger.info("Google Auth Receiver Endpoint hit")
     if request.method != 'POST':
+        logger.warning(f"Invalid method {request.method} for auth_receiver")
         return HttpResponse('Method not allowed', status=405)
     
     token = request.POST.get('credential')
     
     if not token:
+        logger.error("No credential provided in Google Auth request")
         return HttpResponse('No credential provided', status=400)
 
     try:
@@ -113,7 +124,9 @@ def auth_receiver(request):
             google_requests.Request(), 
             os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
         )
+        logger.debug("Google token verification successful")
     except ValueError as e:
+        logger.error(f"Token verification failed: {e}", exc_info=True)
         print(f"Token verification failed: {e}")
         return HttpResponse('Invalid token', status=403)
 
@@ -125,6 +138,7 @@ def auth_receiver(request):
     email_verified = user_data.get('email_verified', False)
 
     if not email_verified:
+        logger.warning(f"Email not verified for Google User: {email}")
         return HttpResponse('Email not verified', status=403)
 
     try:
@@ -136,8 +150,10 @@ def auth_receiver(request):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+            logger.info(f"Existing user logged in via Google: {email}")
             
         except User.DoesNotExist:
+            logger.info(f"Creating new user from Google Auth: {email}")
             # Create a new user
             # Use email as username (or generate a username from email)
             username = email
@@ -165,6 +181,7 @@ def auth_receiver(request):
         return redirect('my-courses')  # Redirect to your courses page
         
     except Exception as e:
+        logger.error(f"Error during Google authentication process: {e}", exc_info=True)
         print(f"Error during authentication: {e}")
         return HttpResponse('Authentication error', status=500)
 
@@ -174,6 +191,7 @@ def login(request):
 
         #handle onboarding flow
         if "first-name" and "last-name" in request.POST and request.user.is_authenticated:
+            logger.info(f"Processing onboarding for user: {request.user.username}")
             first_name = request.POST.get('first-name')
             last_name = request.POST.get('last-name')
             user = request.user
@@ -186,10 +204,12 @@ def login(request):
         if 'otp' in request.POST:
             email = request.session.get('otp_email')
             if not email:
+                logger.warning("OTP login attempted with expired session")
                 messages.error(request, 'OTP session expired. Please try again.')
                 return redirect('login')
             
             otp_code = request.POST['otp']
+            logger.info(f"Verifying OTP for email: {email}")
             
             try:
                 user = User.objects.get(email=email)
@@ -197,6 +217,7 @@ def login(request):
                 
                 if otp.is_valid():
                     auth_login(request, user)
+                    logger.info(f"User logged in successfully via OTP: {email}")
                     # Clean up
                     OTP.objects.filter(user=user).delete()
                     if 'otp_email' in request.session:
@@ -204,21 +225,26 @@ def login(request):
                     
                     #check if First and Last name exists
                     if request.user.first_name == "" or request.user.last_name == "":
+                        logger.info(f"Redirecting user {email} to onboarding form")
                         return render(request, "onboarding_form.html")
                     return redirect("my-courses")
                 else:
+                    logger.warning(f"Expired OTP submitted for {email}")
                     messages.error(request, 'OTP has expired. Please request a new one.')
                     return redirect('login')
             except (User.DoesNotExist, OTP.DoesNotExist):
+                logger.warning(f"Invalid OTP attempt for {email}")
                 messages.error(request, 'Invalid OTP. Please try again.')
                 return render(request, "verify_otp.html", {'email': email})
         
         # Initial email submission
         email = request.POST['email'].lower()
+        logger.info(f"Login initiated for email: {email}")
         
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
+            logger.info(f"Creating new user during login: {email}")
             # Create user if not exists
             password = "1234567890"
             user = User.objects.create_user(username=email, email=email, password=password)
@@ -232,6 +258,7 @@ def login(request):
             request.session['otp_email'] = email
             return render(request, "verify_otp.html", {'email': email})
         else:
+            logger.error(f"Failed to send OTP to {email}")
             messages.error(request, 'Failed to send OTP. Please try again.')
             return redirect('login')
 
@@ -243,9 +270,11 @@ def resend_otp(request):
     if request.method == HTTPMethod.POST:
         email = request.session.get('otp_email')
         if not email:
+            logger.warning("Resend OTP attempted without valid session email")
             messages.error(request, 'Session expired. Please try logging in again.')
             return redirect('login')
         
+        logger.info(f"Resending OTP for email: {email}")
         try:
             user = User.objects.get(email=email)
             # Delete any existing OTPs for this user
@@ -261,6 +290,7 @@ def resend_otp(request):
             
             return render(request, "verify_otp.html", {'email': email})
         except User.DoesNotExist:
+            logger.error(f"Resend OTP failed: User not found for email {email}")
             messages.error(request, 'User not found. Please try again.')
             return redirect('login')
     
@@ -269,6 +299,7 @@ def resend_otp(request):
 @trace_span
 @login_required(login_url="login")
 def logout(request):
+    logger.info(f"User logged out: {request.user.username}")
     auth.logout(request)
     return redirect('login')
 
@@ -279,12 +310,14 @@ def home(request):
 
 @trace_span
 def code_editor_freemium(request):
+    logger.info("Code Editor Freemium Page Accessed")
     print("Code Editor Freemium Page Called")
     return render(request,"code-editor-freemium.html")
 
 @trace_span
 @login_required(login_url="login")
 def code_editor(request, course_id):
+    logger.info(f"User {request.user.id} accessed code editor for course {course_id}")
     roadmap = None
     is_enrolled_user = False
     if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
@@ -306,10 +339,12 @@ from .models import UserCourse, CourseContent, ProblemSubmission
 @trace_span
 @login_required(login_url="login")
 def profile_page(request, section=None):
+    logger.info(f"User {request.user.id} accessed profile page (section: {section})")
     user = request.user
     
     # --- Profile Update Logic ---
     if request.method == "POST":
+        logger.info(f"User {request.user.id} updating profile details")
         user.first_name = request.POST.get('firstName', user.first_name).strip().title()
         user.last_name = request.POST.get('lastName', user.last_name).strip().title()
         user.email = request.POST.get('email', user.email).lower().strip()
@@ -339,12 +374,15 @@ def profile_page(request, section=None):
 @trace_span
 @login_required(login_url="login")
 def certificate_page(request):
+    logger.info(f"User {request.user.id} accessed certificate page")
     return render(request, "profile-page-certificates.html")
 
 @trace_span
 @login_required(login_url="login")
 def list_problems(request, course_id):
+    logger.info(f"User {request.user.id} listing problems for course {course_id}")
     if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        logger.warning(f"User {request.user.id} tried to list problems for unenrolled course {course_id}")
         return redirect("home")
 
     roadmap = None
@@ -414,7 +452,9 @@ def list_problems(request, course_id):
 @trace_span
 @login_required(login_url="login")
 def list_content(request, course_id):
+    logger.info(f"User {request.user.id} listing content for course {course_id}")
     if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        logger.warning(f"User {request.user.id} tried to list content for unenrolled course {course_id}")
         return redirect("home")
 
     # Sidebar logic (excludes single 'PROBLEM' but keeps 'PROBLEMS')
@@ -492,12 +532,19 @@ def list_content(request, course_id):
 @trace_span
 @login_required(login_url="login")
 def checkout(request, course_id):
+    logger.info(f"User {request.user.id} initiated checkout for course {course_id}")
     if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+            logger.info(f"User {request.user.id} already enrolled in {course_id}, redirecting to my-courses")
             return redirect("my-courses")
     
     course = get_object_or_404(Course, id=course_id)
-    phonepe_client = setup_phonepe_client()
-    payment_link, ui_redirect_url = get_checkout_page_url(request, phonepe_client, course)
+    try:
+        phonepe_client = setup_phonepe_client()
+        payment_link, ui_redirect_url = get_checkout_page_url(request, phonepe_client, course)
+    except Exception as e:
+        logger.error(f"Error generating payment link for user {request.user.id}, course {course_id}: {e}", exc_info=True)
+        messages.error(request, "Unable to initiate payment. Please try again later.")
+        return redirect('course-catalog')
 
     context = {
         "payment_link" : payment_link,
@@ -513,27 +560,35 @@ def checkout(request, course_id):
 @trace_span
 def payment_status(request):
     merchant_order_id = request.GET.get('txn_id')
+    logger.info(f"Payment status callback received for transaction: {merchant_order_id}")
 
     #TODO : verify the txn_id from DB
     
-    phonepe_client = setup_phonepe_client()
-    order_status = get_order_status(request, phonepe_client, merchant_order_id)
+    try:
+        phonepe_client = setup_phonepe_client()
+        order_status = get_order_status(request, phonepe_client, merchant_order_id)
+        logger.info(f"Payment status for {merchant_order_id}: {order_status.state}")
 
-    if order_status.state == "COMPLETED":
-        course_id = order_status.meta_info.udf2
-        if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
-            enroll_course(request, course_id)
-        
-            order, created = Order.objects.get_or_create(
-            order_id = order_status.order_id,
-            defaults = {
-                'user': request.user,
-                'total_amount': int(order_status.amount)//100,
-                'status': 'COMPLETED',
-                'payment_status': 'PAID',
-                'transaction_id': merchant_order_id,
-               }
-            )
+        if order_status.state == "COMPLETED":
+            course_id = order_status.meta_info.udf2
+            if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+                logger.info(f"Payment successful, enrolling user {request.user.id} in course {course_id}")
+                enroll_course(request, course_id)
+            
+                order, created = Order.objects.get_or_create(
+                order_id = order_status.order_id,
+                defaults = {
+                    'user': request.user,
+                    'total_amount': int(order_status.amount)//100,
+                    'status': 'COMPLETED',
+                    'payment_status': 'PAID',
+                    'transaction_id': merchant_order_id,
+                }
+                )
+    except Exception as e:
+        logger.error(f"Error processing payment status for {merchant_order_id}: {e}", exc_info=True)
+        # Handle error appropriately in UI
+        return render(request, 'payment_status.html', {'status': 'ERROR'})
 
     context = {
         'status': order_status.state,
@@ -552,6 +607,8 @@ def payment_status(request):
 @trace_span
 def show_certificate(request):
     certificate_id = request.GET.get('certificate_id')
+    logger.info(f"Certificate page accessed for ID: {certificate_id}")
+    
     if certificate_id == ""  or certificate_id == None:
         #Default Values
         context = {}
@@ -573,22 +630,27 @@ def show_certificate(request):
 
 @trace_span
 def terms_and_conditions(request):
+    logger.info("Terms and Conditions page accessed")
     return render(request, "terms-and-conditions.html")
 
 @trace_span
 def privacy_policy(request):
+    logger.info("Privacy Policy page accessed")
     return render(request, "privacy-policy.html")
 
 @trace_span
 def refund_policy(request):
+    logger.info("Refund Policy page accessed")
     return render(request, "refund-policy.html")
 
 @trace_span
 def contact_us(request):
+    logger.info("Contact Us page accessed")
     return render(request, "contact-us.html")
 
 @trace_span
 def about_us(request):
+    logger.info("About Us page accessed")
     return render(request, "about-us.html")
 
 @trace_span
@@ -598,9 +660,12 @@ def problem_solver(request, course_id):
     content_id = request.GET.get('content_id')  # Optional
     course_id = course_id    # Optional
     
+    logger.info(f"User {request.user.id} accessed problem solver: {problem_file_id} (Course: {course_id})")
+
     try:
         problem = Problem.objects.get(file_name=problem_file_id)
     except Problem.DoesNotExist:
+        logger.error(f"Problem not found: {problem_file_id}")
         return HttpResponseNotFound("Problem not found")
 
     # Get or create user progress if content_id is provided
@@ -646,6 +711,7 @@ def problem_solver(request, course_id):
 @trace_span
 @login_required
 def my_courses(request):
+    logger.info(f"User {request.user.id} accessed 'My Courses'")
     #check eligibility for onboarding
     #check if First and Last name exists
     # if request.user.first_name == "" or request.user.last_name == "" :
@@ -659,6 +725,7 @@ def my_courses(request):
     
     #if a user is new or not having any course - enroll it to fremium course and send a Mail
     if len(enrolled_courses) == 0:
+        logger.info(f"No courses found for user {request.user.id}, enrolling in freemium course")
         FREEMIUM_COURSE_ID = 101
         enroll_course(request, FREEMIUM_COURSE_ID)
 
@@ -700,6 +767,7 @@ def my_courses(request):
         #update course completion status
         if is_course_completed:
             if user_course.status != "COMPLETED":
+                logger.info(f"User {request.user.id} completed course {course.id}. Generating certificate.")
                 user_course.status = "COMPLETED"
                 user_course.certificate_id = generate_certificate_id(request.user.id, user_course.course_id)
                 user_course.completion_date = datetime.now()
@@ -740,6 +808,7 @@ def generate_certificate_id(user_id, course_id):
 @trace_span
 @login_required
 def continue_course(request, course_id):
+    logger.info(f"User {request.user.id} continuing course {course_id}")
     # Get the user's course enrollment
     user_course = get_object_or_404(
         UserCourse,
@@ -775,6 +844,7 @@ def continue_course(request, course_id):
         return redirect('view-content', content_id=first_content.content.id)
     
     # Fallback - redirect to course list with message
+    logger.info(f"No content found for course {course_id}, redirecting to course list")
     messages.info(request, "This course doesn't have any content yet.")
     return redirect('my-courses')
 
@@ -786,12 +856,14 @@ from .models import UserContentProgress, Content, Course, UserCourse
 @trace_span
 @login_required
 def view_content(request, course_id, content_file_id):
+    logger.info(f"User {request.user.id} viewing content {content_file_id} in course {course_id}")
     with transaction.atomic():
         # Get course and content objects
         course = get_object_or_404(Course, id=course_id)
         content = get_object_or_404(Content, file_name=content_file_id)
 
         if not UserCourse.objects.filter(user=request.user, course=course).exists():
+            logger.warning(f"User {request.user.id} tried to view content in unenrolled course {course_id}")
             return render(request, "index.html")
         
         # Get user enrollment for batch/date info
@@ -853,6 +925,7 @@ def view_content(request, course_id, content_file_id):
         
         # Handle POST request to mark as completed
         if request.method == 'POST' and 'mark_completed' in request.POST:
+            logger.info(f"User {request.user.id} marking content {content_file_id} as completed")
             
             # 1. Mark CURRENT content as completed (Always allowed)
             progress.is_completed = True
@@ -866,6 +939,7 @@ def view_content(request, course_id, content_file_id):
             if next_content_obj:
                 # If next content is strictly TIME-LOCKED, we don't move the user there
                 if is_next_drip_locked:
+                    logger.info(f"Next content locked for user {request.user.id}. Unlock date: {next_unlock_date}")
                     messages.info(request, f"Great job! The next lesson unlocks on {next_unlock_date.strftime('%B %d')}.")
                     # Stay on current page, but with completed status
                     return redirect(reverse('content', kwargs={
@@ -890,6 +964,7 @@ def view_content(request, course_id, content_file_id):
                 }))
             
             # No next content (End of course)
+            logger.info(f"End of course content reached for course {course_id}")
             return redirect(reverse('content', kwargs={
                 'course_id': course.id,
                 'content_file_id': content.file_name 
@@ -947,6 +1022,7 @@ def view_content(request, course_id, content_file_id):
 
 @trace_span
 def problems_catalog(request, course_id):
+    logger.info(f"Problem catalog accessed for course {course_id}")
     # 1. Get the Course
     course = get_object_or_404(Course, id=course_id)
 
@@ -1018,6 +1094,7 @@ def problems_catalog(request, course_id):
 
 @trace_span
 def course_catalog(request):
+    logger.info("Course catalog accessed")
     # 1. Fetch Courses
     # Changed 'course_content' to 'contents' based on your error message
     courses = Course.objects.all().annotate(
@@ -1272,8 +1349,11 @@ def save_code(request):
         course_id  = int(data['course_id'])
         failed_count = int(data.get('failed_count', 0))
         
+        logger.info(f"Received code submission from User {request.user.id} for Problem {problem_file_id} (Course: {course_id})")
+
         problem = Problem.objects.filter(file_name=problem_file_id).first()
         if not problem:
+            logger.error(f"Problem not found in save_code: {problem_file_id}")
             return Response({"error": "Problem not found"}, status=404)
         
         course = Course.objects.get(id=course_id)
@@ -1308,6 +1388,7 @@ def save_code(request):
         )
         
         if not user_content_progress.is_completed and status == 'SOLVED':
+            logger.info(f"User {request.user.id} solved problem {problem_file_id}, marking progress complete")
             user_content_progress.is_completed = True
             user_content_progress.completed_at = timezone.now()
             user_content_progress.save()
@@ -1326,12 +1407,14 @@ def save_code(request):
         return Response(response_data, status=200)
         
     except KeyError as e:
+        logger.error(f"Missing key in save_code request data: {str(e)}", exc_info=True)
         print(f"Missing key in request data: {str(e)}")
         return Response(
             {"error": f"Missing required field: {str(e)}"},
             status=400
         )
     except Exception as e:
+        logger.error(f"Error in save_code: {str(e)}", exc_info=True)
         print(f"Error in save_code: {str(e)}")
         return Response(
             {"error": str(e)},
@@ -1351,6 +1434,8 @@ def save_quiz_data(request):
             content_id = request.data.get('content_id')
             course_id = request.data.get('course_id')
             is_passed = bool(request.data.get('is_passed'))
+            
+            logger.info(f"User {request.user.id} submitting quiz data for content {content_id} (passed: {is_passed})")
 
             #make data to save
             total_quetions = len(quiz_data)
@@ -1438,13 +1523,19 @@ def save_quiz_data(request):
                 # existing_record.time_taken = timezone.now()
                 
             existing_record.save()
+            logger.info(f"Quiz data saved successfully for user {request.user.id}, score: {score}")
 
             # Process your quiz_data here...
             print("Received:", quiz_data)
 
             return JsonResponse({"status": "success", "message": "Quiz data saved successfully"})
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON in save_quiz_data: {e}", exc_info=True)
             return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except Exception as e:
+            logger.error(f"Error in save_quiz_data: {e}", exc_info=True)
+            return JsonResponse({"error": str(e)}, status=500)
+            
     return JsonResponse({"error": "Only POST method allowed"}, status=405)
 
 @trace_span
@@ -1454,12 +1545,14 @@ def generate_password(length=8):
 
 @trace_span
 def enroll_course(request, course_id):
+    logger.info(f"Enrollment requested for course {course_id} by user {request.user.id}")
     # Get the course or return 404 if not found
     course = get_object_or_404(Course, id=course_id)
     user = request.user
     
     # Check if user is already enrolled
     if UserCourse.objects.filter(user=user, course=course).exists():
+        logger.warning(f"User {user.id} attempted double enrollment in {course_id}")
         messages.warning(request, 'You are already enrolled in this course!')
         return 
     
@@ -1503,6 +1596,7 @@ def enroll_course(request, course_id):
                 is_locked=not (index == 0 and course_content.is_unlocked_by_default)
             )
         
+        logger.info(f"Successfully enrolled user {user.id} in course {course.name}")
         messages.success(request, f'Successfully enrolled in {course.name}!')
 
         # Send enrollment email
@@ -1511,6 +1605,7 @@ def enroll_course(request, course_id):
         return 
     
     except Exception as e:
+        logger.error(f"Error enrolling user {user.id} in course {course_id}: {str(e)}", exc_info=True)
         messages.error(request, f'Error enrolling in course: {str(e)}')
         return 
 
@@ -1554,6 +1649,7 @@ def setup_phonepe_client():
 @trace_span
 def get_checkout_page_url(request, client, course):
     unique_order_id = str(generate_txn_id())
+    logger.info(f"Generating PhonePe checkout URL. Order ID: {unique_order_id}")
     redirection_uri = credentials.get('PHONE_PAY_REDIRECTION_URI')
     ui_redirect_url = f"{redirection_uri}/order/status?txn_id={unique_order_id}"
     amount = (int(course.base_price)) * 100 
@@ -1573,5 +1669,6 @@ def get_checkout_page_url(request, client, course):
 
 @trace_span
 def get_order_status(request, client, merchant_order_id):
+    logger.info(f"Checking order status from PhonePe for {merchant_order_id}")
     response = client.get_order_status(merchant_order_id, details=False)
     return response
