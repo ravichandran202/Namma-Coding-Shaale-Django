@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,7 +89,7 @@
             
             background-image: 
                 /* Layer 1: The Text Loop (Namma Coding Shaale) - Updated with new Branding */
-                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' fill='rgba(15, 23, 42, 0.05)' font-family='Arial, sans-serif' font-weight='800' font-size='14' text-anchor='middle' transform='rotate(-30 100 100)'%3ENamma Coding Shaale%3C/text%3E%3C/svg%3E"),
+                /* url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' fill='rgba(15, 23, 42, 0.05)' font-family='Arial, sans-serif' font-weight='800' font-size='14' text-anchor='middle' transform='rotate(-30 100 100)'%3ENamma Coding Shaale%3C/text%3E%3C/svg%3E"), */
                 
                 /* Layer 2: Graph Paper Grid (Vertical Lines) */
                 linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
@@ -109,18 +110,27 @@
             z-index: 0;
         }
 
-        /* --- The Watermark (</>) --- */
+        /* --- The Watermark (IMAGE MODIFICATION) --- */
         .cert-border::before {
-            content: '</>';
+            content: ''; /* Must be empty string for image */
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-10deg);
-            font-size: clamp(60px, 20vw, 300px);
-            font-family: 'Roboto Mono', monospace;
-            font-weight: 900;
-            color: rgba(37, 99, 235, 0.04); /* Blue tint */
-            white-space: nowrap;
+            transform: translate(-50%, -50%); /* Centers the image */
+            
+            /* Dimensions of the watermark */
+            width: 60%; 
+            height: 60%;
+            
+            /* --- INSERT YOUR BACKGROUND IMAGE PATH BELOW --- */
+            background-image: url('{% static "images/logo-no-background.png" %}');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            /* Opacity (0.1 is very faint, 1 is full visibility) */
+            opacity: 0.1; 
+            
             z-index: -1;
             pointer-events: none;
         }
@@ -138,13 +148,18 @@
         /* --- Typography (Scalable) --- */
         .header { display: flex; justify-content: space-between; align-items: center; }
 
+        /* UPDATED BRAND LOGO STYLES */
         .brand-logo {
-            font-family: 'Roboto', 'Noto Sans Kannada', sans-serif; /* Added Kannada Font */
-            font-weight: 700;
-            font-size: clamp(12px, 2.5vw, 26px);
-            color: var(--slate-900);
-            display: flex; align-items: center;
-            letter-spacing: -0.5px;
+            display: flex; 
+            align-items: center;
+            /* Removed font properties as they don't apply to image */
+        }
+        
+        /* New rule to size the top-left logo image appropriately */
+        .brand-logo img {
+             /* Responsive height matching previous text scale roughly */
+            height: clamp(25px, 5vw, 60px);
+            width: auto; /* Maintain aspect ratio */
         }
 
         .serial-block { text-align: right; }
@@ -276,8 +291,9 @@
 
             <div class="header">
                 <div class="brand-logo">
-                    <span>&lt;&nbsp;ನಮ್ಮ&nbsp;<span class="label-highligh">CODING</span>&nbsp;ಶಾಲೆ&nbsp;/&gt;</span>
+                    <img src="{% static 'images/logo-no-background.png' %}" alt="Namma Coding Shaale Logo">
                 </div>
+                
                 <div class="serial-block">
                     <div class="serial-label">CERTIFICATE ID</div>
                     <div class="serial-id">{{ certificate_id }}</div>
