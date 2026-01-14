@@ -1672,3 +1672,20 @@ def get_order_status(request, client, merchant_order_id):
     logger.info(f"Checking order status from PhonePe for {merchant_order_id}")
     response = client.get_order_status(merchant_order_id, details=False)
     return response
+
+def email_sender(request):
+    subject = 'Enroll | Namma Coding Shaale'
+    html_message = render_to_string('email/push-notification.html')
+    message = strip_tags(html_message)
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [request.user.email]
+    
+    try:
+        send_mail(subject, message, email_from, recipient_list, html_message=html_message)
+        logger.info(f"OTP email sent successfully to {request.user.email}")
+
+    except Exception as e:
+        logger.error(f"Failed to send OTP email to {request.user.email}: {str(e)}", exc_info=True)
+        print(f"Failed to send OTP email: {str(e)}")
+
+    return render(request, "index.html")
