@@ -32,7 +32,8 @@ from .models import OTP, CourseContent, UserContentProgress, UserCourse, Problem
 import logging
 import json
 import ast
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
+from django.utils import timezone
 import requests
 
 from django.db import transaction
@@ -891,15 +892,25 @@ def view_content(request, course_id, content_file_id):
 
         is_next_drip_locked = False
         next_unlock_date = None
-
+    
         if next_content_obj:
-            # Calculate when the NEXT content opens
-            next_unlock_date = start_date + timedelta(days=next_content_obj.unlock_days)
-            today = timezone.now().date()
-            # Check if we are currently BEFORE that date
-            if next_unlock_date > today:
+            raw_unlock_date = start_date + timedelta(days=next_content_obj.unlock_days)
+            today = timezone.localdate()
+    
+            if raw_unlock_date > today:
                 is_next_drip_locked = True
-        # -----------------------------------------------
+                naive_unlock = datetime.combine(raw_unlock_date, time.min)
+                next_unlock_date = timezone.make_aware(naive_unlock, timezone.get_current_timezone())
+            else:
+                next_unlock_date = raw_unlock_date
+
+            logger.info(
+                f"Drip Check - User: {request.user.id} Conetnt: {content.pk}| "
+                f"Today: {today} | "
+                f"Start Date: {start_date} | "
+                f"Raw Unlock Date: {raw_unlock_date} | "
+                f"Final Unlock DT: {next_unlock_date}"
+            )
         
 
         roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
