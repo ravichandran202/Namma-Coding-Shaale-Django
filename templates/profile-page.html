@@ -1,16 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | Namma Coding Shaale</title>
+    <title>My Profile | ನಮ್ಮ CODING ಶಾಲೆ</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
-        /* --- 1. Variables --- */
+        /* --- 1. GLOBAL VARIABLES (Merged from Course Page) --- */
         :root {
             --primary: #2563eb;
             --primary-dark: #1e40af;
@@ -20,467 +23,427 @@
             --light: #f8fafc;
             --gray: #64748b;
             --gray-light: #e2e8f0;
-            --avatar-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            /* Glass Theme Vars */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --text-muted: #64748b;
+            --dark-slate: #0f172a;
         }
 
         body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
-      font-weight: 400;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    .display-font {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .text-serif {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .text-sans {
-      font-family: 'Inter', sans-serif;
-    }
-
-    .text-uppercase {
-      letter-spacing: 0.1em;
-    }
-        
-    /* Navigation */
-    .navbar {
-      padding: 1rem 0;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s ease;
-    }
-
-    .navbar.scrolled {
-      padding: 0.75rem 0;
-      background: rgba(15, 23, 42, 0.95);
-    }
-
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: white !important;
-      display: flex;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .brand-text {
-      font-family: 'Playfair Display', serif;
-      margin: 0 0.5rem;
-    }
-
-    .brand-highlight {
-      color: var(--primary-light);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-    }
-
-    .nav-link {
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.8) !important;
-      margin: 0 0.25rem;
-      padding: 0.75rem 1.25rem !important;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-link:hover {
-      color: white !important;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-link.active {
-      color: white !important;
-      background: rgba(37, 99, 235, 0.15);
-    }
-
-    .nav-link.active:before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-        /* --- 4. Profile Page Specific Styles --- */
-        .main-container {
-            margin-top: 100px;
-            padding-bottom: 3rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Background Gradient */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 40%);
+            min-height: 100vh;
         }
 
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            background: #fff;
-        }
-
-        .profile-cover {
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary), #1e1b4b);
-            border-radius: 12px 12px 0 0;
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            margin-top: -60px;
-            display: inline-block;
-        }
-
-        .profile-avatar-placeholder {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            background: var(--avatar-gradient);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
+        h1, h2, h3, h4, h5, .display-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            text-transform: uppercase;
+            letter-spacing: -0.02em;
         }
 
-        /* --- Form Styling (UPDATED FIX) --- */
-        .form-floating > .form-control:focus ~ label {
-            color: var(--primary);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.15);
-        }
-
-        /* THIS IS THE FIX FOR DARKISH DISABLED INPUTS */
-        .form-control:disabled, .form-control[readonly] {
-            background-color: #ffffff; /* White background */
-            opacity: 1; /* Fixes fading on Safari/iOS */
-            color: var(--dark); /* Sharp dark text */
-            border-color: #f1f5f9; /* Very subtle border */
-            font-weight: 600; /* Bolder text for better readability */
-            cursor: default; /* Removes the 'not allowed' symbol */
-        }
-        
-        .form-floating > .form-control:disabled ~ label {
-            color: var(--gray); /* Keeps label distinct */
-        }
-
-        /* Badges */
-        .badge-soft {
-            background-color: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-            padding: 0.5em 1em;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-
-        /* Section Cards */
-        .section-card {
-            cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.05);
+        /* --- 2. STRICT NAVBAR STYLES (Exact copy from Course Page) --- */
+        .navbar {
+            padding: 1rem 0;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
         }
-        .section-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-light);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        .section-card.active-section {
-            border-color: var(--primary);
-            background-color: rgba(37, 99, 235, 0.05);
-        }
-        .section-card i {
-            font-size: 1.5rem;
-            color: var(--gray);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        .section-card.active-section i {
-            color: var(--primary);
+
+        .navbar.scrolled {
+            padding: 0.75rem 0;
+            background: rgba(15, 23, 42, 0.95);
         }
 
-        /* Button */
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary), #1d4ed8);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .brand-text { font-family: 'Playfair Display', serif; margin: 0 0.5rem; }
+        .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
+
+        .nav-link {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8) !important;
+            margin: 0 0.25rem;
+            padding: 0.75rem 1.25rem !important;
             border-radius: 8px;
-            font-weight: 600;
-        }
-        .btn-primary-custom:hover {
-            background: linear-gradient(135deg, var(--primary-dark), #1e3a8a);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        /* Mobile Navbar Fixes */
+        .nav-link:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
+        .nav-link.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
+        
+        .nav-link.active:before {
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%); width: 20px; height: 2px;
+            background: var(--primary); border-radius: 2px;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white !important; border: none; padding: 0.75rem 1.75rem;
+            border-radius: 8px; font-weight: 600; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease; display: flex; align-items: center;
+            text-align: center; width: 100%; justify-content: center;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), #6d28d9); color: white;
+        }
+
+        .navbar-toggler { border: none; padding: 0.5rem; }
+        .navbar-toggler:focus { box-shadow: none; }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
         @media (max-width: 991px) {
             .navbar-collapse {
-                background: rgba(15, 23, 42, 0.98);
-                padding: 1rem;
-                border-radius: 12px;
-                margin-top: 1rem;
+                background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px); padding: 1rem; border-radius: 12px;
+                margin-top: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             }
+            .navbar-brand{ font-size: 1rem; }
+            .nav-link { margin: 0.25rem 0; padding: 0.75rem !important; }
+            .btn-premium { margin-top: 0.5rem; width: 100%; justify-content: center; }
         }
+
+        /* --- 3. GLASS FORM STYLES (Content Body) --- */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        
+        .main-container { margin-top: 100px; padding-bottom: 3rem; }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+            overflow: hidden; height: 100%;
+        }
+
+        /* Sidebar Elements */
+        .profile-cover { height: 120px; background: linear-gradient(135deg, var(--primary), #4f46e5); position: relative; }
+        .avatar-section { text-align: center; margin-top: -60px; position: relative; padding-bottom: 20px; }
+        .profile-avatar { width: 120px; height: 120px; border-radius: 50%; border: 5px solid rgba(255,255,255,0.8); backdrop-filter: blur(5px); object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); background: #fff; }
+
+        /* Camera Icon */
+        .camera-btn {
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(30px);
+            width: 35px; height: 35px; background: var(--dark-slate); color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: 2px solid #fff; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+
+        /* Inputs */
+        .form-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 5px; }
+        
+        .custom-input {
+            width: 100%; padding: 10px 15px; font-size: 0.95rem; font-weight: 500;
+            border-radius: 12px; border: 2px solid #e2e8f0; background: rgba(255,255,255,0.5);
+            color: var(--dark-slate); transition: all 0.2s;
+        }
+        .custom-input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .custom-input:disabled { background: rgba(241, 245, 249, 0.6); border-color: transparent; color: var(--text-muted); cursor: default; }
+
+        /* Glass Buttons (Sidebar) */
+        .glass-btn {
+            display: block; padding: 15px; background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.6); border-radius: 16px;
+            color: var(--dark-slate); text-decoration: none; transition: 0.2s;
+            margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .glass-btn:hover, .glass-btn.active {
+            background: rgba(37, 99, 235, 0.1); border-color: var(--primary); color: var(--primary); transform: translateY(-2px);
+        }
+
+        .text-gradient { background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .btn-save { background: var(--dark-slate); color: white; border: none; padding: 12px 30px; border-radius: 12px; font-weight: 600; display: none; }
     </style>
 </head>
 
 <body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">
-        &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-          </li>
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}" aria-current="page">
-              <i class="fas fa-home me-1"></i> Home
-            </a>
-          </li>
-          <li class="nav-item ms-lg-3">
-            <a class="nav-link" href="{% url 'my-courses' %}">
-              <i class="fas fa-graduation-cap me-1"></i> My Courses
-            </a>
-          </li>
-          <li class="nav-item ms-lg-3">
-            <a class="nav-link active" href="{% url 'profile' 'details' %}">
-              <i class="fas fa-graduation-cap me-1"></i> Profile
-            </a>
-          </li>
-            {% else %}
-            <li class="nav-item ms-lg-3">
-            <a class="btn btn-premium" href="{% url 'login' %}">
-              <i class="fas fa-gem me-1"></i> Login Now
-            </a>
-          </li>
-            {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <div id="particles-js"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+              </li>
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <i class="fas fa-home me-1"></i> Home
+                </a>
+              </li>
+              <li class="nav-item ms-lg-3">
+                <a class="nav-link" href="{% url 'my-courses' %}">
+                  <i class="fas fa-graduation-cap me-1"></i> My Courses
+                </a>
+              </li>
+              <li class="nav-item ms-lg-3">
+                <a class="nav-link active" href="{% url 'profile' 'details' %}">
+                  <i class="fas fa-user me-1"></i> Profile
+                </a>
+              </li>
+                {% else %}
+                <li class="nav-item ms-lg-3">
+                <a class="btn btn-premium" href="{% url 'login' %}">
+                  <i class="fas fa-gem me-1"></i> Login Now
+                </a>
+              </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
 
     <div class="container main-container">
-        <div class="row g-4">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4" style="border-radius: 16px; backdrop-filter: blur(10px);">
+                    {{ message }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" id="profileForm">
+            {% csrf_token %}
             
-            <div class="col-lg-4">
-                <div class="card text-center h-100">
-                    <div class="profile-cover"></div>
-                    <div class="card-body">
-                        <div class="avatar-wrapper">
-                            <div class="profile-avatar-placeholder" id="mainAvatar">{{user.first_name.0}}</div>
-                        </div>
+            <div class="row g-4">
+                
+                <div class="col-lg-4">
+                    <div class="glass-card">
+                        <div class="profile-cover"></div>
                         
-                        <h4 class="mt-3 mb-1" id="cardName">{{user.first_name}} {{user.last_name}}</h4>
-                        <p class="text-muted small mb-3">Student</p>
-                        
-                        <div class="d-flex justify-content-center gap-2 mb-4">
-                            <span class="badge badge-soft">FREEMIUM</span>
+                        <div class="avatar-section">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" id="avatarPreview" class="profile-avatar" alt="User">
+                            {% else %}
+                                <img src="https://ui-avatars.com/api/?name={{user.first_name}}+{{user.last_name}}&background=random&size=128" id="avatarPreview" class="profile-avatar" alt="User">
+                            {% endif %}
+                            
+                            <h4 class="mt-3 mb-1 fw-bold">{{ user.get_full_name|default:user.username }}</h4>
+                            <p class="text-muted small mb-0">{{ user.profile.location|default:"Student" }}</p>
+                            
+                            <label for="id_avatar" class="camera-btn" id="cameraBtn" title="Change Photo">
+                                <i class="fas fa-camera small"></i>
+                            </label>
+                            <input type="file" name="avatar" id="id_avatar" accept="image/*" style="display:none;" onchange="previewImage(this)">
                         </div>
 
-                        <hr class="text-muted opacity-25">
+                        <div class="p-4 pt-0">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a href="#" class="glass-btn active">
+                                        <i class="fas fa-user-edit mb-2 fs-5"></i>
+                                        <small class="fw-bold">Details</small>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{% url 'profile' 'certificates' %}" class="glass-btn">
+                                        <i class="fas fa-certificate mb-2 fs-5"></i>
+                                        <small class="fw-bold">Badges</small>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <hr style="opacity: 0.1;">
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="small fw-bold text-muted">PROFILE STATUS</span>
+                                {% if user.profile.is_verified %}
+                                    <span class="badge bg-success rounded-pill px-3">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark rounded-pill px-3">Student</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="glass-card p-4 p-md-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="mb-0 fw-bold">Profile <span class="text-gradient">Details</span></h3>
+                            
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="editToggle" style="width: 40px; height: 20px; cursor: pointer;">
+                                <label class="form-check-label ms-2 small fw-bold text-muted" for="editToggle">EDIT</label>
+                            </div>
+                        </div>
 
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <a href="{% url 'profile' 'details' %}" style="text-decoration: none;">
-                                    <div class="card section-card  active-section">
-                                        <div class="card-body text-center py-4">
-                                            <i class="fas fa-user"></i>
-                                            <h6 class="mb-0 mt-2">Details</h6>
-                                        </div>
-                                    </div>
-                                </a>
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="custom-input" value="{{ user.first_name }}" disabled style="opacity: 0.7;">
                             </div>
                             <div class="col-md-6">
-                                <a href="{% url 'profile' 'certificates' %}" style="text-decoration: none;">
-                                    <div class="card section-card">
-                                        <div class="card-body text-center py-4">
-                                            <i class="fas fa-certificate"></i>
-                                            <h6 class="mb-0 mt-2">Certificates</h6>
-                                        </div>
-                                    </div>
-                                </a>
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="custom-input" value="{{ user.last_name }}" disabled style="opacity: 0.7;">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Email <small>(Locked)</small></label>
+                                <input type="email" class="custom-input" value="{{ user.email }}" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Mobile Number</label>
+                                <input type="tel" name="mobile_number" class="custom-input editable-field" value="{{ user.profile.mobile_number|default:'' }}" disabled placeholder="+91...">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Birth Date</label>
+                                <input type="date" name="birth_date" class="custom-input editable-field" value="{{ user.profile.birth_date|date:'Y-m-d' }}" disabled>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Gender</label>
+                                <select name="gender" class="custom-input editable-field" disabled>
+                                    <option value="N" {% if user.profile.gender == 'N' %}selected{% endif %}>Hidden</option>
+                                    <option value="M" {% if user.profile.gender == 'M' %}selected{% endif %}>Male</option>
+                                    <option value="F" {% if user.profile.gender == 'F' %}selected{% endif %}>Female</option>
+                                    <option value="O" {% if user.profile.gender == 'O' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">City/Location</label>
+                                <input type="text" name="location" class="custom-input editable-field" value="{{ user.profile.location|default:'' }}" disabled placeholder="City">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Bio</label>
+                                <textarea name="bio" class="custom-input editable-field" rows="3" disabled placeholder="Tell us about yourself...">{{ user.profile.bio|default:'' }}</textarea>
+                            </div>
+                            
+                            <div class="col-12 mt-4 mb-2">
+                                <h6 class="text-primary fw-bold small text-uppercase"><i class="fas fa-link me-2"></i>Social Links</h6>
+                                <hr style="margin: 5px 0 15px; opacity: 0.1;">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text border-0 bg-transparent ps-0"><i class="fab fa-linkedin text-muted"></i></span>
+                                    <input type="url" name="linkedin_url" class="custom-input editable-field" value="{{ user.profile.linkedin_url|default:'' }}" disabled placeholder="LinkedIn URL">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text border-0 bg-transparent ps-0"><i class="fab fa-twitter text-muted"></i></span>
+                                    <input type="text" name="twitter_handle" class="custom-input editable-field" value="{{ user.profile.twitter_handle|default:'' }}" disabled placeholder="@handle">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-lg-8">
-                
-                <div class="card mb-4">
-                    <div class="card-header bg-white border-bottom-0 py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Profile Details</h5>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="editToggle">
-                            <label class="form-check-label small text-muted" for="editToggle">Edit Mode</label>
+                        <div class="mt-4 pt-3 text-end border-top border-light" id="actionButtons" style="display:none;">
+                            <button type="button" class="btn btn-light text-muted me-2 rounded-3" onclick="cancelEdit()">Cancel</button>
+                            <button type="submit" class="btn-save" style="display:inline-block;">Save Changes</button>
                         </div>
-                    </div>
-                    
-                    <div class="card-body">
-                        <form id="profileForm" method="post">
-                            {% csrf_token %}
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="firstName" value="{{user.first_name}}" name="firstName" disabled>
-                                        <label>First Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="lastName" value="{{user.last_name}}" name="lastName" disabled>
-                                        <label>Last Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" value="{{user.email}}" name="email" disabled>
-                                        <label>Email Address</label>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="tel" class="form-control" id="phone" value="+91 98765 43210" disabled>
-                                        <label>Phone Number</label>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="bio" style="height: 100px" disabled>Passionate learner exploring Python DSA and Web Development.</textarea>
-                                        <label>Bio</label>
-                                    </div>
-                                </div> -->
-                            </div>
 
-                            <div class="mt-4 text-end" id="actionButtons" style="display: none;">
-                                <button type="button" class="btn btn-light text-muted me-2" onclick="cancelEdit()">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-check-circle me-2"></i> Profile updated successfully!
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        // 1. NAVBAR SCROLL EFFECT
+        // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // 2. PROFILE EDIT LOGIC
-        const editToggle = document.getElementById('editToggle');
-        const formInputs = document.querySelectorAll('#profileForm input, #profileForm textarea');
-        const actionButtons = document.getElementById('actionButtons');
-        
-        let originalValues = {};
-        formInputs.forEach(input => originalValues[input.id] = input.value);
-
-        editToggle.addEventListener('change', function() {
-            toggleFormState(this.checked);
+        // 1. PARTICLES CONFIG
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40 },
+                "color": { "value": "#2563eb" },
+                "opacity": { "value": 0.1 },
+                "size": { "value": 3 },
+                "line_linked": { "color": "#2563eb", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
+            }
         });
 
-        function toggleFormState(editable) {
-            formInputs.forEach(input => {
-                input.disabled = !editable;
-                // Optional: Change background when editing to alert user
-                if (editable) {
-                    input.style.backgroundColor = '#fff'; 
-                    input.style.borderColor = '#93c5fd';
-                } else {
-                    input.style.backgroundColor = ''; // revert to CSS rule
-                    input.style.borderColor = ''; // revert to CSS rule
-                }
+        // 2. EDIT MODE TOGGLE
+        const editToggle = document.getElementById('editToggle');
+        const editableFields = document.querySelectorAll('.editable-field');
+        const actionButtons = document.getElementById('actionButtons');
+        const cameraBtn = document.getElementById('cameraBtn');
+        
+        let originalValues = {};
+        editableFields.forEach(field => {
+            originalValues[field.name] = field.value;
+        });
+
+        editToggle.addEventListener('change', function() {
+            toggleEditMode(this.checked);
+        });
+
+        function toggleEditMode(isEditing) {
+            editableFields.forEach(field => {
+                field.disabled = !isEditing;
             });
-
-            actionButtons.style.display = editable ? 'block' : 'none';
-            if(editable) document.getElementById('firstName').focus();
-        }
-
-        function saveProfile() {
-            const first = document.getElementById('firstName').value;
-            const last = document.getElementById('lastName').value;
-
-            if(!first || !last) { alert("Name fields cannot be empty."); return; }
-
-            // Update Name Display
-            document.getElementById('cardName').textContent = `${first} ${last}`;
             
-            // Update Avatar Letter
-            const initial = first.charAt(0).toUpperCase();
-            document.getElementById('mainAvatar').textContent = initial;
-            // No nav avatar in this simplified HTML but keeping logic for you
-            
-            // Save new values
-            formInputs.forEach(input => originalValues[input.id] = input.value);
-            
-            editToggle.checked = false;
-            toggleFormState(false);
-
-            const toast = new bootstrap.Toast(document.getElementById('liveToast'));
-            toast.show();
+            if(isEditing) {
+                actionButtons.style.display = 'block';
+                cameraBtn.style.opacity = '1';
+                cameraBtn.style.visibility = 'visible';
+            } else {
+                actionButtons.style.display = 'none';
+                cameraBtn.style.opacity = '0';
+                cameraBtn.style.visibility = 'hidden';
+            }
         }
 
         function cancelEdit() {
-            formInputs.forEach(input => input.value = originalValues[input.id]);
+            editableFields.forEach(field => {
+                field.value = originalValues[field.name];
+            });
             editToggle.checked = false;
-            toggleFormState(false);
+            toggleEditMode(false);
         }
 
-        function setActiveSection(card) {
-            document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active-section'));
-            card.classList.add('active-section');
+        // 3. IMAGE PREVIEW
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatarPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
 </body>

@@ -6,19 +6,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python DSA Mastery Course - Learn with LeetCode-style Problems</title>
-  <!-- Bootstrap CSS -->
+  <title>My Courses | ನಮ್ಮ CODING ಶಾಲೆ</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 
   <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-  <!-- Custom CSS -->
   <style>
     :root {
       --primary: #2563eb;
@@ -41,207 +37,102 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--light);
+      background-color: #ffffff;
+      background-image: 
+            radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0px, transparent 40%),
+            radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 40%);
       color: var(--dark);
       font-weight: 400;
       line-height: 1.6;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
     }
+
+    /* Particles */
+    #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
     
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    .display-font {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+    h1, h2, h3, h4, h5, .display-font { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+    .text-serif { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .text-sans { font-family: 'Inter', sans-serif; }
+    .text-uppercase { letter-spacing: 0.1em; }
 
-    .text-serif {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .text-sans {
-      font-family: 'Inter', sans-serif;
-    }
-
-    .text-uppercase {
-      letter-spacing: 0.1em;
-    }
-
-    /* Navigation */
+    /* --- Navigation (UNCHANGED) --- */
     .navbar {
       padding: 1rem 0;
       background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.3s ease;
     }
-
-    .navbar.scrolled {
-      padding: 0.75rem 0;
-      background: rgba(15, 23, 42, 0.95);
-    }
-
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: white !important;
-      display: flex;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .brand-text {
-      font-family: 'Playfair Display', serif;
-      margin: 0 0.5rem;
-    }
-
-    .brand-highlight {
-      color: var(--primary-light);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-    }
-
-    .nav-link {
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.8) !important;
-      margin: 0 0.25rem;
-      padding: 0.75rem 1.25rem !important;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-link:hover {
-      color: white !important;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-link.active {
-      color: white !important;
-      background: rgba(37, 99, 235, 0.15);
-    }
-
-    .nav-link.active:before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-    /* Premium Button */
-    .btn-premium {
-      background: linear-gradient(135deg, var(--primary), #7c3aed);
-      color: white !important;
-      border: none;
-      padding: 0.75rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .btn-premium:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-      background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
-      color: white;
-    }
-
-    /* Navbar Toggler */
-    .navbar-toggler {
-      border: none;
-      padding: 0.5rem;
-    }
-
-    .navbar-toggler:focus {
-      box-shadow: none;
-    }
-
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    }
+    .navbar.scrolled { padding: 0.75rem 0; background: rgba(15, 23, 42, 0.95); }
+    .navbar-brand { font-weight: 700; font-size: 1.25rem; color: white !important; display: flex; align-items: center; transition: all 0.3s ease; }
+    .brand-text { font-family: 'Playfair Display', serif; margin: 0 0.5rem; }
+    .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
+    .nav-link { font-weight: 500; color: rgba(255, 255, 255, 0.8) !important; margin: 0 0.25rem; padding: 0.75rem 1.25rem !important; border-radius: 8px; transition: all 0.3s ease; position: relative; display: flex; align-items: center; }
+    .nav-link:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
+    .nav-link.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
+    .nav-link.active:before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20px; height: 2px; background: var(--primary); border-radius: 2px; }
+    .btn-premium { background: linear-gradient(135deg, var(--primary), #7c3aed); color: white !important; border: none; padding: 0.75rem 1.75rem; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); transition: all 0.3s ease; display: flex; align-items: center; text-align: center; width: 100%; justify-content: center; }
+    .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4); background: linear-gradient(135deg, var(--primary-dark), #6d28d9); color: white; }
+    .navbar-toggler { border: none; padding: 0.5rem; }
+    .navbar-toggler:focus { box-shadow: none; }
+    .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
 
     /* Section Styling */
-    .section {
-      padding: var(--section-padding);
-      padding-bottom: 1rem;
-    }
+    .section { padding: var(--section-padding); padding-bottom: 1rem; }
+    .section-title { font-size: 2rem; margin-bottom: 3rem; text-align: center; position: relative; }
+    .section-title:after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary); margin: 1.5rem auto; border-radius: 2px; }
 
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 3rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .section-title:after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: var(--primary);
-      margin: 1.5rem auto;
-      border-radius: 2px;
-    }
-
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: var(--gray);
-      max-width: 700px;
-      margin: 0 auto 4rem;
-      text-align: center;
-      line-height: 1.7;
-    }
-
-    /* Courses Section */
+    /* --- SCROLL LAYOUT FIX --- */
     .courses-scroller {
       overflow-x: auto;
-      padding-bottom: 2rem;
+      /* FIX: Added top padding so shadows don't get cut off on hover */
+      padding: 1.5rem 1.5rem 2.5rem 1.5rem; 
+      /* Fix mobile margin */
+      margin: 0 -1rem; 
       -webkit-overflow-scrolling: touch;
       position: relative;
-      margin: 0 -1.5rem;
-      padding: 0 1.5rem;
+      /* Hide scrollbar for cleaner look */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+    .courses-scroller::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
     }
 
     .courses-container {
       display: flex;
       gap: 2rem;
-      padding-bottom: 2rem;
+      /* Ensure it doesn't wrap */
+      flex-wrap: nowrap;
+      /* Center items if there are few, start if many */
       width: max-content;
+      min-width: 100%;
+    }
+    
+    /* Centering logic when courses are few */
+    @media (min-width: 992px) {
+        .courses-scroller {
+            display: flex;
+            justify-content: center; /* Center the container if possible */
+        }
     }
 
     .course-card {
-      flex: 0 0 auto;      /* Prevent auto-stretch in flexbox */
-      align-self: flex-start; /* Align top instead of stretch */
+      /* FIX: Prevent shrinking and enforce width */
+      flex: 0 0 320px;
+      width: 320px;
+      
       background-color: white;
       border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      width: 320px;
-      flex-shrink: 0;
       border: 1px solid rgba(37, 99, 235, 0.1);
       position: relative;
+      display: flex; 
+      flex-direction: column;
     }
 
     .course-card:hover {
@@ -250,314 +141,66 @@
       border-color: rgba(37, 99, 235, 0.3);
     }
 
-    .course-img-container {
-      position: relative;
-      height: 180px;
-      overflow: hidden;
-    }
+    .course-img-container { position: relative; height: 180px; overflow: hidden; flex-shrink: 0; }
+    .course-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .course-card:hover .course-img { transform: scale(1.05); }
+    .course-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.1) 100%); }
+    .course-badge { position: absolute; top: 1rem; left: 1rem; color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; z-index: 2; }
+    .course-level { position: absolute; bottom: 1rem; left: 1rem; display: flex; gap: 0.5rem; z-index: 2; }
+    .level-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.3); border: 1px solid white; }
+    .level-dot.active { background-color: white; }
 
-    .course-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
+    .course-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .course-footer { margin-top: auto; }
 
-    .course-card:hover .course-img {
-      transform: scale(1.05);
-    }
+    .course-title { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--dark); }
+    .premium-course-title { color: var(--light); font-size: 1.3rem; }
+    .course-meta { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem; }
+    .course-progress { height: 6px; background-color: var(--gray-light); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 3px; }
 
-    .course-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.1) 100%);
-    }
+    .premium-edition { position: relative; overflow: hidden; border: none; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); border-radius: 12px; transition: all 0.4s ease; color: #fff; }
+    .premium-edition:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); }
+    .bg-gold { background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #1a1a2e; }
+    .text-gold { color: #FFD700; }
+    .course-badge.bg-gold { font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+    .exclusive-ribbon { position: absolute; top: 15px; right: -30px; width: 120px; padding: 3px 0; background: #e63946; color: white; text-align: center; font-size: 0.7rem; font-weight: 600; transform: rotate(45deg); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); letter-spacing: 0.5px; }
+    .btn-premium-gold { background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #1a1a2e !important; border: none; font-weight: 600; padding: 8px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden; width: 100%; text-align: center; }
+    .btn-premium-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4); }
+    .premium-glow-1, .premium-glow-2 { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.3; z-index: 0; }
+    .premium-glow-1 { width: 100px; height: 100px; background: #FFD700; top: -30px; right: -30px; }
+    .premium-glow-2 { width: 150px; height: 150px; background: #4cc9f0; bottom: -50px; left: -50px; }
+    .text-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { animation: fadeInUp 0.6s ease-out forwards; }
 
-    .course-badge {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      color: white;
-      padding: 0.25rem 1rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      z-index: 2;
-    }
-
-    .course-level {
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      display: flex;
-      gap: 0.5rem;
-      z-index: 2;
-    }
-
-    .level-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.3);
-      border: 1px solid white;
-    }
-
-    .level-dot.active {
-      background-color: white;
-    }
-
-    .course-content {
-      padding: 1.5rem;
-    }
-
-    .course-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      color: var(--dark);
-    }
-
-    .premium-course-title {
-      color: var(--light);
-      font-size: 1.3rem;
-    }
-
-    .course-desc {
-      color: var(--gray);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-      min-height: 60px;
-    }
-
-    .course-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--gray);
-      margin-bottom: 1rem;
-    }
-
-    .course-progress {
-      height: 6px;
-      background-color: var(--gray-light);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 3px;
-    }
-
-    /* Premium Course Card Styles */
-    .premium-edition {
-      position: relative;
-      overflow: hidden;
-      border: none;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      transition: all 0.4s ease;
-      color: #fff;
-    }
-
-    .premium-edition:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .bg-gold {
-      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
-      color: #1a1a2e;
-    }
-
-    .text-gold {
-      color: #FFD700;
-    }
-
-    .course-badge.bg-gold {
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .exclusive-ribbon {
-      position: absolute;
-      top: 15px;
-      right: -30px;
-      width: 120px;
-      padding: 3px 0;
-      background: #e63946;
-      color: white;
-      text-align: center;
-      font-size: 0.7rem;
-      font-weight: 600;
-      transform: rotate(45deg);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      letter-spacing: 0.5px;
-    }
-
-    .btn-premium-gold {
-      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
-      color: #1a1a2e !important;
-      border: none;
-      font-weight: 600;
-      padding: 8px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      text-align: center;
-    }
-
-    .btn-premium-gold:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-    }
-
-    /* Glow Effects */
-    .premium-glow-1,
-    .premium-glow-2 {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      z-index: 0;
-    }
-
-    .premium-glow-1 {
-      width: 100px;
-      height: 100px;
-      background: #FFD700;
-      top: -30px;
-      right: -30px;
-    }
-
-    .premium-glow-2 {
-      width: 150px;
-      height: 150px;
-      background: #4cc9f0;
-      bottom: -50px;
-      left: -50px;
-    }
-
-    .text-gradient {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: inline-block;
-    }
-
-    /* Animation */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate {
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    /* Responsive adjustments */
     @media (max-width: 991px) {
-      .navbar-collapse {
-        background: rgba(15, 23, 42, 0.98);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 1rem;
-        border-radius: 12px;
-        margin-top: 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-
-      .nav-link {
-        margin: 0.25rem 0;
-        padding: 0.75rem !important;
-      }
-
-      .btn-premium {
-        margin-top: 0.5rem;
-        width: 100%;
-        justify-content: center;
-      }
+      .navbar-collapse { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem; border-radius: 12px; margin-top: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+      .nav-link { margin: 0.25rem 0; padding: 0.75rem !important; }
+      .btn-premium { margin-top: 0.5rem; width: 100%; justify-content: center; }
     }
-
     @media (max-width: 767px) {
-      .course-card {
-        width: 280px;
-      }
-
-      .section-title{
-        font-size: 1.75 rem;
-      }
-      .navbar-brand{
-        font-size: 1rem;
-      }
+      .section-title{ font-size: 1.75rem; }
+      .navbar-brand{ font-size: 1rem; }
+      /* Align scroll to left on mobile */
+      .courses-scroller { justify-content: flex-start; }
     }
 
-    /* 1. Full-Screen Overlay */
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* background-color: rgba(255, 255, 255, 0.9); */
-        z-index: 99999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;           /* Hidden by default state */
-        visibility: hidden;   /* Hidden by default state */
-        transition: opacity 0.3s ease;
-    }
-
-    /* 2. Visible State (Active) */
-    #preloader.loading {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* 3. Spinner Animation */
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(37, 99, 235, 0.1);
-        border-top-color: #2563eb;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
+    /* Preloader */
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
+    #preloader.loading { opacity: 1; visibility: visible; }
+    .spinner { width: 50px; height: 50px; border: 4px solid rgba(37, 99, 235, 0.1); border-top-color: #2563eb; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
 <body>
+  <div id="particles-js"></div>
+
   <div id="preloader" class="loading">
     <div class="spinner"></div>
-</div>
+  </div>
 
-  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">
@@ -583,7 +226,7 @@
           </li>
           <li class="nav-item ms-lg-3">
             <a class="nav-link" href="{% url 'profile' 'details' %}">
-              <i class="fas fa-graduation-cap me-1"></i> Profile
+              <i class="fas fa-user me-1"></i> Profile
             </a>
           </li>
             {% else %}
@@ -598,7 +241,6 @@
     </div>
   </nav>
 
-  <!-- Premium Courses Section -->
   <section class="section" id="course-section">
     <div class="container">
       <div class="text-center mb-6">
@@ -656,56 +298,54 @@
                   <div class="progress-bar {% if course.is_premium %}bg-gold{% endif %}" style="width: {{ course.module_progress }}%"></div>
                 </div>
                 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                  {% if course.is_course_unlocked %}
-                
-                    {% if course.is_premium %}
-                      <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
-                         class="btn btn-premium-gold">
-                        <i class="fas fa-crown me-1"></i> Continue Learning
-                      </a>
-                    {% else %}
-                      <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
-                         class="btn btn-premium">
-                        <i class="fas fa-book me-1"></i> Continue Learning
-                      </a>
-                    {% endif %}
-                
-                  {% else %}
-                    <!-- Locked state -->
-                     {% if course.is_premium %}
-                         <a href="#"
+                <div class="course-footer mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                    {% if course.is_course_unlocked %}
+                    
+                        {% if course.is_premium %}
+                        <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
                             class="btn btn-premium-gold">
-                           <i class="fas fa-crown me-1"></i> Starts on {{ course.course_start_date|date:"d M Y" }}
-                         </a>
-                       {% else %}
-                         <a href="#"
+                            <i class="fas fa-crown me-1"></i> Continue
+                        </a>
+                        {% else %}
+                        <a href="{% url 'content' course_id=course.course.id content_file_id=course.user_course.current_content.file_name %}"
                             class="btn btn-premium">
-                           <i class="fas fa-book me-1"></i> Starts on {{ course.course_start_date|date:"d M Y" }}
-                         </a>
-                       {% endif %}
-                  {% endif %}
-                </div>
-                
+                            <i class="fas fa-book me-1"></i> Continue
+                        </a>
+                        {% endif %}
+                    
+                    {% else %}
+                        {% if course.is_premium %}
+                            <a href="#" class="btn btn-premium-gold">
+                            <i class="fas fa-crown me-1"></i> {{ course.course_start_date|date:"d M Y" }}
+                            </a>
+                        {% else %}
+                            <a href="#" class="btn btn-premium">
+                            <i class="fas fa-book me-1"></i> {{ course.course_start_date|date:"d M Y" }}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                    
 
-                {% if course.is_course_completed %}
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                  {% if course.is_premium  %}
-                    <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium-gold">
-                      <i class="fas fas fa-certificate me-1"></i> Show Certificate
+                    {% if course.is_course_completed %}
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                    {% if course.is_premium  %}
+                        <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium-gold w-100">
+                        <i class="fas fas fa-certificate me-1"></i> Certificate
+                        </a>
+                    {% else %}
+                    <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium w-100">
+                        <i class="fas fas fa-certificate me-1"></i> Certificate
                     </a>
-                  {% else %}
-                  <a href="{% url 'show_certificate' %}?certificate_id={{course.certificate_id}}" class="btn btn-premium">
-                    <i class="fas fas fa-certificate me-1"></i> Show Certificate
-                  </a>
-                  {% endif %}
+                    {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
                 
               </div>
       
               {% if course.is_premium %}
-                <!-- Glow Effects -->
                 <div class="premium-glow-1"></div>
                 <div class="premium-glow-2"></div>
               {% endif %}
@@ -727,7 +367,6 @@
     {% endif %}
   </section>
 
-  <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Navbar scroll effect
@@ -738,24 +377,25 @@
 
     // Initialize animations
     document.addEventListener('DOMContentLoaded', function() {
-      // Set initial state for animated elements
+      // Particles
+      particlesJS('particles-js', {
+        "particles": { "number": { "value": 40 }, "color": { "value": "#2563eb" }, "opacity": { "value": 0.1 }, "size": { "value": 3 }, "line_linked": { "color": "#2563eb", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1 } }
+      });
+
+      // Animate Elements
       document.querySelectorAll('.animate').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
       });
-
-      // Run animation check
       animateOnScroll();
     });
 
-    // Animation on scroll
     function animateOnScroll() {
       const elements = document.querySelectorAll('.animate');
       elements.forEach(element => {
         const elementPosition = element.getBoundingClientRect().top;
         const screenPosition = window.innerHeight / 1.2;
-
         if (elementPosition < screenPosition) {
           element.style.opacity = '1';
           element.style.transform = 'translateY(0)';
@@ -764,104 +404,42 @@
     }
 
     const loader = document.getElementById("preloader");
-
-    // 1. HIDE loader when the new page finishes loading
-    window.addEventListener("load", function() {
-        loader.classList.remove("loading");
-    });
-
-    // 2. SHOW loader immediately when user clicks a link
+    window.addEventListener("load", function() { loader.classList.remove("loading"); });
     document.addEventListener("click", function(e) {
-        const target = e.target.closest("a"); // Find the closest anchor tag
-
+        const target = e.target.closest("a");
         if (target) {
             const href = target.getAttribute("href");
             const targetAttr = target.getAttribute("target");
-
-            // Logic to check if we should show the loader:
-            // 1. It must have an href
-            // 2. It must not be an anchor link (e.g., #section)
-            // 3. It must not be opening in a new tab (_blank)
-            // 4. It must not be a javascript: void action
-            if (href && 
-                !href.startsWith("#") && 
-                !href.startsWith("javascript") && 
-                targetAttr !== "_blank") {
-                
-                // Show the loader immediately
+            if (href && !href.startsWith("#") && !href.startsWith("javascript") && targetAttr !== "_blank") {
                 loader.classList.add("loading");
             }
         }
     });
-
-    // 3. FIX for "Back Button": Ensure loader hides if user hits browser Back button
-    window.addEventListener("pageshow", function(event) {
-        if (event.persisted) {
-            loader.classList.remove("loading");
-        }
-    });
+    window.addEventListener("pageshow", function(event) { if (event.persisted) loader.classList.remove("loading"); });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // 1. Find the hidden messages from Django
         const messageData = document.getElementById('django-messages-data');
-        
-        // 2. If messages exist, loop through them and show toasts
         if (messageData) {
             Array.from(messageData.children).forEach(msgDiv => {
-                // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
-                // msgDiv.dataset.msg will be "This course doesn't have any content yet."
                 showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
             });
         }
     });
     
-  // --- The Helper Function ---
   function showToast(message, type) {
     const toastContainer = document.getElementById('toastContainer');
-    
-    // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
     if (type === 'error') type = 'danger';
-
-    // Map types to Bootstrap colors
-    const bgClass = {
-        'success': 'text-bg-success',
-        'danger':  'text-bg-danger',
-        'warning': 'text-bg-warning',
-        'info':    'text-bg-info',
-    }[type] || 'text-bg-primary';
-
-    const icon = {
-        'success': 'fas fa-check-circle',
-        'danger':  'fas fa-exclamation-circle',
-        'warning': 'fas fa-exclamation-triangle',
-        'info':    'fas fa-info-circle',
-    }[type] || 'fas fa-bell';
-
-    // Build Toast HTML
-    const toastHtml = `
-        <div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="${icon} me-2"></i> ${message}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    `;
-
-    // Append and Show
+    const bgClass = { 'success': 'text-bg-success', 'danger':  'text-bg-danger', 'warning': 'text-bg-warning', 'info': 'text-bg-info' }[type] || 'text-bg-primary';
+    const icon = { 'success': 'fas fa-check-circle', 'danger':  'fas fa-exclamation-circle', 'warning': 'fas fa-exclamation-triangle', 'info': 'fas fa-info-circle' }[type] || 'fas fa-bell';
+    const toastHtml = `<div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body"><i class="${icon} me-2"></i> ${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>`;
     const wrapper = document.createElement('div');
     wrapper.innerHTML = toastHtml;
     const toastElement = wrapper.firstElementChild;
-    
     toastContainer.appendChild(toastElement);
     const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
     toast.show();
-    
-    // Remove from DOM after it fades out
     toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
 }
-  
   </script>
 </body>
 </html>
