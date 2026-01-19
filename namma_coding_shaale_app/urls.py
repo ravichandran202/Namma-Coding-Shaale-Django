@@ -38,5 +38,5 @@ urlpatterns = [
     path("catalog/list-problems/<int:course_id>", views.problems_catalog, name="problems-catalog"),
     path("catalog/list-courses", views.course_catalog, name="course-catalog"),
     
-    path("email-sender", views.email_sender, name="course-catalog")
+    path("email-sender", views.email_sender, name="email-sender")
 ]
