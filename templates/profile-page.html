@@ -9,8 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
-
+    
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
@@ -346,8 +345,89 @@
                                 <label class="form-label">Bio</label>
                                 <textarea name="bio" class="custom-input editable-field" rows="3" disabled placeholder="Tell us about yourself...">{{ user.profile.bio|default:'' }}</textarea>
                             </div>
+
+                            <!-- 🎓 College & Academic Details -->
+                            <div class="col-12 mt-4">
+                                <h6 class="text-primary fw-bold small text-uppercase">
+                                    <i class="fas fa-graduation-cap me-2"></i>College & Academic Details
+                                </h6>
+                                <hr style="margin: 5px 0 15px; opacity: 0.1;">
+                            </div>
                             
-                            <div class="col-12 mt-4 mb-2">
+                            <div class="col-md-6">
+                                <label class="form-label">College Name</label>
+                                <input type="text" name="college_name"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.college_name|default:'' }}"
+                                    disabled placeholder="College / Institute Name">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">University</label>
+                                <input type="text" name="college_university"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.college_university|default:'' }}"
+                                    disabled placeholder="Affiliated University">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Degree</label>
+                                <input type="text" name="degree"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.degree|default:'' }}"
+                                    disabled placeholder="B.Tech / B.E / M.Tech">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Branch</label>
+                                <input type="text" name="branch"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.branch|default:'' }}"
+                                    disabled placeholder="Computer Science">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Year of Study</label>
+                                <select name="year_of_study"
+                                    class="custom-input editable-field"
+                                    disabled>
+                                    <option value="">Select</option>
+                                    {% for i in "12345" %}
+                                        <option value="{{ i }}"
+                                            {% if user.profile.year_of_study|stringformat:"s" == i %}selected{% endif %}>
+                                            {{ i }} Year
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Enrollment / USN</label>
+                                <input type="text" name="enrollment_number"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.enrollment_number|default:'' }}"
+                                    disabled placeholder="Roll / USN">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Graduation Year</label>
+                                <input type="number" name="graduation_year"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.graduation_year|default:'' }}"
+                                    disabled min="2000" max="2100" placeholder="2026">
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">CGPA</label>
+                                <input type="number" step="0.01" min="0" max="10"
+                                    name="cgpa"
+                                    class="custom-input editable-field"
+                                    value="{{ user.profile.cgpa|default:'' }}"
+                                    disabled placeholder="8.50">
+                            </div>
+
+                            
+                            <div class="col-12 mt-4">
                                 <h6 class="text-primary fw-bold small text-uppercase"><i class="fas fa-link me-2"></i>Social Links</h6>
                                 <hr style="margin: 5px 0 15px; opacity: 0.1;">
                             </div>
@@ -446,88 +526,91 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        /**
+ * Initializes a full-screen loader that reacts to Page Load and Link Clicks.
+ * Automatically injects CSS/HTML if missing.
+ */
+function initDynamicLoader() {
+    const loaderId = 'preloader';
     
-    function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
-                #${loaderId} { 
-                    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
-                    display: flex; justify-content: center; align-items: center; 
-                    opacity: 0; visibility: hidden; transition: opacity 0.3s ease; 
-                }
-                #${loaderId}.loading { opacity: 1; visibility: visible; }
-                .spinner { 
-                    width: 50px; height: 50px; 
-                    border: 4px solid rgba(37, 99, 235, 0.1); 
-                    border-top-color: #2563eb; 
-                    border-radius: 50%; 
-                    animation: spin 1s linear infinite; 
-                }
-                @keyframes spin { to { transform: rotate(360deg); } }
-            `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
-        }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
+    // 1. Inject Styles & HTML if they don't exist
+    if (!document.getElementById(loaderId)) {
+        const css = `
+            #${loaderId} { 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
+                display: flex; justify-content: center; align-items: center; 
+                opacity: 0; visibility: hidden; transition: opacity 0.3s ease; 
             }
-        });
+            #${loaderId}.loading { opacity: 1; visibility: visible; }
+            .spinner { 
+                width: 50px; height: 50px; 
+                border: 4px solid rgba(37, 99, 235, 0.1); 
+                border-top-color: #2563eb; 
+                border-radius: 50%; 
+                animation: spin 1s linear infinite; 
+            }
+            @keyframes spin { to { transform: rotate(360deg); } }
+        `;
+        const style = document.createElement('style');
+        style.innerHTML = css;
+        document.head.appendChild(style);
+
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = loaderId;
+        loaderDiv.innerHTML = '<div class="spinner"></div>';
+        document.body.prepend(loaderDiv);
     }
-    
-    // Call it immediately
-    initDynamicLoader();
-    
+
+    const loader = document.getElementById(loaderId);
+
+    // 2. Define Actions
+    const show = () => loader.classList.add('loading');
+    const hide = () => loader.classList.remove('loading');
+
+    // 3. Event: Page Load (Hide loader when content is ready)
+    if (document.readyState === "complete") {
+        hide();
+    } else {
+        show(); // Ensure it's shown immediately while loading
+        window.addEventListener('load', hide);
+    }
+
+    // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) hide();
+    });
+
+    // 5. Event: Link Clicks (Show loader only for actual navigation)
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        
+        // Check if it is a valid link
+        if (link) {
+            const href = link.getAttribute('href');
+            const target = link.getAttribute('target');
+            
+            // Logic: Don't load if:
+            // 1. No href
+            // 2. It's an anchor link (#section)
+            // 3. It's a javascript: call
+            // 4. It opens in a new tab (_blank)
+            // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+            if (
+                href && 
+                !href.startsWith('#') && 
+                !href.startsWith('javascript:') && 
+                target !== '_blank' &&
+                !e.ctrlKey && !e.metaKey
+            ) {
+                show();
+            }
+        }
+    });
+}
+
+// Call it immediately
+initDynamicLoader();
     </script>
 </body>
 </html>

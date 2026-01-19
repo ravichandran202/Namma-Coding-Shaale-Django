@@ -12,7 +12,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
         rel="stylesheet">
-    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
@@ -258,14 +257,21 @@
         }
 
         @media (max-width: 767px) {
-        .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-            padding-right: 0;
-            padding-left: 0;
-        }
 
-        .auth-card {
-            padding: 3rem 1rem;
-        }
+            .container,
+            .container-fluid,
+            .container-lg,
+            .container-md,
+            .container-sm,
+            .container-xl,
+            .container-xxl {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            .auth-card {
+                padding: 3rem 1rem;
+            }
         }
     </style>
 </head>
@@ -345,6 +351,70 @@
                                     placeholder="Tell us a little about yourself..."></textarea>
                             </div>
 
+                            <div class="form-section-title">
+                                <i class="fas fa-graduation-cap"></i> College & Academic Details
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">College Name</label>
+                                    <input type="text" name="college_name" class="custom-input form-control"
+                                        placeholder="e.g., NIT Surathkal">
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">University</label>
+                                    <input type="text" name="college_university" class="custom-input form-control"
+                                        placeholder="Affiliated University (if any)">
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label class="form-label">Degree</label>
+                                    <input type="text" name="degree" class="custom-input form-control"
+                                        placeholder="B.Tech / B.E / M.Tech">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Branch</label>
+                                    <input type="text" name="branch" class="custom-input form-control"
+                                        placeholder="Computer Science">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Year of Study</label>
+                                    <select name="year_of_study" class="custom-input form-select">
+                                        <option value="">Select</option>
+                                        <option value="1">1st Year</option>
+                                        <option value="2">2nd Year</option>
+                                        <option value="3">3rd Year</option>
+                                        <option value="4">4th Year</option>
+                                        <option value="5">5th Year</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Graduation Year</label>
+                                    <input type="number" name="graduation_year" class="custom-input form-control"
+                                        placeholder="2026" min="2000" max="2100">
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label class="form-label">Enrollment / USN</label>
+                                    <input type="text" name="enrollment_number" class="custom-input form-control"
+                                        placeholder="College Roll / USN">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">CGPA</label>
+                                    <input type="number" name="cgpa" class="custom-input form-control"
+                                        placeholder="8.50" step="0.01" min="0" max="10">
+                                </div>
+                            </div>
+
                             <div class="form-section-title"><i class="fas fa-link"></i> Social Links</div>
 
                             <div class="row g-3">
@@ -367,6 +437,7 @@
                                     <div class="invalid-feedback">Must be a valid URL (https://...)</div>
                                 </div>
                             </div>
+
 
                             <button type="submit" class="btn-submit">
                                 Save Profile
