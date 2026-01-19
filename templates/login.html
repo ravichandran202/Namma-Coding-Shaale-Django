@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,45 +6,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | ನಮ್ಮ CODING ಶಾಲೆ</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
+        /* KEEP YOUR EXISTING CSS EXACTLY AS IT WAS */
+        /* I am pasting the essential parts here for context */
         :root {
             --primary: #2563eb;
             --dark-slate: #0f172a;
-            --text-muted: #64748b;
             --glass-bg: rgba(255, 255, 255, 0.85);
         }
 
-        body, html {
+        body,
+        html {
             height: 100%;
-            margin: 0;
-            padding: 0;
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
-            overflow-x: hidden; /* Prevent horizontal shift */
+            overflow-x: hidden;
         }
 
-        /* --- PREMIUM BACKGROUND --- */
         .auth-wrapper {
             min-height: 100vh;
             position: relative;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.04) 0px, transparent 40%);
+            background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 40%), radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.04) 0px, transparent 40%);
         }
 
         #particles-js {
             position: absolute;
-            width: 100%; height: 100%;
-            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             z-index: 1;
         }
 
@@ -55,10 +55,9 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center; /* Ensures horizontal centering */
+            justify-content: center;
         }
 
-        /* --- LEFT SIDE (DESKTOP) --- */
         .brand-section {
             padding-right: 5rem;
         }
@@ -70,7 +69,6 @@
             border-radius: 100px;
             font-size: 0.7rem;
             font-weight: 800;
-            letter-spacing: 0.05em;
             text-transform: uppercase;
             display: inline-block;
             margin-bottom: 2rem;
@@ -84,7 +82,6 @@
             color: var(--dark-slate);
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            letter-spacing: -0.04em;
         }
 
         .text-gradient {
@@ -93,19 +90,16 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- RIGHT SIDE (LOGIN BOX) --- */
         .auth-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 32px;
             padding: 4rem 3rem;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
             text-align: center;
             width: 100%;
-            max-width: 480px; /* Limits width on desktop */
-            margin: auto; /* Centers card in its column */
+            max-width: 480px;
+            margin: auto;
         }
 
         .login-logo {
@@ -119,7 +113,6 @@
             justify-content: center;
             font-size: 1.8rem;
             margin: 0 auto 2rem;
-            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
         }
 
         .login-title {
@@ -130,96 +123,66 @@
             margin-bottom: 0.75rem;
         }
 
-        .login-subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 3.5rem;
+        /* Custom Google Button Style */
+        .btn-google-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-top: 1.5rem;
         }
 
-        /* Container for Google's Library Button */
-        .g-btn-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-top: 1rem;
+        .btn-google-custom:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .legal-text {
-            margin-top: 4rem;
+            margin-top: 3rem;
             font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+            color: #64748b;
         }
 
-        .legal-link {
-            color: var(--dark-slate);
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 1px solid #e2e8f0;
+        .fade-up {
+            animation: fUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        /* --- MOBILE ADAPTATION & FIX FOR ALIGNMENT --- */
-        @media (max-width: 991px) {
-            body { background-color: #ffffff; overflow-y: auto; }
-            .auth-wrapper { background-image: none; height: auto; }
-            #particles-js { display: none; }
-            
-            .auth-container {
-                padding: 0; /* Remove padding that causes shift */
-            }
-
-            .row {
-                margin: 0; /* Remove Bootstrap row negative margins */
-                width: 100%;
-            }
-
-            .col-12 {
-                padding: 0 20px; /* Balanced side gutters */
-            }
-            
-            .auth-card {
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                padding: 4rem 0; /* Vertical space only */
-                backdrop-filter: none;
-                max-width: 100%; /* Use full available width */
-            }
-            
-            .login-title { font-size: 1.8rem; }
-            
-            .login-logo {
-                background: var(--primary);
-                box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+        @keyframes fUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-
-        /* Entry Animation */
-        .fade-up { 
-            opacity: 0; 
-            transform: translateY(20px); 
-            animation: fUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
-        }
-        @keyframes fUp { to { opacity: 1; transform: translateY(0); } }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 
 <body>
-
     <div class="auth-wrapper">
         <div id="particles-js"></div>
 
         <div class="container auth-container">
             <div class="row w-100 align-items-center justify-content-center g-0">
-                
+
                 <div class="col-lg-7 d-none d-lg-block">
                     <div class="brand-section fade-up">
                         <span class="premium-pill">Official Coding Academy</span>
-                        <h1 class="main-heading">Sharpen Your <span class="text-gradient">Logic</span>.<br>Code Your Future.</h1>
-                        <p class="text-muted fs-5">Master the logic behind every line of code with 500+ problems and personalized industry mentorship.</p>
+                        <h1 class="main-heading">Sharpen Your <span class="text-gradient">Logic</span>.<br>Code Your
+                            Future.</h1>
+                        <p class="text-muted fs-5">Master the logic behind every line of code with 500+ problems and
+                            personalized industry mentorship.</p>
                     </div>
                 </div>
 
@@ -228,44 +191,20 @@
                         <div class="login-logo">
                             <i class="fas fa-terminal"></i>
                         </div>
-                        
+
                         <h2 class="login-title"><span>ನಮ್ಮ <span class="text-gradient">CODING ಶಾಲೆ</span></span></h2>
-                        <p class="login-subtitle">Continue your learning journey</p>
+                        <p class="login-subtitle text-muted mb-4">Continue your learning journey</p>
 
-                        <div id="g_id_onload"
-                             data-client_id="1023788795737-t0ho6k6gt8vvptbvk5214bu6jdpcggqu.apps.googleusercontent.com"
-                             data-context="signin"
-                             data-ux_mode="popup"
-                             data-login_uri="https://nammacodingshaale.in/auth-receiver"
-                             data-itp_support="true"
-                             data-auto_prompt="false">
-                        </div>
-
-                        <div class="g-btn-wrapper" id="google-btn-container">
-                            <div class="g_id_signin"
-                                 data-type="standard"
-                                 data-shape="rectangular"
-                                 data-theme="outline"
-                                 data-text="signin_with"
-                                 data-size="large"
-                                 data-logo_alignment="left"
-                                 data-width="320">
-                            </div>
-                        </div>
-
-                        <div id="google-loader" style="display: none; padding: 20px;">
-                            <div style="display: inline-block; padding: 12px 24px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 18px; height: 18px; border: 2px solid #e2e8f0; border-top: 2px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--dark-slate);">Verifying...</span>
-                                </div>
-                            </div>
-                        </div>
+                        <button onclick="authWithGoogle()" class="btn-google-custom">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" height="20"
+                                alt="Google">
+                            <span>Continue with Google</span>
+                        </button>
 
                         <div class="legal-text">
                             By continuing, you agree to our <br>
-                            <a href="#" class="legal-link">Terms of Service</a> & 
-                            <a href="#" class="legal-link">Privacy Policy</a>
+                            <a href="#" class="text-decoration-none fw-bold text-dark">Terms of Service</a> &
+                            <a href="#" class="text-decoration-none fw-bold text-dark">Privacy Policy</a>
                         </div>
                     </div>
                 </div>
@@ -275,41 +214,33 @@
     </div>
 
     <script>
-        // Particle.js Config
+        // Particles Config
         particlesJS('particles-js', {
             "particles": {
-                "number": { "value": 30, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 40 },
                 "color": { "value": "#2563eb" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.08 },
+                "opacity": { "value": 0.1 },
                 "size": { "value": 3 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#2563eb", "opacity": 0.08, "width": 1 },
-                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
-            },
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } },
-            "retina_detect": true
-        });
-
-        // Simple click listener for UI feedback
-        document.addEventListener('DOMContentLoaded', function () {
-            const googleBtn = document.getElementById('google-btn-container');
-            const loader = document.getElementById('google-loader');
-
-            if (googleBtn && loader) {
-                // Since g_id_signin uses an iframe, we listen to the wrapper
-                googleBtn.addEventListener('click', function () {
-                    loader.style.display = 'block';
-                    googleBtn.style.display = 'none';
-                    setTimeout(() => {
-                        if (loader.style.display === 'block') {
-                            loader.style.display = 'none';
-                            googleBtn.style.display = 'flex';
-                        }
-                    }, 10000);
-                });
+                "line_linked": { "color": "#2563eb", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1 }
             }
         });
-    </script>
 
+        // --- GOOGLE AUTH LOGIC ---
+         function authWithGoogle() {
+            const redirectUri = `${window.location.origin}/auth-receiver`;
+        
+            const client = google.accounts.oauth2.initCodeClient({
+                client_id: '1023788795737-t0ho6k6gt8vvptbvk5214bu6jdpcggqu.apps.googleusercontent.com',
+                scope: 'openid email profile https://www.googleapis.com/auth/user.phonenumbers.read',
+                ux_mode: 'redirect',
+                redirect_uri: redirectUri,
+                state: crypto.randomUUID() // better than hardcoded
+            });
+        
+            client.requestCode();
+        }
+    </script>
 </body>
+
 </html>

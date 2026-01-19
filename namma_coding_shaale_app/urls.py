@@ -9,6 +9,7 @@ urlpatterns = [
     path('resend-otp', views.resend_otp, name='resend-otp'),
     path('logout', views.logout, name='logout'),
     path('profile/<str:section>', views.profile_page, name='profile'),
+    path('complete-profile/', views.complete_profile, name='complete_profile'),
 
     path("code-editor/<int:course_id>",views.code_editor,name="code-editor"),
     path("code-editor",views.code_editor_freemium,name="code-editor-freemium"),

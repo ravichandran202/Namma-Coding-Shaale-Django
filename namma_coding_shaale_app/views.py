@@ -103,88 +103,148 @@ def send_course_enrollment_email(user, course, user_course, request):
 
 @trace_span
 @csrf_exempt
+@csrf_exempt
 def auth_receiver(request):
     """
-    Google calls this URL after the user has signed in with their Google account.
+    Handles Google OAuth2 'Authorization Code' Flow
     """
-    logger.info("Google Auth Receiver Endpoint hit")
-    if request.method != 'POST':
-        logger.warning(f"Invalid method {request.method} for auth_receiver")
-        return HttpResponse('Method not allowed', status=405)
+    # 1. Get the Code (Google sends this via GET or POST)
+    code = request.GET.get('code') or request.POST.get('code')
     
-    token = request.POST.get('credential')
-    
-    if not token:
-        logger.error("No credential provided in Google Auth request")
-        return HttpResponse('No credential provided', status=400)
+    if not code:
+        return HttpResponse('No authorization code provided.', status=400)
 
     try:
-        # Verify the Google token
-        user_data = id_token.verify_oauth2_token(
-            token, 
+        print("CLIENT -->", CLIENT_SECRET)
+        # 2. Exchange Code for Access Token
+        token_endpoint = "https://oauth2.googleapis.com/token"
+        token_data = {
+            'code': code,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+            'redirect_uri': REDIRECT_URI,
+            'grant_type': 'authorization_code'
+        }
+
+        
+        res = requests.post(token_endpoint, data=token_data)
+        tokens = res.json()
+        
+        if 'error' in tokens:
+            logger.error(f"Google Token Error: {tokens}")
+            return HttpResponse(f"Google Error: {tokens.get('error_description')}", status=400)
+
+        access_token = tokens.get('access_token')
+        id_token_jwt = tokens.get('id_token')
+
+        # 3. Verify Identity (Get Email/Name)
+        id_info = id_token.verify_oauth2_token(
+            id_token_jwt, 
             google_requests.Request(), 
-            os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+            CLIENT_ID
         )
-        logger.debug("Google token verification successful")
-    except ValueError as e:
-        logger.error(f"Token verification failed: {e}", exc_info=True)
-        print(f"Token verification failed: {e}")
-        return HttpResponse('Invalid token', status=403)
+        
+        email = id_info['email']
+        first_name = id_info.get('given_name', '')
+        last_name = id_info.get('family_name', '')
 
-    # Extract user data
-    google_id = user_data['sub']
-    email = user_data['email']
-    first_name = user_data.get('given_name', '')
-    last_name = user_data.get('family_name', '')
-    email_verified = user_data.get('email_verified', False)
-
-    if not email_verified:
-        logger.warning(f"Email not verified for Google User: {email}")
-        return HttpResponse('Email not verified', status=403)
-
-    try:
-        # SIMPLE APPROACH: Use email as the identifier
-        # Try to find user by email (Google ensures email is unique and verified)
+        # 4. ATTEMPT TO FETCH PHONE NUMBER (The "Try" Step)
+        phone_number = None
         try:
-            user = User.objects.get(email=email)
-            # Update user info if needed
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
-            logger.info(f"Existing user logged in via Google: {email}")
+            creds = Credentials(token=access_token)
+            service = build('people', 'v1', credentials=creds)
+
+            # Query the People API
+            person = service.people().get(
+                resourceName='people/me',
+                personFields='phoneNumbers'
+            ).execute()
+
+            print("\n\nPERSON : ", person)
             
-        except User.DoesNotExist:
-            logger.info(f"Creating new user from Google Auth: {email}")
-            # Create a new user
-            # Use email as username (or generate a username from email)
-            username = email
+            # Check results
+            connections = person.get('phoneNumbers', [])
+            if connections:
+                # Use 'canonicalForm' (e.g., +919876543210) or 'value'
+                phone_number = connections[0].get('canonicalForm') or connections[0].get('value')
+                logger.info(f"Success: Found phone number via API: {phone_number}")
+            else:
+                logger.info("API returned no phone numbers (User likely set to Private).")
+
+        except Exception as api_e:
+            logger.warning(f"People API failed: {api_e}")
+            # Do not crash; proceed to login
+
+        # 5. USER LOGIN / CREATION
+        user, created = User.objects.get_or_create(
+            email=email,
+            defaults={
+                'username': email,
+                'first_name': first_name,
+                'last_name': last_name,
+            }
+        )
+
+        # 6. SAVE PHONE (If API found it)
+        if phone_number:
+            # Basic cleaning (remove spaces/dashes)
+            clean_number = ''.join(filter(str.isdigit, phone_number))
             
-            # Ensure username is unique
-            if User.objects.filter(username=username).exists():
-                username = email
+            # Ensure profile exists
+            if not hasattr(user, 'profile'):
+                from .models import Profile
+                Profile.objects.create(user=user)
             
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                first_name=first_name,
-                last_name=last_name,
-                password="1234567890"  # No password for Google auth
-            )
-            user.save()
-        
-        # Log the user in directly (no need for authenticate() since we verified Google token)
+            user.profile.mobile_number = clean_number
+            user.profile.save()
+
+        # Log the user in
         auth_login(request, user)
+
+        # 7. ROUTING LOGIC (The Fallback)
+        # If we STILL don't have a number, send to manual form
+        if not hasattr(user, 'profile') or not user.profile.mobile_number:
+            return redirect('complete_profile')
         
-        # Store minimal user data in session if needed
-        request.session['user_email'] = email
-        request.session['user_name'] = f"{first_name} {last_name}".strip()
-        
-        return redirect('my-courses')  # Redirect to your courses page
-        
+        return redirect('my_course')
+
     except Exception as e:
-        logger.error(f"Error during Google authentication process: {e}", exc_info=True)
-        print(f"Error during authentication: {e}")
-        return HttpResponse('Authentication error', status=500)
+        logger.error(f"Critical Auth Error: {e}", exc_info=True)
+        return HttpResponse('System Error', status=500)
+
+@trace_span
+@login_required
+def complete_profile(request):
+    """
+    Fallback View: Validation logic handled here (No forms.py)
+    """
+    # Safety check: If they have a number, kick them out
+    # if request.user.profile.mobile_number:
+    #     return redirect('my-courses')
+
+    error_message = None
+    entered_number = ''
+
+    if request.method == 'POST':
+        entered_number = request.POST.get('mobile_number', '').strip()
+        
+        # Manual Validation
+        if not entered_number:
+            error_message = "Mobile number is required."
+        elif not entered_number.isdigit():
+            error_message = "Mobile number must contain digits only."
+        elif len(entered_number) < 10:
+            error_message = "Please enter a valid 10-digit number."
+        else:
+            # Save and Finish
+            # request.user.profile.mobile_number = entered_number
+            # request.user.profile.save()
+            return redirect('my-courses')
+
+    return render(request, 'onboarding_form.html', {
+        'error_message': error_message,
+        'entered_number': entered_number
+    })
 
 @trace_span
 def login(request):
