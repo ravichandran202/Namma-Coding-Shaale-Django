@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from google.oauth2.credentials import Credentials 
+from googleapiclient.discovery import build  
 import os
 
 import requests.auth
@@ -43,6 +45,9 @@ from django.db.models.functions import Concat
 from django.db.models import F
 
 credentials = getattr(settings, 'CREDENTIALS', {})
+CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET')
+REDIRECT_URI = os.environ.get('GOOGLE_OAUTH_REDIRECT_URI')
 # Get an instance of a logger
 from namma_coding_shaale.otel.otel_utils import trace_span
 logger = logging.getLogger(__name__)
@@ -115,7 +120,6 @@ def auth_receiver(request):
         return HttpResponse('No authorization code provided.', status=400)
 
     try:
-        print("CLIENT -->", CLIENT_SECRET)
         # 2. Exchange Code for Access Token
         token_endpoint = "https://oauth2.googleapis.com/token"
         token_data = {
@@ -206,6 +210,7 @@ def auth_receiver(request):
         if not hasattr(user, 'profile') or not user.profile.mobile_number:
             return redirect('complete_profile')
         
+        logger.info(f"GOOGLE_LOGIN_SUCCESS")
         return redirect('my_course')
 
     except Exception as e:
