@@ -546,8 +546,7 @@
                             <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=0f172a&color=fff&size=96"
                                 class="author-pic" alt="{{ post.author.get_full_name|default:post.author.username }}">
                             <div class="meta-text">
-                                <span class="meta-name">{{ post.author.get_full_name|default:post.author.username
-                                    }}</span>
+                                <span class="meta-name">{{ post.author.get_full_name|default:post.author.username }}</span>
                                 <span class="meta-dt">{{ post.created_at|date:"F d, Y" }} · 5 min read</span>
                             </div>
                         </div>
