@@ -211,7 +211,7 @@ def auth_receiver(request):
             return redirect('complete_profile')
         
         logger.info(f"GOOGLE_LOGIN_SUCCESS")
-        return redirect('my_courses')
+        return redirect('my-courses')
 
     except Exception as e:
         logger.error(f"Critical Auth Error: {e}", exc_info=True)
