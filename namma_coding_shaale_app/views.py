@@ -1868,3 +1868,150 @@ def email_sender(request):
         print(f"Failed to send OTP email: {str(e)}")
 
     return render(request, "index.html")
+
+# --- Blog Management Service (In-Memory) ---
+BLOG_POSTS = []
+
+
+@trace_span
+@login_required(login_url="login")
+def blog_list(request):
+    logger.info("Blog list page accessed")
+    
+    # Sort by date descending
+    sorted_posts = sorted(BLOG_POSTS, key=lambda x: x['date'], reverse=True)
+    
+    search_query = request.GET.get('q', '').strip()
+    if search_query:
+        import difflib
+        filtered_posts = []
+        for post in sorted_posts:
+            # Prepare text for searching
+            title = post['title'].lower()
+            content = post['content'].lower()
+            query = search_query.lower()
+            
+            # 1. Exact/Substring Match
+            if query in title or query in content:
+                filtered_posts.append(post)
+                continue
+                
+            # 2. Fuzzy Match (Title only for performance/relevance)
+            # improved fuzzy: check similarity of query words against title words
+            title_words = title.split()
+            query_words = query.split()
+            
+            match_found = False
+            for q_word in query_words:
+                matches = difflib.get_close_matches(q_word, title_words, n=1, cutoff=0.6)
+                if matches:
+                    match_found = True
+                    break
+            
+            if match_found:
+                 filtered_posts.append(post)
+
+        sorted_posts = filtered_posts
+
+    return render(request, "blog/blog_list.html", {"posts": sorted_posts, "search_query": search_query})
+
+@trace_span
+@login_required(login_url="login")
+def my_blogs(request):
+    logger.info(f"User {request.user.username} accessing their blogs")
+    user_posts = [post for post in BLOG_POSTS if post['author'] == request.user.username]
+    sorted_posts = sorted(user_posts, key=lambda x: x['date'], reverse=True)
+    return render(request, "blog/blog_list.html", {"posts": sorted_posts, "title": "My Blogs", "is_my_blogs": True})
+
+@trace_span
+@login_required(login_url="login")
+def blog_create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        
+        if not title or not content:
+            messages.error(request, "Title and Content are required!")
+            return render(request, "blog/blog_form.html", {"title": title, "content": content})
+        
+        print("\nContent : ", content)
+        post_id = str(len(BLOG_POSTS) + 1)
+        new_post = {
+            "id": post_id,
+            "title": title,
+            "content": content,
+            "author": request.user.username,
+            "author_name": f"{request.user.first_name} {request.user.last_name}",
+            "date": datetime.now(),
+            "date_str": datetime.now().strftime("%B %d, %Y")
+        }
+        BLOG_POSTS.append(new_post)
+        logger.info(f"New blog post created: {title} by {request.user.username}")
+        messages.success(request, "Blog post published successfully!")
+        return redirect("blog_list")
+
+    return render(request, "blog/blog_form.html")
+
+@trace_span
+@login_required(login_url="login")
+def blog_detail(request, post_id):
+    post = next((p for p in BLOG_POSTS if p["id"] == post_id), None)
+    if not post:
+        logger.warning(f"Blog post not found: {post_id}")
+        return redirect("blog_list")
+    
+    
+    sorted_posts = sorted(BLOG_POSTS, key=lambda x: x['date'], reverse=True)
+    # Exclude current post
+    recent_posts = [p for p in sorted_posts if p["id"] != post_id][:5]
+    
+    return render(request, "blog/blog_detail.html", {"post": post, "recent_posts": recent_posts})
+
+@trace_span
+@login_required(login_url="login")
+def blog_update(request, post_id):
+    post = next((p for p in BLOG_POSTS if p["id"] == post_id), None)
+    if not post:
+        messages.error(request, "Blog post not found.")
+        return redirect("blog_list")
+    
+    # if post["author"] != request.user.username:
+    #     messages.error(request, "You are not authorized to edit this post.")
+    #     return redirect("blog_list")
+
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        
+        if not title or not content:
+            messages.error(request, "Title and Content are required!")
+            return render(request, "blog/blog_form.html", {"title": title, "content": content, "post_id": post_id})
+        
+        post["title"] = title
+        post["content"] = content
+        # Update date? Maybe keep original or add updated_at. Let's keep distinct.
+        post["updated_at"] = datetime.now()
+        post["updated_at_str"] = datetime.now().strftime("%B %d, %Y")
+        
+        logger.info(f"Blog post updated: {title} by {request.user.username}")
+        messages.success(request, "Blog post updated successfully!")
+        return redirect("blog_detail", post_id=post_id)
+
+    return render(request, "blog/blog_form.html", {"title": post["title"], "content": post["content"], "post_id": post_id})
+
+@trace_span
+@login_required(login_url="login")
+def blog_delete(request, post_id):
+    post = next((p for p in BLOG_POSTS if p["id"] == post_id), None)
+    if not post:
+        messages.error(request, "Blog post not found.")
+        return redirect("blog_list")
+    
+    if post["author"] != request.user.username:
+        messages.error(request, "You are not authorized to delete this post.")
+        return redirect("blog_list")
+    
+    BLOG_POSTS.remove(post)
+    logger.info(f"Blog post deleted: {post_id} by {request.user.username}")
+    messages.success(request, "Blog post deleted successfully!")
+    return redirect("blog_list")

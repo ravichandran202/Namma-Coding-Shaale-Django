@@ -29,6 +29,14 @@ urlpatterns = [
     path('order/status', views.payment_status, name='payment_status'),
     path('verify/certificate', views.show_certificate, name='show_certificate'),
 
+    # Blog URLs
+    path('blog/', views.blog_list, name='blog_list'),
+    path('blog/create/', views.blog_create, name='blog_create'),
+    path('blog/<str:post_id>/', views.blog_detail, name='blog_detail'),
+    path('blog/edit/<str:post_id>/', views.blog_update, name='blog_update'),
+    path('blog/delete/<str:post_id>/', views.blog_delete, name='blog_delete'),
+    path('my-blogs/', views.my_blogs, name='my_blogs'),
+
 
     path('terms-and-conditions', views.terms_and_conditions, name='terms_and_conditions'),
     path('privacy-policy', views.privacy_policy, name='privacy_policy'),
