@@ -231,24 +231,73 @@ def complete_profile(request):
     entered_number = ''
 
     if request.method == 'POST':
-        entered_number = request.POST.get('mobile_number', '').strip()
+        # Extract data from POST
+        mobile_number = request.POST.get('mobile_number', '').strip()
+        birth_date = request.POST.get('birth_date')
+        gender = request.POST.get('gender')
+        location = request.POST.get('location')
+        bio = request.POST.get('bio')
         
-        # Manual Validation
-        if not entered_number:
+        college_name = request.POST.get('college_name')
+        college_university = request.POST.get('college_university')
+        degree = request.POST.get('degree')
+        branch = request.POST.get('branch')
+        year_of_study = request.POST.get('year_of_study')
+        graduation_year = request.POST.get('graduation_year')
+        enrollment_number = request.POST.get('enrollment_number')
+        cgpa = request.POST.get('cgpa')
+        
+        linkedin_url = request.POST.get('linkedin_url')
+        twitter_handle = request.POST.get('twitter_handle')
+        website = request.POST.get('website')
+        
+        # Basic Validation
+        if not mobile_number:
             error_message = "Mobile number is required."
-        elif not entered_number.isdigit():
+        elif not mobile_number.isdigit():
             error_message = "Mobile number must contain digits only."
-        elif len(entered_number) < 10:
+        elif len(mobile_number) < 10:
             error_message = "Please enter a valid 10-digit number."
         else:
-            # Save and Finish
-            # request.user.profile.mobile_number = entered_number
-            # request.user.profile.save()
-            return redirect('my-courses')
+            try:
+                # Create or Update UserProfile
+                # We import UserProfile here to avoid circular imports if any, 
+                # but better to put it at top level if possible. 
+                # For now, inline import to be safe with existing structure.
+                from .models import UserProfile
+                
+                profile, created = UserProfile.objects.get_or_create(user=request.user)
+                
+                profile.mobile_number = mobile_number
+                profile.birth_date = birth_date if birth_date else None
+                profile.gender = gender
+                profile.location = location
+                profile.bio = bio
+                
+                profile.college_name = college_name
+                profile.college_university = college_university
+                profile.degree = degree
+                profile.branch = branch
+                profile.year_of_study = year_of_study if year_of_study else None
+                profile.graduation_year = graduation_year if graduation_year else None
+                profile.enrollment_number = enrollment_number
+                profile.cgpa = cgpa if cgpa else None
+                
+                profile.linkedin_url = linkedin_url
+                profile.twitter_handle = twitter_handle
+                profile.website = website
+                
+                profile.save()
+                
+                return redirect('my-courses')
+            
+            except Exception as e:
+                logger.error(f"Error saving profile for {request.user.username}: {e}", exc_info=True)
+                error_message = "An error occurred while saving your profile. Please try again."
 
     return render(request, 'onboarding_form.html', {
         'error_message': error_message,
-        'entered_number': entered_number
+        'user': request.user
     })
 
 @trace_span
@@ -289,8 +338,14 @@ def login(request):
                     if 'otp_email' in request.session:
                         del request.session['otp_email']
                     
-                    #check if First and Last name exists
-                    if request.user.first_name == "" or request.user.last_name == "":
+                    
+                    # Check if profile exists and has mobile number
+                    try:
+                        has_mobile = hasattr(request.user, 'profile') and request.user.profile.mobile_number
+                    except Exception:
+                        has_mobile = False
+
+                    if request.user.first_name == "" or not has_mobile:
                         logger.info(f"Redirecting user {email} to onboarding form")
                         return render(request, "onboarding_form.html")
                     return redirect("my-courses")
@@ -411,10 +466,54 @@ def profile_page(request, section=None):
     # --- Profile Update Logic ---
     if request.method == "POST":
         logger.info(f"User {request.user.id} updating profile details")
-        user.first_name = request.POST.get('firstName', user.first_name).strip().title()
-        user.last_name = request.POST.get('lastName', user.last_name).strip().title()
-        user.email = request.POST.get('email', user.email).lower().strip()
-        user.save()
+        
+        # 1. Update User Model
+        # user.first_name = request.POST.get('firstName', user.first_name).strip().title()
+        # user.last_name = request.POST.get('lastName', user.last_name).strip().title()
+        # user.email = request.POST.get('email', user.email).lower().strip()
+        # user.save()
+
+        # 2. Update UserProfile Model
+        from .models import UserProfile
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Fields from profile-page.html
+        # mobile_number, birth_date, gender, location, bio
+        # college_name, college_university, degree, branch, year_of_study, graduation_year, enrollment_number, cgpa
+        # linkedin_url, twitter_handle
+        
+        profile.mobile_number = request.POST.get('mobile_number', profile.mobile_number)
+        
+        dob = request.POST.get('birth_date')
+        if dob: profile.birth_date = dob
+        
+        profile.gender = request.POST.get('gender', profile.gender)
+        profile.location = request.POST.get('location', profile.location)
+        profile.bio = request.POST.get('bio', profile.bio)
+        
+        profile.college_name = request.POST.get('college_name', profile.college_name)
+        profile.college_university = request.POST.get('college_university', profile.college_university)
+        profile.degree = request.POST.get('degree', profile.degree)
+        profile.branch = request.POST.get('branch', profile.branch)
+        
+        yos = request.POST.get('year_of_study')
+        if yos: profile.year_of_study = yos
+        
+        grad_year = request.POST.get('graduation_year')
+        if grad_year: profile.graduation_year = grad_year
+        
+        profile.enrollment_number = request.POST.get('enrollment_number', profile.enrollment_number)
+        
+        cgpa_val = request.POST.get('cgpa')
+        if cgpa_val: profile.cgpa = cgpa_val
+        
+        profile.linkedin_url = request.POST.get('linkedin_url', profile.linkedin_url)
+        profile.twitter_handle = request.POST.get('twitter_handle', profile.twitter_handle)
+        
+        profile.save()
+        
+        messages.success(request, "Profile updated successfully!")
+        return redirect('profile', section=section if section else 'details')
 
     # --- Fetching Course Enrollment Data ---
     # We fetch all enrollments and their related course data in one go
@@ -778,12 +877,16 @@ def problem_solver(request, course_id):
 @login_required
 def my_courses(request):
     logger.info(f"User {request.user.id} accessed 'My Courses'")
-    #check eligibility for onboarding
-    #check if First and Last name exists
-    # if request.user.first_name == "" or request.user.last_name == "" :
-    #     return render(request, "onboarding_form.html", context = {
-    #         "user" : request.user
-    #     })
+    # Check eligibility for onboarding
+    try:
+        has_mobile = hasattr(request.user, 'profile') and request.user.profile.mobile_number
+    except Exception:
+        has_mobile = False
+
+    if not has_mobile:
+        return render(request, "onboarding_form.html", context = {
+            "user" : request.user
+        })
 
 
     # Get all enrolled courses with progress annotations

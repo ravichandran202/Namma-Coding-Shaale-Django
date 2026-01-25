@@ -256,3 +256,29 @@ class Order(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    mobile_number = models.CharField(max_length=15, blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other'), ('N', 'Prefer not to say')], default='N')
+    location = models.CharField(max_length=255, blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    
+    # College details
+    college_name = models.CharField(max_length=255, blank=True, null=True)
+    college_university = models.CharField(max_length=255, blank=True, null=True)
+    degree = models.CharField(max_length=100, blank=True, null=True)
+    branch = models.CharField(max_length=100, blank=True, null=True)
+    year_of_study = models.PositiveIntegerField(blank=True, null=True)
+    graduation_year = models.PositiveIntegerField(blank=True, null=True)
+    enrollment_number = models.CharField(max_length=50, blank=True, null=True)
+    cgpa = models.FloatField(blank=True, null=True)
+    
+    # Social Media
+    linkedin_url = models.URLField(blank=True, null=True)
+    twitter_handle = models.CharField(max_length=100, blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"

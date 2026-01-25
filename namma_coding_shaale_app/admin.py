@@ -77,3 +77,9 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Batch)
 class BatchAdmin(admin.ModelAdmin): 
     list_display = ('name', 'course', 'start_date', 'enrollment_end_date')
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'mobile_number', 'gender', 'location', 'college_name', 'year_of_study']
+    list_filter = ['gender', 'year_of_study', 'graduation_year']
+    search_fields = ['user__username', 'user__email', 'mobile_number', 'college_name']
