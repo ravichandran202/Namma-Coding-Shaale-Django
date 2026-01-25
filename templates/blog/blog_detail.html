@@ -523,7 +523,7 @@
                     </a>
 
                     <!-- Author Controls -->
-                    {% if request.user.username == post.author %}
+                    {% if request.user == post.author %}
                     <div class="author-controls mb-4">
                         <a href="{% url 'blog_update' post.id %}?next={{ request.path }}"
                             class="btn btn-sm btn-outline-primary" title="Edit Story">
@@ -543,11 +543,12 @@
                     <header class="article-header">
                         <h1 class="article-title">{{ post.title }}</h1>
                         <div class="author-meta">
-                            <img src="https://ui-avatars.com/api/?name={{ post.author_name }}&background=0f172a&color=fff&size=96"
-                                class="author-pic" alt="{{ post.author_name }}">
+                            <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=0f172a&color=fff&size=96"
+                                class="author-pic" alt="{{ post.author.get_full_name|default:post.author.username }}">
                             <div class="meta-text">
-                                <span class="meta-name">{{ post.author_name }}</span>
-                                <span class="meta-dt">{{ post.date_str }} · 5 min read</span>
+                                <span class="meta-name">{{ post.author.get_full_name|default:post.author.username
+                                    }}</span>
+                                <span class="meta-dt">{{ post.created_at|date:"F d, Y" }} · 5 min read</span>
                             </div>
                         </div>
                     </header>
@@ -574,7 +575,7 @@
                             <a href="{% url 'blog_detail' recent.id %}" class="recent-post-card">
                                 <h5 class="recent-post-title">{{ recent.title }}</h5>
                                 <div class="recent-post-meta">
-                                    <span class="text-muted">{{ recent.date_str }}</span>
+                                    <span class="text-muted">{{ recent.created_at|date:"F d, Y" }}</span>
                                 </div>
                             </a>
                             {% empty %}

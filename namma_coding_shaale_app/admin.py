@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OTP, Course, Problem, Content, CourseContent, UserCourse, ProblemSubmission, UserContentProgress, QuizSubmission
+from .models import OTP, Course, Problem, Content, CourseContent, UserCourse, ProblemSubmission, UserContentProgress, QuizSubmission, Blog
 
 from django.contrib import admin
 from .models import *
@@ -83,3 +83,10 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'mobile_number', 'gender', 'location', 'college_name', 'year_of_study']
     list_filter = ['gender', 'year_of_study', 'graduation_year']
     search_fields = ['user__username', 'user__email', 'mobile_number', 'college_name']
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'created_at', 'updated_at']
+    list_filter = ['created_at', 'author']
+    search_fields = ['title', 'content', 'author__username']
+    readonly_fields = ['created_at', 'updated_at']
