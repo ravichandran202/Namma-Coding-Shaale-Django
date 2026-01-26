@@ -2204,6 +2204,7 @@ def student_dashboard(request, username):
 
     return render(request, "student_dashboard.html", context)
 
+@trace_span
 def student_report(request, username):
     logger.info(f"Student report accessed for user: {username} - Fixed Version Loaded")
     try:
@@ -2319,3 +2320,133 @@ def student_report(request, username):
     }
     
     return render(request, "student_report.html", context)
+
+@trace_span
+def calculate_leaderboard_data(timeframe='overall'):
+    # Fetch all non-staff users
+    # In a real app with millions of users, this would be optimized with aggregation queries.
+    # For now, we iterate as per the request context and typical scale.
+    users = User.objects.filter(is_staff=False)
+    leaderboard_data = []
+
+    now = timezone.now()
+    start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    for user in users:
+        points = 0
+        
+        # --- Filters for timeframe ---
+        date_filter_submission = Q()
+        date_filter_progress = Q()
+        date_filter_quiz = Q()
+        date_filter_access = Q() # For active days via last_accessed
+        
+        if timeframe == 'monthly':
+            date_filter_submission = Q(submitted_at__gte=start_of_month)
+            date_filter_progress = Q(completed_at__gte=start_of_month)
+            date_filter_quiz = Q(completed_at__gte=start_of_month) # QuizSubmission class has completed_at
+            # last_accessed is a single field that updates constantly. 
+            # We can only count it if it falls in this month (which means user was active recently).
+            # But this is imperfect for historical monthly data. 
+            # Ideally we'd have an ActivityLog. 
+            # For now, we use what we have: if last_accessed is this month, it contributes a day.
+            date_filter_access = Q(last_accessed__gte=start_of_month)
+
+        # 1. Text Content: 5 points
+        text_count = UserContentProgress.objects.filter(
+            user=user, 
+            is_completed=True, 
+            content__type='TEXT'
+        ).filter(date_filter_progress).count()
+        points += text_count * 5
+
+        # 2. Quiz Content: 10 points
+        # Using QuizSubmission for passed quizzes
+        quiz_count = QuizSubmission.objects.filter(
+            user=user, 
+            passed=True
+        ).filter(date_filter_quiz).count()
+        points += quiz_count * 10
+
+        # 3. Problems Content (easy, medium, hard): 10/20/30 points
+        # Only count SOLVED problems. Avoid duplicates (same problem solved multiple times).
+        # We need unique problem IDs.
+        solved_submissions = ProblemSubmission.objects.filter(
+            user=user, 
+            status='SOLVED'
+        ).filter(date_filter_submission).select_related('problem')
+        
+        # Deduplicate by problem ID
+        unique_solved = {}
+        for sub in solved_submissions:
+            if sub.problem.id not in unique_solved:
+                unique_solved[sub.problem.id] = sub.problem.difficulty
+
+        for pid, difficulty in unique_solved.items():
+            diff_upper = difficulty.upper()
+            if diff_upper == 'EASY':
+                points += 10
+            elif diff_upper == 'MEDIUM':
+                points += 20
+            elif diff_upper == 'HARD':
+                points += 30
+
+        # 4. User Streak / Active Days: 5 points per day
+        # Collect unique dates from submissions, completions, and last_accessed
+        
+        # Submissions
+        sub_dates = ProblemSubmission.objects.filter(
+            user=user
+        ).filter(date_filter_submission).values_list('submitted_at__date', flat=True)
+        
+        # Completions
+        comp_dates = UserContentProgress.objects.filter(
+            user=user,
+            is_completed=True
+        ).filter(date_filter_progress).values_list('completed_at__date', flat=True)
+        
+        # Last Accessed (Only one date per content-user pair)
+        acc_dates = UserContentProgress.objects.filter(
+            user=user
+        ).filter(date_filter_access).values_list('last_accessed__date', flat=True)
+        
+        unique_dates = set(sub_dates) | set(comp_dates) | set(acc_dates)
+        # Filter None values just in case
+        valid_dates = {d for d in unique_dates if d is not None}
+        
+        active_days = len(valid_dates)
+        points += active_days * 5
+
+        # --- Prepare Data ---
+        leaderboard_data.append({
+            'user': user,
+            'username': user.username,
+            'name': user.get_full_name() or user.username,
+            'points': points,
+            'avatar_url': f"https://i.pravatar.cc/150?u={user.id}", # Consistent avatar based on ID
+            'rank': 0
+        })
+
+    # Sort users by points (Desc)
+    leaderboard_data.sort(key=lambda x: x['points'], reverse=True)
+
+    # Assign Ranks
+    for i, data in enumerate(leaderboard_data):
+        data['rank'] = i + 1
+
+    # Return top 10
+    return leaderboard_data[:10]
+
+@trace_span
+def leaderboard(request):
+    logger.info(f"Leaderboard accessed by {request.user.username if request.user.is_authenticated else 'Guest'}")
+    
+    monthly_leaders = calculate_leaderboard_data('monthly')
+    overall_leaders = calculate_leaderboard_data('overall')
+    
+    context = {
+        'monthly_leaders': monthly_leaders,
+        'overall_leaders': overall_leaders
+    }
+    return render(request, 'leaderboard.html', context)
+

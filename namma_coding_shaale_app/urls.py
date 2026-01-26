@@ -51,5 +51,6 @@ urlpatterns = [
 
     # Student Dashboard
     path("dashboard/<str:username>/", views.student_dashboard, name="student_dashboard"),
-    path("dashboard/<str:username>/report/", views.student_report, name="student_report")
+    path("dashboard/<str:username>/report/", views.student_report, name="student_report"),
+    path("leaderboard/", views.leaderboard, name="leaderboard")
 ]
