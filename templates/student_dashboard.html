@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard | {{ profile_user.first_name|default:profile_user.username }}</title>
 
-    <!-- Bootstrap and Fonts (Shared with other pages) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
@@ -22,10 +21,12 @@
         :root {
             --primary: #2563eb;
             --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
             --secondary: #10b981;
             --dark: #1e293b;
             --light: #f8fafc;
             --gray: #64748b;
+            --gray-light: #e2e8f0;
             --border-radius: 12px;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -35,47 +36,169 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--light);
             color: var(--dark);
+            /* Prevent horizontal scroll on mobile */
+            overflow-x: hidden;
         }
 
-        /* Navbar (Condensed version of existing) */
+        /* --- NAVBAR STYLES (Strictly Followed Reference) --- */
         .navbar {
             padding: 1rem 0;
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 0;
+            background: rgba(15, 23, 42, 0.95);
         }
 
         .navbar-brand {
-            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
             color: white !important;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .brand-text {
+            font-family: 'Playfair Display', serif;
+            margin: 0 0.5rem;
+        }
+
+        .brand-highlight {
+            color: var(--primary-light);
+            font-family: 'Inter', sans-serif;
             font-weight: 700;
         }
 
         .nav-link {
-            color: rgba(255, 255, 255, 0.8) !important;
             font-weight: 500;
+            color: rgba(255, 255, 255, 0.8) !important;
+            margin: 0 0.25rem;
+            padding: 0.75rem 1.25rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .nav-link:hover {
             color: white !important;
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Dashboard Specifics */
+        .nav-link.active {
+            color: white !important;
+            background: rgba(37, 99, 235, 0.15);
+        }
+
+        /* Desktop active indicator line */
+        .nav-link.active:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white !important;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
+            color: white;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* --- MOBILE NAVIGATION FIX (Reference) --- */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                padding: 1rem;
+                border-radius: 12px;
+                margin-top: 1rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-link {
+                margin: 0.25rem 0;
+                padding: 1rem !important;
+                border-radius: 8px;
+            }
+
+            .nav-link.active:before {
+                display: none;
+            }
+
+            .nav-link.active {
+                background: rgba(37, 99, 235, 0.2);
+            }
+
+            .btn-premium {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navbar-nav {
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        /* --- DASHBOARD CONTENT STYLES --- */
         .dashboard-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 8rem 1.5rem 4rem;
-            /* Top padding for fixed navbar */
         }
 
-        /* Simple & Premium Profile Header */
         .profile-header-simple {
-            background: #ffffff;
+            /* background: #ffffff; */
             border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-            /* Softer shadow */
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            /* box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); */
+            /* border: 1px solid rgba(226, 232, 240, 0.8); */
             margin-bottom: 3rem;
             position: relative;
             overflow: hidden;
@@ -85,16 +208,21 @@
             transition: all 0.3s ease;
         }
 
-        /* Responsive override handled by Bootstrap classes, but we ensure flex wrap */
         @media (max-width: 768px) {
             .profile-header-simple {
                 flex-direction: column;
                 text-align: center;
                 padding: 2rem 1.5rem;
             }
-        }
 
-        /* Left Accent Bar for pop */
+            .dashboard-container {
+                padding-top: 6rem;
+                /* Less top padding on mobile */
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+/* 
         .profile-header-simple::before {
             content: '';
             position: absolute;
@@ -103,7 +231,7 @@
             bottom: 0;
             width: 6px;
             background: linear-gradient(to bottom, #2563eb, #06b6d4);
-        }
+        } */
 
         .avatar-simple {
             width: 110px;
@@ -123,71 +251,11 @@
 
         .profile-name-simple {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Revert to clean sans-serif */
             font-weight: 700;
             font-size: 2rem;
             color: #1e293b;
             margin-bottom: 0.25rem;
             line-height: 1.1;
-        }
-
-        .profile-badges .badge {
-            font-size: 0.75rem;
-            padding: 0.5em 1em;
-        }
-
-        .profile-details {
-            padding-top: 10px;
-        }
-
-        .profile-name {
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            font-size: 2.5rem;
-            line-height: 1.2;
-            color: #0f172a;
-        }
-
-        .profile-username {
-            font-size: 1.1rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .avatar-circle {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary), #4f46e5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            font-weight: 700;
-            flex-shrink: 0;
-            border: 6px solid white;
-            box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        .profile-info h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            font-size: 2.25rem;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .profile-badges .badge {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-right: 0.5rem;
         }
 
         /* Stats Cards */
@@ -196,6 +264,26 @@
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
+        }
+
+        /* Mobile adjustment for stats to be 2 per row on smaller screens */
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            .stat-icon {
+                font-size: 2rem;
+            }
         }
 
         .stat-card {
@@ -237,7 +325,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Charts & Activity */
         .chart-card {
             background: white;
             padding: 1.5rem;
@@ -265,50 +352,6 @@
             padding-bottom: 1rem;
         }
 
-        .heatmap-grid {
-            display: grid;
-            grid-template-rows: repeat(7, 1fr);
-            /* 7 Days of week */
-            grid-auto-flow: column;
-            /* Fill columns (weeks) first */
-            gap: 4px;
-            width: max-content;
-        }
-
-        .day-cell {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-            background-color: #ebedf0;
-        }
-
-        .day-cell.active-1 {
-            background-color: #93c5fd;
-        }
-
-        /* Low */
-        .day-cell.active-2 {
-            background-color: #3b82f6;
-        }
-
-        /* Med */
-        .day-cell.active-3 {
-            background-color: #1e40af;
-        }
-
-        /* High */
-
-        .heatmap-legend {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-top: 0.5rem;
-            justify-content: flex-end;
-        }
-
-        /* Blogs List */
         .blog-item {
             display: flex;
             gap: 1rem;
@@ -456,7 +499,6 @@
             color: #333 !important;
         }
 
-        /* Flatten Charts & Stats */
         body.printing-mode .stat-value {
             color: #000 !important;
             font-size: 2rem !important;
@@ -466,7 +508,6 @@
             color: #555 !important;
         }
 
-        /* Premium Card Override for Print */
         body.printing-mode .course-card-premium {
             background: white !important;
             border: 1px solid #ccc !important;
@@ -489,7 +530,6 @@
             background: #eee !important;
         }
 
-        /* Adjust Grid for PDF (A4) */
         body.printing-mode .stats-grid {
             grid-template-columns: repeat(4, 1fr) !important;
             gap: 15px !important;
@@ -499,41 +539,51 @@
 
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                &lt; ನಮ್ಮ <span class="text-primary fw-bold">CODING</span> ಶಾಲೆ /&gt;
+                &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'my-courses' %}">My Courses</a></li>
                     <li class="nav-item">
-                        {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'profile' 'details' %}">Profile</a>
-                        {% else %}
-                        <a class="nav-link btn btn-primary px-3 text-white ms-2" href="{% url 'login' %}">Login</a>
-                        {% endif %}
                     </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}" aria-current="page">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link" href="{% url 'my-courses' %}">
+                            <i class="fas fa-graduation-cap me-1"></i> My Courses
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link active" href="{% url 'profile' 'details' %}">
+                            <i class="fas fa-user me-1"></i> Profile
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-premium" href="{% url 'login' %}">
+                            <i class="fas fa-gem me-1"></i> Login Now
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-
     <div class="dashboard-container">
-        <!-- User Header -->
-        <!-- User Header (Simple & Responsive) -->
         <div class="profile-header-simple">
-            <!-- Avatar -->
             <div class="avatar-simple">
                 {{ profile_user.first_name|first|upper }}{{ profile_user.last_name|first|upper }}
             </div>
 
-            <!-- Content -->
             <div class="flex-grow-1 w-100">
                 <div class="row align-items-center">
                     <div class="col-md-8">
@@ -582,58 +632,49 @@
             </div>
         </div>
 
-        <!-- 4 Key Stats -->
         <div class="stats-grid mb-3">
-            <!-- Active Days -->
             <div class="stat-card">
                 <i class="fas fa-fire stat-icon text-danger"></i>
                 <div class="stat-value text-danger">{{ active_days_count }}</div>
                 <div class="stat-label">Active Days</div>
             </div>
 
-            <!-- Problems Solved -->
             <div class="stat-card">
                 <i class="fas fa-code stat-icon text-success"></i>
                 <div class="stat-value text-success">{{ solved_problems_count }}</div>
                 <div class="stat-label">Problems Solved</div>
             </div>
 
-            <!-- Content Completed -->
             <div class="stat-card">
                 <i class="fas fa-book-open stat-icon text-info"></i>
                 <div class="stat-value text-info">{{ completed_contents_count }}</div>
                 <div class="stat-label">Lessons Completed</div>
             </div>
 
-            <!-- Rank / Blogs written -->
             <div class="stat-card">
                 <i class="fas fa-pen-nib stat-icon text-warning"></i>
                 <div class="stat-value text-warning">{{ blogs.count }}</div>
                 <div class="stat-label">Blogs Written</div>
             </div>
 
-            <!-- Accuracy -->
             <div class="stat-card">
                 <i class="fas fa-crosshairs stat-icon text-primary"></i>
                 <div class="stat-value text-primary">{{ accuracy_rate }}%</div>
                 <div class="stat-label">Submission Accuracy</div>
             </div>
 
-            <!-- Current Streak -->
             <div class="stat-card">
                 <i class="fas fa-fire-alt stat-icon text-danger"></i>
                 <div class="stat-value text-danger">{{ current_streak }} Days</div>
                 <div class="stat-label">Current Streak</div>
             </div>
 
-            <!-- Longest Streak -->
             <div class="stat-card">
                 <i class="fas fa-trophy stat-icon text-warning"></i>
                 <div class="stat-value text-warning">{{ longest_streak }} Days</div>
                 <div class="stat-label">Longest Streak</div>
             </div>
 
-            <!-- Quizzes Solved -->
             <div class="stat-card">
                 <i class="fas fa-question-circle stat-icon text-secondary"></i>
                 <div class="stat-value text-secondary">{{ quizzes_solved_count }}</div>
@@ -641,14 +682,12 @@
             </div>
         </div>
 
-        <!-- Row 1: Activity Log (Full Width) -->
         <div class="row g-3 mb-3">
             <div class="col-12">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-calendar-alt text-primary"></i> Activity Log (Last 30
                         Days)</h4>
 
-                    <!-- Calendar Header -->
                     <div class="d-flex justify-content-between mb-2 px-1 text-muted small fw-bold text-uppercase">
                         <div style="width: 14.28%; text-align: center;">Mon</div>
                         <div style="width: 14.28%; text-align: center;">Tue</div>
@@ -660,42 +699,41 @@
                     </div>
 
                     <div class="heatmap-container" id="heatmapDataContainer">
-                        <!-- JS GENERATED -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Row 2: Charts (Trend, Difficulty, Languages) -->
         <div class="row g-3 mb-3">
-            <!-- Submission Trend -->
             <div class="col-md-6 col-lg-4">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-chart-line text-primary"></i> Problems Solved (30d)</h4>
-                    <canvas id="trendChart"></canvas>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <!-- Difficulty Chart -->
             <div class="col-md-6 col-lg-4">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-layer-group text-primary"></i> Difficulty</h4>
-                    <canvas id="difficultyChart"></canvas>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="difficultyChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <!-- Language Chart -->
             <div class="col-md-6 col-lg-4">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-code text-primary"></i> Languages</h4>
-                    <canvas id="languageChart"></canvas>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="languageChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Row 3: Lists (Solved Recently, Recent Blogs) -->
         <div class="row g-3 mb-3">
-            <!-- Recent Solved Problems -->
             <div class="col-lg-6">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-check-circle text-success"></i> Solved recently</h4>
@@ -724,7 +762,6 @@
                 </div>
             </div>
 
-            <!-- Recent Blogs -->
             <div class="col-lg-6">
                 <div class="chart-card h-100">
                     <h4 class="section-title"><i class="fas fa-rss text-primary"></i> Recent Blogs</h4>
@@ -750,7 +787,6 @@
             </div>
         </div>
 
-        <!-- Premium Course Progress Section -->
         <div class="row g-3 mb-4">
             <div class="col-12">
                 <h4 class="section-title mb-4"><i class="fas fa-graduation-cap text-primary"></i> Course Progress</h4>
@@ -758,7 +794,6 @@
                     {% for course in course_progress_data %}
                     <div class="col-md-6 col-lg-4">
                         <div class="course-card-premium p-4">
-                            <!-- Background Decoration -->
                             <div class="card-glow"></div>
 
                             <div class="d-flex justify-content-between align-items-start mb-4 position-relative">
@@ -806,7 +841,15 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
         // Data from Django
         const difficultyData = JSON.parse('{{ difficulty_data|safe }}');
         const languageData = JSON.parse('{{ language_data|safe }}');
@@ -829,6 +872,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: { position: 'bottom' }
                 }
@@ -853,6 +897,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: { beginAtZero: true, grid: { display: false } },
                     x: { grid: { display: false } }
@@ -880,6 +925,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: { beginAtZero: true, ticks: { precision: 0 } },
                     x: { display: false } // Hide x labels for cleanliness in small card

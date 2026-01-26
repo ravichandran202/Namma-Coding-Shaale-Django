@@ -1041,17 +1041,19 @@
                     </div>
 
                     <div class="leaderboard-list-card">
-                        {% for user in monthly_leaders|slice:"3:" %}
-                        <div class="list-row">
-                            <div class="list-rank">{{ user.rank }}</div>
-                            <div class="list-avatar">
-                                {{ user.name|first }}
+                        {% for user in monthly_leaders %}
+                        <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                            <div class="list-row">
+                                <div class="list-rank">{{ user.rank }}</div>
+                                <div class="list-avatar">
+                                    {{ user.name|first }}
+                                </div>
+                                <div class="list-info">
+                                    <h5 class="list-name">{{ user.name }}</h5>
+                                </div>
+                                <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
                             </div>
-                            <div class="list-info">
-                                <h5 class="list-name">{{ user.name }}</h5>
-                            </div>
-                            <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
-                        </div>
+                        </a>
                         {% endfor %}
                     </div>
                     {% else %}
@@ -1112,8 +1114,9 @@
                     </div>
 
                     <div class="leaderboard-list-card">
-                        {% for user in overall_leaders|slice:"3:" %}
-                        <div class="list-row">
+                        {% for user in overall_leaders %}
+                       <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                         <div class="list-row">
                             <div class="list-rank">{{ user.rank }}</div>
                             <div class="list-avatar">
                                 {{ user.name|first }}
@@ -1123,6 +1126,7 @@
                             </div>
                             <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
                         </div>
+                       </a>
                         {% endfor %}
                     </div>
                     {% else %}

@@ -277,6 +277,21 @@
                                     </a>
                                 </div>
                             </div>
+
+                            <div class="row g-2 mt-2">
+                                <div class="col-6">
+                                    <a href="{% url 'leaderboard' %}" class="glass-btn">
+                                        <i class="fas fa-trophy mb-2 fs-5 text-warning"></i>
+                                        <small class="fw-bold">Leaderboard</small>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{% url 'student_dashboard' user.username %}" class="glass-btn">
+                                        <i class="fas fa-chart-line mb-2 fs-5 text-success"></i>
+                                        <small class="fw-bold">Dashboard</small>
+                                    </a>
+                                </div>
+                            </div>
                             
                             <hr style="opacity: 0.1;">
                             
@@ -288,6 +303,8 @@
                                     <span class="badge bg-warning text-dark rounded-pill px-3">Student</span>
                                 {% endif %}
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>
