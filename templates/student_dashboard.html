@@ -1,0 +1,996 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | {{ profile_user.first_name|default:profile_user.username }}</title>
+
+    <!-- Bootstrap and Fonts (Shared with other pages) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Navbar (Condensed version of existing) */
+        .navbar {
+            padding: 1rem 0;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: white !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        /* Dashboard Specifics */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 1.5rem 4rem;
+            /* Top padding for fixed navbar */
+        }
+
+        /* Simple & Premium Profile Header */
+        .profile-header-simple {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            /* Softer shadow */
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive override handled by Bootstrap classes, but we ensure flex wrap */
+        @media (max-width: 768px) {
+            .profile-header-simple {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Left Accent Bar for pop */
+        .profile-header-simple::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, #2563eb, #06b6d4);
+        }
+
+        .avatar-simple {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #2563eb;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .profile-name-simple {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            /* Revert to clean sans-serif */
+            font-weight: 700;
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+            line-height: 1.1;
+        }
+
+        .profile-badges .badge {
+            font-size: 0.75rem;
+            padding: 0.5em 1em;
+        }
+
+        .profile-details {
+            padding-top: 10px;
+        }
+
+        .profile-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: #0f172a;
+        }
+
+        .profile-username {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 6px solid white;
+            box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            font-size: 2.25rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-badges .badge {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2.5rem;
+            opacity: 0.1;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Charts & Activity */
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: 100%;
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Heatmap Grid */
+        .heatmap-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-rows: repeat(7, 1fr);
+            /* 7 Days of week */
+            grid-auto-flow: column;
+            /* Fill columns (weeks) first */
+            gap: 4px;
+            width: max-content;
+        }
+
+        .day-cell {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background-color: #ebedf0;
+        }
+
+        .day-cell.active-1 {
+            background-color: #93c5fd;
+        }
+
+        /* Low */
+        .day-cell.active-2 {
+            background-color: #3b82f6;
+        }
+
+        /* Med */
+        .day-cell.active-3 {
+            background-color: #1e40af;
+        }
+
+        /* High */
+
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        /* Blogs List */
+        .blog-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .blog-item:hover {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .blog-date {
+            min-width: 60px;
+            text-align: center;
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .date-day {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+
+        .date-month {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+
+        .blog-info h5 {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .blog-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Premium Course Card */
+        .course-card-premium {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .course-card-premium:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-glow {
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .course-icon-bg {
+            background: rgba(255, 255, 255, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Report / Print Mode Styles --- */
+        body.printing-mode {
+            background-color: white !important;
+        }
+
+        body.printing-mode .navbar,
+        body.printing-mode .btn,
+        body.printing-mode .card-glow {
+            display: none !important;
+        }
+
+        body.printing-mode .dashboard-container {
+            padding: 20px !important;
+            max-width: 100% !important;
+        }
+
+        body.printing-mode .profile-header,
+        body.printing-mode .stat-card,
+        body.printing-mode .chart-card,
+        body.printing-mode .course-card-premium {
+            box-shadow: none !important;
+            border: 1px solid #ccc !important;
+            border-radius: 0 !important;
+            background: white !important;
+            color: black !important;
+            margin-bottom: 20px !important;
+        }
+
+        body.printing-mode .profile-header {
+            border: none !important;
+            border-bottom: 2px solid #000 !important;
+            padding: 0 0 20px 0 !important;
+            margin-bottom: 40px !important;
+        }
+
+        body.printing-mode .profile-header::before {
+            display: none;
+        }
+
+        body.printing-mode .avatar-circle {
+            border: 1px solid #333 !important;
+            box-shadow: none !important;
+            color: #333 !important;
+            background: #f0f0f0 !important;
+        }
+
+        body.printing-mode .section-title {
+            color: #000 !important;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        body.printing-mode i {
+            color: #333 !important;
+        }
+
+        /* Flatten Charts & Stats */
+        body.printing-mode .stat-value {
+            color: #000 !important;
+            font-size: 2rem !important;
+        }
+
+        body.printing-mode .stat-label {
+            color: #555 !important;
+        }
+
+        /* Premium Card Override for Print */
+        body.printing-mode .course-card-premium {
+            background: white !important;
+            border: 1px solid #ccc !important;
+        }
+
+        body.printing-mode .course-card-premium h5,
+        body.printing-mode .course-card-premium span {
+            color: #000 !important;
+        }
+
+        body.printing-mode .text-white {
+            color: #000 !important;
+        }
+
+        body.printing-mode .text-white-50 {
+            color: #555 !important;
+        }
+
+        body.printing-mode .progress {
+            background: #eee !important;
+        }
+
+        /* Adjust Grid for PDF (A4) */
+        body.printing-mode .stats-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 15px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                &lt; ನಮ್ಮ <span class="text-primary fw-bold">CODING</span> ಶಾಲೆ /&gt;
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my-courses' %}">My Courses</a></li>
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'profile' 'details' %}">Profile</a>
+                        {% else %}
+                        <a class="nav-link btn btn-primary px-3 text-white ms-2" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- User Header -->
+        <!-- User Header (Simple & Responsive) -->
+        <div class="profile-header-simple">
+            <!-- Avatar -->
+            <div class="avatar-simple">
+                {{ profile_user.first_name|first|upper }}{{ profile_user.last_name|first|upper }}
+            </div>
+
+            <!-- Content -->
+            <div class="flex-grow-1 w-100">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="profile-name-simple">{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+                        <p class="text-secondary mb-2 fst-italic">@{{ profile_user.username }}</p>
+
+                        <p class="text-muted mb-3 small w-100" style="max-width: 600px;">
+                            {{ user_profile.bio|default:"Coding Enthusiast ready to learn and build!" }}
+                        </p>
+
+                        <div
+                            class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start mb-3 mb-md-0">
+                            {% if user_profile.college %}
+                            <span class="badge bg-light text-dark border"><i
+                                    class="fas fa-university me-1 text-warning"></i> {{ user_profile.college }}</span>
+                            {% endif %}
+                            {% if user_profile.location %}
+                            <span class="badge bg-light text-dark border"><i
+                                    class="fas fa-map-marker-alt me-1 text-danger"></i> {{ user_profile.location
+                                }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 text-center text-md-end">
+                        <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-end">
+                            {% if user_profile.linkedin_url %}
+                            <a href="{{ user_profile.linkedin_url }}"
+                                class="btn btn-outline-primary btn-sm rounded-pill px-3" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if user_profile.twitter_url %}
+                            <a href="{{ user_profile.twitter_url }}"
+                                class="btn btn-outline-info btn-sm rounded-pill px-3" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'student_report' profile_user.username %}" target="_blank"
+                                class="btn btn-dark btn-sm rounded-pill px-4 shadow-sm">
+                                <i class="fas fa-file-pdf me-2"></i> Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Key Stats -->
+        <div class="stats-grid mb-3">
+            <!-- Active Days -->
+            <div class="stat-card">
+                <i class="fas fa-fire stat-icon text-danger"></i>
+                <div class="stat-value text-danger">{{ active_days_count }}</div>
+                <div class="stat-label">Active Days</div>
+            </div>
+
+            <!-- Problems Solved -->
+            <div class="stat-card">
+                <i class="fas fa-code stat-icon text-success"></i>
+                <div class="stat-value text-success">{{ solved_problems_count }}</div>
+                <div class="stat-label">Problems Solved</div>
+            </div>
+
+            <!-- Content Completed -->
+            <div class="stat-card">
+                <i class="fas fa-book-open stat-icon text-info"></i>
+                <div class="stat-value text-info">{{ completed_contents_count }}</div>
+                <div class="stat-label">Lessons Completed</div>
+            </div>
+
+            <!-- Rank / Blogs written -->
+            <div class="stat-card">
+                <i class="fas fa-pen-nib stat-icon text-warning"></i>
+                <div class="stat-value text-warning">{{ blogs.count }}</div>
+                <div class="stat-label">Blogs Written</div>
+            </div>
+
+            <!-- Accuracy -->
+            <div class="stat-card">
+                <i class="fas fa-crosshairs stat-icon text-primary"></i>
+                <div class="stat-value text-primary">{{ accuracy_rate }}%</div>
+                <div class="stat-label">Submission Accuracy</div>
+            </div>
+
+            <!-- Current Streak -->
+            <div class="stat-card">
+                <i class="fas fa-fire-alt stat-icon text-danger"></i>
+                <div class="stat-value text-danger">{{ current_streak }} Days</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+
+            <!-- Longest Streak -->
+            <div class="stat-card">
+                <i class="fas fa-trophy stat-icon text-warning"></i>
+                <div class="stat-value text-warning">{{ longest_streak }} Days</div>
+                <div class="stat-label">Longest Streak</div>
+            </div>
+
+            <!-- Quizzes Solved -->
+            <div class="stat-card">
+                <i class="fas fa-question-circle stat-icon text-secondary"></i>
+                <div class="stat-value text-secondary">{{ quizzes_solved_count }}</div>
+                <div class="stat-label">Quizzes Solved</div>
+            </div>
+        </div>
+
+        <!-- Row 1: Activity Log (Full Width) -->
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-calendar-alt text-primary"></i> Activity Log (Last 30
+                        Days)</h4>
+
+                    <!-- Calendar Header -->
+                    <div class="d-flex justify-content-between mb-2 px-1 text-muted small fw-bold text-uppercase">
+                        <div style="width: 14.28%; text-align: center;">Mon</div>
+                        <div style="width: 14.28%; text-align: center;">Tue</div>
+                        <div style="width: 14.28%; text-align: center;">Wed</div>
+                        <div style="width: 14.28%; text-align: center;">Thu</div>
+                        <div style="width: 14.28%; text-align: center;">Fri</div>
+                        <div style="width: 14.28%; text-align: center;">Sat</div>
+                        <div style="width: 14.28%; text-align: center;">Sun</div>
+                    </div>
+
+                    <div class="heatmap-container" id="heatmapDataContainer">
+                        <!-- JS GENERATED -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Charts (Trend, Difficulty, Languages) -->
+        <div class="row g-3 mb-3">
+            <!-- Submission Trend -->
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-chart-line text-primary"></i> Problems Solved (30d)</h4>
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Difficulty Chart -->
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-layer-group text-primary"></i> Difficulty</h4>
+                    <canvas id="difficultyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Language Chart -->
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-code text-primary"></i> Languages</h4>
+                    <canvas id="languageChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Lists (Solved Recently, Recent Blogs) -->
+        <div class="row g-3 mb-3">
+            <!-- Recent Solved Problems -->
+            <div class="col-lg-6">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-check-circle text-success"></i> Solved recently</h4>
+                    <div class="d-flex flex-column gap-3">
+                        {% for problem in recent_solved_problems %}
+                        <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-2 text-success">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold"><a href="{{ problem.url }}"
+                                            class="text-decoration-none text-dark">{{ problem.title }}</a></h6>
+                                    <small class="text-muted">{{ problem.submitted_at|timesince }} ago</small>
+                                </div>
+                            </div>
+                            <span
+                                class="badge {% if problem.difficulty == 'hard' %}bg-danger{% elif problem.difficulty == 'medium' %}bg-warning{% else %}bg-success{% endif %} rounded-pill">
+                                {{ problem.difficulty|title }}
+                            </span>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center py-4">No problems solved yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Blogs -->
+            <div class="col-lg-6">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-rss text-primary"></i> Recent Blogs</h4>
+                    <div class="d-flex flex-column gap-2">
+                        {% for blog in blogs %}
+                        <a href="{% url 'blog_detail' blog.id %}" class="text-decoration-none text-dark">
+                            <div class="blog-item">
+                                <div class="blog-date">
+                                    <div class="date-day">{{ blog.created_at|date:"d" }}</div>
+                                    <div class="date-month">{{ blog.created_at|date:"M" }}</div>
+                                </div>
+                                <div class="blog-info">
+                                    <h5>{{ blog.title }}</h5>
+                                    <p>{{ blog.content|striptags|truncatechars:50 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-muted text-center py-4">No blogs written yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Course Progress Section -->
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <h4 class="section-title mb-4"><i class="fas fa-graduation-cap text-primary"></i> Course Progress</h4>
+                <div class="row g-3">
+                    {% for course in course_progress_data %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="course-card-premium p-4">
+                            <!-- Background Decoration -->
+                            <div class="card-glow"></div>
+
+                            <div class="d-flex justify-content-between align-items-start mb-4 position-relative">
+                                <div>
+                                    <span class="badge bg-white text-primary mb-2 shadow-sm">ENROLLED</span>
+                                    <h5 class="fw-bold text-white mb-1">{{ course.name }}</h5>
+                                </div>
+                                <div class="course-icon-bg">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                            </div>
+
+                            <div class="progress-section position-relative">
+                                <div class="d-flex justify-content-between text-white-50 small mb-1">
+                                    <span>Modules Completed</span>
+                                    <span class="text-white fw-bold">{{ course.module_progress }}%</span>
+                                </div>
+                                <div class="progress mb-3" style="height: 8px; background: rgba(255,255,255,0.1);">
+                                    <div class="progress-bar bg-warning" role="progressbar"
+                                        style="width: {{ course.module_progress }}%"></div>
+                                </div>
+
+                                <div class="d-flex justify-content-between text-white-50 small mb-1">
+                                    <span>Problems Solved</span>
+                                    <span class="text-white fw-bold">{{ course.problem_progress }}%</span>
+                                </div>
+                                <div class="progress" style="height: 8px; background: rgba(255,255,255,0.1);">
+                                    <div class="progress-bar bg-info" role="progressbar"
+                                        style="width: {{ course.problem_progress }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="text-center py-5 text-muted">
+                            <i class="fas fa-folder-open fa-3x mb-3 opacity-25"></i>
+                            <p>No active courses found.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data from Django
+        const difficultyData = JSON.parse('{{ difficulty_data|safe }}');
+        const languageData = JSON.parse('{{ language_data|safe }}');
+        const activeDates = new Set(JSON.parse('{{ heatmap_dates|safe }}'));
+        const trendLabels = JSON.parse('{{ trend_labels|safe }}');
+        const trendData = JSON.parse('{{ trend_data|safe }}');
+
+        // --- 1. Difficulty Chart (Doughnut) ---
+        const diffCtx = document.getElementById('difficultyChart').getContext('2d');
+        new Chart(diffCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Easy', 'Medium', 'Hard'],
+                datasets: [{
+                    data: [difficultyData.easy || 0, difficultyData.medium || 0, difficultyData.hard || 0],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // --- 2. Language Chart (Bar) ---
+        const langCtx = document.getElementById('languageChart').getContext('2d');
+        const langLabels = Object.keys(languageData);
+        const langValues = Object.values(languageData);
+
+        new Chart(langCtx, {
+            type: 'bar',
+            data: {
+                labels: langLabels,
+                datasets: [{
+                    label: 'Submissions',
+                    data: langValues,
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, grid: { display: false } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // --- 4. Trend Chart (Line) ---
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: trendLabels,
+                datasets: [{
+                    label: 'Problems Solved',
+                    data: trendData,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                    x: { display: false } // Hide x labels for cleanliness in small card
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // --- 3. Heatmap Generation (Last 90 Days - Calendar Grid) ---
+        function generateHeatmap() {
+            const container = document.getElementById('heatmapDataContainer');
+            container.innerHTML = ''; // Clear existing
+
+            const grid = document.createElement('div');
+            // Use CSS Grid for proper alignment
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+            grid.style.gap = '8px';
+
+            const today = new Date();
+            // Start from 29 days ago to include today as the 30th day
+            const daysToShow = 30;
+            const endDate = new Date(today);
+            const startDate = new Date(endDate);
+            startDate.setDate(endDate.getDate() - (daysToShow - 1));
+
+            // Find weekday of startDate (0 = Sun, 1 = Mon ... 6 = Sat)
+            let startDay = startDate.getDay();
+            // If we want Mon as start of week (1), convert Sun(0) to 7
+            let isoStartDay = startDay === 0 ? 7 : startDay;
+            // Empty cells needed = isoStartDay - 1 (since Mon is 1st col)
+            const emptyCells = isoStartDay - 1;
+
+            // Add Empty Cells
+            for (let i = 0; i < emptyCells; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+
+            // Iterate daysToShow
+            for (let i = 0; i < daysToShow; i++) {
+                const currentDate = new Date(startDate);
+                currentDate.setDate(startDate.getDate() + i);
+                const dateStr = currentDate.toISOString().split('T')[0];
+                const dayNum = currentDate.getDate();
+
+                // The Cell Wrapper (Layout)
+                const wrapper = document.createElement('div');
+                wrapper.className = 'd-flex flex-column align-items-center justify-content-center p-2 border rounded';
+                wrapper.style.minHeight = '50px';
+                wrapper.style.backgroundColor = activeDates.has(dateStr) ? '#dbeafe' : '#f8fafc'; // light blue or light gray
+                wrapper.style.border = activeDates.has(dateStr) ? '1px solid #93c5fd' : '1px solid #e2e8f0';
+
+                // Date Number
+                const dayLabel = document.createElement('span');
+                dayLabel.innerText = dayNum;
+                dayLabel.style.fontSize = '0.9rem';
+                dayLabel.style.fontWeight = 'bold';
+                dayLabel.style.color = activeDates.has(dateStr) ? '#1e40af' : '#64748b';
+
+                // Status indicator (dot)
+                if (activeDates.has(dateStr)) {
+                    const dot = document.createElement('div');
+                    dot.style.width = '6px';
+                    dot.style.height = '6px';
+                    dot.style.backgroundColor = '#2563eb';
+                    dot.style.borderRadius = '50%';
+                    dot.style.marginTop = '4px';
+                    wrapper.appendChild(dayLabel);
+                    wrapper.appendChild(dot);
+                } else {
+                    wrapper.appendChild(dayLabel);
+                }
+
+                // Tooltip
+                wrapper.title = currentDate.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+                grid.appendChild(wrapper);
+            }
+
+            container.appendChild(grid);
+        }
+
+        generateHeatmap();
+
+        // --- PDF Export Logic ---
+        function exportPDF() {
+            // Toggle Print Mode
+            document.body.classList.add('printing-mode');
+
+            const element = document.querySelector('.dashboard-container');
+            const opt = {
+                margin: 0.3,
+                filename: `{{ profile_user.username }}_Performance_Report.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Needs a small timeout for styles to apply before capture? 
+            // html2pdf usually runs async manually if chained, but .from() takes element state.
+            // Let's force a repaint or wait a tick.
+
+            setTimeout(() => {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    document.body.classList.remove('printing-mode');
+                });
+            }, 100);
+        }
+
+    </script>
+</body>
+
+</html>

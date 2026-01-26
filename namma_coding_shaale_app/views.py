@@ -1972,3 +1972,350 @@ def blog_delete(request, post_id):
     logger.info(f"Blog post deleted: {post_id} by {request.user.username}")
     messages.success(request, "Blog post deleted successfully!")
     return redirect("blog_list")
+
+@trace_span
+def student_dashboard(request, username):
+    logger.info(f"Student dashboard accessed for user: {username}")
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return HttpResponseNotFound("User not found")
+
+    # 1. Total Problems Solved
+    solved_problems_count = ProblemSubmission.objects.filter(
+        user=user, 
+        status='SOLVED'
+    ).values('problem').distinct().count()
+
+    # 2. Contents Done
+    completed_contents_count = UserContentProgress.objects.filter(
+        user=user, 
+        is_completed=True
+    ).count()
+
+    # 3. Active Days & Heatmap Data
+    # Collect dates from submissions
+    submission_dates = ProblemSubmission.objects.filter(
+        user=user
+    ).values_list('submitted_at__date', flat=True)
+    
+    # Collect dates from content completion
+    completion_dates = UserContentProgress.objects.filter(
+        user=user,
+        is_completed=True
+    ).values_list('completed_at__date', flat=True)
+
+    # Collect dates from content access (approximate)
+    access_dates = UserContentProgress.objects.filter(
+        user=user
+    ).values_list('last_accessed__date', flat=True)
+
+    # Combine all unique dates
+    all_dates = set(submission_dates) | set(completion_dates) | set(access_dates)
+    active_days_count = len(all_dates) - 1 if None in all_dates else len(all_dates) # Handle None if any
+    
+    # Filter out None and sort
+    heatmap_dates = sorted([d.strftime("%Y-%m-%d") for d in all_dates if d is not None])
+
+    # 4. Blogs
+    blogs = Blog.objects.filter(author=user).order_by('-created_at')[:5]
+
+    # 5. Charts Data
+    
+    # Difficulty Breakdown
+    # 'problem__difficulty' lookups require 'problem' relation. 
+    # ProblemSubmission relates to Problem.
+    difficulty_counts = ProblemSubmission.objects.filter(
+        user=user,
+        status='SOLVED'
+    ).values('problem__difficulty').annotate(count=Count('problem', distinct=True))
+    
+    difficulty_data = {
+        'easy': 0,
+        'medium': 0,
+        'hard': 0
+    }
+    
+    for item in difficulty_counts:
+        diff = item.get('problem__difficulty', '').lower()
+        if diff in difficulty_data:
+            difficulty_data[diff] = item['count']
+
+    # Language Breakdown (based on submissions)
+    language_counts = ProblemSubmission.objects.filter(
+        user=user
+    ).values('problem__language').annotate(count=Count('id'))
+    
+    language_data = {}
+    for item in language_counts:
+        lang = item.get('problem__language', 'Unknown')
+        language_data[lang] = item['count']
+
+
+    # --- NEW METRICS ---
+
+    # 6. Accuracy Rate
+    total_submissions = ProblemSubmission.objects.filter(user=user).count()
+    successful_submissions = ProblemSubmission.objects.filter(user=user, status='SOLVED').count()
+    accuracy_rate = 0
+    if total_submissions > 0:
+        accuracy_rate = round((successful_submissions / total_submissions) * 100, 1)
+
+    # 7. Course Progress Breakdown
+    enrolled_courses = UserCourse.objects.filter(user=user).select_related('course')
+    course_progress_data = []
+    
+    for user_course in enrolled_courses:
+        course = user_course.course
+        
+        # Modules
+        total_modules = CourseContent.objects.filter(course=course).exclude(content__type='PROBLEM').count()
+        completed_modules = UserContentProgress.objects.filter(
+            user=user, course=course, is_completed=True
+        ).exclude(content__type='PROBLEM').count()
+        
+        mod_prog = (completed_modules / total_modules * 100) if total_modules > 0 else 0
+        
+        # Problems
+        total_probs = Content.objects.filter(coursecontent__course=course, type='PROBLEM').count()
+        solved_probs = ProblemSubmission.objects.filter(
+            user=user, course=course, status='SOLVED'
+        ).values('problem').distinct().count()
+        
+        prob_prog = (solved_probs / total_probs * 100) if total_probs > 0 else 0
+        
+        course_progress_data.append({
+            'name': course.name,
+            'module_progress': round(mod_prog),
+            'problem_progress': round(prob_prog)
+        })
+
+    # 8. Submission Trend (Last 30 Days)
+    today = timezone.now().date()
+    thirty_days_ago = today - timedelta(days=29)
+    
+    # query dict: { date: count }
+    # CHANGED: Filter for status='SOLVED' only
+    daily_subs = ProblemSubmission.objects.filter(
+        user=user,
+        status='SOLVED',
+        submitted_at__date__gte=thirty_days_ago
+    ).values('submitted_at__date').annotate(count=Count('id')).order_by('submitted_at__date')
+    
+    submission_map = {item['submitted_at__date'].strftime('%Y-%m-%d'): item['count'] for item in daily_subs}
+    
+    trend_labels = []
+    trend_data = []
+    
+    # Fill missing dates with 0
+    for i in range(30):
+        d = thirty_days_ago + timedelta(days=i)
+        d_str = d.strftime('%Y-%m-%d')
+        trend_labels.append(d.strftime('%b %d')) # Label format: Jan 01
+        trend_data.append(submission_map.get(d_str, 0))
+
+
+    # --- NEW METRICS (STREAKS & QUIZZES) ---
+
+    # 9. Quizzes Solved
+    quizzes_solved_count = QuizSubmission.objects.filter(user=user, passed=True).count()
+
+    # 10. Streaks Calculation
+    # We already have `all_dates` set from metric #3
+    sorted_dates = sorted([d for d in all_dates if d is not None])
+    
+    current_streak = 0
+    longest_streak = 0
+    
+    if sorted_dates:
+        # Longest Streak
+        temp_streak = 1
+        max_streak = 1
+        
+        for i in range(1, len(sorted_dates)):
+            delta = sorted_dates[i] - sorted_dates[i-1]
+            if delta.days == 1:
+                temp_streak += 1
+            else:
+                max_streak = max(max_streak, temp_streak)
+                temp_streak = 1
+        longest_streak = max(max_streak, temp_streak)
+
+        # Current Streak
+        # Check if the last date is today or yesterday
+        last_date = sorted_dates[-1]
+        today_date = timezone.now().date()
+        
+        if last_date == today_date or last_date == (today_date - timedelta(days=1)):
+            current_streak = 1
+            # Go backwards
+            for i in range(len(sorted_dates) - 2, -1, -1):
+                delta = sorted_dates[i+1] - sorted_dates[i]
+                if delta.days == 1:
+                    current_streak += 1
+                else:
+                    break
+        else:
+            current_streak = 0
+
+    # 11. Recent Solved Problems (Unique)
+    # Fetch last 30 solved submissions to find top 5 unique
+    recent_subs = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED'
+    ).select_related('problem', 'course').order_by('-submitted_at')[:30]
+    
+    seen_probs = set()
+    recent_solved_problems = []
+    for sub in recent_subs:
+        if sub.problem.id not in seen_probs:
+            seen_probs.add(sub.problem.id)
+            # Create a simple dict for template
+            recent_solved_problems.append({
+                'title': sub.problem.title,
+                'difficulty': sub.problem.difficulty.lower(), # easy, medium, hard
+                'submitted_at': sub.submitted_at,
+                # Try to link to problem solver if course exists, else just #
+                'url': reverse('problem-solver', args=[sub.course.id]) + f"?file={sub.problem.file_name}" if sub.course else "#"
+            })
+            if len(recent_solved_problems) >= 5: 
+                break
+
+
+    context = {
+        "profile_user": user,
+        "solved_problems_count": solved_problems_count,
+        "completed_contents_count": completed_contents_count,
+        "active_days_count": active_days_count,
+        "heatmap_dates": json.dumps(heatmap_dates),
+        "blogs": blogs,
+        "difficulty_data": json.dumps(difficulty_data),
+        "language_data": json.dumps(language_data),
+        "accuracy_rate": accuracy_rate,
+        "course_progress_data": course_progress_data,
+        "trend_labels": json.dumps(trend_labels),
+        "trend_data": json.dumps(trend_data),
+        "current_streak": current_streak,
+        "longest_streak": longest_streak,
+        "quizzes_solved_count": quizzes_solved_count,
+        "recent_solved_problems": recent_solved_problems,
+        # Ensure we pass the profile info if it exists
+        "user_profile": getattr(user, 'profile', None) 
+    }
+
+    return render(request, "student_dashboard.html", context)
+
+def student_report(request, username):
+    logger.info(f"Student report accessed for user: {username} - Fixed Version Loaded")
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return HttpResponseNotFound("User not found")
+        
+    # --- Exact same metrics as dashboard, but specific View for Report (status='COMPLETED' fixed) ---
+    
+    # 1. Solved Problems
+    solved_problems_count = ProblemSubmission.objects.filter(
+        user=user, 
+        status='SOLVED'
+    ).values('problem').distinct().count()
+
+    # 2. Content Completed
+    completed_contents_count = UserCourse.objects.filter(
+        user=user, 
+        status='COMPLETED'
+    ).count()
+
+    # 3. Active Days (Total)
+    active_days_count = ProblemSubmission.objects.filter(
+        user=user
+    ).dates('submitted_at', 'day').count()
+    
+    # 4. Heatmap (90 Days)
+    today = timezone.now().date()
+    three_months_ago = today - timedelta(days=90)
+    activity_dates = ProblemSubmission.objects.filter(
+        user=user, 
+        submitted_at__date__gte=three_months_ago
+    ).values_list('submitted_at__date', flat=True)
+    heatmap_dates = [d.strftime("%Y-%m-%d") for d in set(activity_dates)]
+
+    # 5. Difficulty Breakdown
+    difficulty_counts = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED'
+    ).values('problem__difficulty').annotate(count=Count('problem', distinct=True))
+    difficulty_data = {item['problem__difficulty'].lower(): item['count'] for item in difficulty_counts}
+
+    # 6. Trend (30 Days for Chart)
+    # Re-using dashboard logic which calculates 'daily_subs' for last 30 days
+    last_30_days = today - timedelta(days=29)
+    submissions_last_30 = ProblemSubmission.objects.filter(
+        user=user,
+        submitted_at__date__gte=last_30_days,
+        status='SOLVED'
+    ).values('submitted_at__date').annotate(count=Count('id')).order_by('submitted_at__date')
+    
+    trend_map = {item['submitted_at__date'].strftime('%Y-%m-%d'): item['count'] for item in submissions_last_30}
+    trend_labels = []
+    trend_data = []
+    for i in range(30):
+        d_obj = (last_30_days + timedelta(days=i))
+        trend_labels.append(d_obj.strftime("%b %d")) 
+        trend_data.append(trend_map.get(d_obj.strftime("%Y-%m-%d"), 0))
+
+    # 7. Recent Solved
+    recent_solved_problems = []
+    recent_submissions = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED'
+    ).select_related('problem', 'course').order_by('-submitted_at')[:10] 
+
+    seen_problems = set()
+    for sub in recent_submissions:
+        if sub.problem.id not in seen_problems:
+             recent_solved_problems.append({
+                 "title": sub.problem.title,
+                 "difficulty": sub.problem.difficulty,
+                 "submitted_at": sub.submitted_at,
+                 "url": reverse('problem-solver', args=[sub.course.id]) + f"?file={sub.problem.file_name}" if sub.course else "#"
+             })
+             seen_problems.add(sub.problem.id)
+             if len(recent_solved_problems) >= 5: break
+             
+    # 8. Course Progress (needed for report)
+    enrolled_courses = UserCourse.objects.filter(user=user).select_related('course')
+    course_progress_data = []
+    for user_course in enrolled_courses:
+        course = user_course.course
+        total_modules = CourseContent.objects.filter(course=course).exclude(content__type='PROBLEM').count()
+        completed_modules = UserContentProgress.objects.filter(user=user, course=course, is_completed=True).exclude(content__type='PROBLEM').count()
+        mod_prog = (completed_modules / total_modules * 100) if total_modules > 0 else 0
+        
+        total_probs = Content.objects.filter(coursecontent__course=course, type='PROBLEM').count()
+        solved_probs = ProblemSubmission.objects.filter(user=user, course=course, status='SOLVED').values('problem').distinct().count()
+        prob_prog = (solved_probs / total_probs * 100) if total_probs > 0 else 0
+        
+        course_progress_data.append({
+            'name': course.name,
+            'module_progress': round(mod_prog),
+            'problem_progress': round(prob_prog)
+        })
+
+    # 9. Quizzes Solved
+    quizzes_solved_count = QuizSubmission.objects.filter(user=user, passed=True).count()
+
+    # Context
+    context = {
+        "profile_user": user,
+        "solved_problems_count": solved_problems_count,
+        "completed_contents_count": completed_contents_count,
+        "active_days_count": active_days_count,
+        "heatmap_dates": json.dumps(heatmap_dates),
+        "difficulty_data": json.dumps(difficulty_data),
+        "trend_labels": json.dumps(trend_labels),
+        "trend_data": json.dumps(trend_data),
+        "recent_solved_problems": recent_solved_problems,
+        "course_progress_data": course_progress_data,
+        "user_profile": getattr(user, 'profile', None),
+        "quizzes_solved_count": quizzes_solved_count,
+    }
+    
+    return render(request, "student_report.html", context)
