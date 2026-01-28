@@ -2042,9 +2042,12 @@ def student_dashboard(request, username):
             difficulty_data[diff] = item['count']
 
     # Language Breakdown (based on submissions)
+    # Language Breakdown (based on submissions)
+    # CHANGED: Filter for SOLVED and count unique problems
     language_counts = ProblemSubmission.objects.filter(
-        user=user
-    ).values('problem__language').annotate(count=Count('id'))
+        user=user,
+        status='SOLVED'
+    ).values('problem__language').annotate(count=Count('problem', distinct=True))
     
     language_data = {}
     for item in language_counts:
@@ -2091,16 +2094,15 @@ def student_dashboard(request, username):
         })
 
     # 8. Submission Trend (Last 30 Days)
-    today = timezone.now().date()
+    # Use LOCAL time for 'today' to match the user's perspective (IST) and DB aggregation
+    today = timezone.localtime(timezone.now()).date()
     thirty_days_ago = today - timedelta(days=29)
     
-    # query dict: { date: count }
-    # CHANGED: Filter for status='SOLVED' only
     daily_subs = ProblemSubmission.objects.filter(
         user=user,
         status='SOLVED',
         submitted_at__date__gte=thirty_days_ago
-    ).values('submitted_at__date').annotate(count=Count('id')).order_by('submitted_at__date')
+    ).values('submitted_at__date').annotate(count=Count('problem', distinct=True)).order_by('submitted_at__date')
     
     submission_map = {item['submitted_at__date'].strftime('%Y-%m-%d'): item['count'] for item in daily_subs}
     
@@ -2144,7 +2146,7 @@ def student_dashboard(request, username):
         # Current Streak
         # Check if the last date is today or yesterday
         last_date = sorted_dates[-1]
-        today_date = timezone.now().date()
+        today_date = timezone.localtime(timezone.now()).date()
         
         if last_date == today_date or last_date == (today_date - timedelta(days=1)):
             current_streak = 1
@@ -2329,7 +2331,7 @@ def calculate_leaderboard_data(timeframe='overall'):
     users = User.objects.filter(is_staff=False)
     leaderboard_data = []
 
-    now = timezone.now()
+    now = timezone.localtime(timezone.now())
     start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
     for user in users:
