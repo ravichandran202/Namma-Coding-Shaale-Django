@@ -4,46 +4,81 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ post.title }} | ನಮ್ಮ CODING ಶಾಲೆ</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Premium Fonts -->
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css">
 
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
     <style>
-        /* --- 1. PREMIUM DESIGN SYSTEM --- */
+        /* --- 1. DESIGN SYSTEM --- */
         :root {
             --primary: #2563eb;
             --primary-dark: #1e40af;
             --primary-light: #93c5fd;
             --secondary: #10b981;
-            --bg-body: #ffffff;
-            --text-heading: #1e293b;
-            --text-body: #334155;
-            --text-muted: #64748b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-body);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 40%);
+            color: var(--dark);
             line-height: 1.7;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll on body */
+            width: 100%;
+            min-height: 100vh;
         }
 
-        /* --- 2. NAVBAR --- */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Particles */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- 2. NAVBAR (STRICT) --- */
         .navbar {
             padding: 1rem 0;
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
         }
 
@@ -68,7 +103,7 @@
         }
 
         .brand-highlight {
-            color: #93c5fd;
+            color: var(--primary-light);
             font-family: 'Inter', sans-serif;
             font-weight: 700;
         }
@@ -95,27 +130,7 @@
             background: rgba(37, 99, 235, 0.15);
         }
 
-        .btn-premium {
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
-            color: white !important;
-            border: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
-            color: white;
-        }
-
-        .nav-link.active:before {
+         .nav-link.active:before {
             content: '';
             position: absolute;
             bottom: 0;
@@ -135,19 +150,6 @@
             border-radius: 8px;
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
-            color: white;
         }
 
         .navbar-toggler {
@@ -155,313 +157,328 @@
             padding: 0.5rem;
         }
 
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
+        /* --- 3. LAYOUT FIXES --- */
+        .main-container {
+            padding-top: 140px;
+            /* Desktop padding */
+            padding-bottom: 5rem;
+        }
+
+        .article-grid {
+            display: grid;
+            /* Desktop: ToC (260px) | Content (Flexible) | Sidebar (300px) */
+            grid-template-columns: 260px minmax(0, 1fr) 300px;
+            gap: 4rem;
+            align-items: start;
+            width: 100%;
+        }
+
+        /* CRITICAL FIX: Forces grid item to shrink on mobile so <pre> tags don't blow out width */
+        .article-content-wrapper {
+            min-width: 0;
+            width: 100%;
+        }
+
+        /* --- Responsive Logic --- */
+        @media (max-width: 1200px) {
+
+            /* Hide right sidebar on medium screens */
+            .article-grid {
+                grid-template-columns: 240px minmax(0, 1fr);
+            }
+
+            .right-sidebar {
+                display: none;
+            }
+        }
+
         @media (max-width: 991px) {
+
+            .main-container {
+                padding-top: 100px;
+            }
+
+            /* Less padding on mobile top */
+
+            /* Stack everything in one column */
+            .article-grid {
+                display: block;
+                /* Use block instead of grid for simpler stacking */
+            }
+
+            .toc-sidebar {
+                display: none;
+            }
+
+            /* Hide ToC on mobile */
+
+            /* Navbar Mobile Styling */
             .navbar-collapse {
                 background: rgba(15, 23, 42, 0.98);
                 backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
                 padding: 1rem;
                 border-radius: 12px;
                 margin-top: 1rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .navbar-brand {
-                font-size: 1rem;
             }
 
             .nav-link {
                 margin: 0.25rem 0;
-                padding: 0.75rem !important;
             }
 
-            .btn-premium {
-                margin-top: 0.5rem;
-                width: 100%;
-                justify-content: center;
+            /* Typography Fixes */
+            .post-title {
+                font-size: 2rem !important;
+                word-wrap: break-word;
             }
-        }
 
+            /* Smaller title */
+            .post-content h2 {
+                font-size: 1.5rem !important;
+            }
 
-        /* --- 3. READING CONTAINER --- */
-        .main-container {
-            margin-top: 100px;
-            padding-bottom: 8rem;
-        }
-
-        .article-layout {
-            max-width: 740px;
-            /* Optimal reading width */
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            position: relative;
-        }
-
-        /* Toolbar (Floating Glass) */
-        .floating-toolbar {
-            position: fixed;
-            left: calc(50% - 460px);
-            /* Positioned to left of content */
-            top: 250px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            z-index: 100;
-        }
-
-        @media (max-width: 1000px) {
-            .floating-toolbar {
-                position: static;
-                flex-direction: row;
-                margin-bottom: 2rem;
+            /* Container padding */
+            .container-fluid {
+                padding-left: 1.25rem !important;
+                padding-right: 1.25rem !important;
             }
         }
 
-        .tool-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: white;
-            border: 1px solid #e2e8f0;
-            color: #64748b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        /* --- ToC & Sidebar --- */
+        .toc-sidebar {
+            position: sticky;
+            top: 120px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
         }
 
-        .tool-btn:hover {
-            transform: translateY(-2px);
+        .toc-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-left: 2px solid var(--border);
+        }
+
+        .toc-item a {
+            display: block;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            margin-left: -2px;
+            transition: 0.2s;
+        }
+
+        .toc-item a:hover,
+        .toc-item a.active {
             color: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.15);
+            border-left-color: var(--primary);
+            font-weight: 600;
         }
 
-        .tool-btn.delete:hover {
-            color: #ef4444;
-            border-color: #ef4444;
+        .toc-item.h3-link a {
+            padding-left: 2.5rem;
+            font-size: 0.85rem;
         }
 
-        /* Article Header */
-        .article-header {
-            margin-bottom: 3rem;
+        /* --- Content Styling --- */
+        .post-header {
+            margin-bottom: 2.5rem;
         }
 
-        .article-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 2.75rem;
-            line-height: 1.15;
-            color: var(--text-heading);
+        .post-title {
+            font-size: 3rem;
             margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
+            color: var(--dark);
+            line-height: 1.1;
         }
 
-        .author-meta {
+        .author-block {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .author-pic {
-            width: 48px;
-            height: 48px;
+        .author-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid white;
+            box-shadow: var(--shadow);
         }
 
-        .meta-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-
-        .meta-name {
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .meta-dt {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Content Typography */
-        .article-body {
-            font-size: 1.15rem;
-            /* Larger for reading */
+        .post-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
             color: #334155;
         }
 
-        .article-body p {
-            margin-bottom: 1.75rem;
+        .post-content p {
+            margin-bottom: 1.5rem;
         }
 
-        .article-body h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        .post-content h2 {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-top: 3rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
-            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin: 2.5rem 0 1rem;
+            scroll-margin-top: 100px;
         }
 
-        .article-body h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        .post-content h3 {
             font-size: 1.4rem;
             font-weight: 600;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
+            color: var(--dark);
+            margin: 2rem 0 0.75rem;
+            scroll-margin-top: 100px;
         }
 
-        .article-body blockquote {
-            border-left: 4px solid var(--primary);
-            padding-left: 1.5rem;
-            margin: 2.5rem 0;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #1e293b;
-            background: transparent;
+        /* Code Blocks Mobile Fix */
+        .post-content pre {
+            background: #1e293b;
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            /* Allow code to scroll horizontally */
+            color: #e2e8f0;
+            max-width: 100%;
+            /* Strict width limit */
         }
 
-        .article-body img {
-            border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            margin: 2rem 0;
-            width: 100%;
+        .post-content img {
+            max-width: 100%;
             height: auto;
-        }
-
-        .article-body pre {
-            border-radius: 12px;
+            border-radius: var(--border-radius);
             margin: 2rem 0;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        /* Read More Section */
-        .read-next {
-            margin-top: 5rem;
-            padding-top: 3rem;
-            border-top: 1px solid #f1f5f9;
-            text-align: center;
+        .post-content blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--light);
+            padding: 1.5rem;
+            font-style: italic;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
         }
 
-        .btn-back {
+        /* --- Right Sidebar --- */
+        .right-sidebar {
+            position: sticky;
+            top: 120px;
+        }
+
+        .promo-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .btn-join {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            background: var(--dark);
+            color: white;
+            transition: 0.3s;
+        }
+
+        .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
+            color: var(--gray);
             text-decoration: none;
             font-weight: 600;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .btn-back:hover {
-            color: var(--primary);
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
         }
 
-        /* --- NEW: Grid Layout --- */
-        .blog-grid-layout {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 4rem;
-            position: relative;
+        #preloader.loading {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .article-column {
-            min-width: 0;
-            /* Prevent overflow */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(37, 99, 235, 0.1);
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-
-        .recent-post-card {
-            display: block;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .recent-post-card:last-child {
-            border-bottom: none;
-        }
-
-        .recent-post-card:hover {
-            transform: translateX(4px);
-        }
-
-        .recent-post-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-heading);
-            margin-bottom: 0.25rem;
-            line-height: 1.4;
-        }
-
-        .recent-post-card:hover .recent-post-title {
-            color: var(--primary);
-        }
-
-        .recent-post-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        @media(max-width: 991px) {
-            .blog-grid-layout {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .sidebar-column {
-                order: 2;
-                /* Sidebar at bottom */
-                border-top: 1px solid var(--border-subtle);
-                padding-top: 3rem;
-            }
-
-            .sidebar-sticky {
-                position: static;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
 
-        @media(max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 0;
+        @media (max-width:768px) {
+            .navbar-brand {
+                font-weight: 700;
+                font-size: 1rem;
+                color: white !important;
+                display: flex;
+                align-items: center;
             }
 
-            .main-container {
-                margin-top: 80px;
+            p,
+            ul,
+            ol,
+            li {
+                font-size: .9rem;
             }
 
-            .article-title {
-                font-size: 2rem;
-            }
-
-            .article-body {
-                font-size: 1.05rem;
-            }
         }
     </style>
 </head>
 
 <body>
+    <div id="particles-js"></div>
+    <div id="preloader" class="loading">
+        <div class="spinner"></div>
+    </div>
 
-    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
@@ -472,40 +489,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home me-1"></i>
+                            Home</a></li>
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}" aria-current="page">
-                            <i class="fas fa-home me-1"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link" href="{% url 'my-courses' %}">
-                            <i class="fas fa-graduation-cap me-1"></i> My Courses
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link" href="{% url 'my_blogs' %}">
-                            <i class="fas fa-book-open me-1"></i> My Stories
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link active" href="{% url 'blog_list' %}">
-                            <i class="fas fa-globe me-1"></i> Community
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link" href="{% url 'profile' 'details' %}">
-                            <i class="fas fa-user me-1"></i> Profile
-                        </a>
-                    </li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link" href="{% url 'my-courses' %}"><i
+                                class="fas fa-graduation-cap me-1"></i> My Courses</a></li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link active" href="{% url 'blog_list' %}"><i
+                                class="fas fa-newspaper me-1"></i> Community</a></li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link" href="{% url 'profile' 'details' %}"><i
+                                class="fas fa-user me-1"></i> Profile</a></li>
                     {% else %}
-                    <li class="nav-item ms-lg-3">
-                        <a class="btn btn-premium" href="{% url 'login' %}">
-                            <i class="fas fa-gem me-1"></i> Login Now
-                        </a>
-                    </li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link active" href="{% url 'blog_list' %}"><i
+                                class="fas fa-newspaper me-1"></i> Community</a></li>
+                    <li class="nav-item ms-lg-3"><a class="btn btn-premium" href="{% url 'login' %}"><i
+                                class="fas fa-gem me-1"></i> Login Now</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -513,82 +510,74 @@
     </nav>
 
     <div class="main-container">
-        <div class="container-xl">
-            <div class="blog-grid-layout">
+        <div class="container-fluid px-3 px-lg-5" style="max-width: 1600px; margin: 0 auto;">
 
-                <!-- Main Content (Left) -->
-                <div class="article-column">
-                    <a href="javascript:history.back()" class="btn-back">
-                        <i class="fas fa-arrow-left"></i> Back to Community
-                    </a>
+            <div class="article-grid">
 
-                    <!-- Author Controls -->
+                <aside class="toc-sidebar">
+                    <a href="{% url 'blog_list' %}" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="toc-title mt-4">On this page</div>
+                    <ul class="toc-list" id="toc-list"></ul>
+                </aside>
+
+                <main class="article-content-wrapper">
+
                     {% if request.user == post.author %}
-                    <div class="author-controls mb-4">
-                        <a href="{% url 'blog_update' post.id %}?next={{ request.path }}"
-                            class="btn btn-sm btn-outline-primary" title="Edit Story">
-                            <i class="fas fa-pen me-1"></i> Edit
-                        </a>
-                        <button onclick="confirmDelete()" class="btn btn-sm btn-outline-danger ms-2"
-                            title="Delete Story">
-                            <i class="fas fa-trash-alt me-1"></i> Delete
-                        </button>
+                    <div class="d-flex gap-2 mb-4 justify-content-end">
+                        <a href="{% url 'blog_update' post.id %}"
+                            class="btn btn-sm btn-outline-primary rounded-pill px-3">Edit</a>
+                        <a href="{% url 'blog_delete' post.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Delete</a>
                     </div>
-                    <form id="delete-form" action="{% url 'blog_delete' post.id %}" method="POST"
-                        style="display: none;">
-                        {% csrf_token %}
-                    </form>
                     {% endif %}
 
-                    <header class="article-header">
-                        <h1 class="article-title">{{ post.title }}</h1>
-                        <div class="author-meta">
-                            <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=0f172a&color=fff&size=96"
-                                class="author-pic" alt="{{ post.author.get_full_name|default:post.author.username }}">
-                            <div class="meta-text">
-                                <span class="meta-name">{{ post.author.get_full_name|default:post.author.username }}</span>
-                                <span class="meta-dt">{{ post.created_at|date:"F d, Y" }} · 5 min read</span>
+                    <header class="post-header">
+                        <h1 class="post-title">{{ post.title }}</h1>
+                        <div class="author-block">
+                            <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=1e293b&color=fff&size=80"
+                                class="author-avatar" alt="">
+                            <div>
+                                <div class="author-name">{{ post.author.get_full_name|default:post.author.username }}
+                                </div>
+                                <div class="post-meta">{{ post.created_at|date:"F d, Y" }} · 5 min read</div>
                             </div>
                         </div>
                     </header>
 
-                    <article class="article-body">
+                    <div class="d-lg-none mb-4">
+                        <a href="{% url 'blog_list' %}" class="back-btn"><i class="fas fa-arrow-left"></i> Back to
+                            Feed</a>
+                    </div>
+
+                    <article class="post-content" id="post-content">
                         {{ post.content|safe }}
                     </article>
 
-                    <div class="read-next">
-                        <p class="text-muted mb-4">Enjoyed this story?</p>
-                        <a href="{% url 'blog_list' %}" class="btn btn-primary rounded-pill px-5 py-2 fw-bold"
-                            style="background: var(--primary);">
-                            Read More Stories
-                        </a>
+                    <div class="mt-5 pt-4 border-top">
+                        <p class="text-center text-muted fst-italic">Thanks for reading!</p>
                     </div>
-                </div>
+                </main>
 
-                <!-- Sidebar (Right) -->
-                <aside class="sidebar-column">
-                    <div class="sidebar-sticky">
-                        <h4 class="sidebar-title">Recent Stories</h4>
-                        <div class="recent-posts-list">
-                            {% for recent in recent_posts %}
-                            <a href="{% url 'blog_detail' recent.id %}" class="recent-post-card">
-                                <h5 class="recent-post-title">{{ recent.title }}</h5>
-                                <div class="recent-post-meta">
-                                    <span class="text-muted">{{ recent.created_at|date:"F d, Y" }}</span>
-                                </div>
-                            </a>
-                            {% empty %}
-                            <p class="text-muted small">No other stories yet.</p>
-                            {% endfor %}
-                        </div>
+                <aside class="right-sidebar">
+                    <div class="promo-card">
+                        <div class="display-6 mb-3">✍️</div>
+                        <h5 class="fw-bold mb-2">Share your journey</h5>
+                        <p class="text-muted small mb-4">Got something to share? Write your own story for the community.
+                        </p>
+                        <a href="{% url 'blog_create' %}" class="btn-join">Start Writing</a>
+                    </div>
 
-                        <div class="mt-5 p-4 rounded-4 bg-light text-center">
-                            <i class="fas fa-pen-nib fa-2x text-primary mb-3"></i>
-                            <h5 class="fw-bold">Write your story</h5>
-                            <p class="small text-muted mb-3">Share your knowledge with the community.</p>
-                            <a href="{% url 'blog_create' %}" class="btn btn-outline-primary w-100 btn-sm fw-bold">Start
-                                Writing</a>
-                        </div>
+                    <div class="mt-5">
+                        <h6 class="fw-bold text-uppercase small text-muted mb-3">Recent Stories</h6>
+                        {% for recent in recent_posts %}
+                        <a href="{% url 'blog_detail' recent.id %}"
+                            class="d-block text-decoration-none mb-3 p-2 rounded hover-bg-light">
+                            <h6 class="text-dark fw-bold mb-1" style="font-size: 0.95rem;">{{ recent.title }}</h6>
+                            <small class="text-muted" style="font-size: 0.8rem;">{{ recent.created_at|date:"M d"
+                                }}</small>
+                        </a>
+                        {% empty %}
+                        <p class="text-muted small">No recent stories.</p>
+                        {% endfor %}
                     </div>
                 </aside>
 
@@ -601,17 +590,63 @@
     <script>
         hljs.highlightAll();
 
-        // Navbar Scroll
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
+        document.addEventListener('DOMContentLoaded', function () {
+            particlesJS('particles-js', {
+                "particles": { "number": { "value": 40 }, "color": { "value": "#2563eb" }, "opacity": { "value": 0.1 }, "size": { "value": 3 }, "line_linked": { "color": "#2563eb", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1 } }
+            });
+            const loader = document.getElementById("preloader");
+            loader.classList.remove("loading");
+        });
+
         function confirmDelete() {
-            if (confirm('Delete this story completely? This action cannot be undone.')) {
+            if (confirm('Are you sure? This cannot be undone.')) {
                 document.getElementById('delete-form').submit();
             }
         }
+
+        /* Dynamic ToC */
+        document.addEventListener('DOMContentLoaded', () => {
+            const content = document.getElementById('post-content');
+            const tocList = document.getElementById('toc-list');
+            const headings = content.querySelectorAll('h2, h3');
+
+            if (headings.length === 0) {
+                document.querySelector('.toc-sidebar').style.display = 'none';
+                return;
+            }
+
+            headings.forEach((heading, index) => {
+                if (!heading.id) heading.id = 'heading-' + index;
+                const li = document.createElement('li');
+                li.className = heading.tagName === 'H3' ? 'toc-item h3-link' : 'toc-item';
+                const link = document.createElement('a');
+                link.href = '#' + heading.id;
+                link.textContent = heading.textContent;
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById(heading.id).scrollIntoView({ behavior: 'smooth' });
+                    history.pushState(null, null, `#${heading.id}`);
+                });
+                li.appendChild(link);
+                tocList.appendChild(li);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.toc-item a').forEach(a => a.classList.remove('active'));
+                        const active = document.querySelector(`.toc-item a[href="#${entry.target.id}"]`);
+                        if (active) active.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-100px 0px -60% 0px' });
+            headings.forEach(h => observer.observe(h));
+        });
     </script>
 </body>
 

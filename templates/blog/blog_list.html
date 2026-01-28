@@ -4,48 +4,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Stories | ನಮ್ಮ CODING ಶಾಲೆ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Community | ನಮ್ಮ CODING ಶಾಲೆ</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Premium Fonts -->
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
-        /* --- 1. PREMIUM DESIGN SYSTEM --- */
+        /* --- 1. DESIGN SYSTEM (Strictly Matching Reference) --- */
         :root {
-            /* Brand Colors */
             --primary: #2563eb;
             --primary-dark: #1e40af;
             --primary-light: #93c5fd;
             --secondary: #10b981;
-
-            /* Neutral Scale */
-            --bg-body: #ffffff;
-            --bg-subtle: #f8fafc;
-            --text-heading: #0f172a;
-            --text-body: #334155;
-            --text-muted: #64748b;
-            --border-subtle: #e2e8f0;
-
-            /* Effects */
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-premium: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --section-padding: 8rem 0;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-body);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            /* Radial Gradient Background */
+            background-image:
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 40%);
+            color: var(--dark);
             font-weight: 400;
             line-height: 1.6;
+            overflow-x: hidden;
             min-height: 100vh;
         }
 
@@ -55,18 +56,29 @@
         h4,
         h5 {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text-heading);
-            letter-spacing: -0.025em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
-        /* --- 2. NAVBAR --- */
+        /* Particles */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- 2. NAVBAR (Strictly Followed Code) --- */
         .navbar {
             padding: 1rem 0;
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
         }
 
@@ -90,7 +102,7 @@
         }
 
         .brand-highlight {
-            color: #93c5fd;
+            color: var(--primary-light);
             font-family: 'Inter', sans-serif;
             font-weight: 700;
         }
@@ -117,26 +129,6 @@
             background: rgba(37, 99, 235, 0.15);
         }
 
-        .btn-premium {
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
-            color: white !important;
-            border: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
-            color: white;
-        }
-
         .nav-link.active:before {
             content: '';
             position: absolute;
@@ -149,7 +141,7 @@
             border-radius: 2px;
         }
 
-        .btn-premium {
+       .btn-premium {
             background: linear-gradient(135deg, var(--primary), #7c3aed);
             color: white !important;
             border: none;
@@ -161,7 +153,6 @@
             display: flex;
             align-items: center;
             text-align: center;
-            width: 100%;
             justify-content: center;
         }
 
@@ -177,27 +168,19 @@
             padding: 0.5rem;
         }
 
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
+        /* Mobile Nav Fix */
         @media (max-width: 991px) {
             .navbar-collapse {
                 background: rgba(15, 23, 42, 0.98);
                 backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
                 padding: 1rem;
                 border-radius: 12px;
                 margin-top: 1rem;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .navbar-brand {
-                font-size: 1rem;
             }
 
             .nav-link {
@@ -205,310 +188,327 @@
                 padding: 0.75rem !important;
             }
 
-            .btn-premium {
-                margin-top: 0.5rem;
-                width: 100%;
-                justify-content: center;
+            .nav-link.active:before {
+                display: none;
             }
         }
 
-        /* --- 3. GLASS FORM STYLES (Content Body) --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
+        /* --- 3. PAGE CONTENT STYLES --- */
         .main-container {
-            margin-top: 100px;
-            padding-bottom: 3rem;
+            padding-top: 120px;
+            /* Offset for Navbar */
+            padding-bottom: 5rem;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            height: 100%;
-        }
-
-        /* Sidebar Elements */
-        .profile-cover {
-            height: 120px;
-            background: linear-gradient(135deg, var(--primary), #4f46e5);
-            position: relative;
-        }
-
-        .avatar-section {
+        .hero-section {
             text-align: center;
-            margin-top: -60px;
-            position: relative;
-            padding-bottom: 20px;
+            margin-bottom: 4rem;
         }
 
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            object-fit: cover;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            background: #fff;
-        }
-
-        /* --- 3. PAGE HEADER --- */
-        .header-section {
-            padding: 140px 0 80px;
-            background: radial-gradient(circle at top right, #eff6ff, transparent 40%),
-                radial-gradient(circle at top left, #f0fdf4, transparent 40%);
-            text-align: center;
-            position: relative;
-        }
-
-        .page-title {
-            font-size: 3.5rem;
+        .hero-title {
+            font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--dark);
             margin-bottom: 1rem;
-            line-height: 1.1;
         }
 
-        .page-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-muted);
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Search Bar - Premium Style */
+        .search-wrapper {
             max-width: 600px;
             margin: 0 auto;
+            position: relative;
         }
 
-        .btn-create-story {
-            margin-top: 2rem;
-            background: var(--text-heading);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 100px;
-            font-weight: 600;
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-right: 3.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: white;
+            box-shadow: var(--shadow-lg);
             font-size: 1rem;
-            border: none;
-            box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
-        .btn-create-story:hover {
+        .search-input:focus {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.4);
+            border-color: var(--primary-light);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
             color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
         }
 
-        /* --- 4. BLOG GRID --- */
-        .content-section {
-            padding: 0 0 6rem;
-            background: var(--bg-body);
+        .search-btn:hover {
+            background: var(--dark);
+            transform: rotate(90deg);
         }
 
+        /* --- BLOG CARDS (Matching Course Cards) --- */
         .blog-card {
             background: white;
-            border-radius: 24px;
-            border: 1px solid var(--border-subtle);
-            padding: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
             height: 100%;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
         .blog-card:hover {
-            border-color: transparent;
             transform: translateY(-8px);
-            box-shadow: var(--shadow-premium);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.2);
         }
 
-        .card-meta {
+        .blog-card-header {
+            padding: 1.5rem;
+            padding-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 1.5rem;
+            gap: 12px;
         }
 
-        .meta-avatar {
-            width: 42px;
-            height: 42px;
+        .author-img {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid white;
-            box-shadow: 0 0 0 2px var(--primary-light);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .meta-info {
-            line-height: 1.2;
-        }
-
-        .meta-author {
-            font-weight: 700;
-            color: var(--text-heading);
+        .author-meta h6 {
             font-size: 0.95rem;
+            margin: 0;
+            font-weight: 700;
+            color: var(--dark);
         }
 
-        .meta-date {
+        .author-meta small {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--gray);
+            font-weight: 500;
         }
 
-        .card-title {
+        .blog-card-body {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-title {
             font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--text-heading);
+            font-weight: 700;
+            line-height: 1.3;
             margin-bottom: 0.75rem;
-            line-height: 1.35;
-            transition: color 0.2s;
+            display: block;
+            color: var(--dark);
+            text-decoration: none;
+            transition: 0.2s;
         }
 
-        .blog-card:hover .card-title {
+        .blog-title:hover {
             color: var(--primary);
         }
 
-        .blog-card a {
-            text-decoration: none;
-        }
-
-        .card-excerpt {
-            color: var(--text-body);
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            flex-grow: 1;
+        .blog-excerpt {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.7;
-            opacity: 0.9;
         }
 
-        .card-footer-row {
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--bg-subtle);
+        .blog-card-footer {
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--gray-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .read-more {
+        .read-btn {
             color: var(--primary);
-            font-weight: 700;
+            font-weight: 600;
+            text-decoration: none;
             font-size: 0.9rem;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            transition: 0.2s;
         }
 
-        .read-more i {
-            transition: transform 0.2s;
-        }
-
-        .blog-card:hover .read-more i {
-            transform: translateX(4px);
+        .read-btn:hover {
+            gap: 8px;
+            color: var(--primary-dark);
         }
 
         .read-time {
             font-size: 0.8rem;
+            color: var(--gray);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Floating Action Button */
+        .fab-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .fab-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.5);
+            color: white;
+        }
+
+        /* Pagination */
+        .pagination {
+            gap: 5px;
+        }
+
+        .page-link {
+            border: none;
+            border-radius: 8px;
+            color: var(--gray);
             font-weight: 600;
-            color: var(--text-muted);
-            background: var(--bg-subtle);
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 0.5rem 1rem;
         }
 
-        /* --- 5. RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .header-section {
-                padding: 120px 0 60px;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-            }
-
-            .content-section {
-                padding-bottom: 4rem;
-            }
-
-            .blog-card {
-                padding: 1.5rem;
-                border-radius: 20px;
-            }
+        .page-link:hover {
+            background: #e2e8f0;
+            color: var(--dark);
         }
 
-        /* Dropdown Custom */
-        .dropdown-menu {
-            border: none;
-            box-shadow: var(--shadow-lg);
-            border-radius: 12px;
+        .page-item.active .page-link {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
 
-        .btn-dots {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-        }
-
-
-        .search-container {
-            max-width: 600px;
-            margin: 2rem auto 1.5rem;
-            position: relative;
-        }
-
-        .search-form {
-            position: relative;
-        }
-
-        .search-input {
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
-            font-size: 1rem;
-            color: var(--text-heading);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
+            height: 100%;
+            z-index: 99999;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
         }
 
-        .search-input:focus {
-            outline: none;
-            background: #fff;
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1), 0 4px 6px -2px rgba(37, 99, 235, 0.05);
-            border-color: var(--primary-light);
+        #preloader.loading {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .search-icon {
-            position: absolute;
-            left: 1.2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            pointer-events: none;
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(37, 99, 235, 0.1);
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+         @media (max-width:768px) {
+            .navbar-brand {
+                font-weight: 700;
+                font-size: 1rem;
+                color: white !important;
+                display: flex;
+                align-items: center;
+            }
+
+            p,
+            ul,
+            ol,
+            li {
+                font-size: .9rem;
+            }
+
+            .hero-title{
+                font-size: 2rem;
+            }
+
+            .hero-sub-section{
+                font-size: 1.2rem !important;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div id="particles-js"></div>
 
-    <!-- NAVBAR -->
+    <div id="preloader" class="loading">
+        <div class="spinner"></div>
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
@@ -519,210 +519,156 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home me-1"></i>
+                            Home</a></li>
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}" aria-current="page">
-                            <i class="fas fa-home me-1"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link" href="{% url 'my-courses' %}">
-                            <i class="fas fa-graduation-cap me-1"></i> My Courses
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link {% if is_my_blogs %}active{% endif %}" href="{% url 'my_blogs' %}">
-                            <i class="fas fa-book-open me-1"></i> My Stories
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link {% if not is_my_blogs %}active{% endif %}" href="{% url 'blog_list' %}">
-                            <i class="fas fa-globe me-1"></i> Community
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link" href="{% url 'profile' 'details' %}">
-                            <i class="fas fa-user me-1"></i> Profile
-                        </a>
-                    </li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link" href="{% url 'my-courses' %}"><i
+                                class="fas fa-graduation-cap me-1"></i> My Courses</a></li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link active" href="{% url 'blog_list' %}"><i
+                                class="fas fa-newspaper me-1"></i> Community</a></li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link" href="{% url 'profile' 'details' %}"><i
+                                class="fas fa-user me-1"></i> Profile</a></li>
                     {% else %}
-                    <!-- For unauthenticated users in community view -->
-                    <li class="nav-item ms-lg-3">
-                        <a class="nav-link active" href="{% url 'blog_list' %}">
-                            <i class="fas fa-globe me-1"></i> Community
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="btn btn-premium" href="{% url 'login' %}">
-                            <i class="fas fa-gem me-1"></i> Login Now
-                        </a>
-                    </li>
+                    <li class="nav-item ms-lg-3"><a class="nav-link active" href="{% url 'blog_list' %}"><i
+                                class="fas fa-newspaper me-1"></i> Community</a></li>
+                    <li class="nav-item ms-lg-3"><a class="btn btn-premium" href="{% url 'login' %}"><i
+                                class="fas fa-gem me-1"></i> Login Now</a></li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- HEADER -->
-    <div class="header-section">
+    <div class="main-container">
         <div class="container">
-            <h1 class="page-title">
-                {% if title %}{{ title }}{% else %}Community Stories{% endif %}
-            </h1>
-            <p class="page-subtitle">
-                Discover insights, tutorials, and journeys from developers at Namma Coding Shaale.
-            </p>
 
-            <!-- Search Bar -->
-            <div class="search-container">
-                <form method="GET" action="{% url 'blog_list' %}" class="search-form">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" name="q" class="search-input"
-                        placeholder="Search topics, tutorials, or authors..." value="{{ search_query|default:'' }}"
-                        autocomplete="off">
-                </form>
+            <div class="hero-section animate">
+                <h1 class="hero-title">Community <span class="text-gradient">Stories</span></h1>
+                <p class="text-muted hero-sub-section mb-4 fs-5">Share your knowledge, learn from others, and grow together.</p>
+
+                <div class="search-wrapper">
+                    <form method="GET" action="{% url 'blog_list' %}">
+                        <input type="text" name="q" class="search-input" placeholder="Search for tutorials, tips..."
+                            value="{{ search_query|default:'' }}">
+                        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
             </div>
 
-            <a href="{% url 'blog_create' %}" class="btn-create-story" style="text-decoration: none;">
-                <i class="fas fa-pen-nib"></i> Write a Story
-            </a>
-        </div>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="content-section">
-        <div class="container" style="max-width: 1140px;">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-light shadow-sm text-center mb-5 rounded-4 border-0"
-                style="background: #eff6ff; color: #1e40af;">
-                {{ message }}
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-8">
+                    {% for message in messages %}
+                    <div class="alert alert-info shadow-sm border-0 rounded-4 text-center">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
             {% endif %}
 
             {% if posts %}
             <div class="row g-4">
                 {% for post in posts %}
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 animate">
                     <article class="blog-card">
-                        {% if request.user == post.author %}
-                        <div class="position-absolute top-0 end-0 p-3 dropdown" style="z-index: 10;">
-                            <button class="btn-dots" data-bs-toggle="dropdown"><i
-                                    class="fas fa-ellipsis-h"></i></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{% url 'blog_update' post.id %}">Edit Story</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><button class="dropdown-item text-danger"
-                                        onclick="confirmDelete('{{ post.id }}')">Delete</button></li>
-                            </ul>
-                            <form id="delete-form-{{ post.id }}" action="{% url 'blog_delete' post.id %}" method="POST"
-                                style="display: none;">{% csrf_token %}</form>
-                        </div>
-                        {% endif %}
-
-                        <div class="card-meta">
-                            <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=2563eb&color=fff&size=64"
-                                class="meta-avatar" alt="">
-                            <div class="meta-info">
-                                <div class="meta-author">{{ post.author.get_full_name|default:post.author.username }}
-                                </div>
-                                <div class="meta-date">{{ post.created_at|date:"F d, Y" }}</div>
+                        <div class="blog-card-header">
+                            <img src="https://ui-avatars.com/api/?name={{ post.author.get_full_name|default:post.author.username }}&background=1e293b&color=fff&size=64"
+                                class="author-img" alt="">
+                            <div class="author-meta">
+                                <h6>{{ post.author.get_full_name|default:post.author.username }}</h6>
+                                <small>{{ post.created_at|date:"M d, Y" }}</small>
                             </div>
                         </div>
 
-                        <a href="{% url 'blog_detail' post.id %}" class="d-block mb-2">
-                            <h3 class="card-title">{{ post.title }}</h3>
-                        </a>
-
-                        <div class="card-excerpt">
-                            {{ post.content|striptags|safe|truncatechars:140 }}
+                        <div class="blog-card-body">
+                            <a href="{% url 'blog_detail' post.id %}" class="blog-title">
+                                {{ post.title }}
+                            </a>
+                            <div class="blog-excerpt">
+                                {{ post.content|striptags|safe|truncatechars:120 }}
+                            </div>
                         </div>
 
-                        <div class="card-footer-row">
-                            <a href="{% url 'blog_detail' post.id %}" class="read-more">
-                                Read Story <i class="fas fa-arrow-right"></i>
+                        <div class="blog-card-footer">
+                            <div class="read-time">
+                                <i class="far fa-clock"></i> 5 min read
+                            </div>
+                            <a href="{% url 'blog_detail' post.id %}" class="read-btn">
+                                Read More <i class="fas fa-arrow-right"></i>
                             </a>
-                            <span class="read-time">5 min read</span>
                         </div>
                     </article>
                 </div>
                 {% endfor %}
             </div>
 
-            <!-- Pagination -->
             {% if posts.has_other_pages %}
-            <nav aria-label="Page navigation" class="mt-5">
-                <ul class="pagination justify-content-center">
+            <div class="d-flex justify-content-center mt-5 pt-4">
+                <ul class="pagination">
                     {% if posts.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="?page={{ posts.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link">&laquo;</span>
-                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}"><i
+                                class="fas fa-chevron-left"></i></a></li>
                     {% endif %}
 
                     {% for i in posts.paginator.page_range %}
-                    {% if posts.number == i %}
-                    <li class="page-item active"><span class="page-link">{{ i }}</span></li>
-                    {% else %}
-                    <li class="page-item"><a class="page-link"
-                            href="?page={{ i }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ i }}</a></li>
-                    {% endif %}
+                    <li class="page-item {% if posts.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
                     {% endfor %}
 
                     {% if posts.has_next %}
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="?page={{ posts.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}"
-                            aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link">&raquo;</span>
-                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}"><i
+                                class="fas fa-chevron-right"></i></a></li>
                     {% endif %}
                 </ul>
-            </nav>
+            </div>
             {% endif %}
+
             {% else %}
-            <div class="text-center py-5">
-                <div class="mb-3">
-                    <i class="fas fa-feather-alt fa-3x text-muted" style="opacity: 0.3;"></i>
-                </div>
-                <h3 class="fw-bold text-heading">No stories yet</h3>
-                <p class="text-muted mb-4">Be the first to share your knowledge with the community.</p>
-                <a href="{% url 'blog_create' %}" class="btn btn-outline-primary rounded-pill px-4">Start Writing</a>
+            <div class="text-center py-5 animate">
+                <div class="display-1 text-muted mb-3"><i class="far fa-folder-open"></i></div>
+                <h3 class="fw-bold mb-3 text-dark">No stories found</h3>
+                <p class="text-muted">Be the first to share something amazing!</p>
             </div>
             {% endif %}
         </div>
     </div>
 
+    <a href="{% url 'blog_create' %}" class="fab-btn">
+        <i class="fas fa-pen-nib"></i> Write Story
+    </a>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Navbar Scroll Logic
+        // Navbar Scroll
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        function confirmDelete(id) {
-            if (confirm('Are you sure you want to delete this story?')) {
-                document.getElementById('delete-form-' + id).submit();
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Particles
+            particlesJS('particles-js', {
+                "particles": { "number": { "value": 40 }, "color": { "value": "#2563eb" }, "opacity": { "value": 0.1 }, "size": { "value": 3 }, "line_linked": { "color": "#2563eb", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1 } }
+            });
+
+            // Animate Elements
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+            // Remove Preloader
+            const loader = document.getElementById("preloader");
+            loader.classList.remove("loading");
+        });
     </script>
 </body>
 
