@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variable Scope (LEGB) • Visualizer</title>
+    <style>
+        /* --- DESIGN SYSTEM --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --scope-global: #3b82f6;
+            --scope-enclosing: #8b5cf6;
+            --scope-local: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+            background: linear-gradient(to right, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* --- LAYOUT --- */
+        .workspace {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 30px;
+            min-height: 600px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        /* --- CODE EDITOR --- */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .code-editor {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            width: 100%;
+            height: 450px;
+            tab-size: 4;
+            white-space: pre;
+            overflow: auto;
+            resize: none;
+        }
+        .code-editor:focus { border-color: var(--scope-global); }
+
+        .active-line-marker {
+            position: absolute;
+            background: rgba(245, 158, 11, 0.15);
+            border-left: 2px solid var(--warning);
+            width: 100%;
+            height: 21px;
+            pointer-events: none;
+            display: none;
+            left: 0;
+        }
+
+        /* --- SCOPE VISUALIZER --- */
+        .scope-area {
+            background: #1e293b;
+            border-radius: 16px;
+            border: var(--glass-border);
+            padding: 20px;
+            position: relative;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .scope-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px dashed #555;
+            border-radius: 8px;
+            padding: 30px 20px 20px 20px;
+            position: relative;
+            min-width: 200px;
+            min-height: 120px;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scope-label {
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #1e293b;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 12px;
+            border: 1px solid #555;
+            color: #aaa;
+            z-index: 2;
+        }
+
+        .scope-global { border-color: var(--scope-global); background: rgba(59, 130, 246, 0.05); }
+        .scope-global>.scope-label { color: var(--scope-global); border-color: var(--scope-global); }
+
+        .scope-enclosing { border-color: var(--scope-enclosing); background: rgba(139, 92, 246, 0.05); }
+        .scope-enclosing>.scope-label { color: var(--scope-enclosing); border-color: var(--scope-enclosing); }
+
+        .scope-local { border-color: var(--scope-local); background: rgba(16, 185, 129, 0.05); }
+        .scope-local>.scope-label { color: var(--scope-local); border-color: var(--scope-local); }
+
+        .var-badge {
+            background: #334155;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            min-width: 140px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .var-name { color: #e2e8f0; font-weight: 600; }
+        .var-val { color: #94a3b8; }
+        .var-val.str { color: #fca5a5; } /* Strings in light red */
+        .var-val.num { color: #93c5fd; } /* Numbers in light blue */
+
+        .var-badge.highlight {
+            border-color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+            transform: scale(1.05);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- CONTROLS --- */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            background: #1e293b;
+            padding: 10px 15px;
+            border-radius: 12px;
+        }
+
+        button {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--scope-global);
+            color: white;
+        }
+        button:hover { filter: brightness(1.1); }
+        button:disabled { background: #475569; cursor: not-allowed; filter: none; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header>
+            <div>
+                <h1>Variable Scope (LEGB)</h1>
+                <p style="color:var(--text-muted); margin:5px 0 0 0;">Visualize Global, Enclosing, and Local variable lifetimes.</p>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div style="font-size:0.9rem; color:#aaa;">Controls:</div>
+
+            <button id="btn-start" onclick="runUserCode()" class="primary">Start / Reset</button>
+            <button id="btn-next" onclick="triggerNextStep()" disabled class="secondary">Next Step ➡</button>
+
+            <div style="display:flex; align-items:center; gap:5px; margin-left:15px; border-left:1px solid #444; padding-left:15px;">
+                <span style="font-size:0.8rem; color:#aaa;">Auto-Play:</span>
+                <input type="checkbox" id="auto-play" onchange="toggleAutoPlay()">
+            </div>
+
+            <div id="status-text" style="color:var(--warning); font-family:monospace; margin-left:auto;">Ready</div>
+        </div>
+
+        <div class="workspace">
+            <div class="editor-container" style="position:relative;">
+<textarea id="code-input" class="code-editor" spellcheck="false">
+x = "Global X"
+
+def outer(param):
+    # This creates a NEW local variable
+    x = "Outer X" 
+    
+    def inner():
+        # Searches local, then outer, then global
+        print("Inner sees:", x)
+        print("Inner sees param:", param)
+    
+    inner()
+    print("Outer sees:", x)
+
+outer("I am an Arg")
+print("Global sees:", x)
+</textarea>
+                <div id="highlight-overlay" class="active-line-marker"></div>
+
+                <div id="console-output" style="background:#111; border-top:1px solid #333; height:150px; padding:10px; font-family:'Fira Code'; font-size:0.8rem; overflow-y:auto; color:#ccc;">
+                    <div style="color:#666; border-bottom:1px solid #333; margin-bottom:5px;">Console</div>
+                    <div id="console-logs"></div>
+                </div>
+            </div>
+
+            <div class="scope-area" id="scope-root">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE ---
+        const editor = document.getElementById('code-input');
+        const scopeRoot = document.getElementById('scope-root');
+        const highlightOverlay = document.getElementById('highlight-overlay');
+        const statusText = document.getElementById('status-text');
+
+        let scopes = {};
+        let currentScopeId = 'global';
+        let scopeStack = ['global'];
+        let stepResolver = null;
+        let isAutoPlay = false;
+
+        // --- CONTROLS ---
+        function toggleAutoPlay() {
+            isAutoPlay = document.getElementById('auto-play').checked;
+            if (isAutoPlay && stepResolver) stepResolver();
+        }
+
+        function triggerNextStep() {
+            if (stepResolver) {
+                const r = stepResolver;
+                stepResolver = null;
+                r();
+            }
+        }
+
+        function waitForStep() {
+            if (isAutoPlay) return new Promise(r => setTimeout(r, 800));
+            statusText.innerText = "Waiting for Next Step...";
+            document.getElementById('btn-next').disabled = false;
+            return new Promise(resolve => { stepResolver = resolve; })
+                .then(() => {
+                    document.getElementById('btn-next').disabled = true;
+                    statusText.innerText = "Executing...";
+                });
+        }
+
+        // --- SCOPE VISUALIZATION ENGINE ---
+
+        function initGlobalScope() {
+            scopeRoot.innerHTML = '';
+            const globalBox = createScopeBox('global', 'Global Scope', 'scope-global');
+            scopeRoot.appendChild(globalBox);
+            scopes['global'] = globalBox;
+        }
+
+        function createScopeBox(id, name, typeClass) {
+            const box = document.createElement('div');
+            box.className = `scope-box ${typeClass}`;
+            box.id = `scope-${id}`;
+            box.innerHTML = `<div class="scope-label">${name}</div><div class="vars-container" id="vars-${id}"></div>`;
+            return box;
+        }
+
+        function enterScope(name, type) {
+            const parentId = currentScopeId;
+            const newId = `scope_${Math.random().toString(36).substr(2, 9)}`;
+            
+            // Determine Color Scheme
+            let typeClass = 'scope-local';
+            if (scopeStack.length === 1) typeClass = 'scope-enclosing'; 
+
+            const newBox = createScopeBox(newId, name + '()', typeClass);
+            
+            // Append
+            const parentBox = scopes[parentId];
+            if(parentBox) parentBox.appendChild(newBox);
+            
+            scopes[newId] = newBox;
+            scopeStack.push(newId);
+            currentScopeId = newId;
+            statusText.innerText = `Entered scope: ${name}`;
+        }
+
+        function exitScope() {
+            if (scopeStack.length <= 1) return;
+            const dyingId = scopeStack.pop();
+            currentScopeId = scopeStack[scopeStack.length - 1];
+            
+            const box = scopes[dyingId];
+            if(box) {
+                box.style.opacity = '0';
+                box.style.transform = 'scale(0.9)';
+                setTimeout(() => box.remove(), 500);
+            }
+            statusText.innerText = `Exited scope`;
+        }
+
+        function updateVar(name, val) {
+            // In a real Python env, assignment without 'global' or 'nonlocal' keywords
+            // implies the variable belongs to the CURRENT scope.
+            const boxId = currentScopeId;
+            const varsContainer = document.getElementById(`vars-${boxId}`);
+            if(!varsContainer) return;
+
+            let displayVal = val;
+            let typeClass = 'num';
+            
+            if (typeof val === 'string') {
+                displayVal = `"${val}"`;
+                typeClass = 'str';
+            } else if (typeof val === 'object') {
+                displayVal = JSON.stringify(val);
+            }
+
+            let badge = document.getElementById(`var-${boxId}-${name}`);
+            if (badge) {
+                badge.querySelector('.var-val').innerText = displayVal;
+                badge.querySelector('.var-val').className = `var-val ${typeClass}`;
+                badge.classList.add('highlight');
+                setTimeout(() => badge.classList.remove('highlight'), 300);
+            } else {
+                badge = document.createElement('div');
+                badge.className = 'var-badge';
+                badge.id = `var-${boxId}-${name}`;
+                badge.innerHTML = `<span class="var-name">${name}</span><span class="var-val ${typeClass}">${displayVal}</span>`;
+                varsContainer.appendChild(badge);
+            }
+        }
+
+        function printToConsole(...args) {
+            const logs = document.getElementById('console-logs');
+            const row = document.createElement('div');
+            
+            // Join args just like Python
+            row.innerText = args.join(' ');
+            
+            row.style.borderBottom = '1px dashed #333';
+            logs.appendChild(row);
+            logs.parentElement.scrollTop = logs.parentElement.scrollHeight;
+        }
+
+        async function reportLine(n) {
+            const h = 21; // height of a line roughly
+            highlightOverlay.style.display = 'block';
+            highlightOverlay.style.top = `${15 + (n * h)}px`;
+            await waitForStep();
+        }
+
+        // --- ROBUST TRANSPILER ---
+        function transpile(source) {
+            const lines = source.split('\n');
+            let jsCode = `async function main() { try { initGlobalScope(); \n`;
+            
+            let indentStack = [0]; // Tracks indentation levels
+            let declaredVarsStack = [new Set()]; // Tracks variables declared in each scope
+            
+            const funcRegex = /^def\s+(\w+)\s*\((.*)\):/;
+            
+            lines.forEach((line, i) => {
+                const trimmed = line.split('#')[0].trimEnd();
+                if (!trimmed.trim()) return; 
+
+                const indent = line.search(/\S|$/);
+                const cleanLine = trimmed.trim();
+
+                // 1. Handle Indentation (Scope blocks)
+                if (indent > indentStack[indentStack.length - 1]) {
+                    jsCode += ` {\n`;
+                    indentStack.push(indent);
+                    declaredVarsStack.push(new Set()); // New scope, new var tracker
+                }
+                while (indent < indentStack[indentStack.length - 1]) {
+                    jsCode += ` exitScope(); }\n`;
+                    indentStack.pop();
+                    declaredVarsStack.pop();
+                }
+
+                // Trace Line
+                if (!cleanLine.startsWith('else') && !cleanLine.startsWith('elif') && !cleanLine.startsWith('def ')) {
+                    jsCode += `await reportLine(${i});\n`;
+                }
+
+                // 2. Parse Syntax
+
+                // CASE: Function Definition
+                if (funcRegex.test(cleanLine)) {
+                    const match = cleanLine.match(funcRegex);
+                    const funcName = match[1];
+                    const argsRaw = match[2]; 
+                    
+                    // We generate a JS function
+                    jsCode += `async function ${funcName}(${argsRaw}) \n`;
+                    
+                    // But we defer the execution of "enterScope" until inside the block
+                    // We also need to register arguments as local variables immediately
+                    const argsList = argsRaw.split(',').map(a => a.trim()).filter(a => a);
+                    
+                    // Logic to inject immediately after the opening brace {
+                    // We can't insert it here easily, so we add a hook command
+                    jsCode += ` { enterScope('${funcName}', 'func'); \n`;
+                    
+                    // Inject argument visualizations
+                    argsList.forEach(arg => {
+                        jsCode += `updateVar('${arg}', ${arg});\n`;
+                        // Arguments are effectively declared local vars
+                        // We need to add them to the NEXT stack layer, but we haven't processed the indent yet.
+                        // However, JS will handle the execution order.
+                    });
+                    
+                    // We manually pushed indentation in the logic above? No.
+                    // Python structure:
+                    // def foo():
+                    //    body
+                    //
+                    // The "body" indent triggers the brace in logic block 1.
+                    // But we just opened a brace for the function `async function... {`.
+                    // The indentation logic will see increased indent next line and open *another* brace.
+                    // This is tricky.
+                    
+                    // FIX: Let's treat the function declaration line as the opener, 
+                    // and disable the indentation logic's brace creation for the immediate next step 
+                    // or rely on standard JS blocks.
+                    
+                    // Simplified approach for this fix:
+                    // We close the `{` opened by `async function` at the end of the indentation loop.
+                    // To sync with `indentStack`, we need to cheat a bit.
+                    // The `indentStack` logic wraps blocks. `async function` is a line.
+                    // Let's rely on the indent logic to open the block, but declare the function as a variable expression?
+                    
+                    // Better approach:
+                    // `const foo = async function(${args}) { enterScope...` 
+                    // But indentation logic adds another `{`.
+                    
+                    // Let's stick to the previous loop logic but fix the "enterScope" timing.
+                    // Actually, the previous logic was: `def` line sets `blockInject`.
+                    
+                    // REVERTING TO BLOCK INJECT STRATEGY with improvements
+                    // Remove the ` { enterScope...` I just added above and use a flag.
+                    return; // Skip standard processing, handled by blockInject in next iteration logic?
+                    // No, let's rewrite the `funcRegex` block entirely below using a buffer variable.
+                }
+
+                // Redo this line processing
+            });
+
+            // --- RE-IMPLEMENTATION OF THE LOOP FOR ROBUSTNESS ---
+            jsCode = `async function main() { try { initGlobalScope(); \n`;
+            indentStack = [0];
+            declaredVarsStack = [new Set()];
+            let blockInject = ""; // Code to run at start of next block
+
+            lines.forEach((line, i) => {
+                const rawLine = line.split('#')[0].trimEnd();
+                if (!rawLine.trim()) return;
+
+                const indent = line.search(/\S|$/);
+                const cleanLine = rawLine.trim();
+
+                // INDENTATION HANDLING
+                if (indent > indentStack[indentStack.length - 1]) {
+                    jsCode += ` {\n`;
+                    if(blockInject) { jsCode += blockInject; blockInject = ""; }
+                    indentStack.push(indent);
+                    declaredVarsStack.push(new Set());
+                    
+                    // Arguments logic from previous Def needs to be added to declaredVars
+                    // It's hard to pass state here. 
+                    // Let's just handle it via the "Args Injection" string directly.
+                }
+                while (indent < indentStack[indentStack.length - 1]) {
+                    jsCode += ` exitScope(); }\n`;
+                    indentStack.pop();
+                    declaredVarsStack.pop();
+                }
+
+                // LINE REPORTING
+                if (!cleanLine.startsWith('else') && !cleanLine.startsWith('elif') && !cleanLine.startsWith('def ')) {
+                    jsCode += `await reportLine(${i});\n`;
+                }
+
+                // 1. DEF
+                if (funcRegex.test(cleanLine)) {
+                    const match = cleanLine.match(funcRegex);
+                    const name = match[1];
+                    const args = match[2];
+                    
+                    jsCode += `async function ${name}(${args}) \n`;
+                    
+                    // Prepare injection for inside the function
+                    let injection = `enterScope('${name}', 'func');\n`;
+                    
+                    // Add logic to visualize arguments
+                    if (args.trim()) {
+                        const argNames = args.split(',').map(s => s.trim());
+                        argNames.forEach(a => {
+                            injection += `updateVar('${a}', ${a});\n`;
+                            // We don't need to add to declaredVars here because JS arguments 
+                            // are automatically local.
+                        });
+                    }
+                    blockInject = injection;
+                    return; 
+                }
+
+                // 2. PRINT
+                const printRegex = /^print\s*\((.*)\)/;
+                if (printRegex.test(cleanLine)) {
+                    const match = cleanLine.match(printRegex);
+                    // allow arguments to pass through to JS `printToConsole`
+                    jsCode += `printToConsole(${match[1]});\n`;
+                    return;
+                }
+
+                // 3. ASSIGNMENT (The big fix for scope)
+                // Regex to capture "var = val"
+                const assignRegex = /^([a-zA-Z_]\w*)\s*=(?!=)(.*)/;
+                if (assignRegex.test(cleanLine)) {
+                    const match = cleanLine.match(assignRegex);
+                    const varName = match[1];
+                    const valExpr = match[2];
+
+                    const currentScopeVars = declaredVarsStack[declaredVarsStack.length - 1];
+                    
+                    // If variable is NOT yet declared in this specific local scope, we MUST use 'let'
+                    // to prevent overwriting outer scopes (unless we want to simulate 'global' keyword, which we aren't supporting yet).
+                    // In Python, x=1 defaults to local.
+                    
+                    if (!currentScopeVars.has(varName)) {
+                        jsCode += `let ${varName} = ${valExpr};\n`;
+                        currentScopeVars.add(varName);
+                    } else {
+                        jsCode += `${varName} = ${valExpr};\n`;
+                    }
+                    
+                    // Update visualizer
+                    jsCode += `updateVar('${varName}', ${varName});\n`;
+                    return;
+                }
+
+                // 4. FUNCTION CALL (Generic)
+                // If it's a standalone call like `inner()` or `outer()`.
+                // We use a simple regex to await it.
+                if (/^[a-zA-Z_]\w*\(.*\)$/.test(cleanLine)) {
+                     // e.g. "func(arg)" -> "await func(arg)"
+                     // We need to match the name to await it
+                     jsCode += `await ${cleanLine};\n`;
+                     return;
+                }
+
+                // Fallback for expression statements
+                jsCode += `${cleanLine};\n`;
+
+            });
+
+            // Close remaining blocks
+            while (indentStack.length > 1) {
+                jsCode += ` exitScope(); }\n`;
+                indentStack.pop();
+            }
+
+            jsCode += ` } catch(e) { console.error(e); statusText.innerText = "Error: " + e.message; } } main();`;
+            return jsCode;
+        }
+
+        function runUserCode() {
+            document.getElementById('console-logs').innerHTML = '';
+            scopeStack = ['global'];
+            currentScopeId = 'global';
+            // Clear visualization
+            scopeRoot.innerHTML = ''; 
+
+            const code = editor.value;
+            try {
+                const js = transpile(code);
+                console.log("Transpiled JS:\n", js);
+                eval(js);
+            } catch (e) {
+                statusText.innerText = "Transpile Error";
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>
