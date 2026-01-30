@@ -507,6 +507,13 @@
             animation: rot 0.8s infinite linear;
         }
 
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         @keyframes rot {
             to {
                 transform: rotate(360deg);
@@ -1037,55 +1044,53 @@
 
         // --- SECURITY ---
         function enableSecurity() {
-            const descPanel = document.getElementById('tab-desc');
-            const style = document.createElement('style');
-            style.innerHTML = `#tab-desc, #tab-desc * { -webkit-user-select: none !important; user-select: none !important; }`;
-            document.head.appendChild(style);
-
-            if (descPanel) {
-                descPanel.addEventListener('mouseup', () => window.getSelection().removeAllRanges());
-                descPanel.addEventListener('contextmenu', (e) => e.preventDefault());
+            // 1. Disable Left Panel Selection & Context Menu
+            const leftPane = document.getElementById('pane-left');
+            if (leftPane) {
+                leftPane.classList.add('no-select');
+                leftPane.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    return false;
+                });
             }
 
-            document.addEventListener('copy', (e) => {
-                const selection = window.getSelection();
-                if (descPanel && (descPanel.contains(selection.anchorNode) || descPanel.contains(selection.focusNode))) {
-                    e.preventDefault(); e.stopPropagation();
-                    if (e.clipboardData) e.clipboardData.setData('text/plain', '');
-                    selection.removeAllRanges();
-                    return false;
-                }
-            });
+            // 2. Restrict Copy/Cut/Paste to Right Panel Only
+            const preventAction = (e) => {
+                const rightPane = document.getElementById('pane-right');
+                const target = e.target;
 
-            document.addEventListener('keydown', (e) => {
-                const isCtrl = e.ctrlKey || e.metaKey;
-                if (descPanel && descPanel.offsetParent !== null) {
-                    if (isCtrl && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'p')) {
-                        const activeEl = document.activeElement;
-                        const rightPane = document.getElementById('pane-right');
-                        if (!rightPane.contains(activeEl)) {
-                            e.preventDefault(); e.stopPropagation(); return false;
-                        }
-                    }
+                // Allow action only if the target is within the right panel
+                if (rightPane && rightPane.contains(target)) {
+                    return; // Allow
                 }
-            });
 
-            let alertTriggered = false;
-            const punishUser = () => {
-                if (alertTriggered) return;
-                alertTriggered = true;
-                alert("Warning: Switching windows is not allowed!");
-                setTimeout(() => { alertTriggered = false; }, 1000);
+                // Otherwise block it
+                e.preventDefault();
+                return false;
             };
 
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'hidden') punishUser();
-            });
+            document.addEventListener('copy', preventAction);
+            document.addEventListener('cut', preventAction);
+            document.addEventListener('paste', preventAction);
 
-            window.addEventListener('blur', () => {
-                if (document.activeElement && document.activeElement.tagName === "IFRAME") return;
-                punushUser();
-            });
+            // 3. Clear Clipboard on Tab Switch/Return
+            const clearClipboard = async () => {
+                try {
+                    await navigator.clipboard.writeText('');
+                } catch (e) {
+                    // console.log("Clipboard clear failed/denied");
+                }
+            };
+
+            const handleReturn = () => {
+                if (!document.hidden) {
+                    // Small delay to ensure focus is regained
+                    setTimeout(clearClipboard, 100);
+                }
+            };
+
+            document.addEventListener('visibilitychange', handleReturn);
+            window.addEventListener('focus', () => setTimeout(clearClipboard, 100));
         }
         enableSecurity();
     </script>
