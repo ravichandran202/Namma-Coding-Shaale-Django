@@ -924,7 +924,7 @@
                     }
                 }
 
-                renderTabbedResults(results, isSubmit ? p.testCases.length : 2);
+                renderTabbedResults(results, isSubmit ? p.testCases.length : Math.min(results.length, 2));
 
                 if (isSubmit) {
                     await submitCodeToBackend(code, results.length - passed);
