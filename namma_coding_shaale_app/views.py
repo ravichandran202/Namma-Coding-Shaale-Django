@@ -868,7 +868,8 @@ def problem_solver(request, course_id):
         # "content_id": content_id,
         "course_id": course_id,
         "problem_id": problem.id,
-        "submission_id": submission.id  # Include submission ID for your API
+        "submission_id": submission.id,  # Include submission ID for your API
+        "is_solved": str(submission.status == 'SOLVED')
     }
     
     return render(request, "problem-solver.html", context)
@@ -2451,4 +2452,3 @@ def leaderboard(request):
         'overall_leaders': overall_leaders
     }
     return render(request, 'leaderboard.html', context)
-
