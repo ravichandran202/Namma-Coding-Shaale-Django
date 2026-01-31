@@ -268,7 +268,7 @@
             border: 1px solid #e5e5e5;
         }
 
-        /* --- EDITOR --- */
+        /* --- EDITOR & SOLUTION --- */
         .editor-tools {
             height: 40px;
             border-bottom: 1px solid var(--border);
@@ -298,6 +298,35 @@
         #editor-container {
             flex: 1;
             min-height: 0;
+            /* Default visible */
+        }
+
+        #solution-container {
+            flex: 1;
+            min-height: 0;
+            display: none;
+            /* Hidden by default */
+            position: relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #solution-lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            color: var(--text-muted);
+            text-align: center;
         }
 
         /* --- SPLITTER & DRAG --- */
@@ -549,10 +578,6 @@
 
     <nav>
         <div class="nav-brand">
-            <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffa116" stroke-width="2">
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                <polyline points="14 2 14 8 20 8" />
-            </svg> -->
             <span>&lt; Namma Coding Shaale /&gt;</span>
         </div>
         <div class="nav-controls">
@@ -598,12 +623,19 @@
 
         <div id="pane-right">
             <div class="tabs-bar">
-                <div class="tab active" style="cursor: default;">
+                <div id="top-tab-code" class="tab active" onclick="switchTopTab(this, 'code')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="16 18 22 12 16 6" />
                         <polyline points="8 6 2 12 8 18" />
                     </svg>
                     Code
+                </div>
+                <div id="top-tab-sol" class="tab" onclick="switchTopTab(this, 'solution')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    Solution
                 </div>
                 <div style="flex:1;"></div>
                 <select id="langSelect" class="lang-select" onchange="changeLanguage()">
@@ -615,6 +647,20 @@
             </div>
 
             <div id="editor-container"></div>
+
+            <div id="solution-container">
+                <div id="solution-editor" style="width:100%; height:100%;"></div>
+                <div id="solution-lock-overlay">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        style="margin-bottom:16px; opacity:0.5;">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <h3 style="margin:0 0 8px 0; font-size:16px; font-weight:600; color:var(--text-main);">
+                        Solution Locked</h3>
+                    <p style="margin:0; font-size:14px;">Solve the problem to unlock the solution.</p>
+                </div>
+            </div>
 
             <div id="splitter"></div>
 
@@ -683,13 +729,15 @@
 
     <script>
         // --- CONFIG ---
-        let editor, language = 'python', isRunning = false;
+        let editor, solutionEditor, language = 'python', isRunning = false;
         const problems = {};
         const urlParams = new URLSearchParams(window.location.search);
         const currentProblemId = urlParams.get('id') || 'sum-two-numbers';
+        const isSolved = "{{ is_solved }}" === "True";
 
         require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
         require(['vs/editor/editor.main'], async function () {
+            // Main Code Editor
             editor = monaco.editor.create(document.getElementById('editor-container'), {
                 value: '',
                 language: language,
@@ -703,6 +751,23 @@
                 scrollBeyondLastLine: false,
                 renderLineHighlight: 'line'
             });
+
+            // Read-only Solution Editor
+            solutionEditor = monaco.editor.create(document.getElementById('solution-editor'), {
+                value: '',
+                language: language,
+                theme: 'vs',
+                automaticLayout: true,
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 15,
+                lineHeight: 24,
+                minimap: { enabled: false },
+                padding: { top: 16, bottom: 16 },
+                scrollBeyondLastLine: false,
+                readOnly: true, // Key property
+                renderLineHighlight: 'none'
+            });
+
             await loadProblem(currentProblemId);
         });
 
@@ -735,6 +800,7 @@
                 ${p.conditions ? `<br><h3 style="font-size:16px;">Constraints</h3><ul>${p.conditions}</ul>` : ''}
             `;
 
+            // Setup Main Editor
             const savedEl = document.getElementById('codeData');
             let code = p.templates[language] || '';
             if (savedEl && savedEl.textContent) {
@@ -745,6 +811,16 @@
             }
             editor.setValue(code);
             monaco.editor.setModelLanguage(editor.getModel(), language);
+
+            // Setup Solution Editor
+            if (isSolved && p.solution) {
+                solutionEditor.setValue(p.solution);
+                monaco.editor.setModelLanguage(solutionEditor.getModel(), language); // Currently assumes python, could be improved if solution object had lang
+                document.getElementById('solution-lock-overlay').style.display = 'none';
+            } else {
+                solutionEditor.setValue("");
+                document.getElementById('solution-lock-overlay').style.display = 'flex';
+            }
         }
 
         function changeLanguage() {
@@ -754,6 +830,32 @@
             if (p) {
                 editor.setValue(p.templates[language] || '');
                 monaco.editor.setModelLanguage(editor.getModel(), language);
+                
+                // Also update solution syntax highlighting if you want it to match
+                // (Assuming p.solution is fixed text, usually python, but if you had multi-lang solutions:)
+                monaco.editor.setModelLanguage(solutionEditor.getModel(), 'python'); 
+            }
+        }
+
+        // --- UI SWITCHING ---
+        function switchTopTab(el, type) {
+            document.getElementById('top-tab-code').classList.remove('active');
+            document.getElementById('top-tab-sol').classList.remove('active');
+            el.classList.add('active');
+
+            const editContainer = document.getElementById('editor-container');
+            const solContainer = document.getElementById('solution-container');
+            const langSelect = document.getElementById('langSelect');
+
+            if (type === 'code') {
+                editContainer.style.display = 'block';
+                solContainer.style.display = 'none';
+                langSelect.style.visibility = 'visible';
+            } else {
+                editContainer.style.display = 'none';
+                solContainer.style.display = 'block';
+                langSelect.style.visibility = 'hidden'; // Hide language select in solution view
+                solutionEditor.layout(); // Refresh layout
             }
         }
 
@@ -827,6 +929,13 @@
                 if (isSubmit) {
                     await submitCodeToBackend(code, results.length - passed);
                     addToHistory(passed, results.length);
+                    // Refresh page or update isSolved status dynamically if desired
+                    // For now, reload to see unlocked solution is standard, or set flag:
+                    if (passed === cases.length) {
+                        // Optional: Unlock immediately without reload
+                        // isSolved = true; 
+                        // renderProblem(currentProblemId);
+                    }
                 }
             } catch (e) {
                 renderSingleResult(null, e.message, "System Error");
@@ -933,7 +1042,6 @@
                 <div class="input-header">Expected</div><div class="res-box">${r.tc.expected}</div>
             `;
 
-            // Inject Diff if Failed
             if (!r.isPass) {
                 const diffHtml = getDiffHtml(r.output, r.tc.expected);
                 html += `
@@ -999,15 +1107,17 @@
             document.getElementById('tab-subs').style.display = id === 'subs' ? 'block' : 'none';
         }
         function switchRight(el, id) {
-            document.querySelectorAll('#pane-right .tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#pane-output .tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('out-cases').style.display = id === 'cases' ? 'block' : 'none';
             document.getElementById('out-results').style.display = id === 'results' ? 'block' : 'none';
         }
+
         function toggleConsole() {
             const panel = document.getElementById('pane-output');
             panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
             editor.layout();
+            if(solutionEditor) solutionEditor.layout();
         }
 
         // --- DRAG RESIZER ---
@@ -1032,6 +1142,7 @@
             if (newHeight > 40 && newHeight < window.innerHeight - 100) {
                 outputPanel.style.height = `${newHeight}px`;
                 editor.layout();
+                if(solutionEditor) solutionEditor.layout();
             }
         }
 
@@ -1044,27 +1155,16 @@
 
         // --- SECURITY ---
         function enableSecurity() {
-            // 1. Disable Left Panel Selection & Context Menu
             const leftPane = document.getElementById('pane-left');
             if (leftPane) {
                 leftPane.classList.add('no-select');
-                leftPane.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
-                    return false;
-                });
+                leftPane.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; });
             }
 
-            // 2. Restrict Copy/Cut/Paste to Right Panel Only
             const preventAction = (e) => {
                 const rightPane = document.getElementById('pane-right');
                 const target = e.target;
-
-                // Allow action only if the target is within the right panel
-                if (rightPane && rightPane.contains(target)) {
-                    return; // Allow
-                }
-
-                // Otherwise block it
+                if (rightPane && rightPane.contains(target)) return;
                 e.preventDefault();
                 return false;
             };
@@ -1073,22 +1173,8 @@
             document.addEventListener('cut', preventAction);
             document.addEventListener('paste', preventAction);
 
-            // 3. Clear Clipboard on Tab Switch/Return
-            const clearClipboard = async () => {
-                try {
-                    await navigator.clipboard.writeText('');
-                } catch (e) {
-                    // console.log("Clipboard clear failed/denied");
-                }
-            };
-
-            const handleReturn = () => {
-                if (!document.hidden) {
-                    // Small delay to ensure focus is regained
-                    setTimeout(clearClipboard, 100);
-                }
-            };
-
+            const clearClipboard = async () => { try { await navigator.clipboard.writeText(''); } catch (e) { } };
+            const handleReturn = () => { if (!document.hidden) setTimeout(clearClipboard, 100); };
             document.addEventListener('visibilitychange', handleReturn);
             window.addEventListener('focus', () => setTimeout(clearClipboard, 100));
         }
