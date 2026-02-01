@@ -76,7 +76,6 @@ def send_otp_email(user, otp_code):
         return True
     except Exception as e:
         logger.error(f"Failed to send OTP email to {user.email}: {str(e)}", exc_info=True)
-        print(f"Failed to send OTP email: {str(e)}")
         return False
 
 def send_course_enrollment_email(user, course, user_course, request):
@@ -164,8 +163,6 @@ def auth_receiver(request):
                 resourceName='people/me',
                 personFields='phoneNumbers'
             ).execute()
-
-            print("\n\nPERSON : ", person)
             
             # Check results
             connections = person.get('phoneNumbers', [])
@@ -433,7 +430,6 @@ def home(request):
 @trace_span
 def code_editor_freemium(request):
     logger.info("Code Editor Freemium Page Accessed")
-    print("Code Editor Freemium Page Called")
     return render(request,"code-editor-freemium.html")
 
 @trace_span
@@ -532,7 +528,6 @@ def profile_page(request, section=None):
         "active_section": section
     }
 
-    print(context)
 
     template_name = "profile-page-certificates.html" if section == "certificates" else "profile-page.html"
     return render(request, template_name, context)
@@ -605,8 +600,6 @@ def list_problems(request, course_id):
         section["title"] = f"{idx}. {section['title']}"
         sections.append(section)
     
-    print("SECTIONS : ",sections)
-
     context = {
         "is_freemium": not is_enrolled_user,
         "roadmap": roadmap,
@@ -1166,7 +1159,6 @@ def view_content(request, course_id, content_file_id):
             'next_unlock_date': next_unlock_date,
         }
 
-        print(context)
 
         if content.type.lower() == "quiz":
             quiz_submission = QuizSubmission.objects.get_or_create(
@@ -1326,14 +1318,11 @@ def bulk_fetch_content_content(user, course, problem_ids):
             course=course
         ).first()
 
-        print(user_progress)
 
         contents.append({
             "content" : course_content,
             "is_completed" : user_progress.is_completed
         })
-
-        print(course_content)
     
     
     return contents
@@ -1417,7 +1406,7 @@ def get_user_roadmap_html(user_id, course_id):
         })
     
     memorycache_sidebar[user_id+course_id] = result
-    print(f"CACHE SET : for id {user_id+course_id}")
+    logger.info(f"CACHE SET : for id {user_id+course_id}")
     
     return result
 
@@ -1541,7 +1530,7 @@ def save_code(request):
 
         # Determine status based on failed_count
         status = 'SOLVED' if failed_count == 0 else 'ATTEMPTED'
-        print("\n\nSTATUS:", status, "Problem ID:", problem_file_id)
+        logger.info(f"\n\nSTATUS: {status}, Problem ID: {problem_file_id}")
         
         # Get or create the submission
         submission, created = ProblemSubmission.objects.update_or_create(
@@ -1589,14 +1578,12 @@ def save_code(request):
         
     except KeyError as e:
         logger.error(f"Missing key in save_code request data: {str(e)}", exc_info=True)
-        print(f"Missing key in request data: {str(e)}")
         return Response(
             {"error": f"Missing required field: {str(e)}"},
             status=400
         )
     except Exception as e:
         logger.error(f"Error in save_code: {str(e)}", exc_info=True)
-        print(f"Error in save_code: {str(e)}")
         return Response(
             {"error": str(e)},
             status=500
@@ -1623,12 +1610,9 @@ def save_quiz_data(request):
             correct_answer_count = 0
 
             for record in quiz_data:
-                print(type(record))
                 if record.get("isCorrect") == True:
                     correct_answer_count += 1
             
-            print("Extra details", total_quetions, is_passed, content_id, course_id)
-
             content = Content.objects.get(pk=content_id)
             course = Course.objects.get(pk=course_id)
             existing_record = QuizSubmission.objects.filter(content = content, course = course, user = request.user).first()
@@ -1705,9 +1689,6 @@ def save_quiz_data(request):
                 
             existing_record.save()
             logger.info(f"Quiz data saved successfully for user {request.user.id}, score: {score}")
-
-            # Process your quiz_data here...
-            print("Received:", quiz_data)
 
             return JsonResponse({"status": "success", "message": "Quiz data saved successfully"})
         except json.JSONDecodeError as e:
@@ -1812,11 +1793,6 @@ def setup_phonepe_client():
     client_version = credentials.get('PHONE_PAY_CLIENT_VERSION')
     env = Env.PRODUCTION if os.environ.get('ENV') == "production" else Env.SANDBOX
 
-    print("PHONE_PAY_CLIENT_SECRET", client_secret)
-    print("PHONE_PAY_CLIENT_ID", client_id)
-    print("PHONE_PAY_CLIENT_VERSION", client_version)
-    print("ENV", env)
-
     should_publish_events = True
     client = StandardCheckoutClient.get_instance(client_id=client_id,
                                                         client_secret=client_secret,
@@ -1845,7 +1821,6 @@ def get_checkout_page_url(request, client, course):
                                                                     meta_info=meta_info)
     standard_pay_response = client.pay(standard_pay_request)
     checkout_page_url = standard_pay_response.redirect_url
-    print("\n\n",checkout_page_url)
     return checkout_page_url, ui_redirect_url
 
 @trace_span
@@ -1867,7 +1842,6 @@ def email_sender(request):
 
     except Exception as e:
         logger.error(f"Failed to send OTP email to {request.user.email}: {str(e)}", exc_info=True)
-        print(f"Failed to send OTP email: {str(e)}")
 
     return render(request, "index.html")
 
