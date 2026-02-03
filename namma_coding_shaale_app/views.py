@@ -1334,10 +1334,10 @@ def bulk_fetch_content_content(user, course, problem_ids):
 @trace_span
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
-    # cached_result = memorycache_sidebar.get(user_id+course_id)
-    # if cached_result is not None:
-    #     print(f"CACHE FOUND : for id {user_id+course_id}")
-    #     return cached_result
+    cached_result = memorycache_sidebar.get(user_id+course_id)
+    if cached_result is not None:
+        print(f"CACHE FOUND : for id {user_id+course_id}")
+        return cached_result
     
     user_progress = {
         up.content_id: up 
@@ -1949,6 +1949,7 @@ def blog_delete(request, post_id):
     return redirect("blog_list")
 
 @trace_span
+@login_required(login_url="login")
 def student_dashboard(request, username):
     logger.info(f"Student dashboard accessed for user: {username}")
     try:
@@ -2182,6 +2183,7 @@ def student_dashboard(request, username):
     return render(request, "student_dashboard.html", context)
 
 @trace_span
+@login_required(login_url="login")
 def student_report(request, username):
     logger.info(f"Student report accessed for user: {username} - Fixed Version Loaded")
     try:
@@ -2197,25 +2199,35 @@ def student_report(request, username):
         status='SOLVED'
     ).values('problem').distinct().count()
 
-    # 2. Content Completed
-    completed_contents_count = UserCourse.objects.filter(
+    # 2. Contents Done
+    completed_contents_count = UserContentProgress.objects.filter(
         user=user, 
-        status='COMPLETED'
+        is_completed=True
     ).count()
 
-    # 3. Active Days (Total)
-    active_days_count = ProblemSubmission.objects.filter(
+    # 3. Active Days & Heatmap Data
+    # Collect dates from submissions
+    submission_dates = ProblemSubmission.objects.filter(
         user=user
-    ).dates('submitted_at', 'day').count()
-    
-    # 4. Heatmap (90 Days)
-    today = timezone.now().date()
-    three_months_ago = today - timedelta(days=90)
-    activity_dates = ProblemSubmission.objects.filter(
-        user=user, 
-        submitted_at__date__gte=three_months_ago
     ).values_list('submitted_at__date', flat=True)
-    heatmap_dates = [d.strftime("%Y-%m-%d") for d in set(activity_dates)]
+    
+    # Collect dates from content completion
+    completion_dates = UserContentProgress.objects.filter(
+        user=user,
+        is_completed=True
+    ).values_list('completed_at__date', flat=True)
+
+    # Collect dates from content access (approximate)
+    access_dates = UserContentProgress.objects.filter(
+        user=user
+    ).values_list('last_accessed__date', flat=True)
+
+    # Combine all unique dates
+    all_dates = set(submission_dates) | set(completion_dates) | set(access_dates)
+    active_days_count = len(all_dates) - 1 if None in all_dates else len(all_dates) # Handle None if any
+    
+    # Filter out None and sort
+    heatmap_dates = sorted([d.strftime("%Y-%m-%d") for d in all_dates if d is not None])
 
     # 5. Difficulty Breakdown
     difficulty_counts = ProblemSubmission.objects.filter(
@@ -2224,39 +2236,50 @@ def student_report(request, username):
     difficulty_data = {item['problem__difficulty'].lower(): item['count'] for item in difficulty_counts}
 
     # 6. Trend (30 Days for Chart)
-    # Re-using dashboard logic which calculates 'daily_subs' for last 30 days
-    last_30_days = today - timedelta(days=29)
-    submissions_last_30 = ProblemSubmission.objects.filter(
-        user=user,
-        submitted_at__date__gte=last_30_days,
-        status='SOLVED'
-    ).values('submitted_at__date').annotate(count=Count('id')).order_by('submitted_at__date')
+    # Use LOCAL time for 'today' to match the user's perspective (IST) and DB aggregation
+    today = timezone.localtime(timezone.now()).date()
+    thirty_days_ago = today - timedelta(days=29)
     
-    trend_map = {item['submitted_at__date'].strftime('%Y-%m-%d'): item['count'] for item in submissions_last_30}
+    daily_subs = ProblemSubmission.objects.filter(
+        user=user,
+        status='SOLVED',
+        submitted_at__date__gte=thirty_days_ago
+    ).values('submitted_at__date').annotate(count=Count('problem', distinct=True)).order_by('submitted_at__date')
+    
+    trend_map = {item['submitted_at__date'].strftime('%Y-%m-%d'): item['count'] for item in daily_subs}
+    
     trend_labels = []
     trend_data = []
+    
+    # Fill missing dates with 0
     for i in range(30):
-        d_obj = (last_30_days + timedelta(days=i))
-        trend_labels.append(d_obj.strftime("%b %d")) 
-        trend_data.append(trend_map.get(d_obj.strftime("%Y-%m-%d"), 0))
+        d = thirty_days_ago + timedelta(days=i)
+        d_str = d.strftime('%Y-%m-%d')
+        trend_labels.append(d.strftime('%b %d')) # Label format: Jan 01
+        trend_data.append(trend_map.get(d_str, 0))
 
     # 7. Recent Solved
-    recent_solved_problems = []
-    recent_submissions = ProblemSubmission.objects.filter(
+    # 11. Recent Solved Problems (Unique)
+    # Fetch last 30 solved submissions to find top 5 unique
+    recent_subs = ProblemSubmission.objects.filter(
         user=user, status='SOLVED'
-    ).select_related('problem', 'course').order_by('-submitted_at')[:10] 
-
-    seen_problems = set()
-    for sub in recent_submissions:
-        if sub.problem.id not in seen_problems:
-             recent_solved_problems.append({
-                 "title": sub.problem.title,
-                 "difficulty": sub.problem.difficulty,
-                 "submitted_at": sub.submitted_at,
-                 "url": reverse('problem-solver', args=[sub.course.id]) + f"?file={sub.problem.file_name}" if sub.course else "#"
-             })
-             seen_problems.add(sub.problem.id)
-             if len(recent_solved_problems) >= 5: break
+    ).select_related('problem', 'course').order_by('-submitted_at')[:30]
+    
+    seen_probs = set()
+    recent_solved_problems = []
+    for sub in recent_subs:
+        if sub.problem.id not in seen_probs:
+            seen_probs.add(sub.problem.id)
+            # Create a simple dict for template
+            recent_solved_problems.append({
+                'title': sub.problem.title,
+                'difficulty': sub.problem.difficulty.lower(), # easy, medium, hard
+                'submitted_at': sub.submitted_at,
+                # Try to link to problem solver if course exists, else just #
+                'url': reverse('problem-solver', args=[sub.course.id]) + f"?file={sub.problem.file_name}" if sub.course else "#"
+            })
+            if len(recent_solved_problems) >= 5: 
+                break
              
     # 8. Course Progress (needed for report)
     enrolled_courses = UserCourse.objects.filter(user=user).select_related('course')
