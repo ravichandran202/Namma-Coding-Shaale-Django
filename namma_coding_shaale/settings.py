@@ -2,7 +2,18 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load environment variables conditionally
+# Check if we should use stage/local or production environment
+env_file = os.environ.get('ENV_FILE', '.env.stage')  # Default to stage for local dev
+
+# If ENV=production is set in the current environment, use .env
+if os.environ.get('ENV') == 'production':
+    env_file = '.env'
+
+# Load the appropriate environment file
+load_dotenv(env_file)
+print(f"[INFO] Loaded environment from: {env_file}")
+
 
 GOOGLE_OAUTH_CLIENT_ID = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
 if not GOOGLE_OAUTH_CLIENT_ID:
