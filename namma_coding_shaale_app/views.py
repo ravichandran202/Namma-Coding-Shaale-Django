@@ -744,24 +744,26 @@ def payment_status(request):
                     'transaction_id': merchant_order_id,
                 }
                 )
+        
+        # Build context and return inside try block
+        context = {
+            'status': order_status.state,
+            'course': {
+                'name': order_status.meta_info.udf3,
+                'id': order_status.meta_info.udf2,
+            },
+            'total_price': int(order_status.amount)//100,
+            'order_id': order_status.order_id,
+            'transaction_id': merchant_order_id,
+            'payment_date': '2024-01-20 14:30:00'
+        }
+        
+        return render(request, 'payment_status.html', context)
+        
     except Exception as e:
         logger.error(f"Error processing payment status for {merchant_order_id}: {e}", exc_info=True)
         # Handle error appropriately in UI
         return render(request, 'payment_status.html', {'status': 'ERROR'})
-
-    context = {
-        'status': order_status.state,
-        'course': {
-            'name': order_status.meta_info.udf3,
-            'id': order_status.meta_info.udf2,
-        },
-        'total_price': int(order_status.amount)//100,
-        'order_id': order_status.order_id,
-        'transaction_id': merchant_order_id,
-        'payment_date': '2024-01-20 14:30:00'
-    }
-    
-    return render(request, 'payment_status.html', context)
 
 @trace_span
 def show_certificate(request):
