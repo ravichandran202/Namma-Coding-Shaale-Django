@@ -1107,7 +1107,9 @@ def view_content(request, course_id, content_file_id):
             progress.save()
             
             # Clear sidebar cache
-            memorycache_sidebar[str(request.user.id)+str(course_id)] = None
+            cache_key = f"{request.user.id}_{course_id}"
+            memorycache_sidebar[cache_key] = None
+            logger.info(f"CACHE CLEARED: for key {cache_key}")
             
             # 2. Handle Navigation to Next
             if next_content_obj:
@@ -1334,9 +1336,10 @@ def bulk_fetch_content_content(user, course, problem_ids):
 @trace_span
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
-    cached_result = memorycache_sidebar.get(user_id+course_id)
+    cache_key = f"{user_id}_{course_id}"
+    cached_result = memorycache_sidebar.get(cache_key)
     if cached_result is not None:
-        print(f"CACHE FOUND : for id {user_id+course_id}")
+        logger.info(f"CACHE FOUND: for key {cache_key}")
         return cached_result
     
     user_progress = {
@@ -1405,8 +1408,8 @@ def get_user_roadmap_html(user_id, course_id):
             'has_submenu': len(data['contents']) > 1
         })
     
-    memorycache_sidebar[user_id+course_id] = result
-    logger.info(f"CACHE SET : for id {user_id+course_id}")
+    memorycache_sidebar[cache_key] = result
+    logger.info(f"CACHE SET: for key {cache_key}")
     
     return result
 
