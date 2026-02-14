@@ -1,555 +1,558 @@
+{% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% if status == 'success' %}Payment Successful - ನಮ್ಮ CODING ಶಾಲೆ
-    {% elif status == 'pending' %}Payment Pending - ನಮ್ಮ CODING ಶಾಲೆ
-    {% elif status == 'cancelled' %}Payment Cancelled - ನಮ್ಮ CODING ಶಾಲೆ
-    {% else %}Payment Status - ನಮ್ಮ CODING ಶಾಲೆ{% endif %}
-  </title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
+{% block title %}
+{% if status == 'COMPLETED' %}Payment Successful
+{% elif status == 'PENDING' %}Payment Pending
+{% elif status == 'FAILED' %}Payment Failed
+{% else %}Payment Status{% endif %} - ನಮ್ಮ CODING ಶಾಲೆ
+{% endblock %}
 
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
-    rel="stylesheet">
+{% block body_class %}
+class="
+{% if status == 'COMPLETED' %}success-page
+{% elif status == 'PENDING' %}pending-page
+{% elif status == 'FAILED' %}failed-page
+{% else %}error-page{% endif %}"
+{% endblock %}
 
-  <!-- Custom CSS -->
-  <style>
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --primary-light: #93c5fd;
-      --secondary: #10b981;
-      --dark: #1e293b;
-      --light: #f8fafc;
-      --gray: #64748b;
-      --gray-light: #e2e8f0;
-      --border: rgba(0, 0, 0, 0.08);
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      --border-radius: 12px;
-      --section-padding: 8rem 0;
-      --container-max-width: 1000px;
+{% block extra_css %}
+<style>
+  /* Status-specific body backgrounds (kept minimal for colored top bar) */
+  body.success-page .status-card::before {
+    background: var(--success) !important;
+  }
+
+  body.pending-page .status-card::before {
+    background: var(--warning) !important;
+  }
+
+  body.failed-page .status-card::before {
+    background: var(--danger) !important;
+  }
+
+  body.error-page .status-card::before {
+    background: var(--gray) !important;
+  }
+
+  /* Main Container */
+  .status-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 3rem auto;
+    position: relative;
+    z-index: 1;
+    padding: 0 1rem;
+  }
+
+  /* Status Card */
+  .status-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+  }
+
+  /* Status Icon */
+  .status-icon-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+
+  .status-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: white;
+    animation: iconPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s both;
+    position: relative;
+    z-index: 1;
+  }
+
+  .success-page .status-icon {
+    background: linear-gradient(135deg, var(--success), #059669);
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+  }
+
+  .pending-page .status-icon {
+    background: linear-gradient(135deg, var(--warning), #d97706);
+    box-shadow: 0 10px 40px rgba(245, 158, 11, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .failed-page .status-icon {
+    background: linear-gradient(135deg, var(--danger), #dc2626);
+    box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+  }
+
+  .error-page .status-icon {
+    background: linear-gradient(135deg, var(--gray), #475569);
+    box-shadow: 0 10px 40px rgba(100, 116, 139, 0.4);
+  }
+
+  /* Ring Animation for Success */
+  .icon-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid;
+    border-radius: 50%;
+    animation: ringExpand 1.5s ease-out;
+  }
+
+  .success-page .icon-ring {
+    border-color: var(--success);
+  }
+
+  @keyframes iconPop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
     }
 
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
-      font-weight: 400;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes ringExpand {
+    0% {
+      transform: scale(1);
+      opacity: 1;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    .display-font {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    100% {
+      transform: scale(1.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      transform: scale(1);
     }
 
-    /* Navigation */
-    .navbar {
-      padding: 1rem 0;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s ease;
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Text Content */
+  .status-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    animation: fadeIn 0.8s ease-out 0.4s both;
+  }
+
+  .status-message {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    animation: fadeIn 0.8s ease-out 0.5s both;
+  }
+
+  /* Order Details */
+  .order-details {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05));
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+    animation: fadeIn 0.8s ease-out 0.6s both;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    color: var(--gray);
+    font-weight: 500;
+  }
+
+  .detail-value {
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  /* Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    animation: fadeIn 0.8s ease-out 0.7s both;
+  }
+
+  .btn-primary-custom {
+    flex: 1;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    color: white;
+  }
+
+  .btn-secondary-custom {
+    flex: 1;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--gray);
+    background: white;
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .btn-secondary-custom:hover {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Success specific */
+  .success-page .btn-primary-custom {
+    background: linear-gradient(135deg, var(--success), #059669);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .success-page .btn-primary-custom:hover {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+  }
+
+  /* Warning for pending */
+  .warning-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--warning);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    text-align: left;
+  }
+
+  .warning-box h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .warning-box p {
+    margin: 0;
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Animations */
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
     }
 
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: white !important;
-      display: flex;
-      align-items: center;
-      transition: all 0.3s ease;
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
 
-    .brand-text {
-      font-family: 'Playfair Display', serif;
-      margin: 0 0.5rem;
+    to {
+      opacity: 1;
     }
+  }
 
-    .brand-highlight {
-      color: var(--primary-light);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+  /* Confetti for success */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    position: absolute;
+    animation: confetti-fall 3s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
     }
+  }
 
-    /* Main Content */
-    .status-section {
-      padding: 8rem 0 4rem;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .status-container {
-      max-width: var(--container-max-width);
-      margin: 0 auto;
-    }
-
+  /* Responsive */
+  @media (max-width: 575px) {
     .status-card {
-      background-color: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transition: var(--transition);
-      text-align: center;
+      padding: 2rem 1.5rem;
+      border-radius: 20px;
     }
 
-    .status-card:hover {
-      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.2);
+    .status-title {
+      font-size: 1.5rem;
     }
 
-    .status-header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 2.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    .status-message {
+      font-size: 1rem;
     }
 
-    .status-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-      background-size: cover;
-    }
-
-    .status-body {
-      padding: 3rem 2.5rem;
-      position: relative;
-    }
-
-    .status-body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-      background-size: cover;
+    .status-icon-wrapper {
+      width: 100px;
+      height: 100px;
     }
 
     .status-icon {
-      font-size: 5rem;
-      margin-bottom: 2rem;
-      display: block;
+      font-size: 2.5rem;
     }
 
-    .status-content {
-      position: relative;
-      z-index: 1;
+    .action-buttons {
+      flex-direction: column;
     }
 
-    .order-details {
-      background-color: var(--light);
-      border-radius: var(--border-radius);
-      padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid var(--border);
-      text-align: left;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .detail-row:last-child {
-      border-bottom: none;
-    }
-
-    .btn-premium {
-      background: linear-gradient(135deg, var(--primary), #7c3aed);
-      color: white !important;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      margin: 0.5rem;
-    }
-
-    .btn-premium::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .btn-primary-custom,
+    .btn-secondary-custom {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: 0.5s;
     }
+  }
+</style>
+{% endblock %}
 
-    .btn-premium:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-      background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
-      color: white;
-    }
+{% block content %}
+<div class="status-container">
+  <div class="status-card">
 
-    .btn-premium:hover::before {
-      left: 100%;
-    }
+    <!-- SUCCESS STATE -->
+    {% if status == 'COMPLETED' %}
+    <div class="status-icon-wrapper">
+      <div class="status-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <div class="icon-ring"></div>
+      <div class="icon-ring" style="animation-delay: 0.2s;"></div>
+    </div>
 
-    .btn-success {
-      background: linear-gradient(135deg, var(--secondary), #059669);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      margin: 0.5rem;
-    }
+    <h1 class="status-title">Payment Successful! 🎉</h1>
+    <p class="status-message">
+      Congratulations! Your enrollment is complete. You now have full access to the course materials.
+    </p>
 
-    .btn-success:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
-      color: white;
-    }
+    <div class="order-details">
+      <div class="detail-row">
+        <span class="detail-label">Course</span>
+        <span class="detail-value">{{ course.name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Transaction ID</span>
+        <span class="detail-value">{{ transaction_id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Amount Paid</span>
+        <span class="detail-value">₹{{ total_price|intcomma }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Order ID</span>
+        <span class="detail-value">{{ order_id }}</span>
+      </div>
+    </div>
 
-    .btn-warning {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      margin: 0.5rem;
-    }
-
-    .btn-warning:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
-      color: white;
-    }
-
-    /* Status Specific Styles */
-    .status-success .status-header {
-      background: linear-gradient(135deg, var(--secondary), #059669);
-    }
-
-    .status-success .status-icon {
-      color: var(--secondary);
-    }
-
-    .status-pending .status-header {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-    }
-
-    .status-pending .status-icon {
-      color: #f59e0b;
-    }
-
-    .status-cancelled .status-header {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-    }
-
-    .status-cancelled .status-icon {
-      color: #ef4444;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 991px) {
-      .status-section {
-        padding: 6rem 0 2rem;
-      }
-      
-      .status-body {
-        padding: 2.5rem 2rem;
-      }
-      
-      h1 {
-        font-size: 1.75rem;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .status-body {
-        padding: 2rem 1.5rem;
-      }
-      
-      .status-header {
-        padding: 2rem 1.5rem;
-      }
-      
-      .order-details {
-        padding: 1.5rem;
-      }
-      
-      .status-icon {
-        font-size: 4rem;
-      }
-    }
-
-    @media (max-width: 575px) {
-      .status-section {
-        padding: 5rem 0 1rem;
-      }
-      
-      .status-body {
-        padding: 1.5rem 1.25rem;
-      }
-      
-      .status-header {
-        padding: 1.5rem 1.25rem;
-      }
-      
-      .order-details {
-        padding: 1.25rem;
-      }
-      
-      .status-icon {
-        font-size: 3.5rem;
-      }
-      
-      .btn-premium, .btn-success, .btn-warning {
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-        width: 100%;
-        margin: 0.25rem 0;
-      }
-
-      h1 {
-        font-size: 1.35rem;
-      }
-      
-      h2, h3 {
-        font-size: 1.25rem;
-      }
-
-      .lead{
-        font-size: 1rem;
-      }
-      
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+    <div class="action-buttons">
+      <a href="{% url 'my-courses' %}" class="btn-primary-custom">
+        <i class="fas fa-graduation-cap"></i> Start Learning
       </a>
     </div>
-  </nav>
 
-  <!-- Status Section -->
-  <section class="status-section">
-    <div class="container status-container">
-      
-      <!-- Success Status -->
-      {% if status == 'COMPLETED' %}
-      <div class="status-card status-success">
-        <div class="status-header">
-          <h1>Payment Successful!</h1>
-          <p class="mb-0">Welcome to the course!</p>
-        </div>
-        
-        <div class="status-body">
-          <i class="fas fa-check-circle status-icon"></i>
-          <div class="status-content">
-            <h2>Thank You for Your Purchase!</h2>
-            <p class="lead">Your payment has been processed successfully. You now have full access to the course.</p>
-            
-            <div class="order-details">
-              <div class="detail-row">
-                <strong>Course Name:</strong>
-                <span>{{ course.name }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Order ID:</strong>
-                <span>{{ order_id }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Transaction ID:</strong>
-                <span>{{ transaction_id }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Amount Paid:</strong>
-                <span>₹{{ total_price|intcomma }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Date:</strong>
-                <span>{{ payment_date }}</span>
-              </div>
-            </div>
-            
-            <p>You will receive an email confirmation with course access details shortly.</p>
-            
-            <div class="action-buttons mt-4">
-              <a href="{% url 'my-courses' %}" class="btn-success">
-                <i class="fas fa-graduation-cap me-2"></i> Go to My Courses
-              </a>
-            </div>
-          </div>
-        </div>
+    <!-- PENDING STATE -->
+    {% elif status == 'PENDING' %}
+    <div class="status-icon-wrapper">
+      <div class="status-icon">
+        <i class="fas fa-clock"></i>
       </div>
-
-      <!-- Pending Status -->
-      {% elif status == 'PENDING' %}
-      <div class="status-card status-pending">
-        <div class="status-header">
-          <h1>Payment Pending</h1>
-          <p class="mb-0">We're processing your payment</p>
-        </div>
-        
-        <div class="status-body">
-          <i class="fas fa-clock status-icon"></i>
-          <div class="status-content">
-            <h2>Payment Processing</h2>
-            <p class="lead">Your payment is being processed. This may take a few moments.</p>
-            
-            <div class="order-details">
-              <div class="detail-row">
-                <strong>Course Name:</strong>
-                <span>{{ course.name }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Order ID:</strong>
-                <span>{{ order_id }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Amount:</strong>
-                <span>₹{{ total_price|intcomma }}</span>
-              </div>
-            </div>
-            
-            <div class="alert alert-warning mt-3">
-              <i class="fas fa-info-circle me-2"></i>
-              <strong>Note:</strong> If money has been deducted from your account, please wait for 5-10 minutes for the status to update.
-            </div>
-            
-            <div class="action-buttons mt-4">
-              <a class="btn-warning" onclick="window.location.reload();">
-                <i class="fas fa-sync-alt me-2"></i> Refresh Status
-              </a>
-              <a href="{% url 'home' %}" class="btn-premium">
-                <i class="fas fa-home me-2"></i> Return Home
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cancelled Status -->
-      {% elif status == 'FAILED' %}
-      <div class="status-card status-cancelled">
-        <div class="status-header">
-          <h1>Payment Failed</h1>
-          <p class="mb-0">Payment process was interrupted</p>
-        </div>
-        
-        <div class="status-body">
-          <i class="fas fa-times-circle status-icon"></i>
-          <div class="status-content">
-            <h2>Payment Not Completed</h2>
-            <p class="lead">You cancelled the payment process. No amount has been deducted from your account.</p>
-            
-            <div class="order-details">
-              <div class="detail-row">
-                <strong>Course Name:</strong>
-                <span>{{ course.name }}</span>
-              </div>
-              <div class="detail-row">
-                <strong>Amount:</strong>
-                <span>₹{{ total_price|intcomma }}</span>
-              </div>
-            </div>
-            
-            <p>If this was a mistake, you can try the payment again.</p>
-            
-            <div class="action-buttons mt-4">
-              <a href="{% url 'checkout' course.id %}" class="btn-premium">
-                <i class="fas fa-redo me-2"></i> Try Payment Again
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Unknown Status -->
-      {% else %}
-      <div class="status-card">
-        <div class="status-header">
-          <h1>Payment Status</h1>
-          <p class="mb-0">Unable to determine payment status</p>
-        </div>
-        
-        <div class="status-body">
-          <i class="fas fa-question-circle status-icon text-muted"></i>
-          <div class="status-content">
-            <h2>Status Unknown</h2>
-            <p class="lead">We're unable to determine the status of your payment.</p>
-            
-            <div class="action-buttons mt-4">
-              <a href="{% url 'my-courses' %}" class="btn-premium">
-                <i class="fas fa-graduation-cap me-2"></i> Check My Courses
-              </a>
-              <a href="{% url 'contact_us' %}" class="btn-warning">
-                <i class="fas fa-headset me-2"></i> Contact Support
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
     </div>
-  </section>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <h1 class="status-title">Payment Processing</h1>
+    <p class="status-message">
+      We're processing your payment. This usually takes just a few moments.
+    </p>
+
+    <div class="warning-box">
+      <h4><i class="fas fa-info-circle" style="color: var(--warning);"></i> Please Note</h4>
+      <p>If money has been deducted from your account, please wait 5-10 minutes for the status to update. Do not retry
+        the payment.</p>
+    </div>
+
+    <div class="order-details">
+      <div class="detail-row">
+        <span class="detail-label">Course</span>
+        <span class="detail-value">{{ course.name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Order ID</span>
+        <span class="detail-value">{{ order_id }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Amount</span>
+        <span class="detail-value">₹{{ total_price|intcomma }}</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="javascript:window.location.reload();" class="btn-secondary-custom">
+        <i class="fas fa-sync-alt"></i> Refresh Status
+      </a>
+      <a href="{% url 'home' %}" class="btn-secondary-custom">
+        <i class="fas fa-home"></i> Go Home
+      </a>
+    </div>
+
+    <!-- FAILED STATE -->
+    {% elif status == 'FAILED' %}
+    <div class="status-icon-wrapper">
+      <div class="status-icon">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <h1 class="status-title">Payment Failed</h1>
+    <p class="status-message">
+      Your payment could not be processed. No amount has been deducted from your account.
+    </p>
+
+    <div class="order-details">
+      <div class="detail-row">
+        <span class="detail-label">Course</span>
+        <span class="detail-value">{{ course.name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Amount</span>
+        <span class="detail-value">₹{{ total_price|intcomma }}</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="{% url 'checkout' course.id %}" class="btn-primary-custom">
+        <i class="fas fa-redo"></i> Try Again
+      </a>
+      <a href="{% url 'contact_us' %}" class="btn-secondary-custom">
+        <i class="fas fa-headset"></i> Get Help
+      </a>
+    </div>
+
+    <!-- ERROR/UNKNOWN STATE -->
+    {% else %}
+    <div class="status-icon-wrapper">
+      <div class="status-icon">
+        <i class="fas fa-question-circle"></i>
+      </div>
+    </div>
+
+    <h1 class="status-title">Unable to Verify Payment</h1>
+    <p class="status-message">
+      We're having trouble verifying your payment status. Please check your enrolled courses or contact support.
+    </p>
+
+    <div class="action-buttons">
+      <a href="{% url 'my-courses' %}" class="btn-primary-custom">
+        <i class="fas fa-graduation-cap"></i> My Courses
+      </a>
+      <a href="{% url 'contact_us' %}" class="btn-secondary-custom">
+        <i class="fas fa-headset"></i> Contact Support
+      </a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Confetti Effect for Success
+  {% if status == 'COMPLETED' %}
+  function createConfetti() {
+    const colors = ['#10b981', '#2563eb', '#f59e0b', '#ef4444', '#8b5cf6'];
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }, i * 30);
+    }
+  }
+
+  createConfetti();
+  {% endif %}
+</script>
+{% endblock %}
