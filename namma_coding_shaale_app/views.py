@@ -424,7 +424,7 @@ def logout(request):
 
 @trace_span
 def home(request):
-    logger.info("Home page called..... Namma Coding Shaale")
+    logger.info(f"Home page called with IP_ADDRESS: {get_ip_address(request)}")
     return render(request,"index.html")
 
 @trace_span
@@ -2454,3 +2454,11 @@ def leaderboard(request):
         'overall_leaders': overall_leaders
     }
     return render(request, 'leaderboard.html', context)
+
+def get_ip_address(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
