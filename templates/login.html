@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
         rel="stylesheet">
-    <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
+    <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -188,8 +188,9 @@
 
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="auth-card fade-up">
-                        <div class="login-logo">
-                            <i class="fas fa-terminal"></i>
+                        <div class="login-logo" style="background: transparent; width: auto; height: auto;">
+                            <img src="{% static 'images/logo-blue.png' %}" alt="Logo"
+                                style="max-height: 80px; max-width: 100%;">
                         </div>
 
                         <h2 class="login-title"><span>ನಮ್ಮ <span class="text-gradient">CODING ಶಾಲೆ</span></span></h2>
@@ -227,9 +228,9 @@
         });
 
         // --- GOOGLE AUTH LOGIC ---
-         function authWithGoogle() {
+        function authWithGoogle() {
             const redirectUri = `${window.location.origin}/auth-receiver`;
-        
+
             const client = google.accounts.oauth2.initCodeClient({
                 client_id: '1023788795737-t0ho6k6gt8vvptbvk5214bu6jdpcggqu.apps.googleusercontent.com',
                 scope: 'openid email profile https://www.googleapis.com/auth/user.phonenumbers.read',
@@ -237,7 +238,7 @@
                 redirect_uri: redirectUri,
                 state: crypto.randomUUID() // better than hardcoded
             });
-        
+
             client.requestCode();
         }
     </script>
