@@ -1,741 +1,711 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Dashboard | {{ profile_user.first_name|default:profile_user.username }}{% endblock %}
+{% block title %}Student Dashboard | {{ profile_user.first_name|default:profile_user.username }}{% endblock %}
 
-{% block head_extra %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-{% endblock %}
+{# Add specific scripts that need to be in the
+<head> #}
+    {% block head_extra %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    {% endblock %}
 
-{% block extra_css %}
-<style>
-    :root {
-        --border-radius: 12px;
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    }
+    {# Add page-specific CSS #}
+    {% block extra_css %}
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
 
-    body {
-        background-color: var(--light);
-    }
+        body {
+            /* font-family is likely defined in base.html, but keeping here just in case */
+            background-color: var(--light);
+            /* Prevent horizontal scroll on mobile */
+            overflow-x: hidden;
+        }
 
-    /* --- DASHBOARD CONTENT STYLES --- */
-    .dashboard-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem 1.5rem 4rem;
-    }
+        /* Desktop active indicator line */
+        .nav-link.active:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
 
-    .profile-header-simple {
-        border-radius: 20px;
-        padding: 2.5rem;
-        margin-bottom: 3rem;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        transition: all 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
-        .profile-header-simple {
-            flex-direction: column;
+        .btn-premium {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white !important;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
             text-align: center;
-            padding: 2rem 1.5rem;
+            width: 100%;
+            justify-content: center;
         }
 
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
+            color: white;
+        }
+
+
+        /* --- DASHBOARD CONTENT STYLES --- */
         .dashboard-container {
-            padding-top: 1rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
         }
-    }
 
-    .avatar-simple {
-        width: 110px;
-        height: 110px;
-        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        color: #2563eb;
-        font-weight: 700;
-        flex-shrink: 0;
-        border: 1px solid #bfdbfe;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-    }
+        .profile-header-simple {
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
 
-    .profile-name-simple {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
-        font-size: 2rem;
-        color: #1e293b;
-        margin-bottom: 0.25rem;
-        line-height: 1.1;
-    }
+        @media (max-width: 768px) {
+            .profile-header-simple {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
 
-    /* Stats Cards */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
+            .dashboard-container {
+                padding-top: 1rem;
+                /* Less top padding on mobile */
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
 
-    @media (max-width: 576px) {
+        .avatar-simple {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #2563eb;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .profile-name-simple {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+            line-height: 1.1;
+        }
+
+        /* Stats Cards */
         .stats-grid {
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Mobile adjustment for stats to be 2 per row on smaller screens */
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            .stat-icon {
+                font-size: 2rem;
+            }
         }
 
         .stat-card {
-            padding: 1rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-value {
-            font-size: 1.75rem;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
         }
 
         .stat-icon {
-            font-size: 2rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2.5rem;
+            opacity: 0.1;
         }
-    }
 
-    .stat-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        transition: transform 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 0.25rem;
+        }
 
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-xl);
-    }
+        .stat-label {
+            color: var(--gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
 
-    .stat-icon {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 2.5rem;
-        opacity: 0.1;
-    }
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: 100%;
+        }
 
-    .stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--primary);
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        margin-bottom: 0.25rem;
-    }
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .stat-label {
-        color: var(--gray);
-        font-weight: 500;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
-    }
+        /* Heatmap Grid */
+        .heatmap-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
 
-    .chart-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        height: 100%;
-    }
+        .blog-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
 
-    .section-title {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
+        .blog-item:hover {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
 
-    /* Heatmap Grid */
-    .heatmap-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        overflow-x: auto;
-        padding-bottom: 1rem;
-    }
+        .blog-date {
+            min-width: 60px;
+            text-align: center;
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
 
-    .blog-item {
-        display: flex;
-        gap: 1rem;
-        padding: 1rem;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-        border: 1px solid transparent;
-    }
+        .date-day {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
 
-    .blog-item:hover {
-        background: #f8fafc;
-        border-color: #e2e8f0;
-    }
+        .date-month {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
 
-    .blog-date {
-        min-width: 60px;
-        text-align: center;
-        background: #f1f5f9;
-        padding: 0.5rem;
-        border-radius: 8px;
-        height: fit-content;
-    }
+        .blog-info h5 {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
 
-    .date-day {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--dark);
-        line-height: 1;
-    }
+        .blog-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
-    .date-month {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        color: var(--gray);
-    }
+        /* Premium Course Card */
+        .course-card-premium {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
 
-    .blog-info h5 {
-        margin-bottom: 0.25rem;
-        font-weight: 600;
-    }
+        .course-card-premium:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
+        }
 
-    .blog-info p {
-        color: var(--gray);
-        font-size: 0.9rem;
-        margin: 0;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+        .card-glow {
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
 
-    /* Premium Course Card */
-    .course-card-premium {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border-radius: 16px;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease;
-        height: 100%;
-    }
+        .course-icon-bg {
+            background: rgba(255, 255, 255, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
 
-    .course-card-premium:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
-    }
+        /* --- Report / Print Mode Styles --- */
+        body.printing-mode {
+            background-color: white !important;
+        }
 
-    .card-glow {
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
-        border-radius: 50%;
-        filter: blur(40px);
-    }
+        body.printing-mode .navbar,
+        body.printing-mode .btn,
+        body.printing-mode .card-glow {
+            display: none !important;
+        }
 
-    .course-icon-bg {
-        background: rgba(255, 255, 255, 0.1);
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        backdrop-filter: blur(5px);
-    }
+        body.printing-mode .dashboard-container {
+            padding: 20px !important;
+            max-width: 100% !important;
+        }
 
-    /* --- Report / Print Mode Styles --- */
-    body.printing-mode {
-        background-color: white !important;
-    }
+        body.printing-mode .profile-header,
+        body.printing-mode .stat-card,
+        body.printing-mode .chart-card,
+        body.printing-mode .course-card-premium {
+            box-shadow: none !important;
+            border: 1px solid #ccc !important;
+            border-radius: 0 !important;
+            background: white !important;
+            color: black !important;
+            margin-bottom: 20px !important;
+        }
 
-    body.printing-mode .navbar,
-    body.printing-mode .btn,
-    body.printing-mode .card-glow {
-        display: none !important;
-    }
+        body.printing-mode .profile-header {
+            border: none !important;
+            border-bottom: 2px solid #000 !important;
+            padding: 0 0 20px 0 !important;
+            margin-bottom: 40px !important;
+        }
 
-    body.printing-mode .dashboard-container {
-        padding: 20px !important;
-        max-width: 100% !important;
-    }
+        body.printing-mode .profile-header::before {
+            display: none;
+        }
 
-    body.printing-mode .profile-header,
-    body.printing-mode .stat-card,
-    body.printing-mode .chart-card,
-    body.printing-mode .course-card-premium {
-        box-shadow: none !important;
-        border: 1px solid #ccc !important;
-        border-radius: 0 !important;
-        background: white !important;
-        color: black !important;
-        margin-bottom: 20px !important;
-    }
+        body.printing-mode .avatar-circle {
+            border: 1px solid #333 !important;
+            box-shadow: none !important;
+            color: #333 !important;
+            background: #f0f0f0 !important;
+        }
 
-    body.printing-mode .profile-header {
-        border: none !important;
-        border-bottom: 2px solid #000 !important;
-        padding: 0 0 20px 0 !important;
-        margin-bottom: 40px !important;
-    }
+        body.printing-mode .section-title {
+            color: #000 !important;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
 
-    body.printing-mode .profile-header::before {
-        display: none;
-    }
+        body.printing-mode i {
+            color: #333 !important;
+        }
 
-    body.printing-mode .avatar-circle {
-        border: 1px solid #333 !important;
-        box-shadow: none !important;
-        color: #333 !important;
-        background: #f0f0f0 !important;
-    }
+        body.printing-mode .stat-value {
+            color: #000 !important;
+            font-size: 2rem !important;
+        }
 
-    body.printing-mode .section-title {
-        color: #000 !important;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-    }
+        body.printing-mode .stat-label {
+            color: #555 !important;
+        }
 
-    body.printing-mode i {
-        color: #333 !important;
-    }
+        body.printing-mode .course-card-premium {
+            background: white !important;
+            border: 1px solid #ccc !important;
+        }
 
-    body.printing-mode .stat-value {
-        color: #000 !important;
-        font-size: 2rem !important;
-    }
+        body.printing-mode .course-card-premium h5,
+        body.printing-mode .course-card-premium span {
+            color: #000 !important;
+        }
 
-    body.printing-mode .stat-label {
-        color: #555 !important;
-    }
+        body.printing-mode .text-white {
+            color: #000 !important;
+        }
 
-    body.printing-mode .course-card-premium {
-        background: white !important;
-        border: 1px solid #ccc !important;
-    }
+        body.printing-mode .text-white-50 {
+            color: #555 !important;
+        }
 
-    body.printing-mode .course-card-premium h5,
-    body.printing-mode .course-card-premium span {
-        color: #000 !important;
-    }
+        body.printing-mode .progress {
+            background: #eee !important;
+        }
 
-    body.printing-mode .text-white {
-        color: #000 !important;
-    }
+        body.printing-mode .stats-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 15px !important;
+        }
+    </style>
+    {% endblock %}
 
-    body.printing-mode .text-white-50 {
-        color: #555 !important;
-    }
 
-    body.printing-mode .progress {
-        background: #eee !important;
-    }
-
-    body.printing-mode .stats-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 15px !important;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="dashboard-container">
-    <div class="profile-header-simple">
-        <div class="avatar-simple">
-            {{ profile_user.first_name|first|upper }}{{ profile_user.last_name|first|upper }}
-        </div>
-
-        <div class="flex-grow-1 w-100">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="profile-name-simple">{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
-                    <p class="text-secondary mb-2 fst-italic">@{{ profile_user.username }}</p>
-
-                    <p class="text-muted mb-3 small w-100" style="max-width: 600px;">
-                        {{ user_profile.bio|default:"Coding Enthusiast ready to learn and build!" }}
-                    </p>
-
-                    <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start mb-3 mb-md-0">
-                        {% if user_profile.college %}
-                        <span class="badge bg-light text-dark border"><i
-                                class="fas fa-university me-1 text-warning"></i> {{ user_profile.college }}</span>
-                        {% endif %}
-                        {% if user_profile.location %}
-                        <span class="badge bg-light text-dark border"><i
-                                class="fas fa-map-marker-alt me-1 text-danger"></i> {{ user_profile.location
-                            }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="col-md-4 text-center text-md-end">
-                    <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-end">
-                        {% if user_profile.linkedin_url %}
-                        <a href="{{ user_profile.linkedin_url }}"
-                            class="btn btn-outline-primary btn-sm rounded-pill px-3" target="_blank">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        {% endif %}
-                        {% if user_profile.twitter_url %}
-                        <a href="{{ user_profile.twitter_url }}" class="btn btn-outline-info btn-sm rounded-pill px-3"
-                            target="_blank">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        {% endif %}
-                        <a href="{% url 'student_report' profile_user.username %}" target="_blank"
-                            class="btn btn-dark btn-sm rounded-pill px-4 shadow-sm">
-                            <i class="fas fa-file-pdf me-2"></i> Report
-                        </a>
-                    </div>
-                </div>
+    {% block content %}
+    <div class="dashboard-container">
+        <div class="profile-header-simple">
+            <div class="avatar-simple">
+                {{ profile_user.first_name|first|upper }}{{ profile_user.last_name|first|upper }}
             </div>
-        </div>
-    </div>
 
-    <div class="stats-grid mb-3">
-        <div class="stat-card">
-            <i class="fas fa-fire stat-icon text-danger"></i>
-            <div class="stat-value text-danger">{{ active_days_count }}</div>
-            <div class="stat-label">Active Days</div>
-        </div>
+            <div class="flex-grow-1 w-100">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="profile-name-simple">{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+                        <p class="text-secondary mb-2 fst-italic">@{{ profile_user.username }}</p>
 
-        <div class="stat-card">
-            <i class="fas fa-code stat-icon text-success"></i>
-            <div class="stat-value text-success">{{ solved_problems_count }}</div>
-            <div class="stat-label">Problems Solved</div>
-        </div>
+                        <p class="text-muted mb-3 small w-100" style="max-width: 600px;">
+                            {{ user_profile.bio|default:"Coding Enthusiast ready to learn and build!" }}
+                        </p>
 
-        <div class="stat-card">
-            <i class="fas fa-book-open stat-icon text-info"></i>
-            <div class="stat-value text-info">{{ completed_contents_count }}</div>
-            <div class="stat-label">Lessons Completed</div>
-        </div>
-
-        <div class="stat-card">
-            <i class="fas fa-pen-nib stat-icon text-warning"></i>
-            <div class="stat-value text-warning">{{ blogs.count }}</div>
-            <div class="stat-label">Blogs Written</div>
-        </div>
-
-        <div class="stat-card">
-            <i class="fas fa-crosshairs stat-icon text-primary"></i>
-            <div class="stat-value text-primary">{{ accuracy_rate }}%</div>
-            <div class="stat-label">Submission Accuracy</div>
-        </div>
-
-        <div class="stat-card">
-            <i class="fas fa-fire-alt stat-icon text-danger"></i>
-            <div class="stat-value text-danger">{{ current_streak }} Days</div>
-            <div class="stat-label">Current Streak</div>
-        </div>
-
-        <div class="stat-card">
-            <i class="fas fa-trophy stat-icon text-warning"></i>
-            <div class="stat-value text-warning">{{ longest_streak }} Days</div>
-            <div class="stat-label">Longest Streak</div>
-        </div>
-
-        <div class="stat-card">
-            <i class="fas fa-question-circle stat-icon text-secondary"></i>
-            <div class="stat-value text-secondary">{{ quizzes_solved_count }}</div>
-            <div class="stat-label">Quizzes Solved</div>
-        </div>
-    </div>
-
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-calendar-alt text-primary"></i> Activity Log (Last 30
-                    Days)</h4>
-
-                <div class="d-flex justify-content-between mb-2 px-1 text-muted small fw-bold text-uppercase">
-                    <div style="width: 14.28%; text-align: center;">Mon</div>
-                    <div style="width: 14.28%; text-align: center;">Tue</div>
-                    <div style="width: 14.28%; text-align: center;">Wed</div>
-                    <div style="width: 14.28%; text-align: center;">Thu</div>
-                    <div style="width: 14.28%; text-align: center;">Fri</div>
-                    <div style="width: 14.28%; text-align: center;">Sat</div>
-                    <div style="width: 14.28%; text-align: center;">Sun</div>
-                </div>
-
-                <div class="heatmap-container" id="heatmapDataContainer">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-3 mb-3">
-        <div class="col-md-6 col-lg-4">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-chart-line text-primary"></i> Problems Solved (30d)</h4>
-                <div style="position: relative; height: 300px; width: 100%;">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-layer-group text-primary"></i> Difficulty</h4>
-                <div style="position: relative; height: 300px; width: 100%;">
-                    <canvas id="difficultyChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-code text-primary"></i> Languages</h4>
-                <div style="position: relative; height: 300px; width: 100%;">
-                    <canvas id="languageChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-3 mb-3">
-        <div class="col-lg-6">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-check-circle text-success"></i> Solved recently</h4>
-                <div class="d-flex flex-column gap-3">
-                    {% for problem in recent_solved_problems %}
-                    <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-success bg-opacity-10 p-2 text-success">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold"><a href="{{ problem.url }}"
-                                        class="text-decoration-none text-dark">{{ problem.title }}</a></h6>
-                                <small class="text-muted">{{ problem.submitted_at|timesince }} ago</small>
-                            </div>
+                        <div
+                            class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start mb-3 mb-md-0">
+                            {% if user_profile.college %}
+                            <span class="badge bg-light text-dark border"><i
+                                    class="fas fa-university me-1 text-warning"></i> {{ user_profile.college }}</span>
+                            {% endif %}
+                            {% if user_profile.location %}
+                            <span class="badge bg-light text-dark border"><i
+                                    class="fas fa-map-marker-alt me-1 text-danger"></i> {{ user_profile.location
+                                }}</span>
+                            {% endif %}
                         </div>
-                        <span
-                            class="badge {% if problem.difficulty == 'hard' %}bg-danger{% elif problem.difficulty == 'medium' %}bg-warning{% else %}bg-success{% endif %} rounded-pill">
-                            {{ problem.difficulty|title }}
-                        </span>
                     </div>
-                    {% empty %}
-                    <p class="text-muted text-center py-4">No problems solved yet.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-6">
-            <div class="chart-card h-100">
-                <h4 class="section-title"><i class="fas fa-rss text-primary"></i> Recent Blogs</h4>
-                <div class="d-flex flex-column gap-2">
-                    {% for blog in blogs %}
-                    <a href="{% url 'blog_detail' blog.id %}" class="text-decoration-none text-dark">
-                        <div class="blog-item">
-                            <div class="blog-date">
-                                <div class="date-day">{{ blog.created_at|date:"d" }}</div>
-                                <div class="date-month">{{ blog.created_at|date:"M" }}</div>
-                            </div>
-                            <div class="blog-info">
-                                <h5>{{ blog.title }}</h5>
-                                <p>{{ blog.content|striptags|truncatechars:50 }}</p>
-                            </div>
+                    <div class="col-md-4 text-center text-md-end">
+                        <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-end">
+                            {% if user_profile.linkedin_url %}
+                            <a href="{{ user_profile.linkedin_url }}"
+                                class="btn btn-outline-primary btn-sm rounded-pill px-3" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if user_profile.twitter_url %}
+                            <a href="{{ user_profile.twitter_url }}"
+                                class="btn btn-outline-info btn-sm rounded-pill px-3" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'student_report' profile_user.username %}" target="_blank"
+                                class="btn btn-dark btn-sm rounded-pill px-4 shadow-sm">
+                                <i class="fas fa-file-pdf me-2"></i> Report
+                            </a>
                         </div>
-                    </a>
-                    {% empty %}
-                    <p class="text-muted text-center py-4">No blogs written yet.</p>
-                    {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row g-3 mb-4">
-        <div class="col-12">
-            <h4 class="section-title mb-4"><i class="fas fa-graduation-cap text-primary"></i> Course Progress</h4>
-            <div class="row g-3">
-                {% for course in course_progress_data %}
-                <div class="col-md-6 col-lg-4">
-                    <div class="course-card-premium p-4">
-                        <div class="card-glow"></div>
-                        <div class="position-relative">
-                            <div class="d-flex align-items-center gap-3 mb-3">
-                                <div class="course-icon-bg">
+        <div class="stats-grid mb-3">
+            <div class="stat-card">
+                <i class="fas fa-fire stat-icon text-danger"></i>
+                <div class="stat-value text-danger">{{ active_days_count }}</div>
+                <div class="stat-label">Active Days</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-code stat-icon text-success"></i>
+                <div class="stat-value text-success">{{ solved_problems_count }}</div>
+                <div class="stat-label">Problems Solved</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-book-open stat-icon text-info"></i>
+                <div class="stat-value text-info">{{ completed_contents_count }}</div>
+                <div class="stat-label">Lessons Completed</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-pen-nib stat-icon text-warning"></i>
+                <div class="stat-value text-warning">{{ blogs.count }}</div>
+                <div class="stat-label">Blogs Written</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-crosshairs stat-icon text-primary"></i>
+                <div class="stat-value text-primary">{{ accuracy_rate }}%</div>
+                <div class="stat-label">Submission Accuracy</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-fire-alt stat-icon text-danger"></i>
+                <div class="stat-value text-danger">{{ current_streak }} Days</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-trophy stat-icon text-warning"></i>
+                <div class="stat-value text-warning">{{ longest_streak }} Days</div>
+                <div class="stat-label">Longest Streak</div>
+            </div>
+
+            <div class="stat-card">
+                <i class="fas fa-question-circle stat-icon text-secondary"></i>
+                <div class="stat-value text-secondary">{{ quizzes_solved_count }}</div>
+                <div class="stat-label">Quizzes Solved</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-calendar-alt text-primary"></i> Activity Log (Last 30
+                        Days)</h4>
+
+                    <div class="d-flex justify-content-between mb-2 px-1 text-muted small fw-bold text-uppercase">
+                        <div style="width: 14.28%; text-align: center;">Mon</div>
+                        <div style="width: 14.28%; text-align: center;">Tue</div>
+                        <div style="width: 14.28%; text-align: center;">Wed</div>
+                        <div style="width: 14.28%; text-align: center;">Thu</div>
+                        <div style="width: 14.28%; text-align: center;">Fri</div>
+                        <div style="width: 14.28%; text-align: center;">Sat</div>
+                        <div style="width: 14.28%; text-align: center;">Sun</div>
+                    </div>
+
+                    <div class="heatmap-container" id="heatmapDataContainer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-chart-line text-primary"></i> Problems Solved (30d)</h4>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-layer-group text-primary"></i> Difficulty</h4>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="difficultyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-code text-primary"></i> Languages</h4>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="languageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-lg-6">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-check-circle text-success"></i> Solved recently</h4>
+                    <div class="d-flex flex-column gap-3">
+                        {% for problem in recent_solved_problems %}
+                        <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-2 text-success">
                                     <i class="fas fa-code"></i>
                                 </div>
                                 <div>
-                                    <h5 class="mb-1 fw-bold text-white">{{ course.course_name }}</h5>
-                                    <small class="text-white-50">{{ course.language }}</small>
+                                    <h6 class="mb-0 fw-bold"><a href="{{ problem.url }}"
+                                            class="text-decoration-none text-dark">{{ problem.title }}</a></h6>
+                                    <small class="text-muted">{{ problem.submitted_at|timesince }} ago</small>
+                                </div>
+                            </div>
+                            <span
+                                class="badge {% if problem.difficulty == 'hard' %}bg-danger{% elif problem.difficulty == 'medium' %}bg-warning{% else %}bg-success{% endif %} rounded-pill">
+                                {{ problem.difficulty|title }}
+                            </span>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center py-4">No problems solved yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="chart-card h-100">
+                    <h4 class="section-title"><i class="fas fa-rss text-primary"></i> Recent Blogs</h4>
+                    <div class="d-flex flex-column gap-2">
+                        {% for blog in blogs %}
+                        <a href="{% url 'blog_detail' blog.id %}" class="text-decoration-none text-dark">
+                            <div class="blog-item">
+                                <div class="blog-date">
+                                    <div class="date-day">{{ blog.created_at|date:"d" }}</div>
+                                    <div class="date-month">{{ blog.created_at|date:"M" }}</div>
+                                </div>
+                                <div class="blog-info">
+                                    <h5>{{ blog.title }}</h5>
+                                    <p>{{ blog.content|striptags|truncatechars:50 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-muted text-center py-4">No blogs written yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <h4 class="section-title mb-4"><i class="fas fa-graduation-cap text-primary"></i> Course Progress</h4>
+                <div class="row g-3">
+                    {% for course in course_progress_data %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="course-card-premium p-4">
+                            <div class="card-glow"></div>
+
+                            <div class="d-flex justify-content-between align-items-start mb-4 position-relative">
+                                <div>
+                                    <span class="badge bg-white text-primary mb-2 shadow-sm">ENROLLED</span>
+                                    <h5 class="fw-bold text-white mb-1">{{ course.name }}</h5>
+                                </div>
+                                <div class="course-icon-bg">
+                                    <i class="fas fa-code"></i>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-white-50 small">Progress</span>
-                                    <span class="text-white fw-bold">{{ course.progress }}%</span>
+                            <div class="progress-section position-relative">
+                                <div class="d-flex justify-content-between text-white-50 small mb-1">
+                                    <span>Modules Completed</span>
+                                    <span class="text-white fw-bold">{{ course.module_progress }}%</span>
                                 </div>
-                                <div class="progress" style="height: 8px; background: rgba(255, 255, 255, 0.1);">
-                                    <div class="progress-bar bg-primary" role="progressbar"
-                                        style="width: {{ course.progress }}%"></div>
+                                <div class="progress mb-3" style="height: 8px; background: rgba(255,255,255,0.1);">
+                                    <div class="progress-bar bg-warning" role="progressbar"
+                                        style="width: {{ course.module_progress }}%"></div>
                                 </div>
-                            </div>
 
-                            <div class="row g-2 text-center">
-                                <div class="col-6">
-                                    <div class="p-2 rounded" style="background: rgba(255, 255, 255, 0.05);">
-                                        <div class="fw-bold text-white">{{ course.completed_modules }}</div>
-                                        <small class="text-white-50">Modules</small>
-                                    </div>
+                                <div class="d-flex justify-content-between text-white-50 small mb-1">
+                                    <span>Problems Solved</span>
+                                    <span class="text-white fw-bold">{{ course.problem_progress }}%</span>
                                 </div>
-                                <div class="col-6">
-                                    <div class="p-2 rounded" style="background: rgba(255, 255, 255, 0.05);">
-                                        <div class="fw-bold text-white">{{ course.solved_problems }}</div>
-                                        <small class="text-white-50">Problems</small>
-                                    </div>
+                                <div class="progress" style="height: 8px; background: rgba(255,255,255,0.1);">
+                                    <div class="progress-bar bg-info" role="progressbar"
+                                        style="width: {{ course.problem_progress }}%"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="text-center py-5 text-muted">
+                            <i class="fas fa-folder-open fa-3x mb-3 opacity-25"></i>
+                            <p>No active courses found.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <div class="col-12">
-                    <p class="text-muted text-center py-4">No courses enrolled yet.</p>
-                </div>
-                {% endfor %}
             </div>
         </div>
+
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
-{% block extra_js %}
-<script>
-    // Heatmap data from Django
-    const heatmapData = {{ heatmap_data| safe }};
-    const easyCount = {{ easy_count }};
-    const mediumCount = {{ medium_count }};
-    const hardcore = {{ hard_count }};
-    const pythonCount = {{ python_count }};
-    const javaCount = {{ java_count }};
-    const javascriptCount = {{ javascript_count }};
-    const trendData = {{ trend_data| safe }};
 
-    // Generate Heatmap
-    function generateHeatmap(data) {
-        const container = document.getElementById('heatmapDataContainer');
-        if (!container) return;
+    {% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        container.innerHTML = '';
-
-        const weeks = [];
-        let currentWeek = [];
-        let currentDay = 0;
-
-        for (let date in data) {
-            const dayOfWeek = new Date(date).getDay();
-            const adjustedDay = (dayOfWeek + 6) % 7;
-
-            if (adjustedDay < currentDay) {
-                weeks.push(currentWeek);
-                currentWeek = [];
-            }
-
-            currentWeek.push({ date, count: data[date] });
-            currentDay = adjustedDay;
-        }
-        if (currentWeek.length) weeks.push(currentWeek);
-
-        const lastFourWeeks = weeks.slice(-5);
-
-        lastFourWeeks.forEach(week => {
-            const weekDiv = document.createElement('div');
-            weekDiv.style.cssText = 'display: flex; gap: 4px;';
-
-            for (let i = 0; i < 7; i++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.style.cssText = 'flex: 1; aspect-ratio: 1; border-radius: 3px; cursor: pointer; transition: all 0.2s;';
-
-                const dayData = week.find(d => (new Date(d.date).getDay() + 6) % 7 === i);
-                if (dayData) {
-                    const count = dayData.count;
-                    const intensity = count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4;
-                    const colors = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127'];
-                    dayDiv.style.backgroundColor = colors[intensity];
-                    dayDiv.title = `${dayData.date}: ${count} activities`;
-
-                    dayDiv.addEventListener('mouseenter', () => {
-                        dayDiv.style.transform = 'scale(1.1)';
-                        dayDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-                    });
-                    dayDiv.addEventListener('mouseleave', () => {
-                        dayDiv.style.transform = 'scale(1)';
-                        dayDiv.style.boxShadow = 'none';
-                    });
-                } else {
-                    dayDiv.style.backgroundColor = '#ebedf0';
-                    dayDiv.style.opacity = '0.3';
-                }
-
-                weekDiv.appendChild(dayDiv);
-            }
-            container.appendChild(weekDiv);
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
-    }
 
-    generateHeatmap(heatmapData);
+        // Data from Django
+        const difficultyData = JSON.parse('{{ difficulty_data|safe }}');
+        const languageData = JSON.parse('{{ language_data|safe }}');
+        // Note: The heatmap data format in your view needs to match what this JS expects (a list of dates)
+        const activeDates = new Set(JSON.parse('{{ heatmap_dates|safe }}'));
+        const trendLabels = JSON.parse('{{ trend_labels|safe }}');
+        const trendData = JSON.parse('{{ trend_data|safe }}');
 
-    // Trend Chart
-    const trendCtx = document.getElementById('trendChart');
-    if (trendCtx) {
-        new Chart(trendCtx, {
-            type: 'line',
-            data: {
-                labels: trendData.map(d => d.date),
-                datasets: [{
-                    label: 'Problems Solved',
-                    data: trendData.map(d => d.count),
-                    borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                }
-            }
-        });
-    }
-
-    // Difficulty Chart
-    const diffCtx = document.getElementById('difficultyChart');
-    if (diffCtx) {
+        // --- 1. Difficulty Chart (Doughnut) ---
+        const diffCtx = document.getElementById('difficultyChart').getContext('2d');
         new Chart(diffCtx, {
             type: 'doughnut',
             data: {
                 labels: ['Easy', 'Medium', 'Hard'],
                 datasets: [{
-                    data: [easyCount, mediumCount, hardCount],
-                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+                    data: [difficultyData.easy || 0, difficultyData.medium || 0, difficultyData.hard || 0],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    borderWidth: 0,
+                    hoverOffset: 4
                 }]
             },
             options: {
@@ -746,50 +716,169 @@
                 }
             }
         });
-    }
 
-    // Language Chart
-    const langCtx = document.getElementById('languageChart');
-    if (langCtx) {
+        // --- 2. Language Chart (Bar) ---
+        const langCtx = document.getElementById('languageChart').getContext('2d');
+        const langLabels = Object.keys(languageData);
+        const langValues = Object.values(languageData);
+
         new Chart(langCtx, {
             type: 'bar',
             data: {
-                labels: ['Python', 'Java', 'JavaScript'],
+                labels: langLabels,
                 datasets: [{
-                    label: 'Problems',
-                    data: [pythonCount, javaCount, javascriptCount],
-                    backgroundColor: ['#3b82f6', '#f59e0b', '#eab308']
+                    label: 'Submissions',
+                    data: langValues,
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                }
+                    y: { beginAtZero: true, grid: { display: false } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
             }
         });
-    }
 
-    // PDF Export Function
-    function exportToPDF() {
-        document.body.classList.add('printing-mode');
+        // --- 4. Trend Chart (Line) ---
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: trendLabels,
+                datasets: [{
+                    label: 'Problems Solved',
+                    data: trendData,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                    x: { display: false } // Hide x labels for cleanliness in small card
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
 
-        const element = document.querySelector('.dashboard-container');
-        const opt = {
-            margin: 10,
-            filename: `{{ profile_user.username }}_dashboard.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+        // --- 3. Heatmap Generation (Last 90 Days - Calendar Grid) ---
+        function generateHeatmap() {
+            const container = document.getElementById('heatmapDataContainer');
+            container.innerHTML = ''; // Clear existing
 
-        setTimeout(() => {
-            html2pdf().set(opt).from(element).save().then(() => {
-                document.body.classList.remove('printing-mode');
-            });
-        }, 100);
-    }
-</script>
-{% endblock %}
+            const grid = document.createElement('div');
+            // Use CSS Grid for proper alignment
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+            grid.style.gap = '8px';
+
+            const today = new Date();
+            // Start from 29 days ago to include today as the 30th day
+            const daysToShow = 30;
+            const endDate = new Date(today);
+            const startDate = new Date(endDate);
+            startDate.setDate(endDate.getDate() - (daysToShow - 1));
+
+            // Find weekday of startDate (0 = Sun, 1 = Mon ... 6 = Sat)
+            let startDay = startDate.getDay();
+            // If we want Mon as start of week (1), convert Sun(0) to 7
+            let isoStartDay = startDay === 0 ? 7 : startDay;
+            // Empty cells needed = isoStartDay - 1 (since Mon is 1st col)
+            const emptyCells = isoStartDay - 1;
+
+            // Add Empty Cells
+            for (let i = 0; i < emptyCells; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+
+            // Iterate daysToShow
+            for (let i = 0; i < daysToShow; i++) {
+                const currentDate = new Date(startDate);
+                currentDate.setDate(startDate.getDate() + i);
+
+                // Use local date to avoid timezone issues with toISOString()
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const dateStr = `${year}-${month}-${day}`;
+
+                const dayNum = currentDate.getDate();
+
+                // The Cell Wrapper (Layout)
+                const wrapper = document.createElement('div');
+                wrapper.className = 'd-flex flex-column align-items-center justify-content-center p-2 border rounded';
+                wrapper.style.minHeight = '50px';
+                wrapper.style.backgroundColor = activeDates.has(dateStr) ? '#dbeafe' : '#f8fafc'; // light blue or light gray
+                wrapper.style.border = activeDates.has(dateStr) ? '1px solid #93c5fd' : '1px solid #e2e8f0';
+
+                // Date Number
+                const dayLabel = document.createElement('span');
+                dayLabel.innerText = dayNum;
+                dayLabel.style.fontSize = '0.9rem';
+                dayLabel.style.fontWeight = 'bold';
+                dayLabel.style.color = activeDates.has(dateStr) ? '#1e40af' : '#64748b';
+
+                // Status indicator (dot)
+                if (activeDates.has(dateStr)) {
+                    const dot = document.createElement('div');
+                    dot.style.width = '6px';
+                    dot.style.height = '6px';
+                    dot.style.backgroundColor = '#2563eb';
+                    dot.style.borderRadius = '50%';
+                    dot.style.marginTop = '4px';
+                    wrapper.appendChild(dayLabel);
+                    wrapper.appendChild(dot);
+                } else {
+                    wrapper.appendChild(dayLabel);
+                }
+
+                // Tooltip
+                wrapper.title = currentDate.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+                grid.appendChild(wrapper);
+            }
+
+            container.appendChild(grid);
+        }
+
+        generateHeatmap();
+
+        // --- PDF Export Logic ---
+        function exportPDF() {
+            // Toggle Print Mode
+            document.body.classList.add('printing-mode');
+
+            const element = document.querySelector('.dashboard-container');
+            const opt = {
+                margin: 0.3,
+                filename: `{{ profile_user.username }}_Performance_Report.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Needs a small timeout for styles to apply before capture? 
+            // html2pdf usually runs async manually if chained, but .from() takes element state.
+            // Let's force a repaint or wait a tick.
+
+            setTimeout(() => {
+                html2pdf().set(opt).from(element).save().then(() => {
+                    document.body.classList.remove('printing-mode');
+                });
+            }, 100);
+        }
+
+    </script>
+    {% endblock %}
