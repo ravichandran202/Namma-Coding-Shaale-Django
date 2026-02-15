@@ -11,7 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
+    <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
 
     <title>Problem Solver</title>
@@ -307,6 +307,13 @@
             display: none;
             /* Hidden by default */
             position: relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #solution-container * {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -631,9 +638,13 @@
                     Code
                 </div>
                 <div id="top-tab-sol" class="tab" onclick="switchTopTab(this, 'solution')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg id="sol-tab-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <svg id="sol-tab-code-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        style="display:none;">
+                        <polyline points="20 6 9 17 4 12" />
                     </svg>
                     Solution
                 </div>
@@ -651,14 +662,19 @@
             <div id="solution-container">
                 <div id="solution-editor" style="width:100%; height:100%;"></div>
                 <div id="solution-lock-overlay">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                        style="margin-bottom:16px; opacity:0.5;">
+                    <svg id="lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" style="margin-bottom:16px; opacity:0.5;">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
-                    <h3 style="margin:0 0 8px 0; font-size:16px; font-weight:600; color:var(--text-main);">
+                    <svg id="code-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" style="margin-bottom:16px; opacity:0.5; display:none;">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <h3 id="lock-title"
+                        style="margin:0 0 8px 0; font-size:16px; font-weight:600; color:var(--text-main);">
                         Solution Locked</h3>
-                    <p style="margin:0; font-size:14px;">Solve the problem to unlock the solution.</p>
+                    <p id="lock-message" style="margin:0; font-size:14px;">Solve the problem to unlock the solution.</p>
                 </div>
             </div>
 
@@ -729,7 +745,7 @@
 
     <script>
         // --- CONFIG ---
-        let editor, solutionEditor, language = 'python', isRunning = false;
+        language = 'python', isRunning = false;
         const problems = {};
         const urlParams = new URLSearchParams(window.location.search);
         const currentProblemId = urlParams.get('id') || 'sum-two-numbers';
@@ -766,6 +782,17 @@
                 scrollBeyondLastLine: false,
                 readOnly: true, // Key property
                 renderLineHighlight: 'none'
+            });
+
+            // Prevent copying from solution container
+            document.getElementById('solution-container').addEventListener('copy', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            document.getElementById('solution-container').addEventListener('cut', function (e) {
+                e.preventDefault();
+                return false;
             });
 
             await loadProblem(currentProblemId);
@@ -812,14 +839,37 @@
             editor.setValue(code);
             monaco.editor.setModelLanguage(editor.getModel(), language);
 
-            // Setup Solution Editor
-            if (isSolved && p.solution) {
-                solutionEditor.setValue(p.solution);
-                monaco.editor.setModelLanguage(solutionEditor.getModel(), language); // Currently assumes python, could be improved if solution object had lang
-                document.getElementById('solution-lock-overlay').style.display = 'none';
+            // Update Solution tab icon based on solved status
+            if (isSolved) {
+                document.getElementById('sol-tab-lock-icon').style.display = 'none';
+                document.getElementById('sol-tab-code-icon').style.display = 'block';
             } else {
+                document.getElementById('sol-tab-lock-icon').style.display = 'block';
+                document.getElementById('sol-tab-code-icon').style.display = 'none';
+            }
+
+            // Setup Solution Editor
+            if (isSolved && p.solutions && p.solutions[language]) {
+                // Problem solved and solution exists
+                solutionEditor.setValue(p.solutions[language]);
+                monaco.editor.setModelLanguage(solutionEditor.getModel(), language);
+                document.getElementById('solution-lock-overlay').style.display = 'none';
+            } else if (isSolved && (!p.solutions || !p.solutions[language])) {
+                // Problem solved but solution doesn't exist
                 solutionEditor.setValue("");
                 document.getElementById('solution-lock-overlay').style.display = 'flex';
+                document.getElementById('lock-icon').style.display = 'none';
+                document.getElementById('code-icon').style.display = 'block';
+                document.getElementById('lock-title').textContent = 'Solution Not Available';
+                document.getElementById('lock-message').textContent = 'Solution code is not available for this problem.';
+            } else {
+                // Problem not solved
+                solutionEditor.setValue("");
+                document.getElementById('solution-lock-overlay').style.display = 'flex';
+                document.getElementById('lock-icon').style.display = 'block';
+                document.getElementById('code-icon').style.display = 'none';
+                document.getElementById('lock-title').textContent = 'Solution Locked';
+                document.getElementById('lock-message').textContent = 'Solve the problem to unlock the solution.';
             }
         }
 
@@ -830,10 +880,30 @@
             if (p) {
                 editor.setValue(p.templates[language] || '');
                 monaco.editor.setModelLanguage(editor.getModel(), language);
-                
-                // Also update solution syntax highlighting if you want it to match
-                // (Assuming p.solution is fixed text, usually python, but if you had multi-lang solutions:)
-                monaco.editor.setModelLanguage(solutionEditor.getModel(), 'python'); 
+
+                // Update solution editor to show solution in the selected language
+                if (isSolved && p.solutions && p.solutions[language]) {
+                    // Problem solved and solution exists for this language
+                    solutionEditor.setValue(p.solutions[language]);
+                    monaco.editor.setModelLanguage(solutionEditor.getModel(), language);
+                    document.getElementById('solution-lock-overlay').style.display = 'none';
+                } else if (isSolved && (!p.solutions || !p.solutions[language])) {
+                    // Problem solved but no solution for this language
+                    solutionEditor.setValue("");
+                    document.getElementById('solution-lock-overlay').style.display = 'flex';
+                    document.getElementById('lock-icon').style.display = 'none';
+                    document.getElementById('code-icon').style.display = 'block';
+                    document.getElementById('lock-title').textContent = 'Solution Not Available';
+                    document.getElementById('lock-message').textContent = 'Solution code is not available for this problem.';
+                } else {
+                    // Problem not solved
+                    solutionEditor.setValue("");
+                    document.getElementById('solution-lock-overlay').style.display = 'flex';
+                    document.getElementById('lock-icon').style.display = 'block';
+                    document.getElementById('code-icon').style.display = 'none';
+                    document.getElementById('lock-title').textContent = 'Solution Locked';
+                    document.getElementById('lock-message').textContent = 'Solve the problem to unlock the solution.';
+                }
             }
         }
 
@@ -1121,7 +1191,7 @@
             const panel = document.getElementById('pane-output');
             panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
             editor.layout();
-            if(solutionEditor) solutionEditor.layout();
+            if (solutionEditor) solutionEditor.layout();
         }
 
         // --- DRAG RESIZER ---
@@ -1146,7 +1216,7 @@
             if (newHeight > 40 && newHeight < window.innerHeight - 100) {
                 outputPanel.style.height = `${newHeight}px`;
                 editor.layout();
-                if(solutionEditor) solutionEditor.layout();
+                if (solutionEditor) solutionEditor.layout();
             }
         }
 
