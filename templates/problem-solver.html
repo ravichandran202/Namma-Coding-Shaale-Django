@@ -956,7 +956,7 @@
             const verMap = { python: '3.10.0', java: '15.0.2', javascript: '16.13.0', "c++": '10.2.0' };
             const finalCode = problem.wrapCode ? problem.wrapCode(language, code, []) : code;
 
-            const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+            const res = await fetch("https://online-code-runner-production.up.railway.app/api/v1/ncs/execute", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
