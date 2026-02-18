@@ -2158,7 +2158,7 @@ def student_dashboard(request, username):
                 'difficulty': sub.problem.difficulty.lower(), # easy, medium, hard
                 'submitted_at': sub.submitted_at,
                 # Try to link to problem solver if course exists, else just #
-                'url': reverse('problem-solver', args=[sub.course.id]) + f"?file={sub.problem.file_name}" if sub.course else "#"
+                'url': reverse('problem-solver', args=[sub.course.id]) + f"?id={sub.problem.file_name}" if sub.course else "#"
             })
             if len(recent_solved_problems) >= 5: 
                 break
