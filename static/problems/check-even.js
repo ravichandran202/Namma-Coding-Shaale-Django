@@ -41,6 +41,14 @@ module.exports = {
     "c++": `#include <string>\nusing namespace std;\nstring checkEvenOdd(int num) {\n    // write your code here\n    return "";\n}`
   },
 
+
+  "solutions": {
+    python: `def check_even_odd(num):\n    # write your code here\n    pass`,
+    java: `public static String checkEvenOdd(int num) {\n    // write your code here\n    return "";\n}`,
+    javascript: `function checkEvenOdd(num) {\n    // write your code here\n    return "";\n}`,
+    "c++": `#include <string>\nusing namespace std;\nstring checkEvenOdd(int num) {\n    // write your code here\n    return "";\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.join(', ');
     switch(lang) {

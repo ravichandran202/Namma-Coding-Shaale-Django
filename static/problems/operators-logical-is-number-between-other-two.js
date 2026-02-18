@@ -68,6 +68,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double a, b, c;\n    std::cin >> a >> b >> c;\n    std::cout << std::boolalpha << ((a >= b && a <= c) || (a >= c && a <= b)) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = float(input())\nb = float(input())\nc = float(input())\nprint((a >= b and a <= c) or (a >= c and a <= b))`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double a = scanner.nextDouble();\n        double b = scanner.nextDouble();\n        double c = scanner.nextDouble();\n        System.out.println((a >= b && a <= c) || (a >= c && a <= b));\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseFloat(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        readline.question('', (third) => {\n            inputs.push(parseFloat(third));\n            console.log((inputs[0] >= inputs[1] && inputs[0] <= inputs[2]) || (inputs[0] >= inputs[2] && inputs[0] <= inputs[1]));\n            readline.close();\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double a, b, c;\n    std::cin >> a >> b >> c;\n    std::cout << std::boolalpha << ((a >= b && a <= c) || (a >= c && a <= b)) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

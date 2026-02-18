@@ -78,6 +78,14 @@ Output: Invalid Triangle</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int angle1, angle2, angle3;\n    std::cin >> angle1 >> angle2 >> angle3;\n    \n    if (angle1 + angle2 + angle3 == 180 && angle1 > 0 && angle2 > 0 && angle3 > 0) {\n        std::cout << \"Valid Triangle\" << std::endl;\n    } else {\n        std::cout << \"Invalid Triangle\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "angle1 = int(input())\nangle2 = int(input())\nangle3 = int(input())\n\nif angle1 + angle2 + angle3 == 180 and angle1 > 0 and angle2 > 0 and angle3 > 0:\n    print(\"Valid Triangle\")\nelse:\n    print(\"Invalid Triangle\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int angle1 = scanner.nextInt();\n        int angle2 = scanner.nextInt();\n        int angle3 = scanner.nextInt();\n        \n        if (angle1 + angle2 + angle3 == 180 && angle1 > 0 && angle2 > 0 && angle3 > 0) {\n            System.out.println(\"Valid Triangle\");\n        } else {\n            System.out.println(\"Invalid Triangle\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 3) {\n        const [angle1, angle2, angle3] = input;\n        \n        if (angle1 + angle2 + angle3 === 180 && angle1 > 0 && angle2 > 0 && angle3 > 0) {\n            console.log(\"Valid Triangle\");\n        } else {\n            console.log(\"Invalid Triangle\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int angle1, angle2, angle3;\n    std::cin >> angle1 >> angle2 >> angle3;\n    \n    if (angle1 + angle2 + angle3 == 180 && angle1 > 0 && angle2 > 0 && angle3 > 0) {\n        std::cout << \"Valid Triangle\" << std::endl;\n    } else {\n        std::cout << \"Invalid Triangle\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -178,6 +178,131 @@ for i in range(row):
       return 0;
   }`
     },
+
+  
+    "solutions": {
+      "python": `row, col = map(int, input().split())
+  
+A = []
+B = []
+
+for i in range(row):
+    A.append(list(map(int, input().split())))
+for i in range(row):
+    B.append(list(map(int, input().split())))
+
+for i in range(row):
+    for j in range(col):
+        print(A[i][j] + B[i][j], end=" ")
+    print()`,
+            
+      "java": `import java.util.Scanner;
+  
+  public class Main {
+      public static void main(String[] args) {
+          Scanner scanner = new Scanner(System.in);
+          int row = scanner.nextInt();
+          int col = scanner.nextInt();
+          
+          int[][] A = new int[row][col];
+          int[][] B = new int[row][col];
+          
+          // Read first matrix
+          for (int i = 0; i < row; i++) {
+              for (int j = 0; j < col; j++) {
+                  A[i][j] = scanner.nextInt();
+              }
+          }
+          
+          // Read second matrix
+          for (int i = 0; i < row; i++) {
+              for (int j = 0; j < col; j++) {
+                  B[i][j] = scanner.nextInt();
+              }
+          }
+          
+          // Print sum matrix
+          for (int i = 0; i < row; i++) {
+              for (int j = 0; j < col; j++) {
+                  System.out.print((A[i][j] + B[i][j]) + " ");
+              }
+              System.out.println();
+          }
+      }
+  }`,
+  
+      "javascript": `const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+  
+  let inputLines = [];
+  let lineCount = 0;
+  let row, col;
+  let A = [];
+  let B = [];
+  
+  readline.on('line', (line) => {
+      inputLines.push(line);
+      lineCount++;
+      
+      if (lineCount === 1) {
+          [row, col] = line.split(' ').map(Number);
+      } else if (lineCount > 1 && lineCount <= row + 1) {
+          A.push(line.split(' ').map(Number));
+      } else if (lineCount > row + 1 && lineCount <= 2 * row + 1) {
+          B.push(line.split(' ').map(Number));
+          
+          if (lineCount === 2 * row + 1) {
+              let output = '';
+              for (let i = 0; i < row; i++) {
+                  let line = '';
+                  for (let j = 0; j < col; j++) {
+                      line += (A[i][j] + B[i][j]) + ' ';
+                  }
+                  output += line + '\\n';
+              }
+              console.log(output);
+              readline.close();
+          }
+      }
+  });`,
+  
+      "c++": `#include <iostream>
+  using namespace std;
+  
+  int main() {
+      int row, col;
+      cin >> row >> col;
+      
+      int A[row][col];
+      int B[row][col];
+      
+      // Read first matrix
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              cin >> A[i][j];
+          }
+      }
+      
+      // Read second matrix
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              cin >> B[i][j];
+          }
+      }
+      
+      // Print sum matrix
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              cout << A[i][j] + B[i][j] << " ";
+          }
+          cout << endl;
+      }
+      
+      return 0;
+  }`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

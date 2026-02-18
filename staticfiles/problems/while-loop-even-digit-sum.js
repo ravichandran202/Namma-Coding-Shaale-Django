@@ -49,6 +49,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int total = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        if (digit % 2 == 0) {\n            total += digit;\n        }\n        n /= 10;\n    }\n    std::cout << total << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ntotal = 0\nwhile n > 0:\n    digit = n % 10\n    if digit % 2 == 0:\n        total += digit\n    n //= 10\nprint(total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int total = 0;\n        while (n > 0) {\n            int digit = n % 10;\n            if (digit % 2 == 0) {\n                total += digit;\n            }\n            n /= 10;\n        }\n        System.out.println(total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let n = parseInt(input);\n    let total = 0;\n    while (n > 0) {\n        const digit = n % 10;\n        if (digit % 2 === 0) {\n            total += digit;\n        }\n        n = Math.floor(n / 10);\n    }\n    console.log(total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int total = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        if (digit % 2 == 0) {\n            total += digit;\n        }\n        n /= 10;\n    }\n    std::cout << total << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

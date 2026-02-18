@@ -50,6 +50,14 @@ Output:
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    const converted = parseFloat(number);\n    console.log(converted.toFixed(1));\n    console.log(typeof converted);\n    readline.close();\n});`,
       "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    double converted = static_cast<double>(number);\n    std::cout << converted << std::endl;\n    std::cout << typeid(converted).name() << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `number = int(input())\nconverted = float(number)\nprint(converted)\nprint(type(converted))`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        double converted = (double) number;\n        System.out.println(converted);\n        System.out.println(((Object)converted).getClass().getName());\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    const converted = parseFloat(number);\n    console.log(converted.toFixed(1));\n    console.log(typeof converted);\n    readline.close();\n});`,
+      "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    double converted = static_cast<double>(number);\n    std::cout << converted << std::endl;\n    std::cout << typeid(converted).name() << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

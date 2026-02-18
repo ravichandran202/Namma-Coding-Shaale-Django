@@ -64,6 +64,14 @@ Output:
     "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        nums.push_back(num);\n    }\n    \n    int index;\n    cin >> index;\n    \n    int removed = nums[index];\n    nums.erase(nums.begin() + index);\n    \n    cout << removed << endl;\n    cout << \"[\";\n    for (int i = 0; i < nums.size(); i++) {\n        cout << nums[i];\n        if (i < nums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nindex = int(input())\nremoved = nums.pop(index)\nprint(removed)\nprint(nums)",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        ArrayList<Integer> nums = new ArrayList<>();\n        \n        for (int i = 0; i < n; i++) {\n            nums.add(scanner.nextInt());\n        }\n        \n        int index = scanner.nextInt();\n        int removed = nums.remove(index);\n        \n        System.out.println(removed);\n        System.out.println(nums);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 3) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const index = parseInt(inputLines[2]);\n        \n        const removed = nums.splice(index, 1)[0];\n        console.log(removed);\n        console.log(JSON.stringify(nums));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        nums.push_back(num);\n    }\n    \n    int index;\n    cin >> index;\n    \n    int removed = nums[index];\n    nums.erase(nums.begin() + index);\n    \n    cout << removed << endl;\n    cout << \"[\";\n    for (int i = 0; i < nums.size(); i++) {\n        cout << nums[i];\n        if (i < nums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -120,6 +120,14 @@ world</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid stop_at_empty() {\n    string word;\n    while (true) {\n        getline(cin, word);\n        if (word == \"\") {\n            break;\n        }\n        cout << word << endl;\n    }\n}\n\nint main() {\n    stop_at_empty();\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def stop_at_empty():\n    while True:\n        word = input()\n        if word == \"\":\n            break\n        print(word)\n\n# main code\nstop_at_empty()",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void stop_at_empty() {\n        Scanner scanner = new Scanner(System.in);\n        while (true) {\n            String word = scanner.nextLine();\n            if (word.equals(\"\")) {\n                break;\n            }\n            System.out.println(word);\n        }\n    }\n    \n    public static void main(String[] args) {\n        stop_at_empty();\n    }\n}",
+    "javascript": "function stop_at_empty() {\n    const readline = require('readline').createInterface({\n        input: process.stdin,\n        output: process.stdout\n    });\n    \n    const lines = [];\n    readline.on('line', (line) => {\n        lines.push(line);\n    });\n    \n    readline.on('close', () => {\n        for (let line of lines) {\n            if (line === '') {\n                break;\n            }\n            console.log(line);\n        }\n    });\n}\n\nstop_at_empty();",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid stop_at_empty() {\n    string word;\n    while (true) {\n        getline(cin, word);\n        if (word == \"\") {\n            break;\n        }\n        cout << word << endl;\n    }\n}\n\nint main() {\n    stop_at_empty();\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

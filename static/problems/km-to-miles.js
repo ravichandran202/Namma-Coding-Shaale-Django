@@ -40,6 +40,14 @@ module.exports = {
     "c++": `double kmToMiles(double km) {\n    // write your code here\n    return 0.0;\n}`
   },
 
+
+  "solutions": {
+    python: `def km_to_miles(km):\n    # write your code here\n    pass`,
+    java: `public static double kmToMiles(double km) {\n    // write your code here\n    return 0.0;\n}`,
+    javascript: `function kmToMiles(km) {\n    // write your code here\n    return 0;\n}`,
+    "c++": `double kmToMiles(double km) {\n    // write your code here\n    return 0.0;\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.join(', ');
     switch(lang) {

@@ -86,6 +86,14 @@ Hello, Alice!</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid print_greeting(string name) {\n    cout << \"Hello, \" << name << \"!\" << endl;\n}\n\nint main() {\n    string name;\n    getline(cin, name);\n    print_greeting(name);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_greeting(name):\n    print(f\"Hello, {name}!\")\n\n# Main code\nname = input()\nprint_greeting(name)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_greeting(String name) {\n        System.out.println(\"Hello, \" + name + \"!\");\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String name = scanner.nextLine();\n        print_greeting(name);\n    }\n}",
+    "javascript": "function print_greeting(name) {\n    console.log(`Hello, ${name}!`);\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (name) => {\n    print_greeting(name);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid print_greeting(string name) {\n    cout << \"Hello, \" << name << \"!\" << endl;\n}\n\nint main() {\n    string name;\n    getline(cin, name);\n    print_greeting(name);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

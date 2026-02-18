@@ -202,6 +202,149 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": `row, col = map(int, input().split())
+
+A = []
+B = []
+
+for i in range(row):
+    A.append(input().split())
+for i in range(row):
+    B.append(input().split())
+
+for i in range(row):
+    for j in range(col):
+        print(f"{A[i][j]}{B[i][j]}", end=" ")
+    print()`,
+            
+    "java": `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int row = scanner.nextInt();
+        int col = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        
+        String[][] A = new String[row][col];
+        String[][] B = new String[row][col];
+        
+        // Read first matrix
+        for (int i = 0; i < row; i++) {
+            String[] line = scanner.nextLine().split(" ");
+            for (int j = 0; j < col; j++) {
+                A[i][j] = line[j];
+            }
+        }
+        
+        // Read second matrix
+        for (int i = 0; i < row; i++) {
+            String[] line = scanner.nextLine().split(" ");
+            for (int j = 0; j < col; j++) {
+                B[i][j] = line[j];
+            }
+        }
+        
+        // Print combined matrices
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                System.out.print(A[i][j] + B[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}`,
+
+    "javascript": `const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let inputLines = [];
+let lineCount = 0;
+let row, col;
+let A = [];
+let B = [];
+
+readline.on('line', (line) => {
+    inputLines.push(line);
+    lineCount++;
+    
+    if (lineCount === 1) {
+        [row, col] = line.split(' ').map(Number);
+    } else if (lineCount > 1 && lineCount <= row + 1) {
+        A.push(line.split(' '));
+    } else if (lineCount > row + 1 && lineCount <= 2 * row + 1) {
+        B.push(line.split(' '));
+        
+        if (lineCount === 2 * row + 1) {
+            let output = '';
+            for (let i = 0; i < row; i++) {
+                let line = '';
+                for (let j = 0; j < col; j++) {
+                    line += A[i][j] + B[i][j] + ' ';
+                }
+                output += line + '\\n';
+            }
+            console.log(output);
+            readline.close();
+        }
+    }
+});`,
+
+    "c++": `#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    int row, col;
+    cin >> row >> col;
+    cin.ignore(); // ignore newline
+    
+    vector<vector<string>> A(row, vector<string>(col));
+    vector<vector<string>> B(row, vector<string>(col));
+    
+    // Read first matrix
+    for (int i = 0; i < row; i++) {
+        string line;
+        getline(cin, line);
+        int start = 0;
+        for (int j = 0; j < col; j++) {
+            size_t space = line.find(' ', start);
+            if (space == string::npos) space = line.length();
+            A[i][j] = line.substr(start, space - start);
+            start = space + 1;
+        }
+    }
+    
+    // Read second matrix
+    for (int i = 0; i < row; i++) {
+        string line;
+        getline(cin, line);
+        int start = 0;
+        for (int j = 0; j < col; j++) {
+            size_t space = line.find(' ', start);
+            if (space == string::npos) space = line.length();
+            B[i][j] = line.substr(start, space - start);
+            start = space + 1;
+        }
+    }
+    
+    // Print combined matrices
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            cout << A[i][j] << B[i][j] << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

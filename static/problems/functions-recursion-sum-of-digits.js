@@ -85,6 +85,14 @@ Output:
     "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint sum_digits(int n) {\n    n = abs(n);\n    if (n == 0) {\n        return 0;\n    }\n    return (n % 10) + sum_digits(n / 10);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << sum_digits(n) << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def sum_digits(n):\n    n = abs(n)\n    if n == 0:\n        return 0\n    return (n % 10) + sum_digits(n // 10)\n\n# main code\nn = int(input())\nprint(sum_digits(n))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int sum_digits(int n) {\n        n = Math.abs(n);\n        if (n == 0) {\n            return 0;\n        }\n        return (n % 10) + sum_digits(n / 10);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        System.out.println(sum_digits(n));\n    }\n}",
+    "javascript": "function sum_digits(n) {\n    n = Math.abs(n);\n    if (n === 0) {\n        return 0;\n    }\n    return (n % 10) + sum_digits(Math.floor(n / 10));\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    console.log(sum_digits(n));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint sum_digits(int n) {\n    n = abs(n);\n    if (n == 0) {\n        return 0;\n    }\n    return (n % 10) + sum_digits(n / 10);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << sum_digits(n) << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

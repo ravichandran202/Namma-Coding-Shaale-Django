@@ -54,6 +54,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double temperature;\n    std::cin >> temperature;\n    std::cout << std::boolalpha << (temperature < 0) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `temperature = float(input())\nprint(temperature < 0)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double temperature = scanner.nextDouble();\n        System.out.println(temperature < 0);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (temperature) => {\n    const temp = parseFloat(temperature);\n    console.log(temp < 0);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double temperature;\n    std::cin >> temperature;\n    std::cout << std::boolalpha << (temperature < 0) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

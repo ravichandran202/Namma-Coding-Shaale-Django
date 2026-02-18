@@ -63,6 +63,14 @@ Output:
     "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int a = 0, b = 1;\n    int count = 0;\n    while (count < n) {\n        std::cout << a << std::endl;\n        int next = a + b;\n        a = b;\n        b = next;\n        count++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\na, b = 0, 1\ncount = 0\nwhile count < n:\n    print(a)\n    a, b = b, a + b\n    count += 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int a = 0, b = 1;\n        int count = 0;\n        while (count < n) {\n            System.out.println(a);\n            int next = a + b;\n            a = b;\n            b = next;\n            count++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let a = 0, b = 1;\n    let count = 0;\n    while (count < n) {\n        console.log(a);\n        const next = a + b;\n        a = b;\n        b = next;\n        count++;\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int a = 0, b = 1;\n    int count = 0;\n    while (count < n) {\n        std::cout << a << std::endl;\n        int next = a + b;\n        a = b;\n        b = next;\n        count++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

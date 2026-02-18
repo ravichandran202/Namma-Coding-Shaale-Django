@@ -58,6 +58,14 @@ Output: 9</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int largest = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        if (digit > largest) {\n            largest = digit;\n        }\n        n /= 10;\n    }\n    std::cout << largest << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nlargest = 0\nwhile n > 0:\n    digit = n % 10\n    if digit > largest:\n        largest = digit\n    n //= 10\nprint(largest)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int largest = 0;\n        while (n > 0) {\n            int digit = n % 10;\n            if (digit > largest) {\n                largest = digit;\n            }\n            n /= 10;\n        }\n        System.out.println(largest);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let n = parseInt(input);\n    let largest = 0;\n    while (n > 0) {\n        const digit = n % 10;\n        if (digit > largest) {\n            largest = digit;\n        }\n        n = Math.floor(n / 10);\n    }\n    console.log(largest);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int largest = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        if (digit > largest) {\n            largest = digit;\n        }\n        n /= 10;\n    }\n    std::cout << largest << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

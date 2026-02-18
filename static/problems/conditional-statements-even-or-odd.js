@@ -57,6 +57,14 @@ Output: Even</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    if (number % 2 == 0) {\n        std::cout << "Even" << std::endl;\n    } else {\n        std::cout << "Odd" << std::endl;\n    }\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `number = int(input())\nif number % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        if (number % 2 == 0) {\n            System.out.println("Even");\n        } else {\n            System.out.println("Odd");\n        }\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    const num = parseInt(number);\n    if (num % 2 === 0) {\n        console.log("Even");\n    } else {\n        console.log("Odd");\n    }\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    if (number % 2 == 0) {\n        std::cout << "Even" << std::endl;\n    } else {\n        std::cout << "Odd" << std::endl;\n    }\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

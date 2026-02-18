@@ -67,6 +67,14 @@ Output: True</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char char1, char2;\n    std::cin >> char1 >> char2;\n    \n    int sum_ascii = (int)char1 + (int)char2;\n    std::cout << ((sum_ascii == 155) ? \"True\" : \"False\") << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char1 = input()\nchar2 = input()\n\nsum_ascii = ord(char1) + ord(char2)\nprint(sum_ascii == 155)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char char1 = scanner.next().charAt(0);\n        char char2 = scanner.next().charAt(0);\n        \n        int sum_ascii = (int)char1 + (int)char2;\n        System.out.println(sum_ascii == 155);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n    if (input.length === 2) {\n        const char1 = input[0];\n        const char2 = input[1];\n        \n        const sum_ascii = char1.charCodeAt(0) + char2.charCodeAt(0);\n        console.log(sum_ascii === 155);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char char1, char2;\n    std::cin >> char1 >> char2;\n    \n    int sum_ascii = (int)char1 + (int)char2;\n    std::cout << ((sum_ascii == 155) ? \"True\" : \"False\") << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

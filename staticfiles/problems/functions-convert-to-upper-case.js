@@ -80,6 +80,14 @@ PYTHON 3.9</pre>
     "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\n#include <cctype>\nusing namespace std;\n\nstring to_uppercase(string s) {\n    transform(s.begin(), s.end(), s.begin(), ::toupper);\n    return s;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    string result = to_uppercase(text);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def to_uppercase(s):\n    return s.upper()\n\n# Main code\ntext = input()\nresult = to_uppercase(text)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static String to_uppercase(String s) {\n        return s.toUpperCase();\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        String result = to_uppercase(text);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function to_uppercase(s) {\n    return s.toUpperCase();\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    const result = to_uppercase(text);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\n#include <cctype>\nusing namespace std;\n\nstring to_uppercase(string s) {\n    transform(s.begin(), s.end(), s.begin(), ::toupper);\n    return s;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    string result = to_uppercase(text);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

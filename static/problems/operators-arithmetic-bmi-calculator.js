@@ -65,6 +65,14 @@ Output: 22.04</pre>
     "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    double weight, height;\n    std::cin >> weight >> height;\n    \n    double bmi = weight / (height * height);\n    std::cout << std::fixed << std::setprecision(2);\n    std::cout << bmi << std::endl;\n    \n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `weight = float(input())\nheight = float(input())\n\nbmi = weight / (height ** 2)\nprint(f"{bmi:.2f}")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double weight = scanner.nextDouble();\n        double height = scanner.nextDouble();\n        \n        double bmi = weight / (height * height);\n        System.out.printf(\"%.2f%n\", bmi);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (weight) => {\n    inputs.push(parseFloat(weight));\n    readline.question('', (height) => {\n        inputs.push(parseFloat(height));\n        \n        const bmi = inputs[0] / (inputs[1] * inputs[1]);\n        console.log(bmi.toFixed(2));\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    double weight, height;\n    std::cin >> weight >> height;\n    \n    double bmi = weight / (height * height);\n    std::cout << std::fixed << std::setprecision(2);\n    std::cout << bmi << std::endl;\n    \n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

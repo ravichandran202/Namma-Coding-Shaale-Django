@@ -50,6 +50,14 @@ C</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    char ch = 'A';\n    int count = 0;\n    while (count < N) {\n        cout << ch << endl;\n        ch++;\n        count++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "ch = 65\nN = int(input())\nwhile ch < 65 + N:\n    print(chr(ch))\n    ch += 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int N = scanner.nextInt();\n        char ch = 'A';\n        int count = 0;\n        while (count < N) {\n            System.out.println(ch);\n            ch++;\n            count++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (N) => {\n    let ch = 65;\n    let count = 0;\n    while (count < parseInt(N)) {\n        console.log(String.fromCharCode(ch));\n        ch++;\n        count++;\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    char ch = 'A';\n    int count = 0;\n    while (count < N) {\n        cout << ch << endl;\n        ch++;\n        count++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

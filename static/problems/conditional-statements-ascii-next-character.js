@@ -56,6 +56,14 @@ Output: b</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    char next_char = ch + 1;\n    std::cout << next_char << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nnext_char = chr(ord(char) + 1)\nprint(next_char)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        char next_char = (char)(character + 1);\n        System.out.println(next_char);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (char) => {\n    const next_char = String.fromCharCode(char.charCodeAt(0) + 1);\n    console.log(next_char);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    char next_char = ch + 1;\n    std::cout << next_char << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

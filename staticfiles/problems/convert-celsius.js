@@ -38,6 +38,14 @@ module.exports = {
     "c++": `double celsiusToFahrenheit(double celsius) {\n    // write your code here\n    return 0.0;\n}`
   },
 
+
+  "solutions": {
+    python: `def celsius_to_fahrenheit(celsius):\n    # write your code here\n    pass`,
+    java: `public static double celsiusToFahrenheit(double celsius) {\n    // write your code here\n    return 0.0;\n}`,
+    javascript: `function celsiusToFahrenheit(celsius) {\n    // write your code here\n    return 0;\n}`,
+    "c++": `double celsiusToFahrenheit(double celsius) {\n    // write your code here\n    return 0.0;\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.join(', ');
     switch(lang) {

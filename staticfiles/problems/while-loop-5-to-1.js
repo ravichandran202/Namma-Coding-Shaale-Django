@@ -46,6 +46,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num = 5;\n    while (num >= 1) {\n        cout << num << endl;\n        num--;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = 5\nwhile num >= 1:\n    print(num)\n    num -= 1",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int num = 5;\n        while (num >= 1) {\n            System.out.println(num);\n            num--;\n        }\n    }\n}",
+    "javascript": "let num = 5;\nwhile (num >= 1) {\n    console.log(num);\n    num--;\n}",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num = 5;\n    while (num >= 1) {\n        cout << num << endl;\n        num--;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

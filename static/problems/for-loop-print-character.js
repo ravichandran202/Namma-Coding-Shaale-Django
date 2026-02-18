@@ -57,6 +57,14 @@ o</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    for (char ch : word) {\n        cout << ch << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "word = input()\nfor ch in word:\n    print(ch)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.next();\n        for (int i = 0; i < word.length(); i++) {\n            System.out.println(word.charAt(i));\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    for (let i = 0; i < input.length; i++) {\n        console.log(input[i]);\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    for (char ch : word) {\n        cout << ch << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

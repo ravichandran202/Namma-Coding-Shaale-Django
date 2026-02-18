@@ -46,6 +46,14 @@ Output: ['Study']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> tasks;\n    string task;\n    \n    while (ss >> task) {\n        tasks.push_back(task);\n    }\n    \n    reverse(tasks.begin(), tasks.end());\n    cout << \"[\";\n    for (int i = 0; i < tasks.size(); i++) {\n        cout << \"'\" << tasks[i] << \"'\";\n        if (i < tasks.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "tasks = input().split()\nprint(tasks[::-1])",
+    "java": "import java.util.Scanner;\nimport java.util.Collections;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] tasks = scanner.nextLine().split(\" \");\n        List<String> taskList = Arrays.asList(tasks);\n        Collections.reverse(taskList);\n        System.out.println(taskList);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const tasks = input.split(' ');\n    const result = tasks.reverse();\n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> tasks;\n    string task;\n    \n    while (ss >> task) {\n        tasks.push_back(task);\n    }\n    \n    reverse(tasks.begin(), tasks.end());\n    cout << \"[\";\n    for (int i = 0; i < tasks.size(); i++) {\n        cout << \"'\" << tasks[i] << \"'\";\n        if (i < tasks.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

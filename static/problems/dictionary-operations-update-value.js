@@ -59,6 +59,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    student[\"age\"] = \"21\";\n    \n    string updateKey, updateValue;\n    getline(cin, updateKey);\n    getline(cin, updateValue);\n    \n    student[updateKey] = updateValue;\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "student = {\"name\": \"Ravi\", \"age\": \"21\"}\n\nupdate_key = input()\nupdate_value = input()\n\nstudent[update_key] = update_value\nprint(student)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        Map<String, String> student = new LinkedHashMap<>();\n        student.put(\"name\", \"Ravi\");\n        student.put(\"age\", \"21\");\n        \n        String updateKey = scanner.nextLine();\n        String updateValue = scanner.nextLine();\n        \n        student.put(updateKey, updateValue);\n        \n        System.out.println(student);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 2) {\n        const student = {name: \"Ravi\", age: \"21\"};\n        const updateKey = lines[0];\n        const updateValue = lines[1];\n        \n        student[updateKey] = updateValue;\n        \n        console.log(JSON.stringify(student).replace(/\"/g, \"'\"));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    student[\"age\"] = \"21\";\n    \n    string updateKey, updateValue;\n    getline(cin, updateKey);\n    getline(cin, updateValue);\n    \n    student[updateKey] = updateValue;\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

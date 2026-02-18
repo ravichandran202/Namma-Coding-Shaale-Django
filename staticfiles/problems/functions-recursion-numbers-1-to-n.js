@@ -86,6 +86,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_numbers(int n) {\n    if (n == 0) {\n        return;\n    }\n    print_numbers(n - 1);\n    cout << n << endl;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    print_numbers(n);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_numbers(n):\n    if n == 0:\n        return\n    print_numbers(n-1)\n    print(n)\n\n# main code\nn = int(input())\nprint_numbers(n)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_numbers(int n) {\n        if (n == 0) {\n            return;\n        }\n        print_numbers(n - 1);\n        System.out.println(n);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        print_numbers(n);\n    }\n}",
+    "javascript": "function print_numbers(n) {\n    if (n === 0) {\n        return;\n    }\n    print_numbers(n - 1);\n    console.log(n);\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    print_numbers(n);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_numbers(int n) {\n    if (n == 0) {\n        return;\n    }\n    print_numbers(n - 1);\n    cout << n << endl;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    print_numbers(n);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

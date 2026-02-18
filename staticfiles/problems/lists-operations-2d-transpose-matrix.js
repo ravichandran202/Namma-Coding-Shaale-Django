@@ -151,6 +151,102 @@ for i in range(col):
       return 0;
   }`
     },
+
+  
+    "solutions": {
+      "python": `row, col = map(int, input().split())
+  
+matrix = []
+for i in range(row):
+    matrix.append(list(map(int, input().split())))
+
+for i in range(col):
+    for j in range(row):
+        print(matrix[j][i], end=" ")
+    print()`,
+              
+      "java": `import java.util.Scanner;
+  
+  public class Main {
+      public static void main(String[] args) {
+          Scanner scanner = new Scanner(System.in);
+          int row = scanner.nextInt();
+          int col = scanner.nextInt();
+          
+          int[][] matrix = new int[row][col];
+          for (int i = 0; i < row; i++) {
+              for (int j = 0; j < col; j++) {
+                  matrix[i][j] = scanner.nextInt();
+              }
+          }
+          
+          for (int i = 0; i < col; i++) {
+              for (int j = 0; j < row; j++) {
+                  System.out.print(matrix[j][i] + " ");
+              }
+              System.out.println();
+          }
+      }
+  }`,
+  
+      "javascript": `const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+  
+  let inputLines = [];
+  let lineCount = 0;
+  let row, col;
+  let matrix = [];
+  
+  readline.on('line', (line) => {
+      inputLines.push(line);
+      lineCount++;
+      
+      if (lineCount === 1) {
+          [row, col] = line.split(' ').map(Number);
+      } else if (lineCount > 1 && lineCount <= row + 1) {
+          matrix.push(line.split(' ').map(Number));
+          
+          if (lineCount === row + 1) {
+              let output = '';
+              for (let i = 0; i < col; i++) {
+                  let line = '';
+                  for (let j = 0; j < row; j++) {
+                      line += matrix[j][i] + ' ';
+                  }
+                  output += line + '\\n';
+              }
+              console.log(output);
+              readline.close();
+          }
+      }
+  });`,
+  
+      "c++": `#include <iostream>
+  using namespace std;
+  
+  int main() {
+      int row, col;
+      cin >> row >> col;
+      
+      int matrix[row][col];
+      for (int i = 0; i < row; i++) {
+          for (int j = 0; j < col; j++) {
+              cin >> matrix[i][j];
+          }
+      }
+      
+      for (int i = 0; i < col; i++) {
+          for (int j = 0; j < row; j++) {
+              cout << matrix[j][i] << " ";
+          }
+          cout << endl;
+      }
+      
+      return 0;
+  }`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

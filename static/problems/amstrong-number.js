@@ -68,6 +68,14 @@ Explanation: 1^3 + 2^3 + 3^3 = 36 ≠ 123</pre>
     "c++": `#include <iostream>\n#include <cmath>\n\nbool isArmstrongNumber(int num) {\n  // Your code here\n  return false;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
   },
 
+
+  "solutions": {
+    python: `def is_armstrong_number(num):\n    # Your code here\n    pass`,
+    java: `public class Main {\n  public static boolean isArmstrongNumber(int num) {\n    // Your code here\n    return false;\n  }\n\n  public static void main(String[] args) {\n    // Test cases will be added here\n  }\n}`,
+    javascript: `function isArmstrongNumber(num) {\n  // Your code here\n  return false;\n}`,
+    "c++": `#include <iostream>\n#include <cmath>\n\nbool isArmstrongNumber(int num) {\n  // Your code here\n  return false;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
+  },
+
   wrapCode: function(lang, userCode, input) {
     switch(lang) {
       case 'python':

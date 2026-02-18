@@ -80,6 +80,14 @@ Output: A</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    int shift;\n    std::cin >> ch >> shift;\n    \n    int ascii_val = (int)ch;\n    int new_ascii = ((ascii_val - 65 + shift) % 26 + 26) % 26 + 65;\n    std::cout << (char)new_ascii << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nshift = int(input())\n\nascii_val = ord(char)\nnew_ascii = (ascii_val - 65 + shift) % 26 + 65\nprint(chr(new_ascii))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        int shift = scanner.nextInt();\n        \n        int ascii_val = (int) character;\n        int new_ascii = ((ascii_val - 65 + shift) % 26 + 26) % 26 + 65;\n        System.out.println((char) new_ascii);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n    if (input.length === 2) {\n        const char = input[0];\n        const shift = parseInt(input[1]);\n        \n        const ascii_val = char.charCodeAt(0);\n        const new_ascii = ((ascii_val - 65 + shift) % 26 + 26) % 26 + 65;\n        console.log(String.fromCharCode(new_ascii));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    int shift;\n    std::cin >> ch >> shift;\n    \n    int ascii_val = (int)ch;\n    int new_ascii = ((ascii_val - 65 + shift) % 26 + 26) % 26 + 65;\n    std::cout << (char)new_ascii << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

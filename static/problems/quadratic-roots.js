@@ -41,6 +41,14 @@ module.exports = {
       javascript: `function quadraticRoots(a, b, c) {\n    // write your code here\n    return [];\n}`,
       "c++": `vector<double> quadraticRoots(double a, double b, double c) {\n    // write your code here\n    return {};\n}`
     },
+
+  
+    "solutions": {
+      python: `def quadratic_roots(a, b, c):\n    # write your code here\n    pass`,
+      java: `public static double[] quadraticRoots(double a, double b, double c) {\n    // write your code here\n    return new double[0];\n}`,
+      javascript: `function quadraticRoots(a, b, c) {\n    // write your code here\n    return [];\n}`,
+      "c++": `vector<double> quadraticRoots(double a, double b, double c) {\n    // write your code here\n    return {};\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.join(', ');

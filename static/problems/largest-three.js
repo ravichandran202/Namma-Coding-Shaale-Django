@@ -34,6 +34,14 @@ module.exports = {
       javascript: `function largestOfThree(a, b, c) {\n    // write your code here\n    return 0;\n}`,
       "c++": `int largestOfThree(int a, int b, int c) {\n    // write your code here\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      python: `def largest_of_three(a, b, c):\n    # write your code here\n    pass`,
+      java: `public static int largestOfThree(int a, int b, int c) {\n    // write your code here\n    return 0;\n}`,
+      javascript: `function largestOfThree(a, b, c) {\n    // write your code here\n    return 0;\n}`,
+      "c++": `int largestOfThree(int a, int b, int c) {\n    // write your code here\n    return 0;\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.join(', ');

@@ -63,6 +63,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int i = 0;\n    while (i < n) {\n        cout << \"* \";\n        i++;\n    }\n    cout << endl;\n    \n    int j = 0;\n    while (j < n / 2) {\n        cout << \"* \";\n        j++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\n\ni = 0\nwhile i < n:\n    print('*', end=' ')\n    i += 1\n\nprint()\n\nj = 0\nwhile j < n // 2:\n    print('*', end=' ')\n    j += 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        \n        int i = 0;\n        while (i < n) {\n            System.out.print(\"* \");\n            i++;\n        }\n        System.out.println();\n        \n        int j = 0;\n        while (j < n / 2) {\n            System.out.print(\"* \");\n            j++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let i = 0;\n    let line1 = '';\n    while (i < n) {\n        line1 += '* ';\n        i++;\n    }\n    \n    let j = 0;\n    let line2 = '';\n    while (j < Math.floor(n / 2)) {\n        line2 += '* ';\n        j++;\n    }\n    \n    console.log(line1.trim());\n    console.log(line2.trim());\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int i = 0;\n    while (i < n) {\n        cout << \"* \";\n        i++;\n    }\n    cout << endl;\n    \n    int j = 0;\n    while (j < n / 2) {\n        cout << \"* \";\n        j++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

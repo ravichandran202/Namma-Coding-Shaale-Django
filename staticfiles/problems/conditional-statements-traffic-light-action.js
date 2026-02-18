@@ -66,6 +66,14 @@ Output: Invalid Color</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (color) => {\n    if (color === \"Red\") {\n        console.log(\"Stop\");\n    } else if (color === \"Yellow\") {\n        console.log(\"Get Ready\");\n    } else if (color === \"Green\") {\n        console.log(\"Go\");\n    } else {\n        console.log(\"Invalid Color\");\n    }\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string color;\n    std::cin >> color;\n    \n    if (color == \"Red\") {\n        std::cout << \"Stop\" << std::endl;\n    } else if (color == \"Yellow\") {\n        std::cout << \"Get Ready\" << std::endl;\n    } else if (color == \"Green\") {\n        std::cout << \"Go\" << std::endl;\n    } else {\n        std::cout << \"Invalid Color\" << std::endl;\n    }\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "color = input()\n\nif color == \"Red\":\n    print(\"Stop\")\nelif color == \"Yellow\":\n    print(\"Get Ready\")\nelif color == \"Green\":\n    print(\"Go\")\nelse:\n    print(\"Invalid Color\")",
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String color = scanner.next();\n        \n        if (color.equals(\"Red\")) {\n            System.out.println(\"Stop\");\n        } else if (color.equals(\"Yellow\")) {\n            System.out.println(\"Get Ready\");\n        } else if (color.equals(\"Green\")) {\n            System.out.println(\"Go\");\n        } else {\n            System.out.println(\"Invalid Color\");\n        }\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (color) => {\n    if (color === \"Red\") {\n        console.log(\"Stop\");\n    } else if (color === \"Yellow\") {\n        console.log(\"Get Ready\");\n    } else if (color === \"Green\") {\n        console.log(\"Go\");\n    } else {\n        console.log(\"Invalid Color\");\n    }\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string color;\n    std::cin >> color;\n    \n    if (color == \"Red\") {\n        std::cout << \"Stop\" << std::endl;\n    } else if (color == \"Yellow\") {\n        std::cout << \"Get Ready\" << std::endl;\n    } else if (color == \"Green\") {\n        std::cout << \"Go\" << std::endl;\n    } else {\n        std::cout << \"Invalid Color\" << std::endl;\n    }\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

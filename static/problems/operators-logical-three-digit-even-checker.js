@@ -59,6 +59,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x >= 100 && x <= 999 && x % 2 == 0) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `x = int(input())\nprint(x >= 100 and x <= 999 and x % 2 == 0)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int x = scanner.nextInt();\n        System.out.println(x >= 100 && x <= 999 && x % 2 == 0);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (x) => {\n    const num = parseInt(x);\n    console.log(num >= 100 && num <= 999 && num % 2 === 0);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x >= 100 && x <= 999 && x % 2 == 0) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

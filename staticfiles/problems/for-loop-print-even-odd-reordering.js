@@ -47,6 +47,17 @@ Output: acebdf</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    string evens = \"\", odds = \"\";\n    for (int i = 0; i < s.length(); i++) {\n        if (i % 2 == 0) evens += s[i];\n        else odds += s[i];\n    }\n    cout << evens + odds;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "s = input()\nevens = ''.join(s[i] for i in range(0, len(s), 2))\nodds = ''.join(s[i] for i in range(1, len(s), 2))\nprint(evens + odds)",
+    
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next();\n        StringBuilder evens = new StringBuilder();\n        StringBuilder odds = new StringBuilder();\n        for (int i = 0; i < s.length(); i++) {\n            if (i % 2 == 0) evens.append(s.charAt(i));\n            else odds.append(s.charAt(i));\n        }\n        System.out.print(evens.toString() + odds.toString());\n    }\n}",
+    
+    "javascript": "const readline = require('readline').createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nreadline.question('', (input) => {\n  let evens = '';\n  let odds = '';\n  for (let i = 0; i < input.length; i++) {\n    if (i % 2 === 0) evens += input[i];\n    else odds += input[i];\n  }\n  console.log(evens + odds);\n  readline.close();\n});",
+    
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    string evens = \"\", odds = \"\";\n    for (int i = 0; i < s.length(); i++) {\n        if (i % 2 == 0) evens += s[i];\n        else odds += s[i];\n    }\n    cout << evens + odds;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

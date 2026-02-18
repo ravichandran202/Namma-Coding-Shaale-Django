@@ -55,6 +55,14 @@ Output: a</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    char prev_char = ch - 1;\n    std::cout << prev_char << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nprev_char = chr(ord(char) - 1)\nprint(prev_char)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        char prev_char = (char)(character - 1);\n        System.out.println(prev_char);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (char) => {\n    const prev_char = String.fromCharCode(char.charCodeAt(0) - 1);\n    console.log(prev_char);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    char prev_char = ch - 1;\n    std::cout << prev_char << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

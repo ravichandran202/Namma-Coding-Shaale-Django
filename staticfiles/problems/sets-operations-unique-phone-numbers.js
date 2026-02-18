@@ -69,6 +69,14 @@ Output:
     "c++": "#include <iostream>\n#include <set>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<string> numbers(n);\n    for (int i = 0; i < n; i++) {\n        cin >> numbers[i];\n    }\n    \n    set<string> uniqueNumbers;\n    for (const string& num : numbers) {\n        uniqueNumbers.insert(num);\n    }\n    \n    cout << \"[\";\n    bool first = true;\n    for (const string& num : uniqueNumbers) {\n        if (!first) cout << \", \";\n        cout << \"'\" << num << \"'\";\n        first = false;\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = input().split()\nunique_sorted = sorted(set(nums))\nprint(unique_sorted)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();  // consume newline\n        \n        String[] numbers = scanner.nextLine().split(\" \");\n        Set<String> uniqueNumbers = new TreeSet<>();\n        \n        for (String num : numbers) {\n            uniqueNumbers.add(num);\n        }\n        \n        System.out.println(uniqueNumbers);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 2) {\n        const n = parseInt(lines[0]);\n        const numbers = lines[1].split(' ');\n        const uniqueNumbers = [...new Set(numbers)].sort();\n        \n        console.log(JSON.stringify(uniqueNumbers));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <set>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<string> numbers(n);\n    for (int i = 0; i < n; i++) {\n        cin >> numbers[i];\n    }\n    \n    set<string> uniqueNumbers;\n    for (const string& num : numbers) {\n        uniqueNumbers.insert(num);\n    }\n    \n    cout << \"[\";\n    bool first = true;\n    for (const string& num : uniqueNumbers) {\n        if (!first) cout << \", \";\n        cout << \"'\" << num << \"'\";\n        first = false;\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -320,6 +320,226 @@ for line in sys.stdin:
       return 0;
   }`
     },
+
+  
+    "solutions": {
+      "python": 
+  `class RailwaySystem:
+      def __init__(self, total_seats):
+          self.total_seats = total_seats
+          self.seats = {}
+          for i in range(1, total_seats + 1):
+              self.seats[i] = "available"
+      
+      def book_seat(self, seat_number):
+          if seat_number < 1 or seat_number > self.total_seats:
+              return "Invalid seat number"
+          if self.seats[seat_number] == "available":
+              self.seats[seat_number] = "booked"
+              return f"Seat {seat_number} booked successfully"
+          return f"Seat {seat_number} is already booked"
+      
+      def show_available_seats(self):
+          available = [seat for seat, status in self.seats.items() if status == "available"]
+          return f"Available seats: {available}"
+  
+# main code
+total_seats = int(input())
+train = RailwaySystem(total_seats)
+
+import sys
+for line in sys.stdin:
+    cmd = line.strip().split()
+    if not cmd:
+        continue
+    if cmd[0] == "book":
+        print(train.book_seat(int(cmd[1])))
+    elif cmd[0] == "show":
+        print(train.show_available_seats())`,
+  
+      "java": 
+  `import java.util.*;
+  
+  class RailwaySystem {
+      int total_seats;
+      HashMap<Integer, String> seats;
+      
+      RailwaySystem(int total_seats) {
+          this.total_seats = total_seats;
+          this.seats = new HashMap<>();
+          for (int i = 1; i <= total_seats; i++) {
+              seats.put(i, "available");
+          }
+      }
+      
+      String book_seat(int seat_number) {
+          if (seat_number < 1 || seat_number > total_seats) {
+              return "Invalid seat number";
+          }
+          if (seats.get(seat_number).equals("available")) {
+              seats.put(seat_number, "booked");
+              return "Seat " + seat_number + " booked successfully";
+          }
+          return "Seat " + seat_number + " is already booked";
+      }
+      
+      String show_available_seats() {
+          List<Integer> available = new ArrayList<>();
+          for (int i = 1; i <= total_seats; i++) {
+              if (seats.get(i).equals("available")) {
+                  available.add(i);
+              }
+          }
+          return "Available seats: " + available;
+      }
+  }
+  
+  public class Main {
+      public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          int total_seats = sc.nextInt();
+          sc.nextLine(); // consume newline
+          
+          RailwaySystem train = new RailwaySystem(total_seats);
+          
+          while (sc.hasNextLine()) {
+              String line = sc.nextLine().trim();
+              if (line.isEmpty()) continue;
+              String[] cmd = line.split(" ");
+              
+              if (cmd[0].equals("book")) {
+                  System.out.println(train.book_seat(Integer.parseInt(cmd[1])));
+              } else if (cmd[0].equals("show")) {
+                  System.out.println(train.show_available_seats());
+              }
+          }
+      }
+  }`,
+  
+      "javascript": 
+  `class RailwaySystem {
+      constructor(total_seats) {
+          this.total_seats = total_seats;
+          this.seats = {};
+          for (let i = 1; i <= total_seats; i++) {
+              this.seats[i] = "available";
+          }
+      }
+      
+      book_seat(seat_number) {
+          if (seat_number < 1 || seat_number > this.total_seats) {
+              return "Invalid seat number";
+          }
+          if (this.seats[seat_number] === "available") {
+              this.seats[seat_number] = "booked";
+              return \`Seat \${seat_number} booked successfully\`;
+          }
+          return \`Seat \${seat_number} is already booked\`;
+      }
+      
+      show_available_seats() {
+          const available = [];
+          for (let i = 1; i <= this.total_seats; i++) {
+              if (this.seats[i] === "available") {
+                  available.push(i);
+              }
+          }
+          return \`Available seats: [\${available.join(", ")}]\`;
+      }
+  }
+  
+  const fs = require('fs');
+  const input = fs.readFileSync(0, 'utf8').trim().split('\\n');
+  
+  const total_seats = parseInt(input[0]);
+  const train = new RailwaySystem(total_seats);
+  
+  for (let i = 1; i < input.length; i++) {
+      const cmd = input[i].trim().split(' ');
+      if (cmd.length === 0) continue;
+      
+      if (cmd[0] === "book") {
+          console.log(train.book_seat(parseInt(cmd[1])));
+      } else if (cmd[0] === "show") {
+          console.log(train.show_available_seats());
+      }
+  }`,
+  
+      "c++": 
+  `#include <iostream>
+  #include <map>
+  #include <vector>
+  #include <sstream>
+  using namespace std;
+  
+  class RailwaySystem {
+  public:
+      int total_seats;
+      map<int, string> seats;
+      
+      RailwaySystem(int total_seats) {
+          this->total_seats = total_seats;
+          for (int i = 1; i <= total_seats; i++) {
+              seats[i] = "available";
+          }
+      }
+      
+      string book_seat(int seat_number) {
+          if (seat_number < 1 || seat_number > total_seats) {
+              return "Invalid seat number";
+          }
+          if (seats[seat_number] == "available") {
+              seats[seat_number] = "booked";
+              return "Seat " + to_string(seat_number) + " booked successfully";
+          }
+          return "Seat " + to_string(seat_number) + " is already booked";
+      }
+      
+      string show_available_seats() {
+          vector<int> available;
+          for (int i = 1; i <= total_seats; i++) {
+              if (seats[i] == "available") {
+                  available.push_back(i);
+              }
+          }
+          string result = "Available seats: [";
+          for (size_t i = 0; i < available.size(); i++) {
+              result += to_string(available[i]);
+              if (i != available.size() - 1) {
+                  result += ", ";
+              }
+          }
+          result += "]";
+          return result;
+      }
+  };
+  
+  int main() {
+      int total_seats;
+      cin >> total_seats;
+      cin.ignore();
+      
+      RailwaySystem train(total_seats);
+      string line;
+      
+      while (getline(cin, line)) {
+          if (line.empty()) continue;
+          
+          stringstream ss(line);
+          string cmd;
+          ss >> cmd;
+          
+          if (cmd == "book") {
+              int seat_num;
+              ss >> seat_num;
+              cout << train.book_seat(seat_num) << endl;
+          } else if (cmd == "show") {
+              cout << train.show_available_seats() << endl;
+          }
+      }
+      return 0;
+  }`
+    },
   
     "wrapCode": function(lang, userCode) {
       return userCode;

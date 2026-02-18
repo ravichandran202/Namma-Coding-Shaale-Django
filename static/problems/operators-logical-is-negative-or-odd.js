@@ -58,6 +58,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x < 0 || x % 2 != 0) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `x = int(input())\nprint(x < 0 or x % 2 != 0)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int x = scanner.nextInt();\n        System.out.println(x < 0 || x % 2 != 0);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (x) => {\n    const num = parseInt(x);\n    console.log(num < 0 || num % 2 !== 0);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x < 0 || x % 2 != 0) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

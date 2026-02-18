@@ -49,6 +49,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int value;\n    cin >> value;\n    \n    int index = -1;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] == value) {\n            index = i;\n            break;\n        }\n    }\n    \n    cout << index << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nvalue = int(input())\nprint(nums.index(value))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] nums = new int[n];\n        \n        for (int i = 0; i < n; i++) {\n            nums[i] = scanner.nextInt();\n        }\n        \n        int value = scanner.nextInt();\n        int index = -1;\n        \n        for (int i = 0; i < n; i++) {\n            if (nums[i] == value) {\n                index = i;\n                break;\n            }\n        }\n        \n        System.out.println(index);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 3) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const value = parseInt(inputLines[2]);\n        \n        const index = nums.indexOf(value);\n        console.log(index);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int value;\n    cin >> value;\n    \n    int index = -1;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] == value) {\n            index = i;\n            break;\n        }\n    }\n    \n    cout << index << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

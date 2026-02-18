@@ -87,6 +87,14 @@ nohtyP</pre>
     "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nstring get_reverse(string s) {\n    reverse(s.begin(), s.end());\n    return s;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    string result = get_reverse(text);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def get_reverse(s):\n    return s[::-1]\n\n# Main code\ntext = input()\nresult = get_reverse(text)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static String get_reverse(String s) {\n        StringBuilder sb = new StringBuilder(s);\n        return sb.reverse().toString();\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        String result = get_reverse(text);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function get_reverse(s) {\n    return s.split('').reverse().join('');\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    const result = get_reverse(text);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nstring get_reverse(string s) {\n    reverse(s.begin(), s.end());\n    return s;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    string result = get_reverse(text);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

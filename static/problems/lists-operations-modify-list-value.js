@@ -60,6 +60,14 @@ Output: ['A', 'B', 'C', 'X']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string line1, v;\n    int i;\n    getline(cin, line1);\n    cin >> i;\n    cin.ignore(); // ignore newline\n    getline(cin, v);\n    \n    vector<string> marks;\n    string mark;\n    \n    stringstream ss(line1);\n    while (ss >> mark) {\n        marks.push_back(mark);\n    }\n    \n    marks[i] = v;\n    \n    cout << \"[\";\n    for (int i = 0; i < marks.size(); i++) {\n        cout << \"'\" << marks[i] << \"'\";\n        if (i < marks.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "marks = input().split()\ni = int(input())\nv = input()\nmarks[i] = v\nprint(marks)",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] marks = scanner.nextLine().split(\" \");\n        int i = scanner.nextInt();\n        scanner.nextLine(); // consume newline\n        String v = scanner.nextLine();\n        \n        marks[i] = v;\n        System.out.println(Arrays.toString(marks));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 3) {\n        const marks = inputLines[0].split(' ').filter(item => item !== '');\n        const i = parseInt(inputLines[1]);\n        const v = inputLines[2];\n        \n        marks[i] = v;\n        console.log(JSON.stringify(marks));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string line1, v;\n    int i;\n    getline(cin, line1);\n    cin >> i;\n    cin.ignore(); // ignore newline\n    getline(cin, v);\n    \n    vector<string> marks;\n    string mark;\n    \n    stringstream ss(line1);\n    while (ss >> mark) {\n        marks.push_back(mark);\n    }\n    \n    marks[i] = v;\n    \n    cout << \"[\";\n    for (int i = 0; i < marks.size(); i++) {\n        cout << \"'\" << marks[i] << \"'\";\n        if (i < marks.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -49,6 +49,14 @@ Output: -1</pre>
     "c++": "#include <iostream>\n#include <climits>\nusing namespace std;\n\nint main() {\n    int row, col;\n    cin >> row >> col;\n    \n    int matrix[row][col];\n    int maxElement = INT_MIN;\n    \n    for (int i = 0; i < row; i++) {\n        for (int j = 0; j < col; j++) {\n            cin >> matrix[i][j];\n            if (matrix[i][j] > maxElement) {\n                maxElement = matrix[i][j];\n            }\n        }\n    }\n    \n    cout << maxElement << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "row, col = tuple(map(int, input().split()))\n\nmatrix = []\nfor i in range(row):\n    r = list(map(int, input().split()))\n    matrix.append(r)\n\nmax_element = matrix[0][0]\nfor row in matrix:\n    for val in row:\n        if val > max_element:\n            max_element = val\nprint(max_element)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int row = scanner.nextInt();\n        int col = scanner.nextInt();\n        \n        int[][] matrix = new int[row][col];\n        int maxElement = Integer.MIN_VALUE;\n        \n        for (int i = 0; i < row; i++) {\n            for (int j = 0; j < col; j++) {\n                matrix[i][j] = scanner.nextInt();\n                if (matrix[i][j] > maxElement) {\n                    maxElement = matrix[i][j];\n                }\n            }\n        }\n        \n        System.out.println(maxElement);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === parseInt(inputLines[0].split(' ')[0]) + 1) {\n        const [row, col] = inputLines[0].split(' ').map(Number);\n        const matrix = [];\n        let maxElement = -Infinity;\n        \n        for (let i = 1; i <= row; i++) {\n            const rowData = inputLines[i].split(' ').map(Number);\n            matrix.push(rowData);\n            const rowMax = Math.max(...rowData);\n            if (rowMax > maxElement) {\n                maxElement = rowMax;\n            }\n        }\n        \n        console.log(maxElement);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <climits>\nusing namespace std;\n\nint main() {\n    int row, col;\n    cin >> row >> col;\n    \n    int matrix[row][col];\n    int maxElement = INT_MIN;\n    \n    for (int i = 0; i < row; i++) {\n        for (int j = 0; j < col; j++) {\n            cin >> matrix[i][j];\n            if (matrix[i][j] > maxElement) {\n                maxElement = matrix[i][j];\n            }\n        }\n    }\n    \n    cout << maxElement << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

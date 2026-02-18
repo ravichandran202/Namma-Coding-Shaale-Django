@@ -49,6 +49,14 @@ Output: 2</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    for (int i = 1; i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ncount = 0\nfor i in range(1, n + 1):\n    if n % i == 0:\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        for (int i = 1; i <= n; i++) {\n            if (n % i == 0) {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let count = 0;\n    for (let i = 1; i <= n; i++) {\n        if (n % i === 0) {\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    for (int i = 1; i <= n; i++) {\n        if (n % i == 0) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

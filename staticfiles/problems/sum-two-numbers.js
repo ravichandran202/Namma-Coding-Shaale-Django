@@ -58,6 +58,14 @@ Explanation: -1 + 5 = 4</pre>
     "c++": `int sumTwoNumbers(int a, int b) {\n    // Write your code here\n    return a + b;\n}`
   },
 
+
+  "solutions": {
+    python: `def sum_two_numbers(a, b):\n    # Write your code here\n`,
+    java: `public class Main {\n    public static int sumTwoNumbers(int a, int b) {\n        // Write your code here\n        return a + b;\n    }\n}`,
+    javascript: `function sumTwoNumbers(a, b) {\n    // Write your code here\n    return a + b;\n}`,
+    "c++": `int sumTwoNumbers(int a, int b) {\n    // Write your code here\n    return a + b;\n}`
+  },
+
   wrapCode: function(lang, code, input) {
     switch(lang) {
       case 'python':

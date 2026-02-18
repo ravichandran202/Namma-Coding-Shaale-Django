@@ -47,6 +47,14 @@ Output: Python</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    // Use regex with global flag to replace all occurrences\n    console.log(line.replace(/ /g, '_'));\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    for(int i = 0; i < s.length(); i++) {\n        if(s[i] == ' ') s[i] = '_';\n    }\n    cout << s << endl;\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "s = input()\nprint(s.replace(' ', '_'))",
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        System.out.println(s.replace(\" \", \"_\"));\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    // Use regex with global flag to replace all occurrences\n    console.log(line.replace(/ /g, '_'));\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    for(int i = 0; i < s.length(); i++) {\n        if(s[i] == ' ') s[i] = '_';\n    }\n    cout << s << endl;\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

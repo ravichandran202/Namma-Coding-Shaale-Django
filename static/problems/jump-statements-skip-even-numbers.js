@@ -84,6 +84,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid skip_evens(int n) {\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            continue;\n        }\n        cout << i << endl;\n    }\n}\n\nint main() {\n    int n;\n    cin >> n;\n    skip_evens(n);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def skip_evens(n):\n    for i in range(1, n+1):\n        if i % 2 == 0:\n            continue\n        print(i)\n\n# main code\nn = int(input())\nskip_evens(n)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void skip_evens(int n) {\n        for (int i = 1; i <= n; i++) {\n            if (i % 2 == 0) {\n                continue;\n            }\n            System.out.println(i);\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        skip_evens(n);\n    }\n}",
+    "javascript": "function skip_evens(n) {\n    for (let i = 1; i <= n; i++) {\n        if (i % 2 === 0) {\n            continue;\n        }\n        console.log(i);\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    skip_evens(n);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid skip_evens(int n) {\n    for (int i = 1; i <= n; i++) {\n        if (i % 2 == 0) {\n            continue;\n        }\n        cout << i << endl;\n    }\n}\n\nint main() {\n    int n;\n    cin >> n;\n    skip_evens(n);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -71,6 +71,14 @@ Output: 45</pre>
     "c++": `#include <iostream>\n#include <cmath>\n\nint main() {\n    int a, r, n;\n    std::cin >> a >> r >> n;\n    \n    int sum_series = a * (pow(r, n) - 1) / (r - 1);\n    std::cout << sum_series << std::endl;\n    \n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = int(input())\nr = int(input())\nn = int(input())\n\nsum_series = a * (r ** n - 1) // (r - 1)\nprint(sum_series)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int r = scanner.nextInt();\n        int n = scanner.nextInt();\n        \n        int sum_series = a * ((int)Math.pow(r, n) - 1) / (r - 1);\n        System.out.println(sum_series);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (a) => {\n    inputs.push(parseInt(a));\n    readline.question('', (r) => {\n        inputs.push(parseInt(r));\n        readline.question('', (n) => {\n            inputs.push(parseInt(n));\n            \n            const sum_series = inputs[0] * (Math.pow(inputs[1], inputs[2]) - 1) / (inputs[1] - 1);\n            console.log(Math.floor(sum_series));\n            readline.close();\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n#include <cmath>\n\nint main() {\n    int a, r, n;\n    std::cin >> a >> r >> n;\n    \n    int sum_series = a * (pow(r, n) - 1) / (r - 1);\n    std::cout << sum_series << std::endl;\n    \n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

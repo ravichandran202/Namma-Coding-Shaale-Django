@@ -91,6 +91,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    map<string, int> result;\n    stringstream ss(input);\n    string name;\n    \n    while (ss >> name) {\n        result[name]++;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& entry : result) {\n        if (!first) cout << \", \";\n        cout << \"'\" << entry.first << \"': \" << entry.second;\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "votes = input().split()\nresult = {}\n\nfor name in votes:\n    if name in result:\n        result[name] = result[name] + 1\n    else:\n        result[name] = 1\n\nprint(result)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String input = scanner.nextLine();\n        \n        Map<String, Integer> result = new LinkedHashMap<>();\n        if (!input.trim().isEmpty()) {\n            String[] votes = input.split(\" \");\n            for (String name : votes) {\n                result.put(name, result.getOrDefault(name, 0) + 1);\n            }\n        }\n        \n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const result = {};\n    if (input.trim()) {\n        const votes = input.split(' ');\n        for (const name of votes) {\n            result[name] = (result[name] || 0) + 1;\n        }\n    }\n    \n    console.log(JSON.stringify(result).replace(/\"/g, \"'\"));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    map<string, int> result;\n    stringstream ss(input);\n    string name;\n    \n    while (ss >> name) {\n        result[name]++;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& entry : result) {\n        if (!first) cout << \", \";\n        cout << \"'\" << entry.first << \"': \" << entry.second;\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

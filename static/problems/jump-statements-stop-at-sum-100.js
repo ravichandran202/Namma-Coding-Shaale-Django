@@ -106,6 +106,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid stop_at_sum_100() {\n    int total = 0;\n    int num;\n    while (total < 100) {\n        cin >> num;\n        total += num;\n        cout << total << endl;\n        if (total >= 100) {\n            break;\n        }\n    }\n}\n\nint main() {\n    stop_at_sum_100();\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def stop_at_sum_100():\n    total = 0\n    while total < 100:\n        num = int(input())\n        total += num\n        print(total)\n        if total >= 100:\n            break\n\n# main code\nstop_at_sum_100()",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void stop_at_sum_100() {\n        Scanner scanner = new Scanner(System.in);\n        int total = 0;\n        while (total < 100) {\n            int num = scanner.nextInt();\n            total += num;\n            System.out.println(total);\n            if (total >= 100) {\n                break;\n            }\n        }\n    }\n    \n    public static void main(String[] args) {\n        stop_at_sum_100();\n    }\n}",
+    "javascript": "function stop_at_sum_100() {\n    const readline = require('readline').createInterface({\n        input: process.stdin,\n        output: process.stdout\n    });\n    \n    const lines = [];\n    readline.on('line', (line) => {\n        lines.push(line);\n    });\n    \n    readline.on('close', () => {\n        let total = 0;\n        for (let line of lines) {\n            const num = parseInt(line);\n            total += num;\n            console.log(total);\n            if (total >= 100) {\n                break;\n            }\n        }\n    });\n}\n\nstop_at_sum_100();",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid stop_at_sum_100() {\n    int total = 0;\n    int num;\n    while (total < 100) {\n        cin >> num;\n        total += num;\n        cout << total << endl;\n        if (total >= 100) {\n            break;\n        }\n    }\n}\n\nint main() {\n    stop_at_sum_100();\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

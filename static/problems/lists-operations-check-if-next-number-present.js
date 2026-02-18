@@ -49,6 +49,14 @@ Output: False</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    bool found = false;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] == target + 1) {\n            found = true;\n            break;\n        }\n    }\n    \n    cout << (found ? \"True\" : \"No\") << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\nif target + 1 in nums:\n    print(\"True\")\nelse:\n    print(\"False\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] nums = new int[n];\n        \n        for (int i = 0; i < n; i++) {\n            nums[i] = scanner.nextInt();\n        }\n        \n        int target = scanner.nextInt();\n        boolean found = false;\n        \n        for (int num : nums) {\n            if (num == target + 1) {\n                found = true;\n                break;\n            }\n        }\n        \n        System.out.println(found ? \"True\" : \"No\");\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 3) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const target = parseInt(inputLines[2]);\n        \n        if (nums.includes(target + 1)) {\n            console.log(\"True\");\n        } else {\n            console.log(\"No\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    bool found = false;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] == target + 1) {\n            found = true;\n            break;\n        }\n    }\n    \n    cout << (found ? \"True\" : \"No\") << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

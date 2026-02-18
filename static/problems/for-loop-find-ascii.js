@@ -66,6 +66,14 @@ Output:
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    for (int i = 0; i < text.length(); i++) {\n        cout << (int) text[i] << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "text = input()\nfor ch in text:\n    print(ord(ch))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        for (int i = 0; i < text.length(); i++) {\n            System.out.println((int) text.charAt(i));\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    for (let i = 0; i < input.length; i++) {\n        console.log(input.charCodeAt(i));\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    for (int i = 0; i < text.length(); i++) {\n        cout << (int) text[i] << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

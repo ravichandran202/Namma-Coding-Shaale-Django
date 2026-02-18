@@ -46,6 +46,14 @@ Output: No</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    bool found = false;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (i != j && nums[j] == nums[i] + 1) {\n                found = true;\n                break;\n            }\n        }\n        if (found) break;\n    }\n    \n    cout << (found ? \"Yes\" : \"No\") << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nfound = False\nfor num in nums:\n    if num + 1 in nums:\n        found = True\n        break\nif found:\n    print(\"Yes\")\nelse:\n    print(\"No\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] nums = new int[n];\n        \n        for (int i = 0; i < n; i++) {\n            nums[i] = scanner.nextInt();\n        }\n        \n        boolean found = false;\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                if (i != j && nums[j] == nums[i] + 1) {\n                    found = true;\n                    break;\n                }\n            }\n            if (found) break;\n        }\n        \n        System.out.println(found ? \"Yes\" : \"No\");\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    readline.question('', (numsStr) => {\n        const nums = numsStr.split(' ').map(Number);\n        let found = false;\n        \n        for (let num of nums) {\n            if (nums.includes(num + 1)) {\n                found = true;\n                break;\n            }\n        }\n        \n        console.log(found ? \"Yes\" : \"No\");\n        readline.close();\n    });\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    bool found = false;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (i != j && nums[j] == nums[i] + 1) {\n                found = true;\n                break;\n            }\n        }\n        if (found) break;\n    }\n    \n    cout << (found ? \"Yes\" : \"No\") << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -97,6 +97,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid stop_at_target() {\n    int num;\n    while (true) {\n        cin >> num;\n        if (num == 99) {\n            break;\n        }\n        cout << num << endl;\n    }\n}\n\nint main() {\n    stop_at_target();\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def stop_at_target():\n    while True:\n        num = int(input())\n        if num == 99:\n            break\n        print(num)\n\n# main code\nstop_at_target()",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void stop_at_target() {\n        Scanner scanner = new Scanner(System.in);\n        while (true) {\n            int num = scanner.nextInt();\n            if (num == 99) {\n                break;\n            }\n            System.out.println(num);\n        }\n    }\n    \n    public static void main(String[] args) {\n        stop_at_target();\n    }\n}",
+    "javascript": "function stop_at_target() {\n    const readline = require('readline').createInterface({\n        input: process.stdin,\n        output: process.stdout\n    });\n    \n    const lines = [];\n    readline.on('line', (line) => {\n        lines.push(line);\n    });\n    \n    readline.on('close', () => {\n        for (let line of lines) {\n            const num = parseInt(line);\n            if (num === 99) {\n                break;\n            }\n            console.log(num);\n        }\n    });\n}\n\nstop_at_target();",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid stop_at_target() {\n    int num;\n    while (true) {\n        cin >> num;\n        if (num == 99) {\n            break;\n        }\n        cout << num << endl;\n    }\n}\n\nint main() {\n    stop_at_target();\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -73,6 +73,14 @@ module.exports = {
       javascript: `function reverseWords(s) {\n    // Write your solution here\n    return ""; \n}`,
       "c++": `string reverseWords(string s) {\n    // Write your solution here\n    return ""; \n}`
     },
+
+  
+    "solutions": {
+      python: `def reverse_words(s):\n    # Write your solution here\n    pass`,
+      java: `public static String reverseWords(String s) {\n    // Write your solution here\n    return ""; \n}`,
+      javascript: `function reverseWords(s) {\n    // Write your solution here\n    return ""; \n}`,
+      "c++": `string reverseWords(string s) {\n    // Write your solution here\n    return ""; \n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.map(str => `"${str}"`).join(', ');

@@ -53,6 +53,14 @@ Output: -5</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int minNum;\n    cin >> minNum;\n    for (int i = 1; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num < minNum) {\n            minNum = num;\n        }\n    }\n    cout << minNum << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nmin_num = int(input())\nfor i in range(n - 1):\n    num = int(input())\n    if num < min_num:\n        min_num = num\nprint(min_num)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int minNum = scanner.nextInt();\n        for (int i = 1; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num < minNum) {\n                minNum = num;\n            }\n        }\n        System.out.println(minNum);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n});\n\nreadline.on('close', () => {\n    const n = parseInt(input[0]);\n    let minNum = parseInt(input[1]);\n    for (let i = 2; i <= n; i++) {\n        const num = parseInt(input[i]);\n        if (num < minNum) {\n            minNum = num;\n        }\n    }\n    console.log(minNum);\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int minNum;\n    cin >> minNum;\n    for (int i = 1; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num < minNum) {\n            minNum = num;\n        }\n    }\n    cout << minNum << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

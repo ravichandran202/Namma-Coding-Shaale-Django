@@ -87,6 +87,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_max(int a, int b) {\n    if (a > b) {\n        cout << a << endl;\n    } else {\n        cout << b << endl;\n    }\n}\n\nint main() {\n    int x, y;\n    cin >> x >> y;\n    print_max(x, y);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_max(a, b):\n    if a > b:\n        print(a)\n    else:\n        print(b)\n\n# Main code\nx, y = map(int, input().split())\nprint_max(x, y)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_max(int a, int b) {\n        if (a > b) {\n            System.out.println(a);\n        } else {\n            System.out.println(b);\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int x = scanner.nextInt();\n        int y = scanner.nextInt();\n        print_max(x, y);\n    }\n}",
+    "javascript": "function print_max(a, b) {\n    if (a > b) {\n        console.log(a);\n    } else {\n        console.log(b);\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const [x, y] = input.split(' ').map(Number);\n    print_max(x, y);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_max(int a, int b) {\n    if (a > b) {\n        cout << a << endl;\n    } else {\n        cout << b << endl;\n    }\n}\n\nint main() {\n    int x, y;\n    cin >> x >> y;\n    print_max(x, y);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

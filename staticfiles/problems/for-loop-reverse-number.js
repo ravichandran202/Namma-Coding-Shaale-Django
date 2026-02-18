@@ -42,6 +42,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num;\n    cin >> num;\n    int rev = 0;\n    while (num > 0) {\n        int rem = num % 10;\n        rev = rev * 10 + rem;\n        num /= 10;\n    }\n    cout << rev << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = int(input())\nrev = 0\nwhile num > 0:\n    rem = num % 10\n    rev = rev * 10 + rem\n    num //= 10\nprint(rev)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        int rev = 0;\n        while (num > 0) {\n            int rem = num % 10;\n            rev = rev * 10 + rem;\n            num /= 10;\n        }\n        System.out.println(rev);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let num = parseInt(input);\n    let rev = 0;\n    while (num > 0) {\n        let rem = num % 10;\n        rev = rev * 10 + rem;\n        num = Math.floor(num / 10);\n    }\n    console.log(rev);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num;\n    cin >> num;\n    int rev = 0;\n    while (num > 0) {\n        int rem = num % 10;\n        rev = rev * 10 + rem;\n        num /= 10;\n    }\n    cout << rev << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

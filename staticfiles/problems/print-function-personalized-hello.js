@@ -43,6 +43,14 @@ module.exports = {
       "javascript": `process.stdout.write("Hello, ");\nprocess.stdout.write("Sarah!");`,
       "c++": `#include <iostream>\n\nint main() {\n    std::cout << "Hello, ";\n    std::cout << "Sarah!";\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `print("Hello, ", end="")\nprint("Sarah!")`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.print("Hello, ");\n        System.out.print("Sarah!");\n    }\n}`,
+      "javascript": `process.stdout.write("Hello, ");\nprocess.stdout.write("Sarah!");`,
+      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "Hello, ";\n    std::cout << "Sarah!";\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

@@ -146,6 +146,90 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": `char = input()
+ascii_val = ord(char)
+
+if 65 <= ascii_val <= 90:
+    # Uppercase to lowercase
+    lower_char = chr(ascii_val + 32)
+    print(lower_char)
+elif 97 <= ascii_val <= 122:
+    # Lowercase to uppercase
+    upper_char = chr(ascii_val - 32)
+    print(upper_char)
+else:
+    # Other characters
+    print(char)`,
+
+    "java": `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        char character = scanner.next().charAt(0);
+        
+        if (character >= 'A' && character <= 'Z') {
+            // Uppercase to lowercase
+            char lower_char = (char)(character + 32);
+            System.out.println(lower_char);
+        } else if (character >= 'a' && character <= 'z') {
+            // Lowercase to uppercase
+            char upper_char = (char)(character - 32);
+            System.out.println(upper_char);
+        } else {
+            // Other characters
+            System.out.println(character);
+        }
+    }
+}`,
+
+    "javascript": `const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+readline.question('', (char) => {
+    const ascii_val = char.charCodeAt(0);
+    
+    if (ascii_val >= 65 && ascii_val <= 90) {
+        // Uppercase to lowercase
+        const lower_char = String.fromCharCode(ascii_val + 32);
+        console.log(lower_char);
+    } else if (ascii_val >= 97 && ascii_val <= 122) {
+        // Lowercase to uppercase
+        const upper_char = String.fromCharCode(ascii_val - 32);
+        console.log(upper_char);
+    } else {
+        // Other characters
+        console.log(char);
+    }
+    readline.close();
+});`,
+
+    "c++": `#include <iostream>
+
+int main() {
+    char ch;
+    std::cin >> ch;
+    
+    if (ch >= 'A' && ch <= 'Z') {
+        // Uppercase to lowercase
+        char lower_char = ch + 32;
+        std::cout << lower_char << std::endl;
+    } else if (ch >= 'a' && ch <= 'z') {
+        // Lowercase to uppercase
+        char upper_char = ch - 32;
+        std::cout << upper_char << std::endl;
+    } else {
+        // Other characters
+        std::cout << ch << std::endl;
+    }
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

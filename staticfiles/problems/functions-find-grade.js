@@ -122,6 +122,14 @@ A</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nstring get_grade(int marks) {\n    if (marks >= 90) {\n        return \"A\";\n    } else if (marks >= 80) {\n        return \"B\";\n    } else if (marks >= 70) {\n        return \"C\";\n    } else {\n        return \"D\";\n    }\n}\n\nint main() {\n    int score;\n    cin >> score;\n    string result = get_grade(score);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def get_grade(marks):\n    if marks >= 90:\n        return \"A\"\n    elif marks >= 80:\n        return \"B\"\n    elif marks >= 70:\n        return \"C\"\n    else:\n        return \"D\"\n\n# Main code\nscore = int(input())\nresult = get_grade(score)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static String get_grade(int marks) {\n        if (marks >= 90) {\n            return \"A\";\n        } else if (marks >= 80) {\n            return \"B\";\n        } else if (marks >= 70) {\n            return \"C\";\n        } else {\n            return \"D\";\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int score = scanner.nextInt();\n        String result = get_grade(score);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function get_grade(marks) {\n    if (marks >= 90) {\n        return \"A\";\n    } else if (marks >= 80) {\n        return \"B\";\n    } else if (marks >= 70) {\n        return \"C\";\n    } else {\n        return \"D\";\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const score = parseInt(input);\n    const result = get_grade(score);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nstring get_grade(int marks) {\n    if (marks >= 90) {\n        return \"A\";\n    } else if (marks >= 80) {\n        return \"B\";\n    } else if (marks >= 70) {\n        return \"C\";\n    } else {\n        return \"D\";\n    }\n}\n\nint main() {\n    int score;\n    cin >> score;\n    string result = get_grade(score);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

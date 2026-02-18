@@ -61,6 +61,14 @@ False</pre>
     "c++": "#include <iostream>\n#include <unordered_set>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    unordered_set<string> cities;\n    for (int i = 0; i < n; i++) {\n        string city;\n        cin >> city;\n        cities.insert(city);\n    }\n    \n    string checkCity;\n    cin >> checkCity;\n    \n    if (cities.find(checkCity) != cities.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ncities = set(input().split())\nx = input()\nif x in cities:\n    print(True)\nelse:\n    print(False)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();  // consume newline\n        \n        String[] cityArray = scanner.nextLine().split(\" \");\n        Set<String> cities = new HashSet<>();\n        for (String city : cityArray) {\n            cities.add(city);\n        }\n        \n        String checkCity = scanner.nextLine();\n        \n        if (cities.contains(checkCity)) {\n            System.out.println(\"True\");\n        } else {\n            System.out.println(\"False\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 3) {\n        const n = parseInt(lines[0]);\n        const cities = new Set(lines[1].split(' '));\n        const checkCity = lines[2];\n        \n        console.log(cities.has(checkCity));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <unordered_set>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    unordered_set<string> cities;\n    for (int i = 0; i < n; i++) {\n        string city;\n        cin >> city;\n        cities.insert(city);\n    }\n    \n    string checkCity;\n    cin >> checkCity;\n    \n    if (cities.find(checkCity) != cities.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

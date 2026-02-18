@@ -53,6 +53,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x >= 10 && x <= 50) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `x = int(input())\nprint(x >= 10 and x <= 50)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double x = scanner.nextDouble();\n        System.out.println(x >= 10 && x <= 50);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (x) => {\n    const num = parseFloat(x);\n    console.log(num >= 10 && num <= 50);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double x;\n    std::cin >> x;\n    std::cout << std::boolalpha << (x >= 10 && x <= 50) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

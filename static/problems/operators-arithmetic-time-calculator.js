@@ -56,6 +56,14 @@ Output: 1 hours and 0 minutes</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int total_minutes;\n    std::cin >> total_minutes;\n    int hours = total_minutes / 60;\n    int minutes = total_minutes % 60;\n    std::cout << hours << \" hours and \" << minutes << \" minutes\" << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `total_minutes = int(input())\nhours = total_minutes // 60\nminutes = total_minutes % 60\nprint(f"{hours} hours and {minutes} minutes")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int total_minutes = scanner.nextInt();\n        int hours = total_minutes / 60;\n        int minutes = total_minutes % 60;\n        System.out.println(hours + \" hours and \" + minutes + \" minutes\");\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (total_minutes) => {\n    const minutes = parseInt(total_minutes);\n    const hours = Math.floor(minutes / 60);\n    const remaining_minutes = minutes % 60;\n    console.log(hours + \" hours and \" + remaining_minutes + \" minutes\");\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int total_minutes;\n    std::cin >> total_minutes;\n    int hours = total_minutes / 60;\n    int minutes = total_minutes % 60;\n    std::cout << hours << \" hours and \" << minutes << \" minutes\" << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

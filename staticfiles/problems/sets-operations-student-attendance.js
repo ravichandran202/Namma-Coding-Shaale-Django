@@ -58,6 +58,14 @@ False</pre>
     "c++": "#include <iostream>\n#include <unordered_set>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    unordered_set<string> studentIds;\n    for (int i = 0; i < n; i++) {\n        string id;\n        cin >> id;\n        studentIds.insert(id);\n    }\n    \n    string checkId;\n    cin >> checkId;\n    \n    if (studentIds.find(checkId) != studentIds.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nids = set(input().split())\nx = input()\nif x in ids:\n    print(True)\nelse:\n    print(False)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();  // consume newline\n        \n        String[] idArray = scanner.nextLine().split(\" \");\n        Set<String> studentIds = new HashSet<>();\n        for (String id : idArray) {\n            studentIds.add(id);\n        }\n        \n        String checkId = scanner.nextLine();\n        \n        if (studentIds.contains(checkId)) {\n            System.out.println(\"True\");\n        } else {\n            System.out.println(\"False\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 3) {\n        const n = parseInt(lines[0]);\n        const ids = new Set(lines[1].split(' '));\n        const checkId = lines[2];\n        \n        console.log(ids.has(checkId));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <unordered_set>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    unordered_set<string> studentIds;\n    for (int i = 0; i < n; i++) {\n        string id;\n        cin >> id;\n        studentIds.insert(id);\n    }\n    \n    string checkId;\n    cin >> checkId;\n    \n    if (studentIds.find(checkId) != studentIds.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

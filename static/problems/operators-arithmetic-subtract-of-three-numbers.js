@@ -66,6 +66,14 @@ Output: 0</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    std::cout << a - b - c << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = int(input())\nb = int(input())\nc = int(input())\nprint(a - b - c)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        System.out.println(a - b - c);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        readline.question('', (third) => {\n            inputs.push(parseInt(third));\n            console.log(inputs[0] - inputs[1] - inputs[2]);\n            readline.close();\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    std::cout << a - b - c << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

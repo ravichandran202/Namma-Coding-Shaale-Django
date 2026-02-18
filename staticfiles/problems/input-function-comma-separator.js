@@ -49,6 +49,14 @@ Output: London,Tokyo,Delhi,Mysore</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet cities = [];\nreadline.question('', (city1) => {\n    cities.push(city1);\n    readline.question('', (city2) => {\n        cities.push(city2);\n        readline.question('', (city3) => {\n            cities.push(city3);\n            readline.question('', (city4) => {\n                cities.push(city4);\n                console.log(cities.join(','));\n                readline.close();\n            });\n        });\n    });\n});`,
       "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string city1, city2, city3, city4;\n    std::getline(std::cin, city1);\n    std::getline(std::cin, city2);\n    std::getline(std::cin, city3);\n    std::getline(std::cin, city4);\n    std::cout << city1 << "," << city2 << "," << city3 << "," << city4 << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `city1 = input()\ncity2 = input()\ncity3 = input()\ncity4 = input()\nprint(city1, city2, city3, city4, sep=",")`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String city1 = scanner.nextLine();\n        String city2 = scanner.nextLine();\n        String city3 = scanner.nextLine();\n        String city4 = scanner.nextLine();\n        System.out.println(city1 + "," + city2 + "," + city3 + "," + city4);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet cities = [];\nreadline.question('', (city1) => {\n    cities.push(city1);\n    readline.question('', (city2) => {\n        cities.push(city2);\n        readline.question('', (city3) => {\n            cities.push(city3);\n            readline.question('', (city4) => {\n                cities.push(city4);\n                console.log(cities.join(','));\n                readline.close();\n            });\n        });\n    });\n});`,
+      "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string city1, city2, city3, city4;\n    std::getline(std::cin, city1);\n    std::getline(std::cin, city2);\n    std::getline(std::cin, city3);\n    std::getline(std::cin, city4);\n    std::cout << city1 << "," << city2 << "," << city3 << "," << city4 << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

@@ -41,6 +41,14 @@ Output: pYtHoN</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    let res = '';\n    for (let char of line) {\n        if (char === char.toUpperCase()) {\n            res += char.toLowerCase();\n        } else {\n            res += char.toUpperCase();\n        }\n    }\n    console.log(res);\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    for (int i = 0; i < s.length(); i++) {\n        if (isupper(s[i])) {\n            s[i] = tolower(s[i]);\n        } else if (islower(s[i])) {\n            s[i] = toupper(s[i]);\n        }\n    }\n    cout << s << endl;\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "s = input()\n# swapcase() is a built-in method for this exact purpose\nprint(s.swapcase())",
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        StringBuilder sb = new StringBuilder();\n        for (char c : s.toCharArray()) {\n            if (Character.isUpperCase(c)) {\n                sb.append(Character.toLowerCase(c));\n            } else if (Character.isLowerCase(c)) {\n                sb.append(Character.toUpperCase(c));\n            } else {\n                sb.append(c);\n            }\n        }\n        System.out.println(sb.toString());\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    let res = '';\n    for (let char of line) {\n        if (char === char.toUpperCase()) {\n            res += char.toLowerCase();\n        } else {\n            res += char.toUpperCase();\n        }\n    }\n    console.log(res);\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    for (int i = 0; i < s.length(); i++) {\n        if (isupper(s[i])) {\n            s[i] = tolower(s[i]);\n        } else if (islower(s[i])) {\n            s[i] = toupper(s[i]);\n        }\n    }\n    cout << s << endl;\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

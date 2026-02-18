@@ -61,6 +61,14 @@ Output: a</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int ascii_value;\n    std::cin >> ascii_value;\n    std::cout << (char)ascii_value << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "ascii_value = int(input())\nprint(chr(ascii_value))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int ascii_value = scanner.nextInt();\n        System.out.println((char) ascii_value);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (ascii_value) => {\n    console.log(String.fromCharCode(parseInt(ascii_value)));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int ascii_value;\n    std::cin >> ascii_value;\n    std::cout << (char)ascii_value << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

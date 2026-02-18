@@ -57,6 +57,14 @@ Updated value: 7</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(first);\n    readline.question('', (second) => {\n        inputs.push(second);\n        console.log("Initial value:", inputs[0]);\n        console.log("Updated value:", inputs[1]);\n        readline.close();\n    });\n});`,
       "c++": `#include <iostream>\n\nint main() {\n    int counter;\n    std::cin >> counter;\n    std::cout << "Initial value: " << counter << std::endl;\n    std::cin >> counter;\n    std::cout << "Updated value: " << counter << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `counter = int(input())\nprint("Initial value:", counter)\ncounter = int(input())\nprint("Updated value:", counter)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int counter = scanner.nextInt();\n        System.out.println("Initial value: " + counter);\n        counter = scanner.nextInt();\n        System.out.println("Updated value: " + counter);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(first);\n    readline.question('', (second) => {\n        inputs.push(second);\n        console.log("Initial value:", inputs[0]);\n        console.log("Updated value:", inputs[1]);\n        readline.close();\n    });\n});`,
+      "c++": `#include <iostream>\n\nint main() {\n    int counter;\n    std::cin >> counter;\n    std::cout << "Initial value: " << counter << std::endl;\n    std::cin >> counter;\n    std::cout << "Updated value: " << counter << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

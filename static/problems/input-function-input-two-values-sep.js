@@ -61,6 +61,14 @@ Output: Python Code</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet words = [];\nreadline.question('', (w1) => {\n    words.push(w1);\n    readline.question('', (w2) => {\n        words.push(w2);\n        process.stdout.write(words[0] + " ");\n        process.stdout.write(words[1]);\n        readline.close();\n    });\n});`,
       "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string w1, w2;\n    std::getline(std::cin, w1);\n    std::getline(std::cin, w2);\n    std::cout << w1 << " ";\n    std::cout << w2;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `w1 = input()\nw2 = input()\n\nprint(w1, end=' ')\nprint(w2)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String w1 = scanner.nextLine();\n        String w2 = scanner.nextLine();\n        System.out.print(w1 + " ");\n        System.out.print(w2);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet words = [];\nreadline.question('', (w1) => {\n    words.push(w1);\n    readline.question('', (w2) => {\n        words.push(w2);\n        process.stdout.write(words[0] + " ");\n        process.stdout.write(words[1]);\n        readline.close();\n    });\n});`,
+      "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string w1, w2;\n    std::getline(std::cin, w1);\n    std::getline(std::cin, w2);\n    std::cout << w1 << " ";\n    std::cout << w2;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

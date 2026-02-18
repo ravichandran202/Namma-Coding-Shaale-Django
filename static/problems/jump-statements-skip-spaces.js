@@ -96,6 +96,14 @@ d</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid skip_spaces(string text) {\n    for (int i = 0; i < text.length(); i++) {\n        char ch = text[i];\n        if (ch == ' ') {\n            continue;\n        }\n        cout << ch << endl;\n    }\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    skip_spaces(text);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def skip_spaces(text):\n    for char in text:\n        if char == ' ':\n            continue\n        print(char)\n\n# main code\ntext = input()\nskip_spaces(text)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void skip_spaces(String text) {\n        for (int i = 0; i < text.length(); i++) {\n            char ch = text.charAt(i);\n            if (ch == ' ') {\n                continue;\n            }\n            System.out.println(ch);\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        skip_spaces(text);\n    }\n}",
+    "javascript": "function skip_spaces(text) {\n    for (let i = 0; i < text.length; i++) {\n        const char = text[i];\n        if (char === ' ') {\n            continue;\n        }\n        console.log(char);\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    skip_spaces(text);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid skip_spaces(string text) {\n    for (int i = 0; i < text.length(); i++) {\n        char ch = text[i];\n        if (ch == ' ') {\n            continue;\n        }\n        cout << ch << endl;\n    }\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    skip_spaces(text);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -64,6 +64,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int totalNumbers = n * (n + 1) / 2;\n    for (int i = n; i >= 1; i--) {\n        for (int j = 1; j <= i; j++) {\n            cout << totalNumbers << \" \";\n            totalNumbers--;\n        }\n        cout << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ntotal_numbers = n * (n + 1) // 2\nfor i in range(n, 0, -1):\n    for j in range(i):\n        print(total_numbers, end=' ')\n        total_numbers -= 1\n    print()",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int totalNumbers = n * (n + 1) / 2;\n        for (int i = n; i >= 1; i--) {\n            for (int j = 1; j <= i; j++) {\n                System.out.print(totalNumbers + \" \");\n                totalNumbers--;\n            }\n            System.out.println();\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let totalNumbers = n * (n + 1) / 2;\n    let output = '';\n    for (let i = n; i >= 1; i--) {\n        let row = '';\n        for (let j = 1; j <= i; j++) {\n            row += totalNumbers + ' ';\n            totalNumbers--;\n        }\n        output += row + '\\n';\n    }\n    console.log(output);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int totalNumbers = n * (n + 1) / 2;\n    for (int i = n; i >= 1; i--) {\n        for (int j = 1; j <= i; j++) {\n            cout << totalNumbers << \" \";\n            totalNumbers--;\n        }\n        cout << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

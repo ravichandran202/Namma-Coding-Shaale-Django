@@ -69,6 +69,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    \n    map<char, int> result;\n    for (char ch : text) {\n        result[ch]++;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : result) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': \" << pair.second;\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "text = input()\n\nresult = {}\n\nfor ch in text:\n    if ch in result:\n        result[ch] = result[ch] + 1\n    else:\n        result[ch] = 1\n\nprint(result)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        \n        Map<Character, Integer> result = new HashMap<>();\n        for (char ch : text.toCharArray()) {\n            result.put(ch, result.getOrDefault(ch, 0) + 1);\n        }\n        \n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    const result = {};\n    for (const ch of text) {\n        result[ch] = (result[ch] || 0) + 1;\n    }\n    \n    console.log(JSON.stringify(result).replace(/\"/g, \"'\"));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    \n    map<char, int> result;\n    for (char ch : text) {\n        result[ch]++;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : result) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': \" << pair.second;\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

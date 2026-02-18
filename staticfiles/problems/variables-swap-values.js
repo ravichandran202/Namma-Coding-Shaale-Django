@@ -67,6 +67,14 @@ After swap - a: 75 b: 25</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        console.log(\"Before swap - a:\", inputs[0], \"b:\", inputs[1]);\n        \n        // Swap values\n        let temp = inputs[0];\n        inputs[0] = inputs[1];\n        inputs[1] = temp;\n        \n        console.log(\"After swap - a:\", inputs[0], \"b:\", inputs[1]);\n        readline.close();\n    });\n});`,
       "c++": `#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << \"Before swap - a: \" << a << \" b: \" << b << std::endl;\n    \n    // Swap values\n    int temp = a;\n    a = b;\n    b = temp;\n    \n    std::cout << \"After swap - a: \" << a << \" b: \" << b << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `a = int(input())\nb = int(input())\nprint("Before swap - a:", a, "b:", b)\n\n# Swap values\ntemp = a\na = b\nb = temp\n\nprint("After swap - a:", a, "b:", b)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        System.out.println("Before swap - a: " + a + " b: " + b);\n        \n        // Swap values\n        int temp = a;\n        a = b;\n        b = temp;\n        \n        System.out.println("After swap - a: " + a + " b: " + b);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        console.log(\"Before swap - a:\", inputs[0], \"b:\", inputs[1]);\n        \n        // Swap values\n        let temp = inputs[0];\n        inputs[0] = inputs[1];\n        inputs[1] = temp;\n        \n        console.log(\"After swap - a:\", inputs[0], \"b:\", inputs[1]);\n        readline.close();\n    });\n});`,
+      "c++": `#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << \"Before swap - a: \" << a << \" b: \" << b << std::endl;\n    \n    // Swap values\n    int temp = a;\n    a = b;\n    b = temp;\n    \n    std::cout << \"After swap - a: \" << a << \" b: \" << b << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

@@ -64,6 +64,14 @@ Output: Positive Odd</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int num;\n    std::cin >> num;\n    \n    if (num == 0) {\n        std::cout << \"Zero\" << std::endl;\n    } else if (num > 0) {\n        if (num % 2 == 0) {\n            std::cout << \"Positive Even\" << std::endl;\n        } else {\n            std::cout << \"Positive Odd\" << std::endl;\n        }\n    } else {\n        if (num % 2 == 0) {\n            std::cout << \"Negative Even\" << std::endl;\n        } else {\n            std::cout << \"Negative Odd\" << std::endl;\n        }\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = int(input())\n\nif num == 0:\n    print(\"Zero\")\nelif num > 0:\n    if num % 2 == 0:\n        print(\"Positive Even\")\n    else:\n        print(\"Positive Odd\")\nelse:\n    if num % 2 == 0:\n        print(\"Negative Even\")\n    else:\n        print(\"Negative Odd\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        \n        if (num == 0) {\n            System.out.println(\"Zero\");\n        } else if (num > 0) {\n            if (num % 2 == 0) {\n                System.out.println(\"Positive Even\");\n            } else {\n                System.out.println(\"Positive Odd\");\n            }\n        } else {\n            if (num % 2 == 0) {\n                System.out.println(\"Negative Even\");\n            } else {\n                System.out.println(\"Negative Odd\");\n            }\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (num) => {\n    const number = parseInt(num);\n    if (number === 0) {\n        console.log(\"Zero\");\n    } else if (number > 0) {\n        if (number % 2 === 0) {\n            console.log(\"Positive Even\");\n        } else {\n            console.log(\"Positive Odd\");\n        }\n    } else {\n        if (number % 2 === 0) {\n            console.log(\"Negative Even\");\n        } else {\n            console.log(\"Negative Odd\");\n        }\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int num;\n    std::cin >> num;\n    \n    if (num == 0) {\n        std::cout << \"Zero\" << std::endl;\n    } else if (num > 0) {\n        if (num % 2 == 0) {\n            std::cout << \"Positive Even\" << std::endl;\n        } else {\n            std::cout << \"Positive Odd\" << std::endl;\n        }\n    } else {\n        if (num % 2 == 0) {\n            std::cout << \"Negative Even\" << std::endl;\n        } else {\n            std::cout << \"Negative Odd\" << std::endl;\n        }\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

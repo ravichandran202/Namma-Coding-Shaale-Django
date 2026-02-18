@@ -56,6 +56,14 @@ Output: 0.125</pre>
     "c++": `#include <iostream>\n#include <cmath>\n#include <iomanip>\n\nint main() {\n    double base, exponent;\n    std::cin >> base >> exponent;\n    double result = pow(base, exponent);\n    std::cout << std::fixed << std::setprecision(15) << result << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `base = int(input())\nexponent = int(input())\nresult = base ** exponent\nprint(result)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double base = scanner.nextDouble();\n        double exponent = scanner.nextDouble();\n        double result = Math.pow(base, exponent);\n        System.out.println(result);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseFloat(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        const result = Math.pow(inputs[0], inputs[1]);\n        console.log(result);\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n#include <cmath>\n#include <iomanip>\n\nint main() {\n    double base, exponent;\n    std::cin >> base >> exponent;\n    double result = pow(base, exponent);\n    std::cout << std::fixed << std::setprecision(15) << result << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

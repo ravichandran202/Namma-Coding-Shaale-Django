@@ -48,6 +48,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int threshold;\n    cin >> threshold;\n    \n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] % 2 == 0 && nums[i] > threshold) {\n            count++;\n        }\n    }\n    \n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nthreshold = int(input())\ncount = 0\nfor num in nums:\n    if num % 2 == 0 and num > threshold:\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        \n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num % 2 == 0 && num > scanner.nextInt()) {\n                count++;\n            }\n        }\n        \n        // Read threshold after reading all numbers\n        scanner.nextLine(); // consume remaining newline\n        int threshold = scanner.nextInt();\n        \n        // Reset scanner and recount properly\n        scanner = new Scanner(System.in);\n        n = scanner.nextInt();\n        count = 0;\n        \n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num % 2 == 0 && num > threshold) {\n                count++;\n            }\n        }\n        \n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 3) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const threshold = parseInt(inputLines[2]);\n        \n        let count = 0;\n        for (let num of nums) {\n            if (num % 2 === 0 && num > threshold) {\n                count++;\n            }\n        }\n        \n        console.log(count);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int threshold;\n    cin >> threshold;\n    \n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        if (nums[i] % 2 == 0 && nums[i] > threshold) {\n            count++;\n        }\n    }\n    \n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -55,6 +55,14 @@ Output: True</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num;\n    cin >> num;\n    int temp = num;\n    int total = 0;\n    while (temp > 0) {\n        int d = temp % 10;\n        total += d * d * d;\n        temp /= 10;\n    }\n    cout << (num == total ? \"True\" : \"False\") << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = int(input())\ntemp = num\ntotal = 0\nwhile temp > 0:\n    d = temp % 10\n    total += d * d * d\n    temp //= 10\nprint(num == total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        int temp = num;\n        int total = 0;\n        while (temp > 0) {\n            int d = temp % 10;\n            total += d * d * d;\n            temp /= 10;\n        }\n        System.out.println(num == total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const num = parseInt(input);\n    let temp = num;\n    let total = 0;\n    while (temp > 0) {\n        const d = temp % 10;\n        total += d * d * d;\n        temp = Math.floor(temp / 10);\n    }\n    console.log(num === total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num;\n    cin >> num;\n    int temp = num;\n    int total = 0;\n    while (temp > 0) {\n        int d = temp % 10;\n        total += d * d * d;\n        temp /= 10;\n    }\n    cout << (num == total ? \"True\" : \"False\") << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

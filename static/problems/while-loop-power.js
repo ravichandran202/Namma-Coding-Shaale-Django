@@ -62,6 +62,14 @@ Output: 625</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int x, y;\n    std::cin >> x >> y;\n    int result = 1;\n    while (y > 0) {\n        result *= x;\n        y--;\n    }\n    std::cout << result << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "x = int(input())\ny = int(input())\nresult = 1\nwhile y > 0:\n    result *= x\n    y -= 1\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int x = scanner.nextInt();\n        int y = scanner.nextInt();\n        int result = 1;\n        while (y > 0) {\n            result *= x;\n            y--;\n        }\n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.question('', (first) => {\n    input.push(first);\n    readline.question('', (second) => {\n        input.push(second);\n        const x = parseInt(input[0]);\n        const y = parseInt(input[1]);\n        let result = 1;\n        let count = y;\n        while (count > 0) {\n            result *= x;\n            count--;\n        }\n        console.log(result);\n        readline.close();\n    });\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int x, y;\n    std::cin >> x >> y;\n    int result = 1;\n    while (y > 0) {\n        result *= x;\n        y--;\n    }\n    std::cout << result << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

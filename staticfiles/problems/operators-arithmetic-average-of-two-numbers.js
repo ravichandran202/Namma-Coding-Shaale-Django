@@ -63,6 +63,14 @@ Output: 3.0</pre>
     "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    double average = (a + b) / 2.0;\n    std::cout << std::fixed << std::setprecision(1) << average << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = int(input())\nb = int(input())\naverage = (a + b) / 2\nprint(average)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        double average = (a + b) / 2.0;\n        System.out.println(average);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        const average = (inputs[0] + inputs[1]) / 2;\n        console.log(average);\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    double average = (a + b) / 2.0;\n    std::cout << std::fixed << std::setprecision(1) << average << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

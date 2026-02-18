@@ -45,6 +45,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    student[\"age\"] = \"21\";\n    \n    string removeKey;\n    getline(cin, removeKey);\n    \n    student.erase(removeKey);\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "student = {\"name\": \"Ravi\", \"age\": \"21\", \"class\": \"12th\"}\n\nremove_key = input()\ndel student[remove_key]\n\nprint(student)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        Map<String, String> student = new LinkedHashMap<>();\n        student.put(\"name\", \"Ravi\");\n        student.put(\"age\", \"21\");\n        \n        String removeKey = scanner.nextLine();\n        student.remove(removeKey);\n        \n        System.out.println(student);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (removeKey) => {\n    const student = {name: \"Ravi\", age: \"21\"};\n    \n    delete student[removeKey];\n    \n    console.log(JSON.stringify(student).replace(/\"/g, \"'\"));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    student[\"age\"] = \"21\";\n    \n    string removeKey;\n    getline(cin, removeKey);\n    \n    student.erase(removeKey);\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

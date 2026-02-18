@@ -50,6 +50,14 @@ module.exports = {
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 1; i <= 10; i++) {\n        cout << \"5 x \" << i << \" = \" << 5 * i << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "for i in range(1, 11):\n    print(\"5 x\", i, \"=\", 5 * i)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 1; i <= 10; i++) {\n            System.out.println(\"5 x \" + i + \" = \" + (5 * i));\n        }\n    }\n}",
+    "javascript": "for (let i = 1; i <= 10; i++) {\n    console.log(\"5 x \" + i + \" = \" + (5 * i));\n}",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 1; i <= 10; i++) {\n        cout << \"5 x \" << i << \" = \" << 5 * i << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

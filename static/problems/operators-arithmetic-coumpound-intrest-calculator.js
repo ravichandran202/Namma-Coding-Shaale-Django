@@ -73,6 +73,14 @@ Output: 2429.74</pre>
     "c++": `#include <iostream>\n#include <iomanip>\n#include <cmath>\n\nint main() {\n    double principal, rate, time;\n    int compounds_per_year;\n    \n    std::cin >> principal >> rate >> time >> compounds_per_year;\n    \n    double amount = principal * pow(1 + rate/compounds_per_year, compounds_per_year * time);\n    double interest = amount - principal;\n    \n    std::cout << std::fixed << std::setprecision(2) << interest << std::endl;\n    \n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `principal = float(input())\nrate = float(input())\ntime = int(input())\ncompounds_per_year = int(input())\n\namount = principal * (1 + rate/compounds_per_year) ** (compounds_per_year * time)\ninterest = amount - principal\n\nprint(f"{interest:.2f}")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double principal = scanner.nextDouble();\n        double rate = scanner.nextDouble();\n        double time = scanner.nextDouble();\n        int compounds_per_year = scanner.nextInt();\n        \n        double amount = principal * Math.pow(1 + rate/compounds_per_year, compounds_per_year * time);\n        double interest = amount - principal;\n        \n        System.out.printf(\"%.2f%n\", interest);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (principal) => {\n    inputs.push(parseFloat(principal));\n    readline.question('', (rate) => {\n        inputs.push(parseFloat(rate));\n        readline.question('', (time) => {\n            inputs.push(parseFloat(time));\n            readline.question('', (compounds) => {\n                inputs.push(parseInt(compounds));\n                \n                const amount = inputs[0] * Math.pow(1 + inputs[1]/inputs[3], inputs[3] * inputs[2]);\n                const interest = amount - inputs[0];\n                \n                console.log(interest.toFixed(2));\n                readline.close();\n            });\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n#include <iomanip>\n#include <cmath>\n\nint main() {\n    double principal, rate, time;\n    int compounds_per_year;\n    \n    std::cin >> principal >> rate >> time >> compounds_per_year;\n    \n    double amount = principal * pow(1 + rate/compounds_per_year, compounds_per_year * time);\n    double interest = amount - principal;\n    \n    std::cout << std::fixed << std::setprecision(2) << interest << std::endl;\n    \n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

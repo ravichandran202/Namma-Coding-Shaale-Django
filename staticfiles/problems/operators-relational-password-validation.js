@@ -52,6 +52,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string password;\n    std::getline(std::cin, password);\n    std::string correct_password = "hello123";\n    std::cout << std::boolalpha << (password == correct_password) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `password = input()\ncorrect_password = "hello123"\nprint(password == correct_password)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String password = scanner.nextLine();\n        String correct_password = "hello123";\n        System.out.println(password.equals(correct_password));\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (password) => {\n    const correct_password = "hello123";\n    console.log(password === correct_password);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string password;\n    std::getline(std::cin, password);\n    std::string correct_password = "hello123";\n    std::cout << std::boolalpha << (password == correct_password) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

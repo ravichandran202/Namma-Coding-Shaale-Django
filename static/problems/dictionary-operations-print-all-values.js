@@ -33,6 +33,14 @@ Output:
     "c++": "#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    vector<string> values;\n    values.push_back(\"Ravi\");\n    values.push_back(\"20\");\n    \n    cout << \"[\";\n    for (size_t i = 0; i < values.size(); i++) {\n        if (i > 0) cout << \", \";\n        cout << \"'\" << values[i] << \"'\";\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "data = {\"name\": \"Ravi\", \"age\": 20}\nprint(list(data.values()))",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Object> data = new LinkedHashMap<>();\n        data.put(\"name\", \"Ravi\");\n        data.put(\"age\", 20);\n        \n        System.out.println(new ArrayList<>(data.values()));\n    }\n}",
+    "javascript": "const data = {\"name\": \"Ravi\", \"age\": 20};\nconsole.log(JSON.stringify(Object.values(data)));",
+    "c++": "#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    vector<string> values;\n    values.push_back(\"Ravi\");\n    values.push_back(\"20\");\n    \n    cout << \"[\";\n    for (size_t i = 0; i < values.size(); i++) {\n        if (i > 0) cout << \", \";\n        cout << \"'\" << values[i] << \"'\";\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

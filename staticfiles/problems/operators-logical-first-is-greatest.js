@@ -63,6 +63,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double a, b, c;\n    std::cin >> a >> b >> c;\n    \n    std::cout << std::boolalpha << (a > b && a > c) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = int(input())\nb = int(input())\nc = int(input())\nprint(a > b and a > c)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double a = scanner.nextDouble();\n        double b = scanner.nextDouble();\n        double c = scanner.nextDouble();\n        \n        System.out.println(a > b && a > c);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseFloat(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        readline.question('', (third) => {\n            inputs.push(parseFloat(third));\n            \n            console.log(inputs[0] > inputs[1] && inputs[0] > inputs[2]);\n            readline.close();\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double a, b, c;\n    std::cin >> a >> b >> c;\n    \n    std::cout << std::boolalpha << (a > b && a > c) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -62,6 +62,14 @@ Output: 5050</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int sum_natural = n * (n + 1) / 2;\n    std::cout << sum_natural << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `n = int(input())\nsum_natural = n * (n + 1) // 2\nprint(sum_natural)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int sum_natural = n * (n + 1) / 2;\n        System.out.println(sum_natural);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    const num = parseInt(n);\n    const sum_natural = num * (num + 1) / 2;\n    console.log(sum_natural);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int sum_natural = n * (n + 1) / 2;\n    std::cout << sum_natural << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

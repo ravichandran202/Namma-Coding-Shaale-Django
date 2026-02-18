@@ -102,6 +102,14 @@ longer</pre>
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    cin.ignore();\n    \n    map<string, string> d;\n    \n    for (int i = 0; i < n; i++) {\n        string key, value;\n        cin >> key >> value;\n        d[key] = value;\n    }\n    \n    string big = \"\";\n    for (const auto& entry : d) {\n        if (entry.first.length() > big.length()) {\n            big = entry.first;\n        }\n    }\n    \n    cout << big << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nd = {}\n\nfor i in range(n):\n    k, v = input().split()\n    d[k] = v\n\nbig = \"\"\nfor x in d:\n    if len(x) > len(big):\n        big = x\n\nprint(big)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = Integer.parseInt(scanner.nextLine());\n        \n        Map<String, String> d = new LinkedHashMap<>();\n        \n        for (int i = 0; i < n; i++) {\n            String line = scanner.nextLine();\n            String[] parts = line.split(\" \");\n            d.put(parts[0], parts[1]);\n        }\n        \n        String big = \"\";\n        for (String key : d.keySet()) {\n            if (key.length() > big.length()) {\n                big = key;\n            }\n        }\n        \n        System.out.println(big);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nlet lineCount = 0;\n\nreadline.on('line', (line) => {\n    lines.push(line);\n    lineCount++;\n    \n    if (lineCount > parseInt(lines[0])) {\n        const n = parseInt(lines[0]);\n        const d = {};\n        \n        for (let i = 1; i <= n; i++) {\n            const [key, value] = lines[i].split(' ');\n            d[key] = value;\n        }\n        \n        let big = \"\";\n        for (const key in d) {\n            if (key.length > big.length) {\n                big = key;\n            }\n        }\n        \n        console.log(big);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    cin.ignore();\n    \n    map<string, string> d;\n    \n    for (int i = 0; i < n; i++) {\n        string key, value;\n        cin >> key >> value;\n        d[key] = value;\n    }\n    \n    string big = \"\";\n    for (const auto& entry : d) {\n        if (entry.first.length() > big.length()) {\n            big = entry.first;\n        }\n    }\n    \n    cout << big << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

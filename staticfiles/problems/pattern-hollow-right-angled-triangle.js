@@ -77,6 +77,14 @@ module.exports = {
       javascript: `function printHollowTriangle(n) {\n    let output = "";\n    for (let i = 1; i <= n; i++) {\n        if (i === 1) {\n            output += "*";\n        } else if (i === n) {\n            output += "\\n" + "* ".repeat(i-1) + "*";\n        } else {\n            output += "\\n*" + " ".repeat(2*i-3) + "*";\n        }\n    }\n    console.log(output);\n}`,
       "c++": `#include <iostream>\n#include <string>\nusing namespace std;\nvoid printHollowTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        if (i == 1) {\n            cout << "*" << endl;\n        } else if (i == n) {\n            for (int j = 1; j <= i; j++) {\n                cout << (j < i ? "* " : "*");\n            }\n            cout << endl;\n        } else {\n            cout << "*";\n            for (int j = 2; j < i; j++) {\n                cout << "  ";\n            }\n            cout << " *" << endl;\n        }\n    }\n}`
     },
+
+  
+    "solutions": {
+      python: `def print_hollow_triangle(n):\n    for i in range(1, n+1):\n        if i == 1:\n            print("*")\n        elif i == n:\n            print("* " * (i-1) + "*")\n        else:\n            print("*" + " " * (2*i-3) + "*")\n`,
+      java: `public static void printHollowTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        if (i == 1) {\n            System.out.println("*");\n        } else if (i == n) {\n            for (int j = 1; j <= i; j++) {\n                System.out.print(j < i ? "* " : "*");\n            }\n            System.out.println();\n        } else {\n            System.out.print("*");\n            for (int j = 2; j < i; j++) {\n                System.out.print("  ");\n            }\n            System.out.println(" *");\n        }\n    }\n}`,
+      javascript: `function printHollowTriangle(n) {\n    let output = "";\n    for (let i = 1; i <= n; i++) {\n        if (i === 1) {\n            output += "*";\n        } else if (i === n) {\n            output += "\\n" + "* ".repeat(i-1) + "*";\n        } else {\n            output += "\\n*" + " ".repeat(2*i-3) + "*";\n        }\n    }\n    console.log(output);\n}`,
+      "c++": `#include <iostream>\n#include <string>\nusing namespace std;\nvoid printHollowTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        if (i == 1) {\n            cout << "*" << endl;\n        } else if (i == n) {\n            for (int j = 1; j <= i; j++) {\n                cout << (j < i ? "* " : "*");\n            }\n            cout << endl;\n        } else {\n            cout << "*";\n            for (int j = 2; j < i; j++) {\n                cout << "  ";\n            }\n            cout << " *" << endl;\n        }\n    }\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.join(', ');

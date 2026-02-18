@@ -106,6 +106,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_table(int n) {\n    for (int i = 1; i <= 10; i++) {\n        cout << n * i << endl;\n    }\n}\n\nint main() {\n    int num;\n    cin >> num;\n    print_table(num);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_table(n):\n    for i in range(1, 11):\n        print(n * i)\n\n# Main code\nnum = int(input())\nprint_table(num)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_table(int n) {\n        for (int i = 1; i <= 10; i++) {\n            System.out.println(n * i);\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        print_table(num);\n    }\n}",
+    "javascript": "function print_table(n) {\n    for (let i = 1; i <= 10; i++) {\n        console.log(n * i);\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const num = parseInt(input);\n    print_table(num);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_table(int n) {\n    for (int i = 1; i <= 10; i++) {\n        cout << n * i << endl;\n    }\n}\n\nint main() {\n    int num;\n    cin >> num;\n    print_table(num);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

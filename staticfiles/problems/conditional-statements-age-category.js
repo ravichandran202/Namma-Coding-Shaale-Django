@@ -72,6 +72,14 @@ Output: Senior</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    if (age <= 12) {\n        std::cout << "Child" << std::endl;\n    } else if (age <= 19) {\n        std::cout << "Teenager" << std::endl;\n    } else if (age <= 59) {\n        std::cout << "Adult" << std::endl;\n    } else {\n        std::cout << "Senior" << std::endl;\n    }\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `age = int(input())\nif age <= 12:\n    print("Child")\nelif age <= 19:\n    print("Teenager")\nelif age <= 59:\n    print("Adult")\nelse:\n    print("Senior")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        if (age <= 12) {\n            System.out.println("Child");\n        } else if (age <= 19) {\n            System.out.println("Teenager");\n        } else if (age <= 59) {\n            System.out.println("Adult");\n        } else {\n            System.out.println("Senior");\n        }\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (age) => {\n    const ageNum = parseInt(age);\n    if (ageNum <= 12) {\n        console.log("Child");\n    } else if (ageNum <= 19) {\n        console.log("Teenager");\n    } else if (ageNum <= 59) {\n        console.log("Adult");\n    } else {\n        console.log("Senior");\n    }\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    if (age <= 12) {\n        std::cout << "Child" << std::endl;\n    } else if (age <= 19) {\n        std::cout << "Teenager" << std::endl;\n    } else if (age <= 59) {\n        std::cout << "Adult" << std::endl;\n    } else {\n        std::cout << "Senior" << std::endl;\n    }\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

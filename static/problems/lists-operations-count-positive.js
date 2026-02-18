@@ -47,6 +47,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > 0) {\n            count++;\n        }\n    }\n    \n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\ncount = 0\nfor num in nums:\n    if num > 0:\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        \n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num > 0) {\n                count++;\n            }\n        }\n        \n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        \n        let count = 0;\n        for (let num of nums) {\n            if (num > 0) {\n                count++;\n            }\n        }\n        \n        console.log(count);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > 0) {\n            count++;\n        }\n    }\n    \n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

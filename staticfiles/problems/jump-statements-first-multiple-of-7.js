@@ -84,6 +84,14 @@ Output:
     "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid first_multiple_of_7(vector<int> numbers) {\n    for (int num : numbers) {\n        if (num % 7 == 0) {\n            cout << num << endl;\n            break;\n        }\n    }\n}\n\nint main() {\n    vector<int> numbers = {3, 14, 5, 21, 8};\n    first_multiple_of_7(numbers);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def first_multiple_of_7(numbers):\n    for num in numbers:\n        if num % 7 == 0:\n            print(num)\n            break\n\n# main code\nnumbers = [3, 14, 5, 21, 8]\nfirst_multiple_of_7(numbers)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void first_multiple_of_7(int[] numbers) {\n        for (int num : numbers) {\n            if (num % 7 == 0) {\n                System.out.println(num);\n                break;\n            }\n        }\n    }\n    \n    public static void main(String[] args) {\n        int[] numbers = {3, 14, 5, 21, 8};\n        first_multiple_of_7(numbers);\n    }\n}",
+    "javascript": "function first_multiple_of_7(numbers) {\n    for (let i = 0; i < numbers.length; i++) {\n        if (numbers[i] % 7 === 0) {\n            console.log(numbers[i]);\n            break;\n        }\n    }\n}\n\n// main code\nconst numbers = [3, 14, 5, 21, 8];\nfirst_multiple_of_7(numbers);",
+    "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid first_multiple_of_7(vector<int> numbers) {\n    for (int num : numbers) {\n        if (num % 7 == 0) {\n            cout << num << endl;\n            break;\n        }\n    }\n}\n\nint main() {\n    vector<int> numbers = {3, 14, 5, 21, 8};\n    first_multiple_of_7(numbers);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

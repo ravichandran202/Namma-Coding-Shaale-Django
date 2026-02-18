@@ -50,6 +50,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int i;\n    cin >> i;\n    while (i >= 1) {\n        cout << i << endl;\n        i--;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "i = int(input())\nwhile i >= 1:\n    print(i)\n    i -= 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int i = scanner.nextInt();\n        while (i >= 1) {\n            System.out.println(i);\n            i--;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (i) => {\n    let num = parseInt(i);\n    while (num >= 1) {\n        console.log(num);\n        num--;\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int i;\n    cin >> i;\n    while (i >= 1) {\n        cout << i << endl;\n        i--;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

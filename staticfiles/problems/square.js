@@ -61,6 +61,14 @@ module.exports = {
       javascript: `function squareOfNumber(num) {\n  return num * num;\n}`,
       "c++": `#include <iostream>\n\nint squareOfNumber(int num) {\n  return num * num;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
     },
+
+  
+    "solutions": {
+      python: `def square_of_number(num):\n    return num * num`,
+      java: `public class Main {\n  public static int squareOfNumber(int num) {\n    return num * num;\n  }\n  \n  public static void main(String[] args) {\n    // Test cases will be added here\n  }\n}`,
+      javascript: `function squareOfNumber(num) {\n  return num * num;\n}`,
+      "c++": `#include <iostream>\n\nint squareOfNumber(int num) {\n  return num * num;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
+    },
   
     wrapCode: function(lang, userCode, input) {
       switch(lang) {

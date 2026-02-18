@@ -41,6 +41,14 @@ Output: ['X', 'Y', 'Z']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> nums;\n    string num;\n    \n    stringstream ss(input);\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    \n    vector<string> result;\n    if (nums.size() >= 3) {\n        int mid = nums.size() / 2;\n        result.push_back(nums[mid - 1]);\n        result.push_back(nums[mid]);\n        result.push_back(nums[mid + 1]);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "nums = input().split()\nmid = len(nums) // 2\nprint(nums[mid-1:mid+2])",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] nums = scanner.nextLine().split(\" \");\n        int mid = nums.length / 2;\n        \n        String[] result;\n        if (nums.length >= 3) {\n            result = Arrays.copyOfRange(nums, mid - 1, mid + 2);\n        } else {\n            result = new String[0];\n        }\n        \n        System.out.println(Arrays.toString(result));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const nums = input.split(' ').filter(item => item !== '');\n    const mid = Math.floor(nums.length / 2);\n    let result = [];\n    \n    if (nums.length >= 3) {\n        result = nums.slice(mid - 1, mid + 2);\n    }\n    \n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> nums;\n    string num;\n    \n    stringstream ss(input);\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    \n    vector<string> result;\n    if (nums.size() >= 3) {\n        int mid = nums.size() / 2;\n        result.push_back(nums[mid - 1]);\n        result.push_back(nums[mid]);\n        result.push_back(nums[mid + 1]);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

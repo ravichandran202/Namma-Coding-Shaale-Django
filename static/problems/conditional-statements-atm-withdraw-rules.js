@@ -73,6 +73,14 @@ Output: Withdrawal Failed</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int balance, withdrawal;\n    std::cin >> balance >> withdrawal;\n    \n    if (balance >= withdrawal && withdrawal % 100 == 0) {\n        std::cout << \"Withdrawal Successful\" << std::endl;\n        std::cout << \"Remaining Balance: \" << balance - withdrawal << std::endl;\n    } else {\n        std::cout << \"Withdrawal Failed\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "balance = int(input())\nwithdrawal = int(input())\n\nif balance >= withdrawal and withdrawal % 100 == 0:\n    print(\"Withdrawal Successful\")\n    print(\"Remaining Balance:\", balance - withdrawal)\nelse:\n    print(\"Withdrawal Failed\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int balance = scanner.nextInt();\n        int withdrawal = scanner.nextInt();\n        \n        if (balance >= withdrawal && withdrawal % 100 == 0) {\n            System.out.println(\"Withdrawal Successful\");\n            System.out.println(\"Remaining Balance: \" + (balance - withdrawal));\n        } else {\n            System.out.println(\"Withdrawal Failed\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 2) {\n        const [balance, withdrawal] = input;\n        \n        if (balance >= withdrawal && withdrawal % 100 === 0) {\n            console.log(\"Withdrawal Successful\");\n            console.log(\"Remaining Balance: \" + (balance - withdrawal));\n        } else {\n            console.log(\"Withdrawal Failed\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int balance, withdrawal;\n    std::cin >> balance >> withdrawal;\n    \n    if (balance >= withdrawal && withdrawal % 100 == 0) {\n        std::cout << \"Withdrawal Successful\" << std::endl;\n        std::cout << \"Remaining Balance: \" << balance - withdrawal << std::endl;\n    } else {\n        std::cout << \"Withdrawal Failed\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

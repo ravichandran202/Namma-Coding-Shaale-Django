@@ -47,6 +47,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string num;\n    cin >> num;\n    int total = 0;\n    for (char ch : num) {\n        int d = ch - '0';\n        if (d % 2 != 0) {\n            total += d;\n        }\n    }\n    cout << total << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = input()\ntotal = 0\nfor ch in num:\n    d = int(ch)\n    if d % 2 != 0:\n        total += d\nprint(total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String num = scanner.next();\n        int total = 0;\n        for (int i = 0; i < num.length(); i++) {\n            int d = num.charAt(i) - '0';\n            if (d % 2 != 0) {\n                total += d;\n            }\n        }\n        System.out.println(total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let total = 0;\n    for (let i = 0; i < input.length; i++) {\n        const d = parseInt(input[i]);\n        if (d % 2 !== 0) {\n            total += d;\n        }\n    }\n    console.log(total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string num;\n    cin >> num;\n    int total = 0;\n    for (char ch : num) {\n        int d = ch - '0';\n        if (d % 2 != 0) {\n            total += d;\n        }\n    }\n    cout << total << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -82,6 +82,14 @@ Output: 4</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > 0) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ncount = 0\nfor i in range(n):\n    num = int(input())\n    if num > 0:\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num > 0) {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n});\n\nreadline.on('close', () => {\n    const n = parseInt(input[0]);\n    let count = 0;\n    for (let i = 1; i <= n; i++) {\n        const num = parseInt(input[i]);\n        if (num > 0) {\n            count++;\n        }\n    }\n    console.log(count);\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > 0) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

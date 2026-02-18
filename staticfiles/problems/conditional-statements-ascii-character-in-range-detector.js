@@ -68,6 +68,14 @@ Output: False</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    int start, end;\n    std::cin >> ch >> start >> end;\n    \n    int ascii_val = (int)ch;\n    std::cout << ((ascii_val >= start && ascii_val <= end) ? \"True\" : \"False\") << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nstart = int(input())\nend = int(input())\n\nascii_val = ord(char)\nprint(start <= ascii_val <= end)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        int start = scanner.nextInt();\n        int end = scanner.nextInt();\n        \n        int ascii_val = (int) character;\n        System.out.println(ascii_val >= start && ascii_val <= end);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n    if (input.length === 3) {\n        const char = input[0];\n        const start = parseInt(input[1]);\n        const end = parseInt(input[2]);\n        \n        const ascii_val = char.charCodeAt(0);\n        console.log(ascii_val >= start && ascii_val <= end);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    int start, end;\n    std::cin >> ch >> start >> end;\n    \n    int ascii_val = (int)ch;\n    std::cout << ((ascii_val >= start && ascii_val <= end) ? \"True\" : \"False\") << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

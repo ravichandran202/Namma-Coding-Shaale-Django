@@ -56,6 +56,14 @@ Output: Uppercase Letter</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    int ascii_val = (int)ch;\n    \n    if (ascii_val >= 65 && ascii_val <= 90) {\n        std::cout << \"Uppercase Letter\" << std::endl;\n    } else if (ascii_val >= 97 && ascii_val <= 122) {\n        std::cout << \"Lowercase Letter\" << std::endl;\n    } else if (ascii_val >= 48 && ascii_val <= 57) {\n        std::cout << \"Digit\" << std::endl;\n    } else {\n        std::cout << \"Special Character\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nascii_val = ord(char)\n\nif 65 <= ascii_val <= 90:\n    print(\"Uppercase Letter\")\nelif 97 <= ascii_val <= 122:\n    print(\"Lowercase Letter\")\nelif 48 <= ascii_val <= 57:\n    print(\"Digit\")\nelse:\n    print(\"Special Character\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        int ascii_val = (int) character;\n        \n        if (ascii_val >= 65 && ascii_val <= 90) {\n            System.out.println(\"Uppercase Letter\");\n        } else if (ascii_val >= 97 && ascii_val <= 122) {\n            System.out.println(\"Lowercase Letter\");\n        } else if (ascii_val >= 48 && ascii_val <= 57) {\n            System.out.println(\"Digit\");\n        } else {\n            System.out.println(\"Special Character\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (char) => {\n    const ascii_val = char.charCodeAt(0);\n    \n    if (ascii_val >= 65 && ascii_val <= 90) {\n        console.log(\"Uppercase Letter\");\n    } else if (ascii_val >= 97 && ascii_val <= 122) {\n        console.log(\"Lowercase Letter\");\n    } else if (ascii_val >= 48 && ascii_val <= 57) {\n        console.log(\"Digit\");\n    } else {\n        console.log(\"Special Character\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    int ascii_val = (int)ch;\n    \n    if (ascii_val >= 65 && ascii_val <= 90) {\n        std::cout << \"Uppercase Letter\" << std::endl;\n    } else if (ascii_val >= 97 && ascii_val <= 122) {\n        std::cout << \"Lowercase Letter\" << std::endl;\n    } else if (ascii_val >= 48 && ascii_val <= 57) {\n        std::cout << \"Digit\" << std::endl;\n    } else {\n        std::cout << \"Special Character\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -49,6 +49,14 @@ Output: -2</pre>
     "c++": "#include <iostream>\n#include <climits>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int max = INT_MIN;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > max) {\n            max = num;\n        }\n    }\n    \n    cout << max << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nprint(max(nums))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int max = Integer.MIN_VALUE;\n        \n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num > max) {\n                max = num;\n            }\n        }\n        \n        System.out.println(max);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const max = Math.max(...nums);\n        console.log(max);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <climits>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int max = INT_MIN;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num > max) {\n            max = num;\n        }\n    }\n    \n    cout << max << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

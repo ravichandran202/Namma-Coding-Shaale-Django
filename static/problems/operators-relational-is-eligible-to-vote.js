@@ -53,6 +53,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    std::cout << std::boolalpha << (age >= 18) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `age = int(input())\nprint(age >= 18)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        System.out.println(age >= 18);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (age) => {\n    const ageNum = parseInt(age);\n    console.log(ageNum >= 18);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    std::cout << std::boolalpha << (age >= 18) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

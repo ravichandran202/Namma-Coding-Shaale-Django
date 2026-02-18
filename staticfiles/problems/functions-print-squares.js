@@ -86,6 +86,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_square(int num) {\n    cout << num * num << endl;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    print_square(n);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_square(num):\n    print(num * num)\n\n# Main code\nn = int(input())\nprint_square(n)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_square(int num) {\n        System.out.println(num * num);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        print_square(n);\n    }\n}",
+    "javascript": "function print_square(num) {\n    console.log(num * num);\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    print_square(n);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_square(int num) {\n    cout << num * num << endl;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    print_square(n);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

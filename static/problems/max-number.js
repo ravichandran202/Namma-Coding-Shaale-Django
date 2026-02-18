@@ -34,6 +34,14 @@ module.exports = {
       javascript: `function largestOfTwo(a, b) {\n    // write your code here\n    return 0;\n}`,
       "c++": `int largestOfTwo(int a, int b) {\n    // write your code here\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      python: `def largest_of_two(a, b):\n    # write your code here\n    pass`,
+      java: `public static int largestOfTwo(int a, int b) {\n    // write your code here\n    return 0;\n}`,
+      javascript: `function largestOfTwo(a, b) {\n    // write your code here\n    return 0;\n}`,
+      "c++": `int largestOfTwo(int a, int b) {\n    // write your code here\n    return 0;\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.join(', ');

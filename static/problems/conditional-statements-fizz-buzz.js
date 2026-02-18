@@ -69,6 +69,14 @@ Output: Not divisible by both</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    if (number % 3 == 0 && number % 5 == 0) {\n        std::cout << \"FIZZ BUZZ\" << std::endl;\n    } else if (number % 5 == 0) {\n        std::cout << \"FIZZ\" << std::endl;\n    } else if (number % 3 == 0) {\n        std::cout << \"BUZZ\" << std::endl;\n    } else {\n        std::cout << \"Not divisible by both\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "number = int(input())\nif number % 3 == 0 and number % 5 == 0:\n    print(\"FIZZ BUZZ\")\nelif number % 5 == 0:\n    print(\"FIZZ\")\nelif number % 3 == 0:\n    print(\"BUZZ\")\nelse:\n    print(\"Not divisible by both\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        if (number % 3 == 0 && number % 5 == 0) {\n            System.out.println(\"FIZZ BUZZ\");\n        } else if (number % 5 == 0) {\n            System.out.println(\"FIZZ\");\n        } else if (number % 3 == 0) {\n            System.out.println(\"BUZZ\");\n        } else {\n            System.out.println(\"Not divisible by both\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    const num = parseInt(number);\n    if (num % 3 === 0 && num % 5 === 0) {\n        console.log(\"FIZZ BUZZ\");\n    } else if (num % 5 === 0) {\n        console.log(\"FIZZ\");\n    } else if (num % 3 === 0) {\n        console.log(\"BUZZ\");\n    } else {\n        console.log(\"Not divisible by both\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    if (number % 3 == 0 && number % 5 == 0) {\n        std::cout << \"FIZZ BUZZ\" << std::endl;\n    } else if (number % 5 == 0) {\n        std::cout << \"FIZZ\" << std::endl;\n    } else if (number % 3 == 0) {\n        std::cout << \"BUZZ\" << std::endl;\n    } else {\n        std::cout << \"Not divisible by both\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

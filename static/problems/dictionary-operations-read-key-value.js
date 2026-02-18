@@ -68,6 +68,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    map<string, string> data;\n    \n    for (int i = 0; i < n; i++) {\n        string key, value;\n        cin >> key >> value;\n        data[key] = value;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : data) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "count = int(input())\ndata = {}\n\nfor i in range(count):\n    key, value = input().split()\n    data[key] = value\n\nprint(data)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();\n        \n        Map<String, String> data = new LinkedHashMap<>();\n        \n        for (int i = 0; i < n; i++) {\n            String line = scanner.nextLine();\n            String[] parts = line.split(\" \");\n            data.put(parts[0], parts[1]);\n        }\n        \n        System.out.println(data);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === parseInt(lines[0]) + 1) {\n        const n = parseInt(lines[0]);\n        const data = {};\n        \n        for (let i = 1; i <= n; i++) {\n            const [key, value] = lines[i].split(' ');\n            data[key] = value;\n        }\n        \n        console.log(JSON.stringify(data).replace(/\"/g, \"'\"));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    map<string, string> data;\n    \n    for (int i = 0; i < n; i++) {\n        string key, value;\n        cin >> key >> value;\n        data[key] = value;\n    }\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : data) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

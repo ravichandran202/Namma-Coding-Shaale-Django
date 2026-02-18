@@ -63,6 +63,17 @@ Output: F</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nchar getGrade(int score) {\n    if (score >= 90) return 'A';\n    else if (score >= 80) return 'B';\n    else if (score >= 70) return 'C';\n    else if (score >= 60) return 'D';\n    else return 'F';\n}\n\nint main() {\n    int score;\n    cin >> score;\n    cout << getGrade(score) << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def get_grade(score):\n    # Write your logic here\n    if score >= 90: return 'A'\n    elif score >= 80: return 'B'\n    elif score >= 70: return 'C'\n    elif score >= 60: return 'D'\n    else: return 'F'\n\n# Do not change the code below\nscore = int(input())\nprint(get_grade(score))",
+    
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    // Function to calculate grade\n    public static char getGrade(int score) {\n        if (score >= 90) return 'A';\n        else if (score >= 80) return 'B';\n        else if (score >= 70) return 'C';\n        else if (score >= 60) return 'D';\n        else return 'F';\n    }\n\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int score = scanner.nextInt();\n        System.out.println(getGrade(score));\n    }\n}",
+    
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nfunction getGrade(score) {\n    if (score >= 90) return 'A';\n    else if (score >= 80) return 'B';\n    else if (score >= 70) return 'C';\n    else if (score >= 60) return 'D';\n    else return 'F';\n}\n\nreadline.on('line', (line) => {\n    const score = parseInt(line);\n    console.log(getGrade(score));\n    readline.close();\n});",
+    
+    "c++": "#include <iostream>\nusing namespace std;\n\nchar getGrade(int score) {\n    if (score >= 90) return 'A';\n    else if (score >= 80) return 'B';\n    else if (score >= 70) return 'C';\n    else if (score >= 60) return 'D';\n    else return 'F';\n}\n\nint main() {\n    int score;\n    cin >> score;\n    cout << getGrade(score) << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

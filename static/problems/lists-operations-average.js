@@ -45,6 +45,14 @@ Output: 10.0</pre>
     "c++": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        sum += num;\n    }\n    \n    double average = static_cast<double>(sum) / n;\n    cout << fixed << setprecision(1) << average << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\naverage = sum(nums) / len(nums)\nprint(average)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int sum = 0;\n        \n        for (int i = 0; i < n; i++) {\n            sum += scanner.nextInt();\n        }\n        \n        double average = (double) sum / n;\n        System.out.println(average);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const sum = nums.reduce((acc, num) => acc + num, 0);\n        const average = sum / n;\n        console.log(average);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        sum += num;\n    }\n    \n    double average = static_cast<double>(sum) / n;\n    cout << fixed << setprecision(1) << average << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

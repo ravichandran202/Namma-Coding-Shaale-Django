@@ -54,6 +54,14 @@ Output: False</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int s = 0;\n    for (int i = 1; i < n; i++) {\n        if (n % i == 0) {\n            s += i;\n        }\n    }\n    cout << (s == n ? \"True\" : \"False\") << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ns = 0\nfor i in range(1, n):\n    if n % i == 0:\n        s += i\nprint(s == n)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int s = 0;\n        for (int i = 1; i < n; i++) {\n            if (n % i == 0) {\n                s += i;\n            }\n        }\n        System.out.println(s == n);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let s = 0;\n    for (let i = 1; i < n; i++) {\n        if (n % i === 0) {\n            s += i;\n        }\n    }\n    console.log(s === n);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int s = 0;\n    for (int i = 1; i < n; i++) {\n        if (n % i == 0) {\n            s += i;\n        }\n    }\n    cout << (s == n ? \"True\" : \"False\") << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

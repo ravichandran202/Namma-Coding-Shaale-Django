@@ -36,6 +36,14 @@ module.exports = {
       javascript: `function isLeapYear(year) {\n    // write your code here\n    return false;\n}`,
       "c++": `bool isLeapYear(int year) {\n    // write your code here\n    return false;\n}`
     },
+
+  
+    "solutions": {
+      python: `def is_leap_year(year):\n    # write your code here\n    pass`,
+      java: `public static boolean isLeapYear(int year) {\n    // write your code here\n    return false;\n}`,
+      javascript: `function isLeapYear(year) {\n    // write your code here\n    return false;\n}`,
+      "c++": `bool isLeapYear(int year) {\n    // write your code here\n    return false;\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.join(', ');

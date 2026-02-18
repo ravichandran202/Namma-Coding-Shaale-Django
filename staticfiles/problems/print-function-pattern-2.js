@@ -54,6 +54,14 @@ module.exports = {
       "javascript": `console.log("*");\nconsole.log("**");\nconsole.log("***");\nconsole.log("**");\nconsole.log("*");`,
       "c++": `#include <iostream>\n\nint main() {\n    std::cout << "*" << std::endl;\n    std::cout << "**" << std::endl;\n    std::cout << "***" << std::endl;\n    std::cout << "**" << std::endl;\n    std::cout << "*" << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `print("*")\nprint("**")\nprint("***")\nprint("**")\nprint("*")`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("*");\n        System.out.println("**");\n        System.out.println("***");\n        System.out.println("**");\n        System.out.println("*");\n    }\n}`,
+      "javascript": `console.log("*");\nconsole.log("**");\nconsole.log("***");\nconsole.log("**");\nconsole.log("*");`,
+      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "*" << std::endl;\n    std::cout << "**" << std::endl;\n    std::cout << "***" << std::endl;\n    std::cout << "**" << std::endl;\n    std::cout << "*" << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

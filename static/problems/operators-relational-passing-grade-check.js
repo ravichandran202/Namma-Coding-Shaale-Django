@@ -62,6 +62,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int marks;\n    std::cin >> marks;\n    std::cout << std::boolalpha << (marks >= 40) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `marks = int(input())\npassing_marks = int(input())\nprint(marks >= passing_marks)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int marks = scanner.nextInt();\n        System.out.println(marks >= 40);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (marks) => {\n    const marksNum = parseInt(marks);\n    console.log(marksNum >= 40);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int marks;\n    std::cin >> marks;\n    std::cout << std::boolalpha << (marks >= 40) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

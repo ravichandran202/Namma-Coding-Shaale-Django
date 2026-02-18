@@ -65,6 +65,14 @@ Output: 9</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char char1, char2;\n    std::cin >> char1 >> char2;\n    int difference = (int)char2 - (int)char1;\n    std::cout << difference << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char1 = input()\nchar2 = input()\ndifference = ord(char2) - ord(char1)\nprint(difference)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char char1 = scanner.next().charAt(0);\n        char char2 = scanner.next().charAt(0);\n        int difference = (int) char2 - (int) char1;\n        System.out.println(difference);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n    if (input.length === 2) {\n        const char1 = input[0];\n        const char2 = input[1];\n        const difference = char2.charCodeAt(0) - char1.charCodeAt(0);\n        console.log(difference);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char char1, char2;\n    std::cin >> char1 >> char2;\n    int difference = (int)char2 - (int)char1;\n    std::cout << difference << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

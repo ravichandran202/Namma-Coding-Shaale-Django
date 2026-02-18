@@ -98,6 +98,77 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": 
+`class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+# main code
+initial_balance = int(input())
+account = BankAccount(initial_balance)
+print("Initial Balance:", account.balance)`,
+    
+    "java": 
+`import java.util.*;
+
+class BankAccount {
+    int balance;
+    BankAccount(int balance) {
+        this.balance = balance;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int balance = sc.nextInt();
+        BankAccount acc = new BankAccount(balance);
+        System.out.println("Initial Balance: " + acc.balance);
+    }
+}`,
+    
+    "javascript": 
+`class BankAccount {
+    constructor(balance) {
+        this.balance = balance;
+    }
+}
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+readline.question('', (input) => {
+    const balance = parseInt(input);
+    const acc = new BankAccount(balance);
+    console.log("Initial Balance:", acc.balance);
+    readline.close();
+});`,
+
+    "c++": 
+`#include <iostream>
+using namespace std;
+
+class BankAccount {
+public:
+    int balance;
+    BankAccount(int balance) {
+        this->balance = balance;
+    }
+};
+
+int main() {
+    int balance;
+    cin >> balance;
+    BankAccount acc(balance);
+    cout << "Initial Balance: " << acc.balance;
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode) {
     return userCode;
   }
