@@ -145,6 +145,83 @@ print(safe_divide(a, b))`,
       return 0;
   }`
     },
+
+  
+    "solutions": {
+      "python": 
+  `def safe_divide(a, b):
+      try:
+          return a / b
+      except ZeroDivisionError:
+          return "Error: Division by zero"
+  
+# main code
+a, b = map(int, input().split())
+print(safe_divide(a, b))`,
+  
+      "java": 
+  `import java.util.*;
+  
+  public class Main {
+      public static String safe_divide(int a, int b) {
+          try {
+              double result = (double) a / b;
+              return String.valueOf(result);
+          } catch (ArithmeticException e) {
+              return "Error: Division by zero";
+          }
+      }
+      
+      public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          int a = sc.nextInt();
+          int b = sc.nextInt();
+          System.out.println(safe_divide(a, b));
+      }
+  }`,
+  
+      "javascript": 
+  `function safe_divide(a, b) {
+      try {
+          if (b === 0) throw new Error("Division by zero");
+          return a / b;
+      } catch (error) {
+          return "Error: Division by zero";
+      }
+  }
+  
+  const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+  
+  readline.question('', (input) => {
+      const [a, b] = input.split(' ').map(Number);
+      console.log(safe_divide(a, b));
+      readline.close();
+  });`,
+  
+      "c++": 
+  `#include <iostream>
+  #include <string>
+  using namespace std;
+  
+  string safe_divide(int a, int b) {
+      try {
+          if (b == 0) throw runtime_error("Division by zero");
+          return to_string((double)a / b);
+      } catch (runtime_error& e) {
+          return "Error: Division by zero";
+      }
+  }
+  
+  int main() {
+      int a, b;
+      cin >> a >> b;
+      cout << safe_divide(a, b);
+      return 0;
+  }`
+    },
   
     "wrapCode": function(lang, userCode) {
       return userCode;

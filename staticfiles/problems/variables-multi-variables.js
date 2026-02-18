@@ -64,6 +64,14 @@ Output: Charlie is 17 years old and in 11th grade</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (name) => {\n    inputs.push(name);\n    readline.question('', (age) => {\n        inputs.push(age);\n        readline.question('', (grade) => {\n            inputs.push(grade);\n            console.log(inputs[0] + \" is \" + inputs[1] + \" years old and in \" + inputs[2] + \" grade\");\n            readline.close();\n        });\n    });\n});`,
       "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string student_name, grade;\n    int age;\n    std::getline(std::cin, student_name);\n    std::cin >> age;\n    std::cin.ignore(); // ignore newline\n    std::getline(std::cin, grade);\n    std::cout << student_name << \" is \" << age << \" years old and in \" << grade << \" grade\" << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `student_name = input()\nage = int(input())\ngrade = input()\nprint(f"{student_name} is {age} years old and in {grade} grade")`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String student_name = scanner.nextLine();\n        int age = scanner.nextInt();\n        scanner.nextLine(); // consume newline\n        String grade = scanner.nextLine();\n        System.out.println(student_name + \" is \" + age + \" years old and in \" + grade + \" grade\");\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (name) => {\n    inputs.push(name);\n    readline.question('', (age) => {\n        inputs.push(age);\n        readline.question('', (grade) => {\n            inputs.push(grade);\n            console.log(inputs[0] + \" is \" + inputs[1] + \" years old and in \" + inputs[2] + \" grade\");\n            readline.close();\n        });\n    });\n});`,
+      "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string student_name, grade;\n    int age;\n    std::getline(std::cin, student_name);\n    std::cin >> age;\n    std::cin.ignore(); // ignore newline\n    std::getline(std::cin, grade);\n    std::cout << student_name << \" is \" << age << \" years old and in \" << grade << \" grade\" << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

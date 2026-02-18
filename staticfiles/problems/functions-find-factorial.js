@@ -90,6 +90,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nlong long calculate_factorial(int n) {\n    long long result = 1;\n    for (int i = 1; i <= n; i++) {\n        result *= i;\n    }\n    return result;\n}\n\nint main() {\n    int num;\n    cin >> num;\n    long long result = calculate_factorial(num);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def calculate_factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result\n\n# Main code\nnum = int(input())\nresult = calculate_factorial(num)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static long calculate_factorial(int n) {\n        long result = 1;\n        for (int i = 1; i <= n; i++) {\n            result *= i;\n        }\n        return result;\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        long result = calculate_factorial(num);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function calculate_factorial(n) {\n    let result = 1;\n    for (let i = 1; i <= n; i++) {\n        result *= i;\n    }\n    return result;\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const num = parseInt(input);\n    const result = calculate_factorial(num);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nlong long calculate_factorial(int n) {\n    long long result = 1;\n    for (int i = 1; i <= n; i++) {\n        result *= i;\n    }\n    return result;\n}\n\nint main() {\n    int num;\n    cin >> num;\n    long long result = calculate_factorial(num);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

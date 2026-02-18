@@ -67,6 +67,14 @@ Output: Not Eligible</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int marks, family_income;\n    std::cin >> marks >> family_income;\n    \n    if (marks >= 90 || (marks >= 80 && family_income < 50000)) {\n        std::cout << \"Eligible for Scholarship\" << std::endl;\n    } else {\n        std::cout << \"Not Eligible\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "marks = int(input())\nfamily_income = int(input())\n\nif marks >= 90 or (marks >= 80 and family_income < 50000):\n    print(\"Eligible for Scholarship\")\nelse:\n    print(\"Not Eligible\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int marks = scanner.nextInt();\n        int family_income = scanner.nextInt();\n        \n        if (marks >= 90 || (marks >= 80 && family_income < 50000)) {\n            System.out.println(\"Eligible for Scholarship\");\n        } else {\n            System.out.println(\"Not Eligible\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 2) {\n        const [marks, family_income] = input;\n        \n        if (marks >= 90 || (marks >= 80 && family_income < 50000)) {\n            console.log(\"Eligible for Scholarship\");\n        } else {\n            console.log(\"Not Eligible\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int marks, family_income;\n    std::cin >> marks >> family_income;\n    \n    if (marks >= 90 || (marks >= 80 && family_income < 50000)) {\n        std::cout << \"Eligible for Scholarship\" << std::endl;\n    } else {\n        std::cout << \"Not Eligible\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

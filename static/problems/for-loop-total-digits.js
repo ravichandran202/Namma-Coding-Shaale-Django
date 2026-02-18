@@ -47,6 +47,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    int count = 0;\n    for (char ch : text) {\n        if (isdigit(ch)) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "text = input()\ncount = 0\nfor ch in text:\n    if ch.isdigit():\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        int count = 0;\n        for (int i = 0; i < text.length(); i++) {\n            if (Character.isDigit(text.charAt(i))) {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let count = 0;\n    for (let i = 0; i < input.length; i++) {\n        if (!isNaN(parseInt(input[i]))) {\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    int count = 0;\n    for (char ch : text) {\n        if (isdigit(ch)) {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -67,6 +67,14 @@ Output:
     "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    \n    std::cout << num1 << \" + \" << num2 << \" = \" << (num1 + num2) << std::endl;\n    std::cout << num1 << \" - \" << num2 << \" = \" << (num1 - num2) << std::endl;\n    std::cout << num1 << \" * \" << num2 << \" = \" << (num1 * num2) << std::endl;\n    std::cout << num1 << \" / \" << num2 << \" = \" << std::fixed << std::setprecision(15) << (static_cast<double>(num1) / num2) << std::endl;\n    \n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `num1 = int(input())\nnum2 = int(input())\n\nprint(f"{num1} + {num2} = {num1 + num2}")\nprint(f"{num1} - {num2} = {num1 - num2}")\nprint(f"{num1} * {num2} = {num1 * num2}")\nprint(f"{num1} / {num2} = {num1 / num2}")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num1 = scanner.nextInt();\n        int num2 = scanner.nextInt();\n        \n        System.out.println(num1 + \" + \" + num2 + \" = \" + (num1 + num2));\n        System.out.println(num1 + \" - \" + num2 + \" = \" + (num1 - num2));\n        System.out.println(num1 + \" * \" + num2 + \" = \" + (num1 * num2));\n        System.out.println(num1 + \" / \" + num2 + \" = \" + ((double)num1 / num2));\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        console.log(inputs[0] + \" + \" + inputs[1] + \" = \" + (inputs[0] + inputs[1]));\n        console.log(inputs[0] + \" - \" + inputs[1] + \" = \" + (inputs[0] - inputs[1]));\n        console.log(inputs[0] + \" * \" + inputs[1] + \" = \" + (inputs[0] * inputs[1]));\n        console.log(inputs[0] + \" / \" + inputs[1] + \" = \" + (inputs[0] / inputs[1]));\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    \n    std::cout << num1 << \" + \" << num2 << \" = \" << (num1 + num2) << std::endl;\n    std::cout << num1 << \" - \" << num2 << \" = \" << (num1 - num2) << std::endl;\n    std::cout << num1 << \" * \" << num2 << \" = \" << (num1 * num2) << std::endl;\n    std::cout << num1 << \" / \" << num2 << \" = \" << std::fixed << std::setprecision(15) << (static_cast<double>(num1) / num2) << std::endl;\n    \n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

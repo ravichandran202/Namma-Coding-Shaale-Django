@@ -63,6 +63,14 @@ Output: -1.5</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        const result = inputs[0] + inputs[1];\n        console.log(result);\n        readline.close();\n    });\n});`,
       "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int a;\n    double b;\n    std::cin >> a >> b;\n    double result = a + b;\n    std::cout << result << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `a = int(input())\nb = float(input())\nresult = a + b\nprint(result)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        double b = scanner.nextDouble();\n        double result = a + b;\n        System.out.println(result);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        const result = inputs[0] + inputs[1];\n        console.log(result);\n        readline.close();\n    });\n});`,
+      "c++": `#include <iostream>\n#include <iomanip>\n\nint main() {\n    int a;\n    double b;\n    std::cin >> a >> b;\n    double result = a + b;\n    std::cout << result << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

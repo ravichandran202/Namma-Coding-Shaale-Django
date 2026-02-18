@@ -105,6 +105,14 @@ Output:</pre>
     // "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid skip_vowels(string word) {\n    string vowels = "aeiou";\n    for (int i = 0; i < word.length(); i++) {\n        char letter = word[i];\n        if (vowels.find(letter) != string::npos) {\n            continue;\n        }\n        cout << letter << endl;\n    }\n}\n\nint main() {\n    string word;\n    cin >> word;\n    skip_vowels(word);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def skip_vowels(word):\n    vowels = \"aeiou\"\n    for letter in word:\n        if letter in vowels:\n            continue\n        print(letter)\n\n# main code\nword = input()\nskip_vowels(word)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void skip_vowels(String word) {\n        String vowels = \"aeiou\";\n        for (int i = 0; i < word.length(); i++) {\n            char letter = word.charAt(i);\n            if (vowels.indexOf(letter) != -1) {\n                continue;\n            }\n            System.out.println(letter);\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.nextLine();\n        skip_vowels(word);\n    }\n}",
+    "javascript": "function skip_vowels(word) {\n    const vowels = \"aeiou\";\n    for (let i = 0; i < word.length; i++) {\n        const letter = word[i];\n        if (vowels.includes(letter)) {\n            continue;\n        }\n        console.log(letter);\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (word) => {\n    skip_vowels(word);\n    readline.close();\n});",
+    // "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nvoid skip_vowels(string word) {\n    string vowels = "aeiou";\n    for (int i = 0; i < word.length(); i++) {\n        char letter = word[i];\n        if (vowels.find(letter) != string::npos) {\n            continue;\n        }\n        cout << letter << endl;\n    }\n}\n\nint main() {\n    string word;\n    cin >> word;\n    skip_vowels(word);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

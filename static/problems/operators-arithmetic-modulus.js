@@ -63,6 +63,14 @@ Output: 1</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    int remainder = num1 % num2;\n    std::cout << remainder << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `num1 = int(input())\nnum2 = int(input())\nremainder = num1 % num2\nprint(remainder)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num1 = scanner.nextInt();\n        int num2 = scanner.nextInt();\n        int remainder = num1 % num2;\n        System.out.println(remainder);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        const remainder = inputs[0] % inputs[1];\n        console.log(remainder);\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    int remainder = num1 % num2;\n    std::cout << remainder << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

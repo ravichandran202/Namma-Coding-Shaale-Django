@@ -80,6 +80,14 @@ Output:
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint get_last_element(vector<int> lst) {\n    return lst.back();\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    stringstream ss(line);\n    vector<int> numbers;\n    int num;\n    while (ss >> num) {\n        numbers.push_back(num);\n    }\n    int result = get_last_element(numbers);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def get_last_element(lst):\n    return lst[-1]\n\n# Main code\nnumbers = list(map(int, input().split()))\nresult = get_last_element(numbers)\nprint(result)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static int get_last_element(List<Integer> lst) {\n        return lst.get(lst.size() - 1);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] input = scanner.nextLine().split(\" \");\n        List<Integer> numbers = new ArrayList<>();\n        for (String num : input) {\n            numbers.add(Integer.parseInt(num));\n        }\n        int result = get_last_element(numbers);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function get_last_element(lst) {\n    return lst[lst.length - 1];\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const numbers = input.split(' ').map(Number);\n    const result = get_last_element(numbers);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint get_last_element(vector<int> lst) {\n    return lst.back();\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    stringstream ss(line);\n    vector<int> numbers;\n    int num;\n    while (ss >> num) {\n        numbers.push_back(num);\n    }\n    int result = get_last_element(numbers);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

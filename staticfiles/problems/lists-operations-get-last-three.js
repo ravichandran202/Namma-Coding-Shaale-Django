@@ -49,6 +49,14 @@ Output: ['Tokyo']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> cities;\n    string city;\n    \n    while (ss >> city) {\n        cities.push_back(city);\n    }\n    \n    int start = max(0, (int)cities.size() - 3);\n    cout << \"[\";\n    for (int i = start; i < cities.size(); i++) {\n        cout << \"'\" << cities[i] << \"'\";\n        if (i < cities.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "cities = input().split()\nprint(cities[-3:])",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] cities = scanner.nextLine().split(\" \");\n        int start = Math.max(0, cities.length - 3);\n        String[] result = Arrays.copyOfRange(cities, start, cities.length);\n        System.out.println(Arrays.toString(result));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const cities = input.split(' ');\n    const result = cities.slice(-3);\n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> cities;\n    string city;\n    \n    while (ss >> city) {\n        cities.push_back(city);\n    }\n    \n    int start = max(0, (int)cities.size() - 3);\n    cout << \"[\";\n    for (int i = start; i < cities.size(); i++) {\n        cout << \"'\" << cities[i] << \"'\";\n        if (i < cities.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

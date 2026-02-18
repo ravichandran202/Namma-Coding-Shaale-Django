@@ -69,6 +69,14 @@ Output:
     "c++": "#include <iostream>\n#include <unordered_set>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    if (n == 0) {\n        cout << 0 << endl;\n        return 0;\n    }\n    \n    vector<string> marks(n);\n    for (int i = 0; i < n; i++) {\n        cin >> marks[i];\n    }\n    \n    unordered_set<string> uniqueMarks;\n    for (const string& mark : marks) {\n        uniqueMarks.insert(mark);\n    }\n    \n    cout << uniqueMarks.size() << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nmarks = input().split()\nprint(len(set(marks)))",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();\n        \n        if (n == 0) {\n            System.out.println(0);\n            return;\n        }\n        \n        String[] marks = scanner.nextLine().split(\" \");\n        Set<String> uniqueMarks = new HashSet<>();\n        \n        for (String mark : marks) {\n            uniqueMarks.add(mark);\n        }\n        \n        System.out.println(uniqueMarks.size());\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 2) {\n        const n = parseInt(lines[0]);\n        const marks = lines[1].split(' ').filter(mark => mark.length > 0);\n        \n        if (marks.length === 0) {\n            console.log(0);\n            readline.close();\n            return;\n        }\n        \n        const uniqueMarks = new Set(marks);\n        console.log(uniqueMarks.size);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <unordered_set>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    if (n == 0) {\n        cout << 0 << endl;\n        return 0;\n    }\n    \n    vector<string> marks(n);\n    for (int i = 0; i < n; i++) {\n        cin >> marks[i];\n    }\n    \n    unordered_set<string> uniqueMarks;\n    for (const string& mark : marks) {\n        uniqueMarks.insert(mark);\n    }\n    \n    cout << uniqueMarks.size() << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

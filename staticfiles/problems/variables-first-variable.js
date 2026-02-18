@@ -38,6 +38,14 @@ Alice</pre>
       "javascript": `let name = "Alice";\nconsole.log(name);`,
       "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = "Alice";\n    std::cout << name << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `name = "Alice"\nprint(name)`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        String name = "Alice";\n        System.out.println(name);\n    }\n}`,
+      "javascript": `let name = "Alice";\nconsole.log(name);`,
+      "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = "Alice";\n    std::cout << name << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

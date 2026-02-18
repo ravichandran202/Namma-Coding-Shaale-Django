@@ -68,6 +68,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    \n    string newKey, newValue;\n    getline(cin, newKey);\n    getline(cin, newValue);\n    \n    student[newKey] = newValue;\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "student = {\"name\": \"Ravi\"}\n\nnew_key = input()\nnew_value = input()\n\nstudent[new_key] = new_value\nprint(student)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        Map<String, String> student = new LinkedHashMap<>();\n        student.put(\"name\", \"Ravi\");\n        \n        String newKey = scanner.nextLine();\n        String newValue = scanner.nextLine();\n        \n        student.put(newKey, newValue);\n        \n        System.out.println(student);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n    if (lines.length === 2) {\n        const student = {name: \"Ravi\"};\n        const newKey = lines[0];\n        const newValue = lines[1];\n        \n        student[newKey] = newValue;\n        \n        console.log(JSON.stringify(student).replace(/\"/g, \"'\"));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> student;\n    student[\"name\"] = \"Ravi\";\n    \n    string newKey, newValue;\n    getline(cin, newKey);\n    getline(cin, newValue);\n    \n    student[newKey] = newValue;\n    \n    cout << \"{\";\n    bool first = true;\n    for (const auto& pair : student) {\n        if (!first) cout << \", \";\n        cout << \"'\" << pair.first << \"': '\" << pair.second << \"'\";\n        first = false;\n    }\n    cout << \"}\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

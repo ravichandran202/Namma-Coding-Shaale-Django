@@ -50,6 +50,14 @@ Output: radar</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (s) => {\n    if (s.length < 3) {\n        console.log(s);\n    } else {\n        const middle = s.substring(1, s.length - 1).split('').reverse().join('');\n        console.log(s[0] + middle + s[s.length - 1]);\n    }\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    if (s.length() < 3) {\n        cout << s << endl;\n    } else {\n        string middle = s.substr(1, s.length() - 2);\n        reverse(middle.begin(), middle.end());\n        cout << s.front() << middle << s.back() << endl;\n    }\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "s = input()\nif len(s) < 3:\n    print(s)\nelse:\n    # first + reversed(middle) + last\n    print(s[0] + s[1:-1][::-1] + s[-1])",
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        if (s.length() < 3) {\n            System.out.println(s);\n        } else {\n            String middle = new StringBuilder(s.substring(1, s.length() - 1)).reverse().toString();\n            System.out.println(s.charAt(0) + middle + s.charAt(s.length() - 1));\n        }\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (s) => {\n    if (s.length < 3) {\n        console.log(s);\n    } else {\n        const middle = s.substring(1, s.length - 1).split('').reverse().join('');\n        console.log(s[0] + middle + s[s.length - 1]);\n    }\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    if (s.length() < 3) {\n        cout << s << endl;\n    } else {\n        string middle = s.substr(1, s.length() - 2);\n        reverse(middle.begin(), middle.end());\n        cout << s.front() << middle << s.back() << endl;\n    }\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

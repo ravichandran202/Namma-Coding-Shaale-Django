@@ -62,6 +62,14 @@ Output:
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n});\n\nreadline.on('close', () => {\n    if (lines.length >= 2) {\n        let a = lines[0];\n        let b = lines[1];\n        \n        // Swapping using array destructuring\n        [a, b] = [b, a];\n        \n        console.log(a);\n        console.log(b);\n    }\n});`,
       "c++": `#include <iostream>\n#include <utility>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    \n    // Built-in swap function\n    std::swap(a, b);\n    \n    std::cout << a << std::endl;\n    std::cout << b << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `a = input()\nb = input()\n\n# Swap the values\na, b = b, a\n\nprint(a)\nprint(b)`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        \n        // Swapping using a temporary variable\n        int temp = a;\n        a = b;\n        b = temp;\n        \n        System.out.println(a);\n        System.out.println(b);\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet lines = [];\nreadline.on('line', (line) => {\n    lines.push(line);\n});\n\nreadline.on('close', () => {\n    if (lines.length >= 2) {\n        let a = lines[0];\n        let b = lines[1];\n        \n        // Swapping using array destructuring\n        [a, b] = [b, a];\n        \n        console.log(a);\n        console.log(b);\n    }\n});`,
+      "c++": `#include <iostream>\n#include <utility>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    \n    // Built-in swap function\n    std::swap(a, b);\n    \n    std::cout << a << std::endl;\n    std::cout << b << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

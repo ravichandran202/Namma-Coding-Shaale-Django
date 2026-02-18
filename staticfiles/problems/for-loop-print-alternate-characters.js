@@ -43,6 +43,14 @@ Output: Pto</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    for (int i = 0; i < s.length(); i += 2) {\n        cout << s[i];\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "s = input()\nfor i in range(0, len(s), 2):\n    print(s[i], end='')",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.next();\n        for (int i = 0; i < s.length(); i += 2) {\n            System.out.print(s.charAt(i));\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let result = '';\n    for (let i = 0; i < input.length; i += 2) {\n        result += input[i];\n    }\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    for (int i = 0; i < s.length(); i += 2) {\n        cout << s[i];\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

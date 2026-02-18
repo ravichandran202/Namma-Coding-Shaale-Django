@@ -45,6 +45,14 @@ Output: [15, 10, 5, 0]</pre>
     "c++": "#include <iostream>\n#include <algorithm>\n#include <functional>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    sort(nums, nums + n, greater<int>());\n    \n    cout << \"[\";\n    for (int i = 0; i < n; i++) {\n        cout << nums[i];\n        if (i < n - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nnums.sort(reverse=True)\nprint(nums)",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\nimport java.util.Collections;\nimport java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        ArrayList<Integer> nums = new ArrayList<>();\n        \n        for (int i = 0; i < n; i++) {\n            nums.add(scanner.nextInt());\n        }\n        \n        Collections.sort(nums, Collections.reverseOrder());\n        System.out.println(nums);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        nums.sort((a, b) => b - a);\n        console.log(JSON.stringify(nums));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <algorithm>\n#include <functional>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    sort(nums, nums + n, greater<int>());\n    \n    cout << \"[\";\n    for (int i = 0; i < n; i++) {\n        cout << nums[i];\n        if (i < n - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

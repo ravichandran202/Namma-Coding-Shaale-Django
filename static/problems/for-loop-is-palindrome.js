@@ -58,6 +58,14 @@ Output: True</pre>
     "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    string reversedWord = \"\";\n    for (int i = word.length() - 1; i >= 0; i--) {\n        reversedWord += tolower(word[i]);\n    }\n    string lowerWord = word;\n    transform(lowerWord.begin(), lowerWord.end(), lowerWord.begin(), ::tolower);\n    if (lowerWord == reversedWord) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "word = input().lower()\nreversed_word = \"\"\nfor i in range(len(word) - 1, -1, -1):\n    reversed_word += word[i]\nif word == reversed_word:\n    print(\"True\")\nelse:\n    print(\"False\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.next().toLowerCase();\n        String reversedWord = \"\";\n        for (int i = word.length() - 1; i >= 0; i--) {\n            reversedWord += word.charAt(i);\n        }\n        if (word.equals(reversedWord)) {\n            System.out.println(\"True\");\n        } else {\n            System.out.println(\"False\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const word = input.toLowerCase();\n    let reversedWord = \"\";\n    for (let i = word.length - 1; i >= 0; i--) {\n        reversedWord += word[i];\n    }\n    if (word === reversedWord) {\n        console.log(\"True\");\n    } else {\n        console.log(\"False\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    string reversedWord = \"\";\n    for (int i = word.length() - 1; i >= 0; i--) {\n        reversedWord += tolower(word[i]);\n    }\n    string lowerWord = word;\n    transform(lowerWord.begin(), lowerWord.end(), lowerWord.begin(), ::tolower);\n    if (lowerWord == reversedWord) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

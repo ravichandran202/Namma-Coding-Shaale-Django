@@ -57,6 +57,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, int> fruitPrices;\n    fruitPrices[\"apple\"] = 50;\n    fruitPrices[\"banana\"] = 20;\n    \n    string keyName;\n    getline(cin, keyName);\n    \n    cout << fruitPrices[keyName] << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "fruit_prices = {\"apple\": 50, \"banana\": 20}\n\nkey_name = input()\nprint(fruit_prices[key_name])",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        Map<String, Integer> fruitPrices = new HashMap<>();\n        fruitPrices.put(\"apple\", 50);\n        fruitPrices.put(\"banana\", 20);\n        \n        String keyName = scanner.nextLine();\n        System.out.println(fruitPrices.get(keyName));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (keyName) => {\n    const fruitPrices = {\"apple\": 50, \"banana\": 20};\n    \n    console.log(fruitPrices[keyName]);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, int> fruitPrices;\n    fruitPrices[\"apple\"] = 50;\n    fruitPrices[\"banana\"] = 20;\n    \n    string keyName;\n    getline(cin, keyName);\n    \n    cout << fruitPrices[keyName] << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

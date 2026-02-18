@@ -35,6 +35,14 @@ Output:
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> person;\n    person[\"name\"] = \"Ravi\";\n    person[\"age\"] = \"21\";\n    person[\"city\"] = \"Mysore\";\n    \n    cout << person.size() << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "person = {\"name\": \"Ravi\", \"age\": 21, \"city\": \"Mysore\"}\nprint(len(person))",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Object> person = new HashMap<>();\n        person.put(\"name\", \"Ravi\");\n        person.put(\"age\", 21);\n        person.put(\"city\", \"Mysore\");\n        \n        System.out.println(person.size());\n    }\n}",
+    "javascript": "const person = {\"name\": \"Ravi\", \"age\": 21, \"city\": \"Mysore\"};\nconsole.log(Object.keys(person).length);",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, string> person;\n    person[\"name\"] = \"Ravi\";\n    person[\"age\"] = \"21\";\n    person[\"city\"] = \"Mysore\";\n    \n    cout << person.size() << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

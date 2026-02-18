@@ -74,6 +74,14 @@ Output: false</pre>
     "c++": `bool isPalindrome(string s) {\n    // Write your solution here\n    return false;\n}`
   },
 
+
+  "solutions": {
+    python: `def is_palindrome(s):\n    # Write your solution here\n    pass`,
+    java: `public static boolean isPalindrome(String s) {\n    // Write your solution here\n    return false;\n}`,
+    javascript: `function isPalindrome(s) {\n    // Write your solution here\n    return false;\n}`,
+    "c++": `bool isPalindrome(string s) {\n    // Write your solution here\n    return false;\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.map(str => `"${str}"`).join(', ');
     switch(lang) {

@@ -42,6 +42,14 @@ Output: 12</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int i = 2;\n    int total = 0;\n    while (i <= N) {\n        total += i;\n        i += 2;\n    }\n    cout << total << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "i = 2\ntotal = 0\nN = int(input())\nwhile i <= N:\n    total += i\n    i += 2\nprint(total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int N = scanner.nextInt();\n        int i = 2;\n        int total = 0;\n        while (i <= N) {\n            total += i;\n            i += 2;\n        }\n        System.out.println(total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (N) => {\n    let i = 2;\n    let total = 0;\n    while (i <= parseInt(N)) {\n        total += i;\n        i += 2;\n    }\n    console.log(total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int i = 2;\n    int total = 0;\n    while (i <= N) {\n        total += i;\n        i += 2;\n    }\n    cout << total << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

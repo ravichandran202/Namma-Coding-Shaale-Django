@@ -37,6 +37,14 @@ Hello</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 0; i < 5; i++) {\n        cout << \"Hello\" << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "for _ in range(5):\n    print(\"Hello\")",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 0; i < 5; i++) {\n            System.out.println(\"Hello\");\n        }\n    }\n}",
+    "javascript": "for (let i = 0; i < 5; i++) {\n    console.log(\"Hello\");\n}",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 0; i < 5; i++) {\n        cout << \"Hello\" << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

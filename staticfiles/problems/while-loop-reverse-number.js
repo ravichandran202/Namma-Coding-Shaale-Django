@@ -52,6 +52,14 @@ Output: 56789</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int rev = 0;\n    \n    while (n > 0) {\n        int digit = n % 10;\n        rev = rev * 10 + digit;\n        n /= 10;\n    }\n    cout << rev << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nrev = 0\nwhile n > 0:\n    digit = n % 10\n    rev = rev * 10 + digit\n    n //= 10\nprint(rev)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int rev = 0;\n        \n        while (n > 0) {\n            int digit = n % 10;\n            rev = rev * 10 + digit;\n            n /= 10;\n        }\n        System.out.println(rev);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    let num = parseInt(n);\n    let rev = 0;\n    \n    while (num > 0) {\n        let digit = num % 10;\n        rev = rev * 10 + digit;\n        num = Math.floor(num / 10);\n    }\n    console.log(rev);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int rev = 0;\n    \n    while (n > 0) {\n        int digit = n % 10;\n        rev = rev * 10 + digit;\n        n /= 10;\n    }\n    cout << rev << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

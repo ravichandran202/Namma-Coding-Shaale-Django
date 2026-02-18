@@ -80,6 +80,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint multiply_three(int a, int b, int c) {\n    return a * b * c;\n}\n\nint main() {\n    int a, b, c;\n    cin >> a >> b >> c;\n    int result = multiply_three(a, b, c);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def multiply_three(a, b, c):\n    return a * b * c\n\n# Main code\na, b, c = map(int, input().split())\nresult = multiply_three(a, b, c)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int multiply_three(int a, int b, int c) {\n        return a * b * c;\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        int result = multiply_three(a, b, c);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function multiply_three(a, b, c) {\n    return a * b * c;\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const [a, b, c] = input.split(' ').map(Number);\n    const result = multiply_three(a, b, c);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint multiply_three(int a, int b, int c) {\n    return a * b * c;\n}\n\nint main() {\n    int a, b, c;\n    cin >> a >> b >> c;\n    int result = multiply_three(a, b, c);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

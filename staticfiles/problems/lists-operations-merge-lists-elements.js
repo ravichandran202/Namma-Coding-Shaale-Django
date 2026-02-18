@@ -53,6 +53,14 @@ Output: ['pens', 'pencils', 'notebook']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string line1, line2;\n    getline(cin, line1);\n    getline(cin, line2);\n    \n    vector<string> combined;\n    string item;\n    \n    stringstream ss1(line1);\n    while (ss1 >> item) {\n        combined.push_back(item);\n    }\n    \n    stringstream ss2(line2);\n    while (ss2 >> item) {\n        combined.push_back(item);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < combined.size(); i++) {\n        cout << \"'\" << combined[i] << \"'\";\n        if (i < combined.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "list1 = input().split()\nlist2 = input().split()\nprint(list1 + list2)",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] list1 = scanner.nextLine().split(\" \");\n        String[] list2 = scanner.nextLine().split(\" \");\n        \n        ArrayList<String> combined = new ArrayList<>();\n        combined.addAll(Arrays.asList(list1));\n        combined.addAll(Arrays.asList(list2));\n        \n        System.out.println(combined);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const list1 = inputLines[0].split(' ').filter(item => item !== '');\n        const list2 = inputLines[1].split(' ').filter(item => item !== '');\n        const combined = list1.concat(list2);\n        console.log(JSON.stringify(combined));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string line1, line2;\n    getline(cin, line1);\n    getline(cin, line2);\n    \n    vector<string> combined;\n    string item;\n    \n    stringstream ss1(line1);\n    while (ss1 >> item) {\n        combined.push_back(item);\n    }\n    \n    stringstream ss2(line2);\n    while (ss2 >> item) {\n        combined.push_back(item);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < combined.size(); i++) {\n        cout << \"'\" << combined[i] << \"'\";\n        if (i < combined.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

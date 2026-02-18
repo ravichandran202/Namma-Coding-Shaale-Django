@@ -50,6 +50,17 @@ Output: False</pre>
       
       "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    \n    string reversed_s = s;\n    reverse(reversed_s.begin(), reversed_s.end());\n    \n    if (s == reversed_s) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "s = input()\n# Check if string equals its reverse\nif s == s[::-1]:\n    print(\"True\")\nelse:\n    print(\"False\")",
+      
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        \n        // Create reversed version\n        String reversed = new StringBuilder(s).reverse().toString();\n        \n        if (s.equals(reversed)) {\n            System.out.println(\"True\");\n        } else {\n            System.out.println(\"False\");\n        }\n    }\n}",
+      
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    // Split, Reverse, Join to get reversed string\n    const reversed = line.split('').reverse().join('');\n    \n    if (line === reversed) {\n        console.log(\"True\");\n    } else {\n        console.log(\"False\");\n    }\n    readline.close();\n});",
+      
+      "c++": "#include <iostream>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    \n    string reversed_s = s;\n    reverse(reversed_s.begin(), reversed_s.end());\n    \n    if (s == reversed_s) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

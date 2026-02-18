@@ -52,6 +52,14 @@ Output: ['Hello']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> words;\n    string word;\n    \n    while (ss >> word) {\n        words.push_back(word);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < words.size(); i += 2) {\n        cout << \"'\" << words[i] << \"'\";\n        if (i + 2 < words.size()) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "words = input().split()\nprint(words[::2])",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] words = scanner.nextLine().split(\" \");\n        ArrayList<String> result = new ArrayList<>();\n        \n        for (int i = 0; i < words.length; i += 2) {\n            result.add(words[i]);\n        }\n        \n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const words = input.split(' ');\n    const result = words.filter((word, index) => index % 2 === 0);\n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    stringstream ss(input);\n    vector<string> words;\n    string word;\n    \n    while (ss >> word) {\n        words.push_back(word);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < words.size(); i += 2) {\n        cout << \"'\" << words[i] << \"'\";\n        if (i + 2 < words.size()) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

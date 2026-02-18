@@ -47,6 +47,14 @@ Output: Link</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    // Replace regex /<[^>]*>/g with empty string\n    console.log(line.replace(/<[^>]*>/g, ''));\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\n#include <regex>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    // Use regex_replace to remove tags\n    regex e(\"<[^>]*>\");\n    cout << regex_replace(s, e, \"\") << endl;\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "import re\ns = input()\n# Replace pattern <...> with empty string\nclean = re.sub('<[^>]*>', '', s)\nprint(clean)",
+      "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        // Regex <[^>]*> matches < followed by anything not > followed by >\n        System.out.println(s.replaceAll(\"<[^>]*>\", \"\"));\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    // Replace regex /<[^>]*>/g with empty string\n    console.log(line.replace(/<[^>]*>/g, ''));\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\n#include <regex>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    // Use regex_replace to remove tags\n    regex e(\"<[^>]*>\");\n    cout << regex_replace(s, e, \"\") << endl;\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

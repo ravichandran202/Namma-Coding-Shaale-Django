@@ -56,6 +56,14 @@ Output:
       "javascript": `// Note: JavaScript doesn't have built-in complex numbers\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    const converted = {real: number, imag: 0, toString: function() { return \"(\" + this.real + \"+0j)\"; }};\n    console.log(converted.toString());\n    console.log(typeof converted);\n    readline.close();\n});`,
       "c++": `// Note: C++ doesn't have built-in complex numbers in standard library\n#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    std::string converted = \"(\" + std::to_string(number) + \"+0j)\";\n    std::cout << converted << std::endl;\n    std::cout << typeid(converted).name() << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `number = int(input())\nconverted = complex(number)\nprint(converted)\nprint(type(converted))`,
+      "java": `// Note: Java doesn't have built-in complex numbers, using string representation\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        String converted = \"(\" + number + \"+0j)\";\n        System.out.println(converted);\n        System.out.println(\"class java.lang.String\");\n    }\n}`,
+      "javascript": `// Note: JavaScript doesn't have built-in complex numbers\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    const converted = {real: number, imag: 0, toString: function() { return \"(\" + this.real + \"+0j)\"; }};\n    console.log(converted.toString());\n    console.log(typeof converted);\n    readline.close();\n});`,
+      "c++": `// Note: C++ doesn't have built-in complex numbers in standard library\n#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    std::string converted = \"(\" + std::to_string(number) + \"+0j)\";\n    std::cout << converted << std::endl;\n    std::cout << typeid(converted).name() << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

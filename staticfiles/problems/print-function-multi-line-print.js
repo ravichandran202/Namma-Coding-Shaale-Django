@@ -49,6 +49,14 @@ Blue</pre>
       "javascript": `console.log("John");\nconsole.log("25");\nconsole.log("Blue");`,
       "c++": `#include <iostream>\n\nint main() {\n    std::cout << "John" << std::endl;\n    std::cout << "25" << std::endl;\n    std::cout << "Blue" << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `print("John")\nprint("25")\nprint("Blue")`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("John");\n        System.out.println("25");\n        System.out.println("Blue");\n    }\n}`,
+      "javascript": `console.log("John");\nconsole.log("25");\nconsole.log("Blue");`,
+      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "John" << std::endl;\n    std::cout << "25" << std::endl;\n    std::cout << "Blue" << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

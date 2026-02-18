@@ -59,6 +59,14 @@ Output: Stop</pre>
     "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string light;\n    std::getline(std::cin, light);\n    \n    if (light == \"Red\") {\n        std::cout << \"Stop\" << std::endl;\n    } else if (light == \"Yellow\") {\n        std::cout << \"Slow Down\" << std::endl;\n    } else if (light == \"Green\") {\n        std::cout << \"Go\" << std::endl;\n    } else {\n        std::cout << \"Invalid color\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "light = input()\n\nmatch light:\n    case \"Red\":\n        print(\"Stop\")\n    case \"Yellow\":\n        print(\"Slow Down\")\n    case \"Green\":\n        print(\"Go\")\n    case _:\n        print(\"Invalid color\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String light = scanner.nextLine();\n        \n        switch (light) {\n            case \"Red\":\n                System.out.println(\"Stop\");\n                break;\n            case \"Yellow\":\n                System.out.println(\"Slow Down\");\n                break;\n            case \"Green\":\n                System.out.println(\"Go\");\n                break;\n            default:\n                System.out.println(\"Invalid color\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (light) => {\n    switch (light) {\n        case \"Red\":\n            console.log(\"Stop\");\n            break;\n        case \"Yellow\":\n            console.log(\"Slow Down\");\n            break;\n        case \"Green\":\n            console.log(\"Go\");\n            break;\n        default:\n            console.log(\"Invalid color\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string light;\n    std::getline(std::cin, light);\n    \n    if (light == \"Red\") {\n        std::cout << \"Stop\" << std::endl;\n    } else if (light == \"Yellow\") {\n        std::cout << \"Slow Down\" << std::endl;\n    } else if (light == \"Green\") {\n        std::cout << \"Go\" << std::endl;\n    } else {\n        std::cout << \"Invalid color\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

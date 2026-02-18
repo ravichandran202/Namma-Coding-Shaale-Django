@@ -56,6 +56,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    \n    if (n == 0) {\n        count = 1;\n    } else {\n        n = abs(n);\n        while (n > 0) {\n            n /= 10;\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ncount = 0\nif n == 0:\n    count = 1\nelse:\n    n = abs(n)\n    while n > 0:\n        n //= 10\n        count += 1\nprint(count)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        \n        if (n == 0) {\n            count = 1;\n        } else {\n            n = Math.abs(n);\n            while (n > 0) {\n                n /= 10;\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    let num = parseInt(n);\n    let count = 0;\n    \n    if (num === 0) {\n        count = 1;\n    } else {\n        num = Math.abs(num);\n        while (num > 0) {\n            num = Math.floor(num / 10);\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    \n    if (n == 0) {\n        count = 1;\n    } else {\n        n = abs(n);\n        while (n > 0) {\n            n /= 10;\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

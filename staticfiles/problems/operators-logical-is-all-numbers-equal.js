@@ -63,6 +63,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double num1, num2, num3;\n    std::cin >> num1 >> num2 >> num3;\n    \n    std::cout << std::boolalpha << (num1 == num2 && num2 == num3 && num1 == num3) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `num1 = int(input())\nnum2 = int(input())\nnum3 = int(input())\n\nprint(num1 == num2 and num2 == num3 and num1 == num3)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double num1 = scanner.nextDouble();\n        double num2 = scanner.nextDouble();\n        double num3 = scanner.nextDouble();\n        \n        System.out.println(num1 == num2 && num2 == num3 && num1 == num3);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseFloat(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        readline.question('', (third) => {\n            inputs.push(parseFloat(third));\n            \n            console.log(inputs[0] === inputs[1] && inputs[1] === inputs[2] && inputs[0] === inputs[2]);\n            readline.close();\n        });\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double num1, num2, num3;\n    std::cin >> num1 >> num2 >> num3;\n    \n    std::cout << std::boolalpha << (num1 == num2 && num2 == num3 && num1 == num3) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

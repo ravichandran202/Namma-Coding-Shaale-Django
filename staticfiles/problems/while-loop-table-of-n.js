@@ -76,6 +76,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int i = 1;\n    while (i <= 10) {\n        cout << N << \" x \" << i << \" = \" << N * i << endl;\n        i++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "i = 1\nN = int(input())\nwhile i <= 10:\n    print(N, \"x\", i, \"=\", N * i)\n    i += 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int N = scanner.nextInt();\n        int i = 1;\n        while (i <= 10) {\n            System.out.println(N + \" x \" + i + \" = \" + (N * i));\n            i++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (N) => {\n    let i = 1;\n    while (i <= 10) {\n        console.log(`${N} x ${i} = ${N * i}`);\n        i++;\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int i = 1;\n    while (i <= 10) {\n        cout << N << \" x \" << i << \" = \" << N * i << endl;\n        i++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

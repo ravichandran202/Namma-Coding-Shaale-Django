@@ -39,6 +39,14 @@ module.exports = {
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 10; i >= 0; i -= 2) {\n        cout << i << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "for i in range(10, -1, -2):\n    print(i)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 10; i >= 0; i -= 2) {\n            System.out.println(i);\n        }\n    }\n}",
+    "javascript": "for (let i = 10; i >= 0; i -= 2) {\n    console.log(i);\n}",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    for (int i = 10; i >= 0; i -= 2) {\n        cout << i << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

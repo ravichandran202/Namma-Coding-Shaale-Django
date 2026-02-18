@@ -66,6 +66,14 @@ Output: [1, -1]</pre>
     "c++": `int* swapVars(int a, int b) {\n    static int result[2];\n    result[0] = b;\n    result[1] = a;\n    return result;\n}`
   },
 
+
+  "solutions": {
+    python: `def swap_vars(a, b):\n    # Swap the values here\n    return [b, a]`,
+    java: `public static int[] swapVars(int a, int b) {\n    // Return new array with swapped values\n    return new int[]{b, a};\n}`,
+    javascript: `function swapVars(a, b) {\n    // Return swapped array\n    return [b, a];\n}`,
+    "c++": `int* swapVars(int a, int b) {\n    static int result[2];\n    result[0] = b;\n    result[1] = a;\n    return result;\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.join(', ');
     switch(lang) {

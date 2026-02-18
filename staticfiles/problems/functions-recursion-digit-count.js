@@ -78,6 +78,14 @@ Output:
     "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint count_digits(int n) {\n    n = abs(n);\n    if (n == 0) {\n        return 1;  // Special case for 0\n    }\n    if (n < 10) {\n        return 1;\n    }\n    return 1 + count_digits(n / 10);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << count_digits(n) << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def count_digits(n):\n    n = abs(n)\n    if n == 0:\n        return 1  # Special case for 0\n    if n < 10:\n        return 1\n    return 1 + count_digits(n // 10)\n\n# main code\nn = int(input())\nprint(count_digits(n))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int count_digits(int n) {\n        n = Math.abs(n);\n        if (n == 0) {\n            return 1;  // Special case for 0\n        }\n        if (n < 10) {\n            return 1;\n        }\n        return 1 + count_digits(n / 10);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        System.out.println(count_digits(n));\n    }\n}",
+    "javascript": "function count_digits(n) {\n    n = Math.abs(n);\n    if (n === 0) {\n        return 1;  // Special case for 0\n    }\n    if (n < 10) {\n        return 1;\n    }\n    return 1 + count_digits(Math.floor(n / 10));\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    console.log(count_digits(n));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint count_digits(int n) {\n    n = abs(n);\n    if (n == 0) {\n        return 1;  // Special case for 0\n    }\n    if (n < 10) {\n        return 1;\n    }\n    return 1 + count_digits(n / 10);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << count_digits(n) << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

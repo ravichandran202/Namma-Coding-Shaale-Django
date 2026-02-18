@@ -58,6 +58,14 @@ Output: 0</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string num;\n    cin >> num;\n    char maxDigit = '0';\n    for (char ch : num) {\n        if (ch > maxDigit) {\n            maxDigit = ch;\n        }\n    }\n    cout << maxDigit << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = input()\nmax_digit = '0'\nfor ch in num:\n    if ch > max_digit:\n        max_digit = ch\nprint(max_digit)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String num = scanner.next();\n        char maxDigit = '0';\n        for (int i = 0; i < num.length(); i++) {\n            if (num.charAt(i) > maxDigit) {\n                maxDigit = num.charAt(i);\n            }\n        }\n        System.out.println(maxDigit);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let maxDigit = '0';\n    for (let i = 0; i < input.length; i++) {\n        if (input[i] > maxDigit) {\n            maxDigit = input[i];\n        }\n    }\n    console.log(maxDigit);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string num;\n    cin >> num;\n    char maxDigit = '0';\n    for (char ch : num) {\n        if (ch > maxDigit) {\n            maxDigit = ch;\n        }\n    }\n    cout << maxDigit << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

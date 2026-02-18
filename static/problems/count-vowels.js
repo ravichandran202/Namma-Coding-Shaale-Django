@@ -72,6 +72,14 @@ module.exports = {
       javascript: `function countVowels(s) {\n    // Write your solution here\n    return 0;\n}`,
       "c++": `int countVowels(string s) {\n    // Write your solution here\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      python: `def count_vowels(s):\n    # Write your solution here\n    pass`,
+      java: `public static int countVowels(String s) {\n    // Write your solution here\n    return 0;\n}`,
+      javascript: `function countVowels(s) {\n    // Write your solution here\n    return 0;\n}`,
+      "c++": `int countVowels(string s) {\n    // Write your solution here\n    return 0;\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.map(str => `"${str}"`).join(', ');

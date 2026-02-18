@@ -175,6 +175,105 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": 
+`def get_element(arr, idx):
+    try:
+        return arr[idx]
+    except IndexError:
+        return "Index Error"
+
+# main code
+n = int(input())
+arr = list(map(int, input().split()))
+idx = int(input())
+print(get_element(arr, idx))`,
+
+    "java": 
+`import java.util.*;
+
+public class Main {
+    public static String get_element(int[] arr, int idx) {
+        try {
+            return String.valueOf(arr[idx]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "Index Error";
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        int idx = sc.nextInt();
+        System.out.println(get_element(arr, idx));
+    }
+}`,
+
+    "javascript": 
+`function get_element(arr, idx) {
+    try {
+        if (idx < 0 || idx >= arr.length) {
+            throw new Error("Index out of bounds");
+        }
+        return arr[idx].toString();
+    } catch (error) {
+        return "Index Error";
+    }
+}
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const input = [];
+readline.on('line', (line) => {
+    input.push(line);
+});
+
+readline.on('close', () => {
+    const n = parseInt(input[0]);
+    const arr = input[1].split(' ').map(Number);
+    const idx = parseInt(input[2]);
+    console.log(get_element(arr, idx));
+});`,
+
+    "c++": 
+`#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+string get_element(vector<int> arr, int idx) {
+    try {
+        if (idx < 0 || idx >= arr.size()) {
+            throw out_of_range("Index out of bounds");
+        }
+        return to_string(arr[idx]);
+    } catch (out_of_range& e) {
+        return "Index Error";
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    int idx;
+    cin >> idx;
+    cout << get_element(arr, idx);
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode) {
     return userCode;
   }

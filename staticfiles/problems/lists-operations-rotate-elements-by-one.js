@@ -48,6 +48,14 @@ Output: ['C', 'A', 'B']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> nums;\n    string num;\n    \n    stringstream ss(input);\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    \n    if (!nums.empty()) {\n        string last = nums.back();\n        nums.pop_back();\n        nums.insert(nums.begin(), last);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < nums.size(); i++) {\n        cout << \"'\" << nums[i] << \"'\";\n        if (i < nums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "nums = input().split()\nif nums:\n    nums = nums[-1:] + nums[:-1]\nprint(nums)",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] nums = scanner.nextLine().split(\" \");\n        \n        if (nums.length > 0 && !nums[0].isEmpty()) {\n            String last = nums[nums.length - 1];\n            for (int i = nums.length - 1; i > 0; i--) {\n                nums[i] = nums[i - 1];\n            }\n            nums[0] = last;\n        }\n        \n        System.out.println(Arrays.toString(nums));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const nums = input.split(' ').filter(item => item !== '');\n    if (nums.length > 0) {\n        const last = nums.pop();\n        nums.unshift(last);\n    }\n    console.log(JSON.stringify(nums));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> nums;\n    string num;\n    \n    stringstream ss(input);\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    \n    if (!nums.empty()) {\n        string last = nums.back();\n        nums.pop_back();\n        nums.insert(nums.begin(), last);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < nums.size(); i++) {\n        cout << \"'\" << nums[i] << \"'\";\n        if (i < nums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

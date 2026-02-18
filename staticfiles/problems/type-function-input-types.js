@@ -50,6 +50,14 @@ Output: &lt;class 'str'&gt;</pre>
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    console.log(typeof text);\n    readline.close();\n});`,
       "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    std::string text;\n    std::getline(std::cin, text);\n    std::cout << typeid(text).name() << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `text = input()\nprint(type(text))`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        System.out.println(text.getClass().getName());\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    console.log(typeof text);\n    readline.close();\n});`,
+      "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    std::string text;\n    std::getline(std::cin, text);\n    std::cout << typeid(text).name() << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

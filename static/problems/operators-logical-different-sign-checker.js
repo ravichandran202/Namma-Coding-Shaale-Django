@@ -61,6 +61,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double a, b;\n    std::cin >> a >> b;\n    std::cout << std::boolalpha << ((a > 0 && b < 0) || (a < 0 && b > 0)) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = float(input())\nb = float(input())\nprint((a > 0 and b < 0) or (a < 0 and b > 0))`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double a = scanner.nextDouble();\n        double b = scanner.nextDouble();\n        System.out.println((a > 0 && b < 0) || (a < 0 && b > 0));\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseFloat(first));\n    readline.question('', (second) => {\n        inputs.push(parseFloat(second));\n        console.log((inputs[0] > 0 && inputs[1] < 0) || (inputs[0] < 0 && inputs[1] > 0));\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double a, b;\n    std::cin >> a >> b;\n    std::cout << std::boolalpha << ((a > 0 && b < 0) || (a < 0 && b > 0)) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -56,6 +56,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string day;\n    std::getline(std::cin, day);\n    bool is_weekend = (day == \"Saturday\" || day == \"Sunday\");\n    std::cout << std::boolalpha << is_weekend << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `day = input()\nis_weekend = day == "Saturday" or day == "Sunday"\nprint(is_weekend)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String day = scanner.nextLine();\n        boolean is_weekend = day.equals(\"Saturday\") || day.equals(\"Sunday\");\n        System.out.println(is_weekend);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (day) => {\n    const is_weekend = day === \"Saturday\" || day === \"Sunday\";\n    console.log(is_weekend);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string day;\n    std::getline(std::cin, day);\n    bool is_weekend = (day == \"Saturday\" || day == \"Sunday\");\n    std::cout << std::boolalpha << is_weekend << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

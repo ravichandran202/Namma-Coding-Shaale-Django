@@ -93,6 +93,14 @@ A</pre>
     "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nvoid first_capital(string text) {\n    for (int i = 0; i < text.length(); i++) {\n        char ch = text[i];\n        if (isupper(ch)) {\n            cout << ch << endl;\n            break;\n        }\n    }\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    first_capital(text);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def first_capital(text):\n    for char in text:\n        if char.isupper():\n            print(char)\n            break\n\n# main code\ntext = input()\nfirst_capital(text)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void first_capital(String text) {\n        for (int i = 0; i < text.length(); i++) {\n            char ch = text.charAt(i);\n            if (Character.isUpperCase(ch)) {\n                System.out.println(ch);\n                break;\n            }\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        first_capital(text);\n    }\n}",
+    "javascript": "function first_capital(text) {\n    for (let i = 0; i < text.length; i++) {\n        const char = text[i];\n        if (char >= 'A' && char <= 'Z') {\n            console.log(char);\n            break;\n        }\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    first_capital(text);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nvoid first_capital(string text) {\n    for (int i = 0; i < text.length(); i++) {\n        char ch = text[i];\n        if (isupper(ch)) {\n            cout << ch << endl;\n            break;\n        }\n    }\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    first_capital(text);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

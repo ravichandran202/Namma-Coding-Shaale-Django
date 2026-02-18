@@ -59,6 +59,14 @@ E F G H I </pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int letter = 65;\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n - i; j++) {\n            cout << \"  \";\n        }\n        for (int k = 1; k <= 2 * i - 1; k++) {\n            cout << (char)letter << \" \";\n            letter++;\n        }\n        cout << endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nletter = 65\nfor i in range(1, n + 1):\n    for j in range(n - i):\n        print(' ', end=' ')\n    for k in range(2 * i - 1):\n        print(chr(letter), end=' ')\n        letter += 1\n    print()",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int letter = 65;\n        for (int i = 1; i <= n; i++) {\n            for (int j = 1; j <= n - i; j++) {\n                System.out.print(\"  \");\n            }\n            for (int k = 1; k <= 2 * i - 1; k++) {\n                System.out.print((char)letter + \" \");\n                letter++;\n            }\n            System.out.println();\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let letter = 65;\n    let output = '';\n    for (let i = 1; i <= n; i++) {\n        let row = '';\n        for (let j = 1; j <= n - i; j++) {\n            row += '  ';\n        }\n        for (let k = 1; k <= 2 * i - 1; k++) {\n            row += String.fromCharCode(letter) + ' ';\n            letter++;\n        }\n        output += row + '\\n';\n    }\n    console.log(output);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int letter = 65;\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= n - i; j++) {\n            cout << \"  \";\n        }\n        for (int k = 1; k <= 2 * i - 1; k++) {\n            cout << (char)letter << \" \";\n            letter++;\n        }\n        cout << endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

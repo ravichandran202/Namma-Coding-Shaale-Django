@@ -50,6 +50,14 @@ Output:
       "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    console.log(number);\n    console.log(typeof number);\n    readline.close();\n});`,
       "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    std::cout << number << std::endl;\n    std::cout << typeid(number).name() << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `number = int(input())\nprint(number)\nprint(type(number))`,
+      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        System.out.println(number);\n        System.out.println(number.getClass().getName());\n    }\n}`,
+      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const number = parseInt(input);\n    console.log(number);\n    console.log(typeof number);\n    readline.close();\n});`,
+      "c++": `#include <iostream>\n#include <string>\n#include <typeinfo>\n\nint main() {\n    int number;\n    std::cin >> number;\n    std::cout << number << std::endl;\n    std::cout << typeid(number).name() << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

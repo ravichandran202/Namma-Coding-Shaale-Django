@@ -61,6 +61,14 @@ Output: Need more experience</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int age, experience;\n    std::cin >> age >> experience;\n    \n    if (age >= 18) {\n        if (experience >= 2) {\n            std::cout << \"Eligible\" << std::endl;\n        } else {\n            std::cout << \"Need more experience\" << std::endl;\n        }\n    } else {\n        std::cout << \"Not eligible due to age\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "age = int(input())\nexperience = int(input())\n\nif age >= 18:\n    if experience >= 2:\n        print(\"Eligible\")\n    else:\n        print(\"Need more experience\")\nelse:\n    print(\"Not eligible due to age\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        int experience = scanner.nextInt();\n        \n        if (age >= 18) {\n            if (experience >= 2) {\n                System.out.println(\"Eligible\");\n            } else {\n                System.out.println(\"Need more experience\");\n            }\n        } else {\n            System.out.println(\"Not eligible due to age\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 2) {\n        const [age, experience] = input;\n        \n        if (age >= 18) {\n            if (experience >= 2) {\n                console.log(\"Eligible\");\n            } else {\n                console.log(\"Need more experience\");\n            }\n        } else {\n            console.log(\"Not eligible due to age\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int age, experience;\n    std::cin >> age >> experience;\n    \n    if (age >= 18) {\n        if (experience >= 2) {\n            std::cout << \"Eligible\" << std::endl;\n        } else {\n            std::cout << \"Need more experience\" << std::endl;\n        }\n    } else {\n        std::cout << \"Not eligible due to age\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

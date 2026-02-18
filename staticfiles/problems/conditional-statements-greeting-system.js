@@ -60,6 +60,14 @@ Output: Good Morning</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int time;\n    std::cin >> time;\n    \n    if (time >= 5 && time <= 11) {\n        std::cout << \"Good Morning\" << std::endl;\n    } else if (time >= 12 && time <= 16) {\n        std::cout << \"Good Afternoon\" << std::endl;\n    } else if (time >= 17 && time <= 20) {\n        std::cout << \"Good Evening\" << std::endl;\n    } else {\n        std::cout << \"Good Night\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "time = int(input())\n\nif time >= 5 and time <= 11:\n    print(\"Good Morning\")\nelif time >= 12 and time <= 16:\n    print(\"Good Afternoon\")\nelif time >= 17 and time <= 20:\n    print(\"Good Evening\")\nelse:\n    print(\"Good Night\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int time = scanner.nextInt();\n        \n        if (time >= 5 && time <= 11) {\n            System.out.println(\"Good Morning\");\n        } else if (time >= 12 && time <= 16) {\n            System.out.println(\"Good Afternoon\");\n        } else if (time >= 17 && time <= 20) {\n            System.out.println(\"Good Evening\");\n        } else {\n            System.out.println(\"Good Night\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (time) => {\n    const hour = parseInt(time);\n    if (hour >= 5 && hour <= 11) {\n        console.log(\"Good Morning\");\n    } else if (hour >= 12 && hour <= 16) {\n        console.log(\"Good Afternoon\");\n    } else if (hour >= 17 && hour <= 20) {\n        console.log(\"Good Evening\");\n    } else {\n        console.log(\"Good Night\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int time;\n    std::cin >> time;\n    \n    if (time >= 5 && time <= 11) {\n        std::cout << \"Good Morning\" << std::endl;\n    } else if (time >= 12 && time <= 16) {\n        std::cout << \"Good Afternoon\" << std::endl;\n    } else if (time >= 17 && time <= 20) {\n        std::cout << \"Good Evening\" << std::endl;\n    } else {\n        std::cout << \"Good Night\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

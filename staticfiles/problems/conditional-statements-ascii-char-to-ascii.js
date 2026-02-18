@@ -58,6 +58,14 @@ Output: 97</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    std::cout << (int)ch << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nprint(ord(char))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        System.out.println((int) character);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (char) => {\n    console.log(char.charCodeAt(0));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    std::cout << (int)ch << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

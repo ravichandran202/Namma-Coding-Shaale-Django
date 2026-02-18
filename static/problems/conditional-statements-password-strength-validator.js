@@ -57,6 +57,14 @@ Output: Weak</pre>
     "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string password;\n    std::getline(std::cin, password);\n    if (password.length() >= 8) {\n        std::cout << \"Strong\" << std::endl;\n    } else {\n        std::cout << \"Weak\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "password = input()\nif len(password) >= 8:\n    print(\"Strong\")\nelse:\n    print(\"Weak\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String password = scanner.nextLine();\n        if (password.length() >= 8) {\n            System.out.println(\"Strong\");\n        } else {\n            System.out.println(\"Weak\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (password) => {\n    if (password.length >= 8) {\n        console.log(\"Strong\");\n    } else {\n        console.log(\"Weak\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string password;\n    std::getline(std::cin, password);\n    if (password.length() >= 8) {\n        std::cout << \"Strong\" << std::endl;\n    } else {\n        std::cout << \"Weak\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

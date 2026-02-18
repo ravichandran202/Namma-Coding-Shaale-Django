@@ -90,6 +90,14 @@ Output:
     "c++": "#include <iostream>\n#include <algorithm>\nusing namespace std;\n\nint find_min(int arr[], int n) {\n    if (n == 1) {\n        return arr[0];\n    }\n    return min(arr[n-1], find_min(arr, n-1));\n}\n\nint main() {\n    int n;\n    cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) {\n        cin >> arr[i];\n    }\n    cout << find_min(arr, n) << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def find_min(arr, n):\n    if n == 1:\n        return arr[0]\n    return min(arr[n-1], find_min(arr, n-1))\n\n# main code\nn = int(input())\narr = list(map(int, input().split()))\nprint(find_min(arr, n))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int find_min(int[] arr, int n) {\n        if (n == 1) {\n            return arr[0];\n        }\n        return Math.min(arr[n-1], find_min(arr, n-1));\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) {\n            arr[i] = scanner.nextInt();\n        }\n        System.out.println(find_min(arr, n));\n    }\n}",
+    "javascript": "function find_min(arr, n) {\n    if (n === 1) {\n        return arr[0];\n    }\n    return Math.min(arr[n-1], find_min(arr, n-1));\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nlet lineCount = 0;\n\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    lineCount++;\n    if (lineCount === 2) {\n        const n = parseInt(inputLines[0]);\n        const arr = inputLines[1].split(' ').map(Number);\n        console.log(find_min(arr, n));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <algorithm>\nusing namespace std;\n\nint find_min(int arr[], int n) {\n    if (n == 1) {\n        return arr[0];\n    }\n    return min(arr[n-1], find_min(arr, n-1));\n}\n\nint main() {\n    int n;\n    cin >> n;\n    int arr[n];\n    for (int i = 0; i < n; i++) {\n        cin >> arr[i];\n    }\n    cout << find_min(arr, n) << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

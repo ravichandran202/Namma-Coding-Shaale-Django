@@ -45,6 +45,14 @@ Output: ['one']</pre>
       "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    const parts = line.split(',');\n    const formatted = parts.map(item => `'${item}'`);\n    console.log(`[${formatted.join(', ')}]`);\n    readline.close();\n});",
       "c++": "#include <iostream>\n#include <string>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    vector<string> parts;\n    stringstream ss(s);\n    string item;\n    \n    while (getline(ss, item, ',')) {\n        parts.push_back(item);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < parts.size(); i++) {\n        cout << \"'\" << parts[i] << \"'\";\n        if (i < parts.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
     },
+
+  
+    "solutions": {
+      "python": "s = input()\n# Split by comma\nprint(s.split(','))",
+      "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        String[] parts = s.split(\",\");\n        \n        // Manual output to match list format ['a', 'b']\n        System.out.print(\"[\");\n        for (int i = 0; i < parts.length; i++) {\n            System.out.print(\"'\" + parts[i] + \"'\");\n            if (i < parts.length - 1) System.out.print(\", \");\n        }\n        System.out.println(\"]\");\n    }\n}",
+      "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.on('line', (line) => {\n    const parts = line.split(',');\n    const formatted = parts.map(item => `'${item}'`);\n    console.log(`[${formatted.join(', ')}]`);\n    readline.close();\n});",
+      "c++": "#include <iostream>\n#include <string>\n#include <vector>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    vector<string> parts;\n    stringstream ss(s);\n    string item;\n    \n    while (getline(ss, item, ',')) {\n        parts.push_back(item);\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < parts.size(); i++) {\n        cout << \"'\" << parts[i] << \"'\";\n        if (i < parts.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

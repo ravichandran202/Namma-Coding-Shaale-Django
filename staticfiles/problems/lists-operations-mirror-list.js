@@ -51,6 +51,14 @@ Output: ['X', 'X']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> items;\n    string item;\n    \n    stringstream ss(input);\n    while (ss >> item) {\n        items.push_back(item);\n    }\n    \n    vector<string> reversed = items;\n    reverse(reversed.begin(), reversed.end());\n    \n    vector<string> result = items;\n    result.insert(result.end(), reversed.begin(), reversed.end());\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "items = input().split()\nprint(items + items[::-1])",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Collections;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] items = scanner.nextLine().split(\" \");\n        \n        ArrayList<String> result = new ArrayList<>(Arrays.asList(items));\n        ArrayList<String> reversed = new ArrayList<>(Arrays.asList(items));\n        Collections.reverse(reversed);\n        result.addAll(reversed);\n        \n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const items = input.split(' ').filter(item => item !== '');\n    const reversed = items.slice().reverse();\n    const result = items.concat(reversed);\n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> items;\n    string item;\n    \n    stringstream ss(input);\n    while (ss >> item) {\n        items.push_back(item);\n    }\n    \n    vector<string> reversed = items;\n    reverse(reversed.begin(), reversed.end());\n    \n    vector<string> result = items;\n    result.insert(result.end(), reversed.begin(), reversed.end());\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -55,6 +55,14 @@ Output: True</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    bool is_teenager = (age >= 13 && age <= 19);\n    std::cout << std::boolalpha << is_teenager << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `age = int(input())\nis_teenager = age >= 13 and age <= 19\nprint(is_teenager)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        boolean is_teenager = age >= 13 && age <= 19;\n        System.out.println(is_teenager);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (age) => {\n    const ageNum = parseInt(age);\n    const is_teenager = ageNum >= 13 && ageNum <= 19;\n    console.log(is_teenager);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    bool is_teenager = (age >= 13 && age <= 19);\n    std::cout << std::boolalpha << is_teenager << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

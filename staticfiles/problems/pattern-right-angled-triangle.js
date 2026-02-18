@@ -62,6 +62,14 @@ module.exports = {
     "c++": `#include <iostream>\nusing namespace std;\nvoid printTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= i; j++) {\n            cout << "* ";\n        }\n        cout << endl;\n    }\n}`
   },
 
+
+  "solutions": {
+    python: `def print_triangle(n):\n    for i in range(1, n+1):\n        print("* " * i)`,
+    java: `public static void printTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= i; j++) {\n            System.out.print("* ");\n        }\n        System.out.println();\n    }\n}`,
+    javascript: `function printTriangle(n) {\n    for (let i = 1; i <= n; i++) {\n        let row = "";\n        for (let j = 1; j <= i; j++) {\n            row += "* ";\n        }\n        console.log(row);\n    }\n}`,
+    "c++": `#include <iostream>\nusing namespace std;\nvoid printTriangle(int n) {\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= i; j++) {\n            cout << "* ";\n        }\n        cout << endl;\n    }\n}`
+  },
+
   wrapCode(lang, code, input) {
     const i = input.join(', ');
     switch(lang) {

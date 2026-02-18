@@ -52,6 +52,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << std::boolalpha << (a % 2 == 0 && b % 2 == 0) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `a = int(input())\nb = int(input())\nprint(a % 2 == 0 and b % 2 == 0)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        System.out.println(a % 2 == 0 && b % 2 == 0);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        console.log(inputs[0] % 2 === 0 && inputs[1] % 2 === 0);\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << std::boolalpha << (a % 2 == 0 && b % 2 == 0) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

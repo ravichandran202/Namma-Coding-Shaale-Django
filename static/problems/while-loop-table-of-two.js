@@ -53,6 +53,14 @@ module.exports = {
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num = 1;\n    while (num <= 10) {\n        int result = 2 * num;\n        cout << \"2 × \" << num << \" = \" << result << endl;\n        num++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = 1\nwhile num <= 10:\n    result = 2 * num\n    print(f\"2 × {num} = {result}\")\n    num += 1",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int num = 1;\n        while (num <= 10) {\n            int result = 2 * num;\n            System.out.println(\"2 × \" + num + \" = \" + result);\n            num++;\n        }\n    }\n}",
+    "javascript": "let num = 1;\nwhile (num <= 10) {\n    let result = 2 * num;\n    console.log(`2 × ${num} = ${result}`);\n    num++;\n}",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int num = 1;\n    while (num <= 10) {\n        int result = 2 * num;\n        cout << \"2 × \" << num << \" = \" << result << endl;\n        num++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

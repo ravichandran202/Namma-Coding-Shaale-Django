@@ -56,6 +56,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    int position = (int)ch - 64;\n    std::cout << position << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "char = input()\nposition = ord(char) - 64\nprint(position)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char character = scanner.next().charAt(0);\n        int position = (int)character - 64;\n        System.out.println(position);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (char) => {\n    const position = char.charCodeAt(0) - 64;\n    console.log(position);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    char ch;\n    std::cin >> ch;\n    int position = (int)ch - 64;\n    std::cout << position << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

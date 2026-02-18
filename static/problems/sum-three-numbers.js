@@ -59,6 +59,14 @@ module.exports = {
       javascript: `function sumThreeNumbers(a, b, c) {\n  return a + b + c;\n}`,
       "c++": `#include <iostream>\n\nint sumThreeNumbers(int a, int b, int c) {\n  return a + b + c;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
     },
+
+    
+    "solutions": {
+      python: `def sum_three_numbers(a, b, c):\n   # write your code here\n   pass`,
+      java: `public class Main {\n  public static int sumThreeNumbers(int a, int b, int c) {\n    return a + b + c;\n  }\n  \n  public static void main(String[] args) {\n    // Test cases will be added here\n  }\n}`,
+      javascript: `function sumThreeNumbers(a, b, c) {\n  return a + b + c;\n}`,
+      "c++": `#include <iostream>\n\nint sumThreeNumbers(int a, int b, int c) {\n  return a + b + c;\n}\n\nint main() {\n  // Test cases will be added here\n  return 0;\n}`
+    },
     
     wrapCode: function(lang, userCode, input) {
       switch(lang) {

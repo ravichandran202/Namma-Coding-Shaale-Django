@@ -67,6 +67,14 @@ Output: Invalid day</pre>
     "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string day;\n    std::getline(std::cin, day);\n    \n    if (day == \"Monday\" || day == \"Tuesday\" || day == \"Wednesday\" || \n        day == \"Thursday\" || day == \"Friday\") {\n        std::cout << \"Weekday\" << std::endl;\n    } else if (day == \"Saturday\" || day == \"Sunday\") {\n        std::cout << \"Weekend\" << std::endl;\n    } else {\n        std::cout << \"Invalid day\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "day = input()\n\nmatch day:\n    case \"Monday\" | \"Tuesday\" | \"Wednesday\" | \"Thursday\" | \"Friday\":\n        print(\"Weekday\")\n    case \"Saturday\" | \"Sunday\":\n        print(\"Weekend\")\n    case _:\n        print(\"Invalid day\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String day = scanner.nextLine();\n        \n        switch (day) {\n            case \"Monday\":\n            case \"Tuesday\":\n            case \"Wednesday\":\n            case \"Thursday\":\n            case \"Friday\":\n                System.out.println(\"Weekday\");\n                break;\n            case \"Saturday\":\n            case \"Sunday\":\n                System.out.println(\"Weekend\");\n                break;\n            default:\n                System.out.println(\"Invalid day\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (day) => {\n    switch (day) {\n        case \"Monday\":\n        case \"Tuesday\":\n        case \"Wednesday\":\n        case \"Thursday\":\n        case \"Friday\":\n            console.log(\"Weekday\");\n            break;\n        case \"Saturday\":\n        case \"Sunday\":\n            console.log(\"Weekend\");\n            break;\n        default:\n            console.log(\"Invalid day\");\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string day;\n    std::getline(std::cin, day);\n    \n    if (day == \"Monday\" || day == \"Tuesday\" || day == \"Wednesday\" || \n        day == \"Thursday\" || day == \"Friday\") {\n        std::cout << \"Weekday\" << std::endl;\n    } else if (day == \"Saturday\" || day == \"Sunday\") {\n        std::cout << \"Weekend\" << std::endl;\n    } else {\n        std::cout << \"Invalid day\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

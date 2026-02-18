@@ -49,6 +49,14 @@ module.exports = {
       "javascript": `console.log("*********");\nconsole.log("* WELCOME *");\nconsole.log("*********");`,
       "c++": `#include <iostream>\n\nint main() {\n    std::cout << "*********" << std::endl;\n    std::cout << "* WELCOME *" << std::endl;\n    std::cout << "*********" << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `print("*********")\nprint("* WELCOME *")\nprint("*********")`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("*********");\n        System.out.println("* WELCOME *");\n        System.out.println("*********");\n    }\n}`,
+      "javascript": `console.log("*********");\nconsole.log("* WELCOME *");\nconsole.log("*********");`,
+      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "*********" << std::endl;\n    std::cout << "* WELCOME *" << std::endl;\n    std::cout << "*********" << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

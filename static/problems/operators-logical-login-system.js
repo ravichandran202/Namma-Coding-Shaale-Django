@@ -61,6 +61,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string username, password;\n    std::getline(std::cin, username);\n    std::getline(std::cin, password);\n    bool login_success = (username == "admin" && password == "1234");\n    std::cout << std::boolalpha << login_success << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `username = input()\npassword = input()\nlogin_success = username == "admin" and password == "1234"\nprint(login_success)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String username = scanner.nextLine();\n        String password = scanner.nextLine();\n        boolean login_success = username.equals("admin") && password.equals("1234");\n        System.out.println(login_success);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (username) => {\n    inputs.push(username);\n    readline.question('', (password) => {\n        inputs.push(password);\n        const login_success = inputs[0] === "admin" && inputs[1] === "1234";\n        console.log(login_success);\n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n#include <string>\n\nint main() {\n    std::string username, password;\n    std::getline(std::cin, username);\n    std::getline(std::cin, password);\n    bool login_success = (username == "admin" && password == "1234");\n    std::cout << std::boolalpha << login_success << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -47,6 +47,14 @@ False</pre>
     "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, int> student;\n    student[\"name\"] = 21;\n    student[\"age\"] = 21;\n    \n    string searchKey;\n    getline(cin, searchKey);\n    \n    if (student.find(searchKey) != student.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "student = {\"name\": \"Ravi\", \"age\": 21}\n\nsearch_key = input()\nprint(search_key in student)",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n        Map<String, Integer> student = new HashMap<>();\n        student.put(\"name\", 21);  // Note: In Java, we need to store values\n        student.put(\"age\", 21);\n        \n        String searchKey = scanner.nextLine();\n        System.out.println(student.containsKey(searchKey));\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (searchKey) => {\n    const student = {\"name\": \"Ravi\", \"age\": 21};\n    \n    console.log(searchKey in student);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <map>\n#include <string>\nusing namespace std;\n\nint main() {\n    map<string, int> student;\n    student[\"name\"] = 21;\n    student[\"age\"] = 21;\n    \n    string searchKey;\n    getline(cin, searchKey);\n    \n    if (student.find(searchKey) != student.end()) {\n        cout << \"True\" << endl;\n    } else {\n        cout << \"False\" << endl;\n    }\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

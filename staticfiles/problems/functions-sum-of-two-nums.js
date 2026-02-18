@@ -86,6 +86,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_sum(int a, int b) {\n    cout << a + b << endl;\n}\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    print_sum(a, b);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_sum(a, b):\n    print(a + b)\n\n# Main code\na, b = map(int, input().split())\nprint_sum(a, b)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_sum(int a, int b) {\n        System.out.println(a + b);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        print_sum(a, b);\n    }\n}",
+    "javascript": "function print_sum(a, b) {\n    console.log(a + b);\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const [a, b] = input.split(' ').map(Number);\n    print_sum(a, b);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_sum(int a, int b) {\n    cout << a + b << endl;\n}\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    print_sum(a, b);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

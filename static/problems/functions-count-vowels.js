@@ -90,6 +90,14 @@ Output:
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint count_vowels(string s) {\n    int count = 0;\n    string vowels = \"aeiouAEIOU\";\n    for (char ch : s) {\n        if (vowels.find(ch) != string::npos) {\n            count++;\n        }\n    }\n    return count;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    int result = count_vowels(text);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def count_vowels(s):\n    count = 0\n    vowels = \"aeiouAEIOU\"\n    for char in s:\n        if char in vowels:\n            count += 1\n    return count\n\n# Main code\ntext = input()\nresult = count_vowels(text)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int count_vowels(String s) {\n        int count = 0;\n        String vowels = \"aeiouAEIOU\";\n        for (int i = 0; i < s.length(); i++) {\n            char ch = s.charAt(i);\n            if (vowels.indexOf(ch) != -1) {\n                count++;\n            }\n        }\n        return count;\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        int result = count_vowels(text);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function count_vowels(s) {\n    let count = 0;\n    const vowels = \"aeiouAEIOU\";\n    for (let i = 0; i < s.length; i++) {\n        if (vowels.includes(s[i])) {\n            count++;\n        }\n    }\n    return count;\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (text) => {\n    const result = count_vowels(text);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint count_vowels(string s) {\n    int count = 0;\n    string vowels = \"aeiouAEIOU\";\n    for (char ch : s) {\n        if (vowels.find(ch) != string::npos) {\n            count++;\n        }\n    }\n    return count;\n}\n\nint main() {\n    string text;\n    getline(cin, text);\n    int result = count_vowels(text);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

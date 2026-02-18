@@ -56,6 +56,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    int total = 0;\n    for (char ch : s) {\n        total += ch - '0';\n    }\n    cout << total << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "s = input()\ntotal = 0\nfor ch in s:\n    total += int(ch)\nprint(total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.next();\n        int total = 0;\n        for (int i = 0; i < s.length(); i++) {\n            total += Character.getNumericValue(s.charAt(i));\n        }\n        System.out.println(total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let total = 0;\n    for (let i = 0; i < input.length; i++) {\n        total += parseInt(input[i]);\n    }\n    console.log(total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    int total = 0;\n    for (char ch : s) {\n        total += ch - '0';\n    }\n    cout << total << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

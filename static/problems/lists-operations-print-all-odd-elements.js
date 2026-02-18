@@ -44,6 +44,14 @@ Output: []</pre>
     "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> oddNums;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num % 2 != 0) {\n            oddNums.push_back(num);\n        }\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < oddNums.size(); i++) {\n        cout << oddNums[i];\n        if (i < oddNums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nodd_nums = []\nfor num in nums:\n    if num % 2 != 0:\n        odd_nums.append(num)\nprint(odd_nums)",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        ArrayList<Integer> oddNums = new ArrayList<>();\n        \n        for (int i = 0; i < n; i++) {\n            int num = scanner.nextInt();\n            if (num % 2 != 0) {\n                oddNums.add(num);\n            }\n        }\n        \n        System.out.println(oddNums);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        const oddNums = nums.filter(num => num % 2 !== 0);\n        console.log(JSON.stringify(oddNums));\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> oddNums;\n    for (int i = 0; i < n; i++) {\n        int num;\n        cin >> num;\n        if (num % 2 != 0) {\n            oddNums.push_back(num);\n        }\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < oddNums.size(); i++) {\n        cout << oddNums[i];\n        if (i < oddNums.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -60,6 +60,14 @@ Output: Bill: ₹ 400</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int units;\n    std::cin >> units;\n    int bill;\n    \n    if (units <= 100) {\n        bill = units * 5;\n    } else if (units <= 200) {\n        bill = 100 * 5 + (units - 100) * 6;\n    } else {\n        bill = 100 * 5 + 100 * 6 + (units - 200) * 7;\n    }\n    \n    std::cout << \"Bill: ₹ \" << bill << std::endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "units = int(input())\n\nif units <= 100:\n    bill = units * 5\nelif units <= 200:\n    bill = 100 * 5 + (units - 100) * 6\nelse:\n    bill = 100 * 5 + 100 * 6 + (units - 200) * 7\n\nprint(\"Bill:\", bill)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int units = scanner.nextInt();\n        int bill;\n        \n        if (units <= 100) {\n            bill = units * 5;\n        } else if (units <= 200) {\n            bill = 100 * 5 + (units - 100) * 6;\n        } else {\n            bill = 100 * 5 + 100 * 6 + (units - 200) * 7;\n        }\n        \n        System.out.println(\"Bill: ₹ \" + bill);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (units) => {\n    const unitsNum = parseInt(units);\n    let bill;\n    \n    if (unitsNum <= 100) {\n        bill = unitsNum * 5;\n    } else if (unitsNum <= 200) {\n        bill = 100 * 5 + (unitsNum - 100) * 6;\n    } else {\n        bill = 100 * 5 + 100 * 6 + (unitsNum - 200) * 7;\n    }\n    \n    console.log(\"Bill: ₹ \" + bill);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int units;\n    std::cin >> units;\n    int bill;\n    \n    if (units <= 100) {\n        bill = units * 5;\n    } else if (units <= 200) {\n        bill = 100 * 5 + (units - 100) * 6;\n    } else {\n        bill = 100 * 5 + 100 * 6 + (units - 200) * 7;\n    }\n    \n    std::cout << \"Bill: ₹ \" << bill << std::endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

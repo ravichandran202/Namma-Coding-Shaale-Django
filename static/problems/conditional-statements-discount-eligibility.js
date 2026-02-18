@@ -61,6 +61,14 @@ Output: Not eligible for discount</pre>
     "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    int age;\n    std::string citizen;\n    \n    std::cin >> age;\n    std::cin >> citizen;\n    \n    if (age >= 60 && citizen == \"yes\") {\n        std::cout << \"Eligible for discount\" << std::endl;\n    } else {\n        std::cout << \"Not eligible for discount\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "age = int(input())\ncitizen = input()\n\nif age >= 60 and citizen == \"yes\":\n    print(\"Eligible for discount\")\nelse:\n    print(\"Not eligible for discount\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        scanner.nextLine(); // consume newline\n        String citizen = scanner.nextLine();\n        \n        if (age >= 60 && citizen.equals(\"yes\")) {\n            System.out.println(\"Eligible for discount\");\n        } else {\n            System.out.println(\"Not eligible for discount\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(line);\n    if (input.length === 2) {\n        const age = parseInt(input[0]);\n        const citizen = input[1];\n        \n        if (age >= 60 && citizen === \"yes\") {\n            console.log(\"Eligible for discount\");\n        } else {\n            console.log(\"Not eligible for discount\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <string>\n\nint main() {\n    int age;\n    std::string citizen;\n    \n    std::cin >> age;\n    std::cin >> citizen;\n    \n    if (age >= 60 && citizen == \"yes\") {\n        std::cout << \"Eligible for discount\" << std::endl;\n    } else {\n        std::cout << \"Not eligible for discount\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

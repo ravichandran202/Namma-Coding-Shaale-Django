@@ -35,6 +35,14 @@ Output:
     "c++": "#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    vector<string> keys;\n    keys.push_back(\"name\");\n    keys.push_back(\"age\");\n    \n    cout << \"[\";\n    for (size_t i = 0; i < keys.size(); i++) {\n        if (i > 0) cout << \", \";\n        cout << \"'\" << keys[i] << \"'\";\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "data = {\"name\": \"Ravi\", \"age\": 20}\nprint(list(data.keys()))",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> data = new LinkedHashMap<>();\n        data.put(\"name\", 20);\n        data.put(\"age\", 20);\n        \n        System.out.println(new ArrayList<>(data.keySet()));\n    }\n}",
+    "javascript": "const data = {\"name\": \"Ravi\", \"age\": 20};\nconsole.log(JSON.stringify(Object.keys(data)));",
+    "c++": "#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    vector<string> keys;\n    keys.push_back(\"name\");\n    keys.push_back(\"age\");\n    \n    cout << \"[\";\n    for (size_t i = 0; i < keys.size(); i++) {\n        if (i > 0) cout << \", \";\n        cout << \"'\" << keys[i] << \"'\";\n    }\n    cout << \"]\" << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -38,6 +38,14 @@ module.exports = {
       "javascript": `let x = 42;\nconsole.log(typeof x);`,
       "c++": `#include <iostream>\n#include <typeinfo>\n\nint main() {\n    int x = 42;\n    std::cout << typeid(x).name() << std::endl;\n    return 0;\n}`
     },
+
+  
+    "solutions": {
+      "python": `x = 42\nprint(type(x))`,
+      "java": `public class Main {\n    public static void main(String[] args) {\n        int x = 42;\n        System.out.println(x.getClass().getName());\n    }\n}`,
+      "javascript": `let x = 42;\nconsole.log(typeof x);`,
+      "c++": `#include <iostream>\n#include <typeinfo>\n\nint main() {\n    int x = 42;\n    std::cout << typeid(x).name() << std::endl;\n    return 0;\n}`
+    },
   
     "wrapCode": function(lang, userCode, input) {
       switch(lang) {

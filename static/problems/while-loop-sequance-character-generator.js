@@ -64,6 +64,14 @@ Output: 1 2 3 4 5</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char startChar, endChar;\n    cin >> startChar >> endChar;\n    \n    int start = (int) startChar;\n    int end = (int) endChar;\n    \n    int asciiVal = start;\n    while (asciiVal <= end) {\n        cout << (char) asciiVal << \" \";\n        asciiVal++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "start_char = input()\nend_char = input()\n\nstart = ord(start_char)\nend = ord(end_char)\n\nascii_val = start\nwhile ascii_val <= end:\n    print(chr(ascii_val), end=' ')\n    ascii_val += 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        char startChar = scanner.next().charAt(0);\n        char endChar = scanner.next().charAt(0);\n        \n        int start = (int) startChar;\n        int end = (int) endChar;\n        \n        int asciiVal = start;\n        while (asciiVal <= end) {\n            System.out.print((char) asciiVal + \" \");\n            asciiVal++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.question('', (first) => {\n    input.push(first);\n    readline.question('', (second) => {\n        input.push(second);\n        const startChar = input[0];\n        const endChar = input[1];\n        \n        const start = startChar.charCodeAt(0);\n        const end = endChar.charCodeAt(0);\n        \n        let asciiVal = start;\n        let output = '';\n        while (asciiVal <= end) {\n            output += String.fromCharCode(asciiVal) + ' ';\n            asciiVal++;\n        }\n        console.log(output.trim());\n        readline.close();\n    });\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char startChar, endChar;\n    cin >> startChar >> endChar;\n    \n    int start = (int) startChar;\n    int end = (int) endChar;\n    \n    int asciiVal = start;\n    while (asciiVal <= end) {\n        cout << (char) asciiVal << \" \";\n        asciiVal++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

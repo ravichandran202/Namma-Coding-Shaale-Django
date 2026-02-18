@@ -73,6 +73,14 @@ Output: Overweight</pre>
     "c++": "#include <iostream>\n\nint main() {\n    double weight, height;\n    std::cin >> weight >> height;\n    \n    double bmi = weight / (height * height);\n    \n    if (bmi < 18.5) {\n        std::cout << \"Underweight\" << std::endl;\n    } else if (bmi < 25) {\n        std::cout << \"Normal\" << std::endl;\n    } else if (bmi < 30) {\n        std::cout << \"Overweight\" << std::endl;\n    } else {\n        std::cout << \"Obese\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "weight = float(input())\nheight = float(input())\n\nbmi = weight / (height * height)\n\nif bmi < 18.5:\n    print(\"Underweight\")\nelif bmi < 25:\n    print(\"Normal\")\nelif bmi < 30:\n    print(\"Overweight\")\nelse:\n    print(\"Obese\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double weight = scanner.nextDouble();\n        double height = scanner.nextDouble();\n        \n        double bmi = weight / (height * height);\n        \n        if (bmi < 18.5) {\n            System.out.println(\"Underweight\");\n        } else if (bmi < 25) {\n            System.out.println(\"Normal\");\n        } else if (bmi < 30) {\n            System.out.println(\"Overweight\");\n        } else {\n            System.out.println(\"Obese\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseFloat(line));\n    if (input.length === 2) {\n        const [weight, height] = input;\n        const bmi = weight / (height * height);\n        \n        if (bmi < 18.5) {\n            console.log(\"Underweight\");\n        } else if (bmi < 25) {\n            console.log(\"Normal\");\n        } else if (bmi < 30) {\n            console.log(\"Overweight\");\n        } else {\n            console.log(\"Obese\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    double weight, height;\n    std::cin >> weight >> height;\n    \n    double bmi = weight / (height * height);\n    \n    if (bmi < 18.5) {\n        std::cout << \"Underweight\" << std::endl;\n    } else if (bmi < 25) {\n        std::cout << \"Normal\" << std::endl;\n    } else if (bmi < 30) {\n        std::cout << \"Overweight\" << std::endl;\n    } else {\n        std::cout << \"Obese\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

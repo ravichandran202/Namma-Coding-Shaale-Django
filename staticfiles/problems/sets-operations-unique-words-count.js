@@ -70,6 +70,14 @@ Output:
     "c++": "#include <iostream>\n#include <unordered_set>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string line;\n    getline(cin, line);\n    \n    if (line.empty()) {\n        cout << 0 << endl;\n        return 0;\n    }\n    \n    unordered_set<string> uniqueWords;\n    stringstream ss(line);\n    string word;\n    \n    while (ss >> word) {\n        uniqueWords.insert(word);\n    }\n    \n    cout << uniqueWords.size() << endl;\n    \n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "words = input().split()\nprint(len(set(words)))",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String line = scanner.nextLine();\n        \n        if (line.trim().isEmpty()) {\n            System.out.println(0);\n            return;\n        }\n        \n        String[] words = line.split(\" \");\n        Set<String> uniqueWords = new HashSet<>();\n        \n        for (String word : words) {\n            uniqueWords.add(word);\n        }\n        \n        System.out.println(uniqueWords.size());\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const words = input.split(' ').filter(word => word.length > 0);\n    const uniqueWords = new Set(words);\n    console.log(uniqueWords.size);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <unordered_set>\n#include <sstream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string line;\n    getline(cin, line);\n    \n    if (line.empty()) {\n        cout << 0 << endl;\n        return 0;\n    }\n    \n    unordered_set<string> uniqueWords;\n    stringstream ss(line);\n    string word;\n    \n    while (ss >> word) {\n        uniqueWords.insert(word);\n    }\n    \n    cout << uniqueWords.size() << endl;\n    \n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -48,6 +48,14 @@ Output: 1</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    long long prod = 1;\n    for (int i = 1; i <= n; i++) {\n        prod *= i;\n    }\n    cout << prod << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nprod = 1\nfor i in range(1, n + 1):\n    prod *= i\nprint(prod)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        long prod = 1;\n        for (int i = 1; i <= n; i++) {\n            prod *= i;\n        }\n        System.out.println(prod);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let prod = 1;\n    for (let i = 1; i <= n; i++) {\n        prod *= i;\n    }\n    console.log(prod);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    long long prod = 1;\n    for (int i = 1; i <= n; i++) {\n        prod *= i;\n    }\n    cout << prod << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

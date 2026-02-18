@@ -42,6 +42,14 @@ Output: 55</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int num = 1;\n    int total = 0;\n    while (num <= N) {\n        total += num;\n        num++;\n    }\n    cout << total << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "num = 1\ntotal = 0\nN = int(input())\nwhile num <= N:\n    total += num\n    num += 1\nprint(total)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int N = scanner.nextInt();\n        int num = 1;\n        int total = 0;\n        while (num <= N) {\n            total += num;\n            num++;\n        }\n        System.out.println(total);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (N) => {\n    let num = 1;\n    let total = 0;\n    while (num <= parseInt(N)) {\n        total += num;\n        num++;\n    }\n    console.log(total);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int num = 1;\n    int total = 0;\n    while (num <= N) {\n        total += num;\n        num++;\n    }\n    cout << total << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

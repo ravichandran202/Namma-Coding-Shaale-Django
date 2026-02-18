@@ -99,6 +99,28 @@ e-d-c-b-a-b-c-d-e
   }`
     },
 
+
+    "solutions": {
+        python: `def print_rangoli(size):
+      # Write your code here
+      pass`,
+
+        java: `public static void printRangoli(int size) {
+      // Write your code here
+  }`,
+
+        javascript: `function printRangoli(size) {
+      // Write your code here
+  }`,
+
+        "c++": `#include <iostream>
+  using namespace std;
+  
+  void printRangoli(int size) {
+      // Write your code here
+  }`
+    },
+
     wrapCode(lang, code, input) {
         const i = input.join(', ');
         switch (lang) {

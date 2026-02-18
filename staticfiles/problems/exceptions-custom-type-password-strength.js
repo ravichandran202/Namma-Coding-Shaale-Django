@@ -188,6 +188,116 @@ print(check_password(pwd))`,
       return 0;
   }`
     },
+
+  
+    "solutions": {
+      "python": 
+  `class WeakPasswordError(Exception):
+      pass
+  
+def check_password(pwd):
+      try:
+          if len(pwd) < 6:
+              raise WeakPasswordError("Weak Password")
+          return "Strong Password"
+      except WeakPasswordError as e:
+          return str(e)
+  
+# main code
+pwd = input()
+print(check_password(pwd))`,
+  
+      "java": 
+  `import java.util.*;
+  
+  class WeakPasswordError extends Exception {
+      public WeakPasswordError(String message) {
+          super(message);
+      }
+  }
+  
+  public class Main {
+      public static String check_password(String pwd) {
+          try {
+              if (pwd.length() < 6) {
+                  throw new WeakPasswordError("Weak Password");
+              }
+              return "Strong Password";
+          } catch (WeakPasswordError e) {
+              return e.getMessage();
+          }
+      }
+      
+      public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          String pwd = sc.nextLine();
+          System.out.println(check_password(pwd));
+      }
+  }`,
+  
+      "javascript": 
+  `class WeakPasswordError extends Error {
+      constructor(message) {
+          super(message);
+          this.name = "WeakPasswordError";
+      }
+  }
+  
+  function check_password(pwd) {
+      try {
+          if (pwd.length < 6) {
+              throw new WeakPasswordError("Weak Password");
+          }
+          return "Strong Password";
+      } catch (error) {
+          if (error instanceof WeakPasswordError) {
+              return error.message;
+          }
+          return "Error occurred";
+      }
+  }
+  
+  const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+  
+  readline.question('', (input) => {
+      console.log(check_password(input));
+      readline.close();
+  });`,
+  
+      "c++": 
+  `#include <iostream>
+  #include <string>
+  #include <exception>
+  using namespace std;
+  
+  class WeakPasswordError : public exception {
+  public:
+      const char* what() const noexcept override {
+          return "Weak Password";
+      }
+  };
+  
+  string check_password(string pwd) {
+      try {
+          if (pwd.length() < 6) {
+              throw WeakPasswordError();
+          }
+          return "Strong Password";
+      } catch (WeakPasswordError& e) {
+          return e.what();
+      }
+  }
+  
+  int main() {
+      string pwd;
+      getline(cin, pwd);
+      cout << check_password(pwd);
+      return 0;
+  }`
+    },
   
     "wrapCode": function(lang, userCode) {
       return userCode;

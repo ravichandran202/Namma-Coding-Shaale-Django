@@ -52,6 +52,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int num = 1;\n    while (num <= N) {\n        cout << num << endl;\n        num += 2;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "N = int(input())\nnum = 1\nwhile num <= N:\n    print(num)\n    num += 2",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int N = scanner.nextInt();\n        int num = 1;\n        while (num <= N) {\n            System.out.println(num);\n            num += 2;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (N) => {\n    let num = 1;\n    while (num <= parseInt(N)) {\n        console.log(num);\n        num += 2;\n    }\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int N;\n    cin >> N;\n    int num = 1;\n    while (num <= N) {\n        cout << num << endl;\n        num += 2;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

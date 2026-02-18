@@ -80,6 +80,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint find_remainder(int a, int b) {\n    return a % b;\n}\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    int result = find_remainder(a, b);\n    cout << result << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def find_remainder(a, b):\n    return a % b\n\n# Main code\na, b = map(int, input().split())\nresult = find_remainder(a, b)\nprint(result)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static int find_remainder(int a, int b) {\n        return a % b;\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int result = find_remainder(a, b);\n        System.out.println(result);\n    }\n}",
+    "javascript": "function find_remainder(a, b) {\n    return a % b;\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const [a, b] = input.split(' ').map(Number);\n    const result = find_remainder(a, b);\n    console.log(result);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint find_remainder(int a, int b) {\n    return a % b;\n}\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    int result = find_remainder(a, b);\n    cout << result << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

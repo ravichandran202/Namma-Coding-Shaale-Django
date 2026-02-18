@@ -182,6 +182,117 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": 
+`class InvalidAgeError(Exception):
+    pass
+
+def validate_age(age):
+    try:
+        if age < 18:
+            raise InvalidAgeError("Invalid Age")
+        return "Valid"
+    except InvalidAgeError as e:
+        return str(e)
+
+# main code
+age = int(input())
+print(validate_age(age))`,
+
+    "java": 
+`import java.util.*;
+
+class InvalidAgeError extends Exception {
+    public InvalidAgeError(String message) {
+        super(message);
+    }
+}
+
+public class Main {
+    public static String validate_age(int age) {
+        try {
+            if (age < 18) {
+                throw new InvalidAgeError("Invalid Age");
+            }
+            return "Valid";
+        } catch (InvalidAgeError e) {
+            return e.getMessage();
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int age = sc.nextInt();
+        System.out.println(validate_age(age));
+    }
+}`,
+
+    "javascript": 
+`class InvalidAgeError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "InvalidAgeError";
+    }
+}
+
+function validate_age(age) {
+    try {
+        if (age < 18) {
+            throw new InvalidAgeError("Invalid Age");
+        }
+        return "Valid";
+    } catch (error) {
+        if (error instanceof InvalidAgeError) {
+            return error.message;
+        }
+        return "Error occurred";
+    }
+}
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+readline.question('', (input) => {
+    const age = parseInt(input);
+    console.log(validate_age(age));
+    readline.close();
+});`,
+
+    "c++": 
+`#include <iostream>
+#include <string>
+#include <exception>
+using namespace std;
+
+class InvalidAgeError : public exception {
+public:
+    const char* what() const noexcept override {
+        return "Invalid Age";
+    }
+};
+
+string validate_age(int age) {
+    try {
+        if (age < 18) {
+            throw InvalidAgeError();
+        }
+        return "Valid";
+    } catch (InvalidAgeError& e) {
+        return e.what();
+    }
+}
+
+int main() {
+    int age;
+    cin >> age;
+    cout << validate_age(age);
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode) {
     return userCode;
   }

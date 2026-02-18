@@ -56,6 +56,14 @@ Output: nohtyP</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    string rev = \"\";\n    for (char ch : s) {\n        rev = ch + rev;\n    }\n    cout << rev << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "s = input()\nrev = \"\"\nfor ch in s:\n    rev = ch + rev\nprint(rev)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        String rev = \"\";\n        for (int i = 0; i < s.length(); i++) {\n            rev = s.charAt(i) + rev;\n        }\n        System.out.println(rev);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let rev = \"\";\n    for (let i = 0; i < input.length; i++) {\n        rev = input[i] + rev;\n    }\n    console.log(rev);\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    string rev = \"\";\n    for (char ch : s) {\n        rev = ch + rev;\n    }\n    cout << rev << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

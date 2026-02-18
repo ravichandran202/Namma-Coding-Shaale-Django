@@ -54,6 +54,14 @@ Output: -3</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    number += 5;\n    number -= 3;\n    std::cout << number << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `number = int(input())\nnumber += 5\nnumber -= 3\nprint(number)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        number += 5;\n        number -= 3;\n        System.out.println(number);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    let num = parseInt(number);\n    num += 5;\n    num -= 3;\n    console.log(num);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    number += 5;\n    number -= 3;\n    std::cout << number << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -153,6 +153,104 @@ int main() {
 }`
   },
 
+
+  "solutions": {
+    "python": `row, col = tuple(map(int, input().split()))
+
+matrix = []
+for i in range(row):
+    r = list(map(int, input().split()))
+    matrix.append(r)
+
+for j in range(col):
+    my_sum = 0
+    for i in range(row):
+        my_sum += matrix[i][j]
+    print(my_sum)`,
+            
+    "java": `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int row = scanner.nextInt();
+        int col = scanner.nextInt();
+        
+        int[][] matrix = new int[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+        
+        for (int j = 0; j < col; j++) {
+            int sum = 0;
+            for (int i = 0; i < row; i++) {
+                sum += matrix[i][j];
+            }
+            System.out.println(sum);
+        }
+    }
+}`,
+
+    "javascript": `const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let inputLines = [];
+let lineCount = 0;
+let row, col;
+let matrix = [];
+
+readline.on('line', (line) => {
+    inputLines.push(line);
+    lineCount++;
+    
+    if (lineCount === 1) {
+        [row, col] = line.split(' ').map(Number);
+    } else if (lineCount > 1 && lineCount <= row + 1) {
+        matrix.push(line.split(' ').map(Number));
+        
+        if (lineCount === row + 1) {
+            for (let j = 0; j < col; j++) {
+                let sum = 0;
+                for (let i = 0; i < row; i++) {
+                    sum += matrix[i][j];
+                }
+                console.log(sum);
+            }
+            readline.close();
+        }
+    }
+});`,
+
+    "c++": `#include <iostream>
+using namespace std;
+
+int main() {
+    int row, col;
+    cin >> row >> col;
+    
+    int matrix[row][col];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    for (int j = 0; j < col; j++) {
+        int sum = 0;
+        for (int i = 0; i < row; i++) {
+            sum += matrix[i][j];
+        }
+        cout << sum << endl;
+    }
+    
+    return 0;
+}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

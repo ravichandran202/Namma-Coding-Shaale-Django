@@ -55,6 +55,14 @@ Output: * * *</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int i = 0;\n    while (i < n) {\n        cout << \"* \";\n        i++;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\ni = 0\nwhile i < n:\n    print('* ', end='')\n    i = i + 1",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int i = 0;\n        while (i < n) {\n            System.out.print(\"* \");\n            i++;\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let i = 0;\n    let output = '';\n    while (i < n) {\n        output += '* ';\n        i++;\n    }\n    console.log(output.trim());\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int i = 0;\n    while (i < n) {\n        cout << \"* \";\n        i++;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -78,6 +78,14 @@ cba</pre>
     "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nstring reverse_string(string s) {\n    if (s.length() == 0) {\n        return \"\";\n    }\n    return reverse_string(s.substr(1)) + s[0];\n}\n\nint main() {\n    string s;\n    getline(cin, s);\n    cout << reverse_string(s) << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def reverse_string(s):\n    if len(s) == 0:\n        return \"\"\n    return reverse_string(s[1:]) + s[0]\n\n# main code\ns = input()\nprint(reverse_string(s))",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static String reverse_string(String s) {\n        if (s.length() == 0) {\n            return \"\";\n        }\n        return reverse_string(s.substring(1)) + s.charAt(0);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        System.out.println(reverse_string(s));\n    }\n}",
+    "javascript": "function reverse_string(s) {\n    if (s.length === 0) {\n        return \"\";\n    }\n    return reverse_string(s.substring(1)) + s[0];\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (s) => {\n    console.log(reverse_string(s));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nstring reverse_string(string s) {\n    if (s.length() == 0) {\n        return \"\";\n    }\n    return reverse_string(s.substr(1)) + s[0];\n}\n\nint main() {\n    string s;\n    getline(cin, s);\n    cout << reverse_string(s) << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

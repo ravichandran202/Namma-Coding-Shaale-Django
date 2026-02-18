@@ -84,6 +84,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid countdown(int n) {\n    if (n == 0) {\n        return;\n    }\n    cout << n << endl;\n    countdown(n - 1);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    countdown(n);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def countdown(n):\n    if n == 0:\n        return\n    print(n)\n    countdown(n-1)\n\n# main code\nn = int(input())\ncountdown(n)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void countdown(int n) {\n        if (n == 0) {\n            return;\n        }\n        System.out.println(n);\n        countdown(n - 1);\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        countdown(n);\n    }\n}",
+    "javascript": "function countdown(n) {\n    if (n === 0) {\n        return;\n    }\n    console.log(n);\n    countdown(n - 1);\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    countdown(n);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid countdown(int n) {\n    if (n == 0) {\n        return;\n    }\n    cout << n << endl;\n    countdown(n - 1);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    countdown(n);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

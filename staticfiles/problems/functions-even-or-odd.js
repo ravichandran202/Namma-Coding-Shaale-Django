@@ -94,6 +94,14 @@ Even</pre>
     "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_even_odd(int n) {\n    if (n % 2 == 0) {\n        cout << \"Even\" << endl;\n    } else {\n        cout << \"Odd\" << endl;\n    }\n}\n\nint main() {\n    int num;\n    cin >> num;\n    print_even_odd(num);\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "def print_even_odd(n):\n    if n % 2 == 0:\n        print(\"Even\")\n    else:\n        print(\"Odd\")\n\n# Main code\nnum = int(input())\nprint_even_odd(num)",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void print_even_odd(int n) {\n        if (n % 2 == 0) {\n            System.out.println(\"Even\");\n        } else {\n            System.out.println(\"Odd\");\n        }\n    }\n    \n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num = scanner.nextInt();\n        print_even_odd(num);\n    }\n}",
+    "javascript": "function print_even_odd(n) {\n    if (n % 2 === 0) {\n        console.log(\"Even\");\n    } else {\n        console.log(\"Odd\");\n    }\n}\n\nconst readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const num = parseInt(input);\n    print_even_odd(num);\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nvoid print_even_odd(int n) {\n    if (n % 2 == 0) {\n        cout << \"Even\" << endl;\n    } else {\n        cout << \"Odd\" << endl;\n    }\n}\n\nint main() {\n    int num;\n    cin >> num;\n    print_even_odd(num);\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

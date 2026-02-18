@@ -53,6 +53,14 @@ Output:
     "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cout << \"* \";\n    }\n    cout << endl;\n    for (int j = 0; j < n / 2; j++) {\n        cout << \"* \";\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nfor i in range(n):\n    print('*', end=' ')\nprint()\nfor j in range(n // 2):\n    print('*', end=' ')",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        for (int i = 0; i < n; i++) {\n            System.out.print(\"* \");\n        }\n        System.out.println();\n        for (int j = 0; j < n / 2; j++) {\n            System.out.print(\"* \");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const n = parseInt(input);\n    let line1 = '';\n    for (let i = 0; i < n; i++) {\n        line1 += '* ';\n    }\n    let line2 = '';\n    for (let j = 0; j < Math.floor(n / 2); j++) {\n        line2 += '* ';\n    }\n    console.log(line1.trim());\n    console.log(line2.trim());\n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cout << \"* \";\n    }\n    cout << endl;\n    for (int j = 0; j < n / 2; j++) {\n        cout << \"* \";\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

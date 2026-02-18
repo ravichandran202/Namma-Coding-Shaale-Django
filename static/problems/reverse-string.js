@@ -98,6 +98,14 @@ Output: ""</pre>
       javascript: `function reverseString(s) {\n    // Try implementing with a for loop or array reduce\n    return s;\n}`,
       "c++": `#include <string>\nusing namespace std;\n\nstring reverseString(string s) {\n    // Implement in-place reversal with two pointers\n    return s;\n}`
     },
+
+  
+    "solutions": {
+      python: `def reverse_string(s):\n    # Implement the string reversal logic\n    # Try not to use s[::-1] or reversed(s)\n    return s`,
+      java: `public static String reverseString(String s) {\n    // Convert to char array and implement two-pointer approach\n    return s;\n}`,
+      javascript: `function reverseString(s) {\n    // Try implementing with a for loop or array reduce\n    return s;\n}`,
+      "c++": `#include <string>\nusing namespace std;\n\nstring reverseString(string s) {\n    // Implement in-place reversal with two pointers\n    return s;\n}`
+    },
   
     wrapCode(lang, code, input) {
       const i = input.map(str => `"${str}"`).join(', ');

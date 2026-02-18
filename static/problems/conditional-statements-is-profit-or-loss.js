@@ -72,6 +72,14 @@ Output: No Profit No Loss</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int cost_price, selling_price;\n    std::cin >> cost_price >> selling_price;\n    \n    if (selling_price > cost_price) {\n        int profit = selling_price - cost_price;\n        std::cout << \"Profit: \" << profit << std::endl;\n    } else if (selling_price < cost_price) {\n        int loss = cost_price - selling_price;\n        std::cout << \"Loss: \" << loss << std::endl;\n    } else {\n        std::cout << \"No Profit No Loss\" << std::endl;\n    }\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "cost_price = int(input())\nselling_price = int(input())\n\nif selling_price > cost_price:\n    profit = selling_price - cost_price\n    print(\"Profit:\", profit)\nelif selling_price < cost_price:\n    loss = cost_price - selling_price\n    print(\"Loss:\", loss)\nelse:\n    print(\"No Profit No Loss\")",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int cost_price = scanner.nextInt();\n        int selling_price = scanner.nextInt();\n        \n        if (selling_price > cost_price) {\n            int profit = selling_price - cost_price;\n            System.out.println(\"Profit: \" + profit);\n        } else if (selling_price < cost_price) {\n            int loss = cost_price - selling_price;\n            System.out.println(\"Loss: \" + loss);\n        } else {\n            System.out.println(\"No Profit No Loss\");\n        }\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 2) {\n        const [cost_price, selling_price] = input;\n        if (selling_price > cost_price) {\n            const profit = selling_price - cost_price;\n            console.log(\"Profit: \" + profit);\n        } else if (selling_price < cost_price) {\n            const loss = cost_price - selling_price;\n            console.log(\"Loss: \" + loss);\n        } else {\n            console.log(\"No Profit No Loss\");\n        }\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int cost_price, selling_price;\n    std::cin >> cost_price >> selling_price;\n    \n    if (selling_price > cost_price) {\n        int profit = selling_price - cost_price;\n        std::cout << \"Profit: \" << profit << std::endl;\n    } else if (selling_price < cost_price) {\n        int loss = cost_price - selling_price;\n        std::cout << \"Loss: \" << loss << std::endl;\n    } else {\n        std::cout << \"No Profit No Loss\" << std::endl;\n    }\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

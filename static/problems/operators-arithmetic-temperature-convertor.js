@@ -57,6 +57,12 @@ Output: 100.0°C = 212.0°F</pre>
     "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double celsius = scanner.nextDouble();\n        double fahrenheit = (celsius * 9/5) + 32;\n        System.out.printf(\"%.1f°C = %.1f°F%n\", celsius, fahrenheit);\n    }\n}`,
   },
 
+
+  "solutions": {
+    "python": `celsius = float(input())\nfahrenheit = (celsius * 9/5) + 32\nprint(f"{celsius:.1f}°C = {fahrenheit:.1f}°F")`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double celsius = scanner.nextDouble();\n        double fahrenheit = (celsius * 9/5) + 32;\n        System.out.printf(\"%.1f°C = %.1f°F%n\", celsius, fahrenheit);\n    }\n}`,
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

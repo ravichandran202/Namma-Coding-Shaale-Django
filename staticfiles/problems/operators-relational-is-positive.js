@@ -55,6 +55,14 @@ Output: False</pre>
     "c++": `#include <iostream>\n\nint main() {\n    double number;\n    std::cin >> number;\n    std::cout << std::boolalpha << (number > 0) << std::endl;\n    return 0;\n}`
   },
 
+
+  "solutions": {
+    "python": `number = float(input())\nprint(number > 0)`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        double number = scanner.nextDouble();\n        System.out.println(number > 0);\n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    const num = parseFloat(number);\n    console.log(num > 0);\n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    double number;\n    std::cin >> number;\n    std::cout << std::boolalpha << (number > 0) << std::endl;\n    return 0;\n}`
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

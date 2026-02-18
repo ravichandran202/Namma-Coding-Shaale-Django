@@ -55,6 +55,14 @@ Output: 3.5</pre>
     "c++": "#include <iostream>\n#include <algorithm>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    sort(nums, nums + n);\n    int mid = n / 2;\n    double median = (nums[mid - 1] + nums[mid]) / 2.0;\n    cout << fixed << setprecision(1) << median << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "n = int(input())\nnums = list(map(int, input().split()))\nnums.sort()\nmid = len(nums) // 2\nmedian = (nums[mid - 1] + nums[mid]) / 2\nprint(median)",
+    "java": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] nums = new int[n];\n        \n        for (int i = 0; i < n; i++) {\n            nums[i] = scanner.nextInt();\n        }\n        \n        Arrays.sort(nums);\n        int mid = n / 2;\n        double median = (nums[mid - 1] + nums[mid]) / 2.0;\n        System.out.println(median);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputLines = [];\nreadline.on('line', (line) => {\n    inputLines.push(line);\n    if (inputLines.length === 2) {\n        const n = parseInt(inputLines[0]);\n        const nums = inputLines[1].split(' ').map(Number);\n        nums.sort((a, b) => a - b);\n        const mid = n / 2;\n        const median = (nums[mid - 1] + nums[mid]) / 2;\n        console.log(median);\n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n#include <algorithm>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    int nums[n];\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    sort(nums, nums + n);\n    int mid = n / 2;\n    double median = (nums[mid - 1] + nums[mid]) / 2.0;\n    cout << fixed << setprecision(1) << median << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':

@@ -46,6 +46,14 @@ Output: ['A', 'B', 'C']</pre>
     "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> colors;\n    string color;\n    \n    stringstream ss(input);\n    while (ss >> color) {\n        colors.push_back(color);\n    }\n    \n    vector<string> result;\n    for (const string& c : colors) {\n        if (find(result.begin(), result.end(), c) == result.end()) {\n            result.push_back(c);\n        }\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
   },
 
+
+  "solutions": {
+    "python": "colors = input().split()\nresult = []\nfor i in colors:\n    if i not in result:\n        result.append(i)\nprint(result)",
+    "java": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String[] colors = scanner.nextLine().split(\" \");\n        \n        ArrayList<String> result = new ArrayList<>();\n        for (String color : colors) {\n            if (!result.contains(color)) {\n                result.add(color);\n            }\n        }\n        \n        System.out.println(result);\n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const colors = input.split(' ').filter(item => item !== '');\n    const result = [];\n    \n    for (const color of colors) {\n        if (!result.includes(color)) {\n            result.push(color);\n        }\n    }\n    \n    console.log(JSON.stringify(result));\n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <vector>\n#include <sstream>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    string input;\n    getline(cin, input);\n    \n    vector<string> colors;\n    string color;\n    \n    stringstream ss(input);\n    while (ss >> color) {\n        colors.push_back(color);\n    }\n    \n    vector<string> result;\n    for (const string& c : colors) {\n        if (find(result.begin(), result.end(), c) == result.end()) {\n            result.push_back(c);\n        }\n    }\n    \n    cout << \"[\";\n    for (int i = 0; i < result.size(); i++) {\n        cout << \"'\" << result[i] << \"'\";\n        if (i < result.size() - 1) cout << \", \";\n    }\n    cout << \"]\" << endl;\n    return 0;\n}"
+  },
+
   "wrapCode": function(lang, userCode, input) {
     switch(lang) {
       case 'python':
