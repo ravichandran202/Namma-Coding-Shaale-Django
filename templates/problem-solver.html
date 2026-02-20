@@ -1254,6 +1254,42 @@
         }
         enableSecurity();
     </script>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
+
+    {% if messages %}
+    <div id="django-messages-data" style="display: none;">
+        {% for message in messages %}
+        <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageData = document.getElementById('django-messages-data');
+            if (messageData) {
+                Array.from(messageData.children).forEach(msgDiv => {
+                    showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+                });
+            }
+        });
+
+        function showToast(message, type) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (type === 'error') type = 'danger';
+            const bgClass = { 'success': 'text-bg-success', 'danger': 'text-bg-danger', 'warning': 'text-bg-warning', 'info': 'text-bg-info' }[type] || 'text-bg-primary';
+            const icon = { 'success': 'fas fa-check-circle', 'danger': 'fas fa-exclamation-circle', 'warning': 'fas fa-exclamation-triangle', 'info': 'fas fa-info-circle' }[type] || 'fas fa-bell';
+            const toastHtml = `<div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body"><i class="${icon} me-2"></i> ${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>`;
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = toastHtml;
+            const toastElement = wrapper.firstElementChild;
+            toastContainer.appendChild(toastElement);
+            const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+            toast.show();
+            toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+        }
+    </script>
 </body>
 
 </html>
