@@ -4723,6 +4723,10 @@
           if (document.getElementById("countdown-timer")) {
             document.getElementById("countdown-timer").innerHTML = "EXPIRED";
           }
+          if (notificationBar) {
+            notificationBar.style.display = 'none';
+            if (typeof updateLayout === 'function') updateLayout();
+          }
           return;
         }
 
@@ -4749,7 +4753,10 @@
         }
       };
 
-      if (!isClosed && notificationBar) {
+      const initialNow = new Date().getTime();
+      const initialDistance = countDownDate - initialNow;
+
+      if (!isClosed && notificationBar && initialDistance > 0) {
         notificationBar.style.display = 'flex';
         // body.classList.add('has-notification'); 
         updateLayout();
