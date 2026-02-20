@@ -965,7 +965,8 @@
       <!-- Greeting -->
       <div class="animate-in " style="text-align: center;">
         <p class="page-greeting">
-          <span style="color: var(--dark);">Hi</span> {{ request.user.first_name|upper }} {{request.user.last_name|upper}}
+          <span style="color: var(--dark);">Hi</span> {{ request.user.first_name|upper }}
+          {{request.user.last_name|upper}}
         </p>
         <h2 class="page-title">Your <span class="text-gradient">Learning Path</span></h2>
       </div>
@@ -1019,7 +1020,11 @@
                       <div class="mb-3">
                         <span
                           class="course-badge {% if course.is_premium %}bg-gold{% else %}bg-primary-soft{% endif %}">
-                          {% if course.is_premium %}<i class="fas fa-crown me-1"></i> Premium{% else %}{{course.course.get_language_display }}{% endif %}
+                          {% if course.is_premium %}<i class="fas fa-crown me-1"></i> 
+                          Premium
+                          {% else %}
+                          {{course.course.get_language_display }}
+                          {% endif %}
                         </span>
                       </div>
                       <span
@@ -1053,7 +1058,8 @@
                   </div>
 
                   <div class="course-meta {% if course.is_premium %}text-light{% endif %} mt-3">
-                    <span><i class="far fa-file-alt me-1"></i> {{ course.completed_modules }} / {{course.total_modules}} Modules</span>
+                    <span><i class="far fa-file-alt me-1"></i> {{ course.completed_modules }} / {{course.total_modules}}
+                      Modules</span>
                     <span>{{ course.module_progress }} %</span>
                   </div>
                   <div class="course-progress">
@@ -1156,7 +1162,11 @@
 
           <!-- Weekly Leaderboard -->
           <div class="dash-card animate-in delay-3">
-            <div class="dash-card-title"><i class="fas fa-medal" style="color: var(--primary);"></i> Weekly Leaderboard
+            <div class="dash-card-title d-flex justify-content-between align-items-center">
+              <div><i class="fas fa-medal" style="color: var(--primary);"></i> Weekly Leaderboard</div>
+              <a href="{% url 'leaderboard' %}" class="text-decoration-none"
+                style="font-size: 0.75rem; font-weight: 500; color: var(--primary);">View All <i
+                  class="fas fa-chevron-right ms-1" style="font-size: 0.6rem;"></i></a>
             </div>
             {% if leaderboard %}
             {% for entry in leaderboard %}
@@ -1183,7 +1193,12 @@
 
           <!-- Insights / Streak -->
           <div class="dash-card animate-in delay-4">
-            <div class="dash-card-title"><i class="fas fa-fire-alt" style="color: #f97316;"></i> Insights</div>
+            <div class="dash-card-title d-flex justify-content-between align-items-center">
+              <div><i class="fas fa-fire-alt" style="color: #f97316;"></i> Insights</div>
+              <a href="{% url 'student_dashboard' request.user.username %}" class="text-decoration-none"
+                style="font-size: 0.75rem; font-weight: 500; color: #f97316;">View Dashboard <i
+                  class="fas fa-chevron-right ms-1" style="font-size: 0.6rem;"></i></a>
+            </div>
             <div class="streak-display">
               <div class="streak-icon">🔥</div>
               <div>
