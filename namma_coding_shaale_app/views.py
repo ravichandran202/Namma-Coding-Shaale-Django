@@ -41,7 +41,7 @@ import requests
 from django.db import transaction
 import django.db.models as models
 from django.db.models import Case, When, Value, BooleanField, Count, Q
-from django.db.models.functions import Concat
+from django.db.models.functions import Concat, ExtractMonth, ExtractYear, ExtractWeekDay
 from django.db.models import F
 from django.core.paginator import Paginator
 
@@ -960,8 +960,164 @@ def my_courses(request):
             "is_course_unlocked": is_unlocked,
             "course_start_date" : start_date,
         })
+
+    # ===== DASHBOARD METRICS =====
+    user = request.user
+    today = timezone.localtime(timezone.now()).date()
+
+    # 1. Daily Activity (last 14 days)
+    fourteen_days_ago = today - timedelta(days=13)
     
-    return render(request, 'my_courses.html', {'courses': courses_data})
+    submission_dates_set = set(
+        ProblemSubmission.objects.filter(
+            user=user,
+            submitted_at__date__gte=fourteen_days_ago
+        ).values_list('submitted_at__date', flat=True)
+    )
+    
+    completion_dates_set = set(
+        UserContentProgress.objects.filter(
+            user=user,
+            is_completed=True,
+            completed_at__date__gte=fourteen_days_ago
+        ).values_list('completed_at__date', flat=True)
+    )
+    
+    activity_dates = []
+    for i in range(14):
+        d = fourteen_days_ago + timedelta(days=i)
+        has_sub = d in submission_dates_set
+        has_comp = d in completion_dates_set
+        activity_dates.append({
+            'date': d,
+            'day_short': d.strftime('%a'),
+            'day_num': d.strftime('%d'),
+            'month_short': d.strftime('%b'),
+            'has_submission': has_sub,
+            'has_completion': has_comp,
+            'has_activity': has_sub or has_comp,
+            'is_today': d == today,
+        })
+
+    # 2. Current Score (difficulty-based)
+    # Problems: Easy=5, Medium=10, Hard=20
+    difficulty_points = {'EASY': 5, 'MEDIUM': 10, 'HARD': 20}
+    solved_by_difficulty = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED'
+    ).values('problem__difficulty').annotate(
+        count=Count('problem', distinct=True)
+    )
+    problems_score = sum(
+        difficulty_points.get(item['problem__difficulty'], 5) * item['count']
+        for item in solved_by_difficulty
+    )
+    
+    # Quizzes: 10 pts each
+    quizzes_passed = QuizSubmission.objects.filter(user=user, passed=True).count()
+    quizzes_score = quizzes_passed * 10
+    
+    # Lessons: 5 pts each
+    total_completed_modules = UserContentProgress.objects.filter(
+        user=user, is_completed=True
+    ).exclude(content__type='PROBLEM').count()
+    lessons_score = total_completed_modules * 5
+    
+    current_score = problems_score + quizzes_score + lessons_score
+    
+    # Weekly growth
+    week_start = today - timedelta(days=today.weekday())  # Monday
+    last_week_start = week_start - timedelta(days=7)
+    
+    this_week_solved = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED',
+        submitted_at__date__gte=week_start
+    ).values('problem').distinct().count()
+    
+    last_week_solved = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED',
+        submitted_at__date__gte=last_week_start,
+        submitted_at__date__lt=week_start
+    ).values('problem').distinct().count()
+    
+    this_week_score = this_week_solved * 10
+    last_week_score = last_week_solved * 10
+    
+    if last_week_score > 0:
+        weekly_growth = round(((this_week_score - last_week_score) / last_week_score) * 100)
+    elif this_week_score > 0:
+        weekly_growth = 100
+    else:
+        weekly_growth = 0
+
+    # 3. Weekly Leaderboard (Top 10)
+    leaderboard_qs = ProblemSubmission.objects.filter(
+        status='SOLVED',
+        submitted_at__date__gte=week_start
+    ).values('user__id', 'user__first_name', 'user__last_name', 'user__username').annotate(
+        score=Count('problem', distinct=True)
+    ).order_by('-score')[:10]
+    
+    leaderboard = []
+    for idx, entry in enumerate(leaderboard_qs):
+        name = f"{entry['user__first_name']} {entry['user__last_name']}".strip()
+        if not name:
+            name = entry['user__username']
+        leaderboard.append({
+            'rank': idx + 1,
+            'name': name,
+            'score': entry['score'] * 10,
+            'is_current_user': entry['user__id'] == user.id,
+        })
+
+    # 4. Streak
+    all_sub_dates = set(
+        ProblemSubmission.objects.filter(user=user).values_list('submitted_at__date', flat=True)
+    )
+    all_comp_dates = set(
+        UserContentProgress.objects.filter(
+            user=user, is_completed=True
+        ).values_list('completed_at__date', flat=True)
+    )
+    all_access_dates = set(
+        UserContentProgress.objects.filter(user=user).values_list('last_accessed__date', flat=True)
+    )
+    
+    all_dates = all_sub_dates | all_comp_dates | all_access_dates
+    sorted_dates = sorted([d for d in all_dates if d is not None])
+    
+    current_streak = 0
+    if sorted_dates:
+        last_date = sorted_dates[-1]
+        if last_date == today or last_date == (today - timedelta(days=1)):
+            current_streak = 1
+            for i in range(len(sorted_dates) - 2, -1, -1):
+                delta = sorted_dates[i + 1] - sorted_dates[i]
+                if delta.days == 1:
+                    current_streak += 1
+                else:
+                    break
+
+    # 5. Today's Summary
+    today_problems = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED',
+        submitted_at__date=today
+    ).values('problem').distinct().count()
+    
+    today_modules = UserContentProgress.objects.filter(
+        user=user, is_completed=True,
+        completed_at__date=today
+    ).exclude(content__type='PROBLEM').count()
+
+    return render(request, 'my_courses.html', {
+        'courses': courses_data,
+        'activity_dates': activity_dates,
+        'current_score': current_score,
+        'weekly_growth': weekly_growth,
+        'leaderboard': leaderboard,
+        'current_streak': current_streak,
+        'today_problems': today_problems,
+        'today_modules': today_modules,
+    })
 
 @trace_span
 def generate_certificate_id(user_id, course_id):
@@ -2164,6 +2320,81 @@ def student_dashboard(request, username):
                 break
 
 
+    # 12. Weekly Activity Distribution (submissions per day of week)
+    # Django ExtractWeekDay: 1=Sunday, 2=Monday, ..., 7=Saturday
+    weekly_activity_qs = ProblemSubmission.objects.filter(
+        user=user
+    ).annotate(
+        dow=ExtractWeekDay('submitted_at')
+    ).values('dow').annotate(count=Count('id')).order_by('dow')
+    
+    # Map Django weekday (1=Sun..7=Sat) to Mon-Sun order
+    django_to_label = {2: 'Mon', 3: 'Tue', 4: 'Wed', 5: 'Thu', 6: 'Fri', 7: 'Sat', 1: 'Sun'}
+    weekly_activity = {day: 0 for day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
+    for item in weekly_activity_qs:
+        label = django_to_label.get(item['dow'])
+        if label:
+            weekly_activity[label] = item['count']
+
+    # 13. Accuracy Over Time (monthly pass rate, last 6 months)
+    six_months_ago = today.replace(day=1) - timedelta(days=150)
+    monthly_subs = ProblemSubmission.objects.filter(
+        user=user,
+        submitted_at__date__gte=six_months_ago
+    ).annotate(
+        month=ExtractMonth('submitted_at'),
+        year=ExtractYear('submitted_at')
+    ).values('year', 'month').annotate(
+        total=Count('id'),
+        solved=Count('id', filter=Q(status='SOLVED'))
+    ).order_by('year', 'month')
+    
+    import calendar
+    accuracy_over_time_labels = []
+    accuracy_over_time_data = []
+    for item in monthly_subs:
+        month_name = calendar.month_abbr[item['month']]
+        accuracy_over_time_labels.append(f"{month_name} '{str(item['year'])[-2:]}")
+        rate = round((item['solved'] / item['total']) * 100, 1) if item['total'] > 0 else 0
+        accuracy_over_time_data.append(rate)
+
+    # 14. Quiz Performance by Course (radar chart data)
+    quiz_performance_qs = QuizSubmission.objects.filter(
+        user=user
+    ).values('course__name').annotate(
+        avg_score=Count('id', filter=Q(passed=True)),
+        total=Count('id')
+    ).order_by('course__name')
+    
+    quiz_perf_labels = []
+    quiz_perf_data = []
+    for item in quiz_performance_qs:
+        quiz_perf_labels.append(item['course__name'])
+        rate = round((item['avg_score'] / item['total']) * 100) if item['total'] > 0 else 0
+        quiz_perf_data.append(rate)
+
+    # 15. Cumulative Progress (running total of unique solved problems over time)
+    all_solved = ProblemSubmission.objects.filter(
+        user=user, status='SOLVED'
+    ).order_by('submitted_at').values_list('problem_id', 'submitted_at')
+    
+    seen_problems = set()
+    cumulative_dates = []
+    cumulative_counts = []
+    running_total = 0
+    
+    for problem_id, submitted_at in all_solved:
+        if problem_id not in seen_problems:
+            seen_problems.add(problem_id)
+            running_total += 1
+            date_str = submitted_at.strftime('%b %d')
+            # Avoid duplicate date labels; update the last entry if same date
+            if cumulative_dates and cumulative_dates[-1] == date_str:
+                cumulative_counts[-1] = running_total
+            else:
+                cumulative_dates.append(date_str)
+                cumulative_counts.append(running_total)
+
     context = {
         "profile_user": user,
         "solved_problems_count": solved_problems_count,
@@ -2181,6 +2412,15 @@ def student_dashboard(request, username):
         "longest_streak": longest_streak,
         "quizzes_solved_count": quizzes_solved_count,
         "recent_solved_problems": recent_solved_problems,
+        # New chart data
+        "weekly_activity_labels": json.dumps(list(weekly_activity.keys())),
+        "weekly_activity_data": json.dumps(list(weekly_activity.values())),
+        "accuracy_time_labels": json.dumps(accuracy_over_time_labels),
+        "accuracy_time_data": json.dumps(accuracy_over_time_data),
+        "quiz_perf_labels": json.dumps(quiz_perf_labels),
+        "quiz_perf_data": json.dumps(quiz_perf_data),
+        "cumulative_labels": json.dumps(cumulative_dates),
+        "cumulative_data": json.dumps(cumulative_counts),
         # Ensure we pass the profile info if it exists
         "user_profile": getattr(user, 'profile', None) 
     }
