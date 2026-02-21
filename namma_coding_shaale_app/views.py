@@ -542,21 +542,32 @@ def certificate_page(request):
 @login_required(login_url="login")
 def list_problems(request, course_id):
     logger.info(f"User {request.user.id} listing problems for course {course_id}")
-    if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+    
+    # Check enrollment status once
+    is_enrolled_user = UserCourse.objects.filter(user=request.user, course_id=course_id).exists()
+    
+    if not is_enrolled_user:
         logger.warning(f"User {request.user.id} tried to list problems for unenrolled course {course_id}")
         return redirect("home")
 
-    roadmap = None
-    is_enrolled_user = False
-    if UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
-        is_enrolled_user = True
-        roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
+    roadmap = get_user_roadmap_html(user_id=request.user.id, course_id=course_id)
 
     # Gather all CourseContent for this course, ordered by sequence_number
     course_contents = CourseContent.objects.filter(
         course_id=course_id, 
         content__type='PROBLEM'
     ).select_related('content__problem').order_by('sequence_number')
+
+    # Fetch all user submissions for this course in a single query
+    # Ordered by submitted_at descending so we can just take the first status for each problem
+    user_submissions = ProblemSubmission.objects.filter(
+        user=request.user, course_id=course_id
+    ).order_by('-submitted_at')
+    
+    submission_status_map = {}
+    for sub in user_submissions:
+        if sub.problem_id not in submission_status_map:
+            submission_status_map[sub.problem_id] = sub.status.lower()
 
     # Section grouping: section_title -> [problems]
     sections_map = {}
@@ -574,14 +585,7 @@ def list_problems(request, course_id):
                 }
 
         problem_obj = cc.content.problem
-        # Determine user problem status based on submissions (if available)
-        submission = ProblemSubmission.objects.filter(
-            user=request.user, problem=problem_obj, course_id = course_id
-        ).order_by('-submitted_at').first()
-        if submission:
-            status = submission.status.lower()
-        else:
-            status = "unsolved"
+        status = submission_status_map.get(problem_obj.id, "unsolved")
 
         sections_map[section_title]["problems"].append({
             "id": problem_obj.file_name,
