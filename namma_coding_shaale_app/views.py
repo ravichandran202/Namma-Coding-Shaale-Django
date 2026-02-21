@@ -902,31 +902,34 @@ def my_courses(request):
         # since newly created, get course data
         enrolled_courses = UserCourse.objects.filter(user=request.user).select_related('course')
 
+    # Pre-fetch counts to avoid N+1 queries
+    course_ids = [uc.course_id for uc in enrolled_courses]
+    
+    # 1. Total contents per course
+    total_contents_qs = CourseContent.objects.filter(course_id__in=course_ids).exclude(content__type='PROBLEM').values('course_id').annotate(total=Count('id'))
+    total_contents_map = {item['course_id']: item['total'] for item in total_contents_qs}
+
+    # 2. Completed contents per course
+    completed_contents_qs = UserContentProgress.objects.filter(user=request.user, course_id__in=course_ids, is_completed=True).exclude(content__type='PROBLEM').values('course_id').annotate(total=Count('id'))
+    completed_contents_map = {item['course_id']: item['total'] for item in completed_contents_qs}
+
+    # 3. Problem contents per course
+    problem_contents_qs = Content.objects.filter(type='PROBLEM', coursecontent__course_id__in=course_ids).values('coursecontent__course_id').annotate(total=Count('id'))
+    problem_contents_map = {item['coursecontent__course_id']: item['total'] for item in problem_contents_qs}
+
+    # 4. Solved problems per course
+    solved_problems_qs = ProblemSubmission.objects.filter(user=request.user, course_id__in=course_ids, status='SOLVED').values('course_id').annotate(total=Count('problem', distinct=True))
+    solved_problems_map = {item['course_id']: item['total'] for item in solved_problems_qs}
+
     courses_data = []
     for user_course in enrolled_courses:
         course = user_course.course
+        cid = course.id
         
-        # Get counts in single queries
-        total_contents = CourseContent.objects.filter(course=course).exclude(content__type='PROBLEM').count()
-        completed_contents = UserContentProgress.objects.filter(
-            user=request.user,
-            course=course,
-            is_completed=True,
-        ).exclude(content__type='PROBLEM').count()
-
-        
-        # Get all problems in this course (through content)
-        problem_contents = Content.objects.filter(
-            coursecontent__course=course,
-            type='PROBLEM'
-        ).count()
-        
-        # Count distinct solved problems for this user in this course
-        solved_problems = ProblemSubmission.objects.filter(
-            user=request.user,
-            course=course,
-            status='SOLVED'
-        ).values('problem').distinct().count()
+        total_contents = total_contents_map.get(cid, 0)
+        completed_contents = completed_contents_map.get(cid, 0)
+        problem_contents = problem_contents_map.get(cid, 0)
+        solved_problems = solved_problems_map.get(cid, 0)
 
         
         # Calculate progress percentages
@@ -969,29 +972,23 @@ def my_courses(request):
     user = request.user
     today = timezone.localtime(timezone.now()).date()
 
+    # Pre-fetch all relevant dates to avoid redundant queries
+    all_sub_dates_list = list(ProblemSubmission.objects.filter(user=user).values_list('submitted_at__date', flat=True))
+    all_comp_dates_list = list(UserContentProgress.objects.filter(user=user, is_completed=True).values_list('completed_at__date', flat=True))
+    all_access_dates_list = list(UserContentProgress.objects.filter(user=user).values_list('last_accessed__date', flat=True))
+
+    all_sub_dates = set(all_sub_dates_list)
+    all_comp_dates = set(all_comp_dates_list)
+    all_access_dates = set(all_access_dates_list)
+
     # 1. Daily Activity (last 14 days)
     fourteen_days_ago = today - timedelta(days=13)
-    
-    submission_dates_set = set(
-        ProblemSubmission.objects.filter(
-            user=user,
-            submitted_at__date__gte=fourteen_days_ago
-        ).values_list('submitted_at__date', flat=True)
-    )
-    
-    completion_dates_set = set(
-        UserContentProgress.objects.filter(
-            user=user,
-            is_completed=True,
-            completed_at__date__gte=fourteen_days_ago
-        ).values_list('completed_at__date', flat=True)
-    )
     
     activity_dates = []
     for i in range(14):
         d = fourteen_days_ago + timedelta(days=i)
-        has_sub = d in submission_dates_set
-        has_comp = d in completion_dates_set
+        has_sub = d in all_sub_dates
+        has_comp = d in all_comp_dates
         activity_dates.append({
             'date': d,
             'day_short': d.strftime('%a'),
@@ -1027,18 +1024,6 @@ def my_courses(request):
     lessons_score = total_completed_modules * 5
     
     # Active Days: 5 pts each
-    all_sub_dates = set(
-        ProblemSubmission.objects.filter(user=user).values_list('submitted_at__date', flat=True)
-    )
-    all_comp_dates = set(
-        UserContentProgress.objects.filter(
-            user=user, is_completed=True
-        ).values_list('completed_at__date', flat=True)
-    )
-    all_access_dates = set(
-        UserContentProgress.objects.filter(user=user).values_list('last_accessed__date', flat=True)
-    )
-    
     all_dates = all_sub_dates | all_comp_dates | all_access_dates
     sorted_dates = sorted([d for d in all_dates if d is not None])
     
@@ -1074,21 +1059,7 @@ def my_courses(request):
 
 
     # 4. Streak
-    all_sub_dates = set(
-        ProblemSubmission.objects.filter(user=user).values_list('submitted_at__date', flat=True)
-    )
-    all_comp_dates = set(
-        UserContentProgress.objects.filter(
-            user=user, is_completed=True
-        ).values_list('completed_at__date', flat=True)
-    )
-    all_access_dates = set(
-        UserContentProgress.objects.filter(user=user).values_list('last_accessed__date', flat=True)
-    )
-    
-    all_dates = all_sub_dates | all_comp_dates | all_access_dates
-    sorted_dates = sorted([d for d in all_dates if d is not None])
-    
+    # all_dates / sorted_dates are already calculated above
     current_streak = 0
     if sorted_dates:
         last_date = sorted_dates[-1]
