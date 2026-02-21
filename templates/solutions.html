@@ -1,0 +1,549 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Solutions — {{ problem.title }}{% endblock %}
+
+{% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block extra_css %}
+/* ===== Solutions Page — IDE Layout ===== */
+.solutions-container {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 1rem 4rem;
+}
+
+/* Header */
+.sol-header {
+text-align: center;
+margin-bottom: 2rem;
+}
+
+.sol-title {
+font-family: 'Plus Jakarta Sans', sans-serif;
+font-weight: 800;
+font-size: 1.75rem;
+color: #0f172a;
+margin-bottom: 0.75rem;
+letter-spacing: -0.5px;
+}
+
+.sol-title .text-gradient {
+background: linear-gradient(135deg, #3b82f6, #10b981);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+display: inline;
+}
+
+.sol-meta {
+display: flex;
+gap: 0.75rem;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+}
+
+.badge-diff {
+font-weight: 700;
+font-size: 0.7rem;
+padding: 4px 12px;
+border-radius: 20px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.badge-easy { background: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+.badge-medium { background: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
+.badge-hard { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+
+.badge-solved {
+background: linear-gradient(135deg, #059669, #10b981);
+color: white;
+font-size: 0.7rem;
+padding: 4px 12px;
+border-radius: 20px;
+font-weight: 600;
+}
+
+/* Back Link */
+.back-link {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+color: #64748b;
+font-size: 0.9rem;
+font-weight: 500;
+text-decoration: none;
+margin-bottom: 1.5rem;
+transition: color 0.2s;
+}
+.back-link:hover { color: #2563eb; }
+
+/* Main Tabs */
+.sol-tabs {
+display: flex;
+gap: 0.25rem;
+margin-bottom: 1.5rem;
+border-bottom: 2px solid #e2e8f0;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+}
+
+.sol-tab {
+padding: 0.75rem 1.25rem;
+font-weight: 600;
+font-size: 0.9rem;
+color: #64748b;
+cursor: pointer;
+border: none;
+background: none;
+border-bottom: 3px solid transparent;
+margin-bottom: -2px;
+transition: all 0.25s ease;
+white-space: nowrap;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+.sol-tab:hover { color: #1e293b; }
+.sol-tab.active { color: #2563eb; border-bottom-color: #2563eb; }
+
+.sol-tab .tab-count {
+background: #e2e8f0;
+color: #475569;
+font-size: 0.7rem;
+padding: 2px 8px;
+border-radius: 10px;
+font-weight: 700;
+}
+.sol-tab.active .tab-count { background: #dbeafe; color: #2563eb; }
+
+/* Tab Content */
+.sol-tab-content {
+display: none;
+animation: fadeSlideIn 0.3s ease-out;
+}
+.sol-tab-content.active { display: block; }
+
+@keyframes fadeSlideIn {
+from { opacity: 0; transform: translateY(8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* IDE Card */
+.ide-card {
+background: #fff;
+border: 1px solid #e2e8f0;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -2px rgba(0,0,0,0.03);
+margin-bottom: 1.25rem;
+}
+
+.ide-card-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0.6rem 1rem;
+background: #f8fafc;
+border-bottom: 1px solid #e2e8f0;
+}
+
+.ide-card-label {
+font-weight: 700;
+font-size: 0.8rem;
+color: #1e293b;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+.ide-card-label i { color: #3b82f6; font-size: 0.85rem; }
+
+.ide-card-time {
+font-size: 0.72rem;
+color: #94a3b8;
+font-weight: 500;
+}
+
+.ide-card-editor {
+height: 400px;
+width: 100%;
+}
+
+/* Language Selector for Reference */
+.lang-selector {
+display: flex;
+gap: 0.5rem;
+margin-bottom: 1rem;
+flex-wrap: wrap;
+}
+
+.lang-btn {
+padding: 0.45rem 1rem;
+border-radius: 8px;
+border: 1px solid #e2e8f0;
+background: white;
+font-size: 0.8rem;
+font-weight: 600;
+color: #475569;
+cursor: pointer;
+transition: all 0.2s;
+}
+.lang-btn:hover { border-color: #93c5fd; color: #2563eb; background: #eff6ff; }
+.lang-btn.active {
+background: #2563eb;
+color: white;
+border-color: #2563eb;
+box-shadow: 0 2px 8px rgba(37,99,235,0.25);
+}
+
+/* Community Solutions Sub-Tabs */
+.community-tabs {
+display: flex;
+gap: 0.5rem;
+margin-bottom: 1rem;
+flex-wrap: wrap;
+}
+
+.community-tab {
+padding: 0.4rem 0.9rem;
+border-radius: 8px;
+border: 1px solid #e2e8f0;
+background: white;
+font-size: 0.8rem;
+font-weight: 600;
+color: #475569;
+cursor: pointer;
+transition: all 0.2s;
+}
+.community-tab:hover { border-color: #93c5fd; color: #2563eb; }
+.community-tab.active {
+background: #0f172a;
+color: white;
+border-color: #0f172a;
+}
+
+/* Empty State */
+.empty-state {
+text-align: center;
+padding: 3rem 1rem;
+color: #94a3b8;
+}
+.empty-state i { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
+.empty-state h4 { font-weight: 700; color: #64748b; margin-bottom: 0.5rem; }
+.empty-state p { font-size: 0.9rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+.sol-title { font-size: 1.25rem; }
+.sol-tab { padding: 0.6rem 0.85rem; font-size: 0.8rem; }
+.ide-card-editor { height: 300px; }
+.solutions-container { padding: 0 0.5rem 3rem; }
+}
+{% endblock %}
+
+{% block content %}
+<div class="solutions-container mt-2">
+
+    <!-- Back Link -->
+    <a href="{% url 'list-problems' course_id %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Problems
+    </a>
+
+    <!-- Header -->
+    <div class="sol-header">
+        <h1 class="sol-title" id="sol-title-el">{{ problem.title }}</h1>
+        <div class="sol-meta">
+            <span class="badge-diff badge-{{ problem.difficulty|lower }}">{{ problem.difficulty }}</span>
+            <span class="badge-solved"><i class="fas fa-check me-1"></i> SOLVED</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="sol-tabs">
+        <button class="sol-tab active" onclick="switchSolTab(this, 'my-solution')">
+            <i class="fas fa-user"></i> My Solution
+        </button>
+        <button class="sol-tab" onclick="switchSolTab(this, 'community')">
+            <i class="fas fa-users"></i> Community
+            <span class="tab-count">{{ other_solutions_count }}</span>
+        </button>
+        <button class="sol-tab" onclick="switchSolTab(this, 'reference')">
+            <i class="fas fa-lightbulb"></i> Reference
+        </button>
+    </div>
+
+    <!-- Tab: My Solution -->
+    <div id="tab-my-solution" class="sol-tab-content active">
+        <div class="ide-card">
+            <div class="ide-card-header">
+                <span class="ide-card-label">
+                    <i class="fas fa-code"></i> Your Submitted Code
+                </span>
+                <span class="ide-card-time">
+                    <i class="far fa-clock me-1"></i>{{ user_submitted_at }}
+                </span>
+            </div>
+            <div class="ide-card-editor" id="editor-my-solution"></div>
+        </div>
+    </div>
+
+    <!-- Tab: Community Solutions -->
+    <div id="tab-community" class="sol-tab-content">
+        <div id="community-tabs-container" class="community-tabs"></div>
+        <div id="community-editor-wrapper">
+            <div class="ide-card" id="community-ide-card" style="display:none;">
+                <div class="ide-card-header">
+                    <span class="ide-card-label" id="community-label">
+                        <i class="fas fa-user-circle"></i> <span id="community-user-label">User 1</span>
+                    </span>
+                    <span class="ide-card-time" id="community-time"></span>
+                </div>
+                <div class="ide-card-editor" id="editor-community"></div>
+            </div>
+            <div id="community-empty" style="display:none;">
+                <div class="empty-state">
+                    <i class="fas fa-users d-block"></i>
+                    <h4>No Community Solutions Yet</h4>
+                    <p>You're one of the first to solve this! Other solutions will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab: Reference Solution -->
+    <div id="tab-reference" class="sol-tab-content">
+        {% if has_reference %}
+        <div id="ref-lang-selector" class="lang-selector"></div>
+        <div class="ide-card">
+            <div class="ide-card-header">
+                <span class="ide-card-label">
+                    <i class="fas fa-bookmark"></i> Official Solution
+                </span>
+                <span class="ide-card-time" id="ref-lang-label"></span>
+            </div>
+            <div class="ide-card-editor" id="editor-reference"></div>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-book-open d-block"></i>
+            <h4>No Reference Solution</h4>
+            <p>A reference solution is not yet available for this problem.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Toast Container for messages -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
+
+    {% if messages %}
+    <div id="django-messages-data" style="display: none;">
+        {% for message in messages %}
+        <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- JSON Data Blocks — must be BEFORE the script that reads them -->
+{{ user_code|json_script:"user-code-data" }}
+<script type="application/json" id="other-solutions-data">{{ other_solutions|safe }}</script>
+<script type="application/json" id="ref-solutions-data">{{ reference_solutions|safe }}</script>
+
+<!-- Monaco Editor Loader -->
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+<script>
+    // --- Data ---
+    const userCode = JSON.parse(document.getElementById('user-code-data').textContent);
+    const otherSolutions = JSON.parse(document.getElementById('other-solutions-data').textContent);
+    const refSolutions = JSON.parse(document.getElementById('ref-solutions-data').textContent);
+
+    const langNames = { 'python': 'Python', 'java': 'Java', 'javascript': 'JavaScript', 'c++': 'C++' };
+    const monacoLangMap = { 'python': 'python', 'java': 'java', 'javascript': 'javascript', 'c++': 'cpp' };
+
+    let editors = {};
+    let editorsCreated = { 'my-solution': false, 'community': false, 'reference': false };
+    let currentCommunityIdx = 0;
+    let currentRefLang = null;
+
+    // --- Monaco Setup ---
+    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
+
+    require(['vs/editor/editor.main'], function () {
+        // Create "My Solution" editor immediately
+        createEditor('my-solution', userCode, 'python');
+        editorsCreated['my-solution'] = true;
+    });
+
+    function createEditor(id, code, language) {
+        const container = document.getElementById('editor-' + id);
+        if (!container) return null;
+
+        const monacoLang = monacoLangMap[language] || language;
+        const editor = monaco.editor.create(container, {
+            value: code || '',
+            language: monacoLang,
+            theme: 'vs',
+            automaticLayout: true,
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 14,
+            lineHeight: 22,
+            minimap: { enabled: false },
+            padding: { top: 12, bottom: 12 },
+            scrollBeyondLastLine: false,
+            readOnly: true,
+            renderLineHighlight: 'line',
+            lineNumbers: 'on',
+            folding: true,
+            wordWrap: 'on',
+            contextmenu: false,
+            domReadOnly: true,
+        });
+
+        editors[id] = editor;
+        return editor;
+    }
+
+    // --- Tab Switching ---
+    function switchSolTab(btn, tabId) {
+        document.querySelectorAll('.sol-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.sol-tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + tabId).classList.add('active');
+
+        // Lazy-create editors on first tab visit
+        if (tabId === 'community' && !editorsCreated['community']) {
+            initCommunityTab();
+            editorsCreated['community'] = true;
+        }
+        if (tabId === 'reference' && !editorsCreated['reference']) {
+            initReferenceTab();
+            editorsCreated['reference'] = true;
+        }
+
+        // Re-layout any visible editor
+        setTimeout(() => {
+            Object.values(editors).forEach(e => e.layout());
+        }, 50);
+    }
+
+    // --- Community Tab ---
+    function initCommunityTab() {
+        const tabsContainer = document.getElementById('community-tabs-container');
+        const ideCard = document.getElementById('community-ide-card');
+        const emptyEl = document.getElementById('community-empty');
+
+        if (otherSolutions.length === 0) {
+            emptyEl.style.display = 'block';
+            return;
+        }
+
+        ideCard.style.display = 'block';
+
+        // Build sub-tabs
+        otherSolutions.forEach((sol, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'community-tab' + (idx === 0 ? ' active' : '');
+            btn.textContent = sol.label;
+            btn.onclick = () => showCommunitySolution(idx, btn);
+            tabsContainer.appendChild(btn);
+        });
+
+        // Create editor
+        createEditor('community', otherSolutions[0].code, 'python');
+        updateCommunityHeader(0);
+    }
+
+    function showCommunitySolution(idx, btn) {
+        document.querySelectorAll('.community-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCommunityIdx = idx;
+
+        const sol = otherSolutions[idx];
+        editors['community'].setValue(sol.code);
+        updateCommunityHeader(idx);
+    }
+
+    function updateCommunityHeader(idx) {
+        const sol = otherSolutions[idx];
+        document.getElementById('community-user-label').textContent = sol.label;
+        document.getElementById('community-time').innerHTML =
+            '<i class="far fa-clock me-1"></i>' + sol.submitted_at;
+    }
+
+    // --- Reference Tab ---
+    function initReferenceTab() {
+        const langSelector = document.getElementById('ref-lang-selector');
+        if (!langSelector || Object.keys(refSolutions).length === 0) return;
+
+        let firstLang = null;
+        Object.keys(refSolutions).forEach((lang, idx) => {
+            if (idx === 0) firstLang = lang;
+            const btn = document.createElement('button');
+            btn.className = 'lang-btn' + (idx === 0 ? ' active' : '');
+            btn.textContent = langNames[lang] || lang;
+            btn.onclick = () => showRefLang(lang, btn);
+            langSelector.appendChild(btn);
+        });
+
+        if (firstLang) {
+            currentRefLang = firstLang;
+            const monacoLang = monacoLangMap[firstLang] || firstLang;
+            createEditor('reference', refSolutions[firstLang], monacoLang);
+            document.getElementById('ref-lang-label').textContent = langNames[firstLang] || firstLang;
+        }
+    }
+
+    function showRefLang(lang, btn) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRefLang = lang;
+
+        const monacoLang = monacoLangMap[lang] || lang;
+        const editor = editors['reference'];
+        monaco.editor.setModelLanguage(editor.getModel(), monacoLang);
+        editor.setValue(refSolutions[lang]);
+        document.getElementById('ref-lang-label').textContent = langNames[lang] || lang;
+    }
+
+    (function () {
+        const el = document.getElementById('sol-title-el');
+        const words = el.textContent.trim().split(' ');
+        if (words.length > 1) {
+            el.innerHTML = words[0] + ' <span class="text-gradient">' + words.slice(1).join(' ') + '</span>';
+        }
+    })();
+
+    // Django Messages as Toasts
+    document.addEventListener('DOMContentLoaded', function () {
+        const messageData = document.getElementById('django-messages-data');
+        if (messageData) {
+            Array.from(messageData.children).forEach(msgDiv => {
+                showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+            });
+        }
+    });
+
+    function showToast(message, type) {
+        const toastContainer = document.getElementById('toastContainer');
+        if (type === 'error') type = 'danger';
+        const bgClass = { 'success': 'text-bg-success', 'danger': 'text-bg-danger', 'warning': 'text-bg-warning', 'info': 'text-bg-info' }[type] || 'text-bg-primary';
+        const icon = { 'success': 'fas fa-check-circle', 'danger': 'fas fa-exclamation-circle', 'warning': 'fas fa-exclamation-triangle', 'info': 'fas fa-info-circle' }[type] || 'fas fa-bell';
+        const toastHtml = `<div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body"><i class="${icon} me-2"></i> ${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>`;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = toastHtml;
+        const toastElement = wrapper.firstElementChild;
+        toastContainer.appendChild(toastElement);
+        const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+        toast.show();
+        toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+    }
+</script>
+{% endblock %}

@@ -1461,6 +1461,105 @@ def course_catalog(request):
 
 
 @trace_span
+@login_required(login_url="login")
+def problem_solutions(request, course_id):
+    """View to display user's solution, other users' solutions, and reference solution for a problem."""
+    problem_file_id = request.GET.get('id')
+    logger.info(f"User {request.user.id} viewing solutions for problem {problem_file_id} (Course: {course_id})")
+
+    # 1. Validate enrollment
+    if not UserCourse.objects.filter(user=request.user, course_id=course_id).exists():
+        logger.warning(f"User {request.user.id} tried to view solutions for unenrolled course {course_id}")
+        return redirect("home")
+
+    # 2. Get problem
+    try:
+        problem = Problem.objects.get(file_name=problem_file_id)
+    except Problem.DoesNotExist:
+        logger.error(f"Problem not found: {problem_file_id}")
+        return HttpResponseNotFound("Problem not found")
+
+    # 3. Check user has solved this problem
+    user_submission = ProblemSubmission.objects.filter(
+        user=request.user,
+        problem=problem,
+        course_id=course_id,
+        status='SOLVED'
+    ).order_by('-submitted_at').first()
+
+    if not user_submission:
+        logger.info(f"User {request.user.id} hasn't solved problem {problem_file_id}, redirecting to solver")
+        return redirect(f"{reverse('problem-solver', kwargs={'course_id': course_id})}?id={problem_file_id}")
+
+    # 4. Get other users' solved submissions (up to 10)
+    other_submissions = ProblemSubmission.objects.filter(
+        problem=problem,
+        course_id=course_id,
+        status='SOLVED'
+    ).exclude(
+        user=request.user
+    ).select_related('user').order_by('-submitted_at')[:10]
+
+    other_solutions = []
+    for sub in other_submissions:
+        name = sub.user.get_full_name() or sub.user.username
+        other_solutions.append({
+            'label': name,
+            'code': sub.submitted_code,
+            'submitted_at': sub.submitted_at.strftime('%b %d, %Y %I:%M %p'),
+        })
+
+    # 5. Try to load reference solution from static JS file
+    reference_solutions = {}
+    try:
+        import os
+        static_file_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'static', 'problems', f'{problem_file_id}.js'
+        )
+        if os.path.exists(static_file_path):
+            with open(static_file_path, 'r') as f:
+                content_text = f.read()
+            
+            # Parse the solutions object from the JS file
+            # Look for "solutions": { ... } block
+            import re
+            solutions_match = re.search(
+                r'"solutions"\s*:\s*\{(.*?)\}\s*,?\s*\n\s*(?:"wrapCode"|$)',
+                content_text,
+                re.DOTALL
+            )
+            if solutions_match:
+                solutions_block = solutions_match.group(1)
+                # Extract each language's solution
+                lang_pattern = re.compile(
+                    r'"(\w[\w+]*?)"\s*:\s*`(.*?)`',
+                    re.DOTALL
+                )
+                for lang_match in lang_pattern.finditer(solutions_block):
+                    lang = lang_match.group(1)
+                    code = lang_match.group(2)
+                    # Unescape the template literal
+                    code = code.replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'").replace('\\"', '"')
+                    reference_solutions[lang] = code
+    except Exception as e:
+        logger.error(f"Error loading reference solution for {problem_file_id}: {str(e)}", exc_info=True)
+
+    context = {
+        'problem': problem,
+        'course_id': course_id,
+        'user_code': user_submission.submitted_code,
+        'user_submitted_at': user_submission.submitted_at.strftime('%b %d, %Y %I:%M %p'),
+        'other_solutions': json.dumps(other_solutions),
+        'other_solutions_count': len(other_solutions),
+        'reference_solutions': json.dumps(reference_solutions),
+        'has_reference': len(reference_solutions) > 0,
+    }
+
+    return render(request, "solutions.html", context)
+
+
+@trace_span
 def bulk_fetch_content_content(user, course, problem_ids):
     """Optimized bulk fetch using prefetch_related"""
     
