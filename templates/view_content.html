@@ -589,7 +589,7 @@
                             {% if progress.is_completed %}
                             Good job! You can move on to the next topic.
                             {% elif is_next_drip_locked %}
-                            The next content will be available on {{ next_unlock_date|timeuntil }}.
+                            The next content will be available in {{ next_unlock_date|timeuntil }}.
                             {% else %}
                             Finished reading? Click the button to track your progress.
                             {% endif %}
