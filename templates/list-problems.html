@@ -9,8 +9,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
 
   <style>
     /* =================================================================
@@ -47,33 +49,212 @@
     }
 
     /* Top Bar Styles */
-    .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
-    .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
-    .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
-    .top-bar-menu-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      z-index: 900;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      justify-content: space-between;
+    }
+
+    .top-bar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin: 0;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .top-bar-menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.2s ease;
+    }
+
+    .top-bar-menu-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
     /* Sidebar Styles */
-    .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-width); background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.08); z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; }
-    .sidebar.active { transform: translateX(0); }
-    .sidebar-overlay { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .sidebar-overlay.active { opacity: 1; visibility: visible; }
-    .sidebar-header { padding: 1rem; margin-bottom: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 10; display: flex; align-items: center; justify-content: center; }
-    .sidebar-header h3 { font-weight: 700; margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
-    .sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
-    .sidebar-menu { list-style: none; padding: 0; margin: 0; }
-    .sidebar-menu li { margin-bottom: 0.25rem; }
-    .sidebar-menu a { display: flex; align-items: center; padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
-    .sidebar-menu a:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
-    .sidebar-menu a.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
-    .sidebar-menu a i { margin-right: 0.75rem; width: 20px; text-align: center; }
-    .sidebar-footer { position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); background: rgba(15, 23, 42, 0.98); }
-    .sidebar-title { font-family: 'Playfair Display', serif; margin: 0; font-size: 1rem; }
-    .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
-    .sidebar-section { margin-bottom: 1.5rem; }
-    .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); margin: 1rem 0 0.5rem 1rem; font-weight: 600; }
-    .sidebar-submenu { list-style: none; padding-left: 1.5rem; margin: 0.25rem 0; }
-    .sidebar-submenu li { margin-bottom: 0.1rem; }
-    .sidebar-submenu a { padding: 0.5rem 1rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+    .sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-width);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      padding: 0;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-header {
+      padding: 1rem;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.98);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-header h3 {
+      font-weight: 700;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-menu a:hover {
+      color: white !important;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-menu a.active {
+      color: white !important;
+      background: rgba(37, 99, 235, 0.15);
+    }
+
+    .sidebar-menu a i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .sidebar-title {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .brand-highlight {
+      color: var(--primary-light);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 1rem 0 0.5rem 1rem;
+      font-weight: 600;
+    }
+
+    .sidebar-submenu {
+      list-style: none;
+      padding-left: 1.5rem;
+      margin: 0.25rem 0;
+    }
+
+    .sidebar-submenu li {
+      margin-bottom: 0.1rem;
+    }
+
+    .sidebar-submenu a {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
 
     /* =================================================================
        2. IMPROVED PREMIUM MAIN CONTENT STYLES
@@ -88,13 +269,13 @@
 
     /* Premium Card Design (Replaces Bootstrap Cards) */
     .premium-card {
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        overflow: hidden;
-        margin-bottom: 24px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+      margin-bottom: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .progress-card-header {
@@ -107,192 +288,344 @@
     }
 
     .progress-card-title {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #0f172a;
-        margin: 0;
-        letter-spacing: -0.02em;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      letter-spacing: -0.02em;
     }
 
     .progress-card-icon {
-        width: 42px;
-        height: 42px;
-        background: rgba(59, 130, 246, 0.1);
-        color: var(--primary);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
+      width: 42px;
+      height: 42px;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
     }
 
-    .progress-card-body { padding: 2rem; }
+    .progress-card-body {
+      padding: 2rem;
+    }
 
     /* Radial Chart Polish */
-    .radial-circle { width: 160px; height: 160px; position: relative; }
-    .circle-bg { stroke: #f1f5f9; stroke-width: 2.5; }
-    .circle-fill { stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3)); }
-    .radial-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.5rem; font-weight: 800; color: #0f172a; letter-spacing: -1px; }
-    .radial-total { font-size: 0.9rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+    .radial-circle {
+      width: 160px;
+      height: 160px;
+      position: relative;
+    }
+
+    .circle-bg {
+      stroke: #f1f5f9;
+      stroke-width: 2.5;
+    }
+
+    .circle-fill {
+      stroke: var(--primary);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3));
+    }
+
+    .radial-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -1px;
+    }
+
+    .radial-total {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
     /* New Modern Search Bar */
-    .search-container { position: relative; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); border-radius: 12px; }
-    .search-input {
-        padding: 0.8rem 1rem 0.8rem 2.8rem;
-        font-size: 0.95rem;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        background-color: white;
-        transition: all 0.2s;
+    .search-container {
+      position: relative;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
     }
-    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-    .search-icon-overlay { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+
+    .search-input {
+      padding: 0.8rem 1rem 0.8rem 2.8rem;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background-color: white;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-icon-overlay {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      pointer-events: none;
+    }
 
     /* Modern Filter Buttons */
     .filter-buttons .btn {
-        border-radius: 20px;
-        padding: 0.4rem 1.2rem;
-        font-weight: 600;
-        font-size: 0.85rem;
-        border: 1px solid #e2e8f0;
-        background: white;
-        color: #64748b;
-        transition: all 0.2s;
+      border-radius: 20px;
+      padding: 0.4rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #64748b;
+      transition: all 0.2s;
     }
-    .filter-buttons .btn:hover { background-color: #f1f5f9; color: #334155; }
+
+    .filter-buttons .btn:hover {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
     .filter-buttons .btn.active {
-        background-color: #0f172a;
-        color: white;
-        border-color: #0f172a;
-        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+      background-color: #0f172a;
+      color: white;
+      border-color: #0f172a;
+      box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
     }
 
     /* Premium Section Headers */
     .section-header {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-left: 4px solid var(--primary);
-        padding: 1.2rem 1.5rem;
-        border-radius: 12px;
-        margin: 1.5rem 0 0.5rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .section-header:hover { transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .section-header h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; color: #1e293b; margin: 0; font-weight: 700; }
-    .section-toggle-icon { color: #cbd5e1; transition: transform 0.3s; }
-    .section-header.active .section-toggle-icon { transform: rotate(180deg); }
+
+    .section-header:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-header h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      color: #1e293b;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .section-toggle-icon {
+      color: #cbd5e1;
+      transition: transform 0.3s;
+    }
+
+    .section-header.active .section-toggle-icon {
+      transform: rotate(180deg);
+    }
 
     /* Premium Table Styling */
     .problems-table-wrapper {
-        background: white;
-        border-radius: 0 0 12px 12px;
-        border: 1px solid #e2e8f0;
-        border-top: none;
-        overflow: hidden;
-        margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 0 0 12px 12px;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
     }
-    
-    .table { margin-bottom: 0; }
+
+    .table {
+      margin-bottom: 0;
+    }
+
     .table thead th {
-        background-color: #f8fafc;
-        color: #64748b;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #e2e8f0;
+      background-color: #f8fafc;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
     }
+
     .table tbody td {
-        padding: 1rem 1.5rem;
-        vertical-align: middle;
-        border-bottom: 1px solid #f1f5f9;
-        color: #334155;
-        font-size: 0.95rem;
+      padding: 1rem 1.5rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      font-size: 0.95rem;
     }
-    .table tbody tr:last-child td { border-bottom: none; }
-    .table tbody tr:hover { background-color: #fcfcfc; }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table tbody tr:hover {
+      background-color: #fcfcfc;
+    }
 
     /* Difficulty & Status Badges */
     .difficulty {
-        font-weight: 600;
-        font-size: 0.75rem;
-        padding: 6px 12px;
-        border-radius: 6px;
-        display: inline-block;
-        min-width: 80px;
-        text-align: center;
-        letter-spacing: 0.3px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      min-width: 80px;
+      text-align: center;
+      letter-spacing: 0.3px;
     }
-    .easy { background-color: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
-    .medium { background-color: #fffbeb; color: #d97706; border: 1px solid #fef3c7; }
-    .hard { background-color: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+
+    .easy {
+      background-color: #ecfdf5;
+      color: #059669;
+      border: 1px solid #d1fae5;
+    }
+
+    .medium {
+      background-color: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fef3c7;
+    }
+
+    .hard {
+      background-color: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fee2e2;
+    }
 
     /* Status Indicator (Dot) */
     .status-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        display: inline-block;
-        cursor: pointer;
-        position: relative;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
     }
+
     .status-dot::after {
-        content: '';
-        position: absolute;
-        top: -4px; left: -4px; right: -4px; bottom: -4px;
-        border-radius: 50%;
-        border: 2px solid transparent;
-        transition: border-color 0.2s;
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
     }
-    .status-dot:hover::after { border-color: rgba(0,0,0,0.1); }
-    
-    .status-solved { background-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
-    .status-attempted { background-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); }
-    .status-unsolved { background-color: #e2e8f0; border: 2px solid #cbd5e1; }
+
+    .status-dot:hover::after {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .status-solved {
+      background-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .status-attempted {
+      background-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .status-unsolved {
+      background-color: #e2e8f0;
+      border: 2px solid #cbd5e1;
+    }
 
     /* Solve Button */
     .btn-solve {
-        background-color: #0f172a;
-        color: white;
-        border-radius: 8px;
-        padding: 0.5rem 1.2rem;
-        font-size: 0.85rem;
-        font-weight: 500;
-        transition: all 0.2s;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+      background-color: #0f172a;
+      color: white;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
+
     .btn-solve:hover {
-        background-color: var(--primary);
-        color: white;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
     }
 
     /* Responsive Adjustments */
     @media (min-width: 992px) {
-      .top-bar { display: none; }
-      .sidebar { top: 0; height: 100vh; transform: translateX(0); }
-      .sidebar-overlay { display: none; }
-      .main-content { margin-left: var(--sidebar-width); padding-top: 2rem; }
+      .top-bar {
+        display: none;
+      }
+
+      .sidebar {
+        top: 0;
+        height: 100vh;
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay {
+        display: none;
+      }
+
+      .main-content {
+        margin-left: var(--sidebar-width);
+        padding-top: 2rem;
+      }
     }
 
     @media (max-width: 768px) {
-      .main-content { padding: 1rem; margin-top: 56px; }
-      .progress-card-body { padding: 1.5rem; }
-      .radial-circle { width: 140px; height: 140px; }
-      .radial-value { font-size: 2rem; }
-      .filter-buttons { overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
-      .section-header { padding: 1rem; }
-      .section-header h3 { font-size: 1rem; }
+      .main-content {
+        padding: 1rem;
+        margin-top: 56px;
+      }
+
+      .progress-card-body {
+        padding: 1.5rem;
+      }
+
+      .radial-circle {
+        width: 140px;
+        height: 140px;
+      }
+
+      .radial-value {
+        font-size: 2rem;
+      }
+
+      .filter-buttons {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+      }
+
+      .section-header {
+        padding: 1rem;
+      }
+
+      .section-header h3 {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -324,7 +657,7 @@
           <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course Content</a></li>
           <li><a href="#" class="active"><i class="fas fa-list-check"></i> Problem List</a></li>
           <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
-      </ul>
+        </ul>
       </div>
 
       {% if not is_freemium %}
@@ -335,14 +668,16 @@
           {% if section.has_submenu %}
           <li class="has-submenu">
             <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
-              <i class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              <i
+                class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
               {{ section.title }}
             </a>
             <ul class="sidebar-submenu">
               {% for content in section.contents %}
               <li>
                 <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}">
-                  <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                  <i
+                    class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                   {{ content.title }}
                 </a>
               </li>
@@ -352,7 +687,8 @@
           {% else %}
           <li>
             <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
-              <i class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+              <i
+                class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
               {{ section.contents.0.title }}
             </a>
           </li>
@@ -375,8 +711,10 @@
         <div class="premium-card position-relative">
 
           {% if is_freemium %}
-          <div style="position: absolute; z-index: 10; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(4px);">
-            <div class="text-center p-4" style="background-color: white; border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+          <div
+            style="position: absolute; z-index: 10; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(4px);">
+            <div class="text-center p-4"
+              style="background-color: white; border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
               <i class="fas fa-lock fa-2x mb-3 text-secondary"></i>
               <h5 class="mb-2 fw-bold text-dark">Premium Analytics</h5>
               <p class="text-muted small mb-3">Upgrade to track detailed progress</p>
@@ -400,8 +738,10 @@
               <div class="col-lg-4 border-end-lg pe-lg-5 mb-4 mb-lg-0 d-flex flex-column align-items-center">
                 <div class="radial-circle">
                   <svg viewBox="0 0 36 36" style="width:100%; height:100%;">
-                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
-                    <path class="circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                    <path class="circle-bg"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
+                    <path class="circle-fill" stroke-dasharray="0, 100"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" />
                   </svg>
                   <div class="position-absolute top-50 start-50 translate-middle text-center">
                     <div class="radial-value" id="total-problems-count">0</div>
@@ -414,31 +754,40 @@
                 <div class="d-flex flex-column gap-4">
                   <div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-success bg-opacity-10 text-success me-2">Easy</span></span>
-                        <span class="text-muted small fw-bold"><span id="easy-count">0</span> / <span id="easy-total">0</span></span>
+                      <span class="fw-semibold text-dark fs-6"><span
+                          class="badge bg-success bg-opacity-10 text-success me-2">Easy</span></span>
+                      <span class="text-muted small fw-bold"><span id="easy-count">0</span> / <span
+                          id="easy-total">0</span></span>
                     </div>
                     <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
-                        <div id="easy-progress-bar" class="progress-bar bg-success" style="width: 0%; border-radius: 4px;"></div>
+                      <div id="easy-progress-bar" class="progress-bar bg-success"
+                        style="width: 0%; border-radius: 4px;"></div>
                     </div>
                   </div>
 
                   <div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-warning bg-opacity-10 text-warning me-2">Medium</span></span>
-                        <span class="text-muted small fw-bold"><span id="medium-count">0</span> / <span id="medium-total">0</span></span>
+                      <span class="fw-semibold text-dark fs-6"><span
+                          class="badge bg-warning bg-opacity-10 text-warning me-2">Medium</span></span>
+                      <span class="text-muted small fw-bold"><span id="medium-count">0</span> / <span
+                          id="medium-total">0</span></span>
                     </div>
                     <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
-                        <div id="medium-progress-bar" class="progress-bar bg-warning" style="width: 0%; border-radius: 4px;"></div>
+                      <div id="medium-progress-bar" class="progress-bar bg-warning"
+                        style="width: 0%; border-radius: 4px;"></div>
                     </div>
                   </div>
 
                   <div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="fw-semibold text-dark fs-6"><span class="badge bg-danger bg-opacity-10 text-danger me-2">Hard</span></span>
-                        <span class="text-muted small fw-bold"><span id="hard-count">0</span> / <span id="hard-total">0</span></span>
+                      <span class="fw-semibold text-dark fs-6"><span
+                          class="badge bg-danger bg-opacity-10 text-danger me-2">Hard</span></span>
+                      <span class="text-muted small fw-bold"><span id="hard-count">0</span> / <span
+                          id="hard-total">0</span></span>
                     </div>
                     <div class="progress" style="height: 8px; background-color: #f1f5f9; border-radius: 4px;">
-                        <div id="hard-progress-bar" class="progress-bar bg-danger" style="width: 0%; border-radius: 4px;"></div>
+                      <div id="hard-progress-bar" class="progress-bar bg-danger" style="width: 0%; border-radius: 4px;">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -450,21 +799,21 @@
 
       <div class="d-flex flex-column flex-md-row gap-3 mb-4 justify-content-between align-items-md-center">
         <div class="search-container flex-grow-1" style="max-width: 400px;">
-            <i class="fas fa-search search-icon-overlay"></i>
-            <input type="text" class="form-control search-input" id="searchInput" placeholder="Search problems...">
+          <i class="fas fa-search search-icon-overlay"></i>
+          <input type="text" class="form-control search-input" id="searchInput" placeholder="Search problems...">
         </div>
-        
+
         <div class="filter-buttons d-flex gap-2">
-            <button class="btn active" data-filter="all">All</button>
-            <button class="btn" data-filter="easy">Easy</button>
-            <button class="btn" data-filter="medium">Medium</button>
-            <button class="btn" data-filter="hard">Hard</button>
-            <button class="btn" id="resetBtn"><i class="fas fa-undo me-1"></i> Reset</button>
+          <button class="btn active" data-filter="all">All</button>
+          <button class="btn" data-filter="easy">Easy</button>
+          <button class="btn" data-filter="medium">Medium</button>
+          <button class="btn" data-filter="hard">Hard</button>
+          <button class="btn" id="resetBtn"><i class="fas fa-undo me-1"></i> Reset</button>
         </div>
       </div>
 
       <div id="sections-container">
-        </div>
+      </div>
     </div>
   </div>
 
@@ -560,7 +909,7 @@
 
       const getSectionState = (sectionId) => {
         const sectionStates = JSON.parse(localStorage.getItem('sectionStates') || '{}');
-        return sectionStates[sectionId] || false; 
+        return sectionStates[sectionId] || false;
       };
 
       const clearSectionStates = () => { localStorage.removeItem('sectionStates'); };
@@ -634,7 +983,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-3">
-                                    ${problem.solution && problem.solution !== '#' ? `<a href="${problem.solution}" class="text-secondary" title="Solution" target="_blank"><i class="fas fa-code"></i></a>` : '<span class="text-muted opacity-25"><i class="fas fa-code"></i></span>'}
+                                    ${problem.status === 'solved' ? `<a href="{% url 'problem-solutions' course_id %}?id=${problem.id}" class="text-success" title="View Solutions"><i class="fas fa-code"></i></a>` : '<span class="text-muted opacity-25"><i class="fas fa-code"></i></span>'}
                                     ${problem.video && problem.video !== '#' ? `<a href="${problem.video}" class="text-danger" title="Video" target="_blank"><i class="fab fa-youtube"></i></a>` : '<span class="text-muted opacity-25"><i class="fab fa-youtube"></i></span>'}
                                 </div>
                             </td>
@@ -657,41 +1006,41 @@
 
         // Add Notes
         ProblemData.sections.filter(s => s.type === "notes").forEach(note => {
-            const noteHTML = `
+          const noteHTML = `
                 <div class="premium-card p-4 mb-4 border-start border-4 border-warning">
                     <h4 class="fw-bold mb-2 text-dark"><i class="fas fa-sticky-note text-warning me-2"></i>${note.title}</h4>
                     <div class="text-secondary">${note.content || ''}</div>
                 </div>
             `;
-            container.insertAdjacentHTML('beforeend', noteHTML);
+          container.insertAdjacentHTML('beforeend', noteHTML);
         });
 
         // Add Event Listeners
         document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                const isHidden = content.style.display === 'none';
-                content.style.display = isHidden ? 'block' : 'none';
-                this.classList.toggle('active');
-                saveSectionState(this.dataset.sectionId, isHidden);
-            });
+          header.addEventListener('click', function () {
+            const content = this.nextElementSibling;
+            const isHidden = content.style.display === 'none';
+            content.style.display = isHidden ? 'block' : 'none';
+            this.classList.toggle('active');
+            saveSectionState(this.dataset.sectionId, isHidden);
+          });
         });
 
         document.querySelectorAll('.status-dot').forEach(status => {
-            status.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const pid = status.dataset.problemId;
-                let current = 'unsolved';
-                if(status.classList.contains('status-attempted')) current = 'attempted';
-                if(status.classList.contains('status-solved')) current = 'solved';
+          status.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const pid = status.dataset.problemId;
+            let current = 'unsolved';
+            if (status.classList.contains('status-attempted')) current = 'attempted';
+            if (status.classList.contains('status-solved')) current = 'solved';
 
-                const next = current === 'unsolved' ? 'attempted' : current === 'attempted' ? 'solved' : 'unsolved';
-                
-                if(ProblemData.updateProblemStatus(pid, next)) {
-                    status.className = `status-dot status-${next}`;
-                    UIController.updateProgressStats();
-                }
-            });
+            const next = current === 'unsolved' ? 'attempted' : current === 'attempted' ? 'solved' : 'unsolved';
+
+            if (ProblemData.updateProblemStatus(pid, next)) {
+              status.className = `status-dot status-${next}`;
+              UIController.updateProgressStats();
+            }
+          });
         });
       };
 
@@ -701,26 +1050,26 @@
 
         // Radial
         const circle = document.querySelector('.circle-fill');
-        if(circle) {
-            const r = 15.9155;
-            const c = 2 * Math.PI * r;
-            const val = (stats.total.percent / 100) * c;
-            circle.style.strokeDasharray = `${val} ${c}`;
+        if (circle) {
+          const r = 15.9155;
+          const c = 2 * Math.PI * r;
+          const val = (stats.total.percent / 100) * c;
+          circle.style.strokeDasharray = `${val} ${c}`;
         }
         document.querySelector(elems.total.count).textContent = stats.total.count;
 
         // Bars
         ['easy', 'medium', 'hard'].forEach(diff => {
-            document.querySelector(elems[diff].count).textContent = stats[diff].count;
-            document.querySelector(elems[diff].total).textContent = stats[diff].total;
-            document.querySelector(elems[diff].bar).style.width = `${stats[diff].percent}%`;
+          document.querySelector(elems[diff].count).textContent = stats[diff].count;
+          document.querySelector(elems[diff].total).textContent = stats[diff].total;
+          document.querySelector(elems[diff].bar).style.width = `${stats[diff].percent}%`;
         });
       };
 
       const updateActiveFilter = (activeFilter) => {
         document.querySelectorAll(DOMStrings.filterButtons).forEach(btn => {
-            btn.classList.remove('active');
-            if(btn.dataset.filter === activeFilter) btn.classList.add('active');
+          btn.classList.remove('active');
+          if (btn.dataset.filter === activeFilter) btn.classList.add('active');
         });
       };
 
@@ -734,21 +1083,21 @@
     const AppController = ((ProblemData, UIController) => {
       const setupEventListeners = () => {
         document.querySelector(UIController.DOMStrings.searchInput).addEventListener('input', updateView);
-        
+
         document.querySelectorAll(UIController.DOMStrings.filterButtons).forEach(btn => {
-            if(btn.id !== 'resetBtn') {
-                btn.addEventListener('click', () => {
-                    UIController.updateActiveFilter(btn.dataset.filter);
-                    updateView();
-                });
-            }
+          if (btn.id !== 'resetBtn') {
+            btn.addEventListener('click', () => {
+              UIController.updateActiveFilter(btn.dataset.filter);
+              updateView();
+            });
+          }
         });
 
         document.querySelector(UIController.DOMStrings.resetBtn).addEventListener('click', () => {
-            UIController.clearSearch();
-            UIController.updateActiveFilter('all');
-            UIController.clearSectionStates();
-            updateView();
+          UIController.clearSearch();
+          UIController.updateActiveFilter('all');
+          UIController.clearSectionStates();
+          updateView();
         });
       };
 
@@ -813,13 +1162,13 @@
     });
 
     document.addEventListener('DOMContentLoaded', AppController.init);
- 
+
     function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
+      const loaderId = 'preloader';
+
+      // 1. Inject Styles & HTML if they don't exist
+      if (!document.getElementById(loaderId)) {
+        const css = `
                 #${loaderId} { 
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
                     display: flex; justify-content: center; align-items: center; 
@@ -835,66 +1184,103 @@
                 }
                 @keyframes spin { to { transform: rotate(360deg); } }
             `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
+        const style = document.createElement('style');
+        style.innerHTML = css;
+        document.head.appendChild(style);
+
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = loaderId;
+        loaderDiv.innerHTML = '<div class="spinner"></div>';
+        document.body.prepend(loaderDiv);
+      }
+
+      const loader = document.getElementById(loaderId);
+
+      // 2. Define Actions
+      const show = () => loader.classList.add('loading');
+      const hide = () => loader.classList.remove('loading');
+
+      // 3. Event: Page Load (Hide loader when content is ready)
+      if (document.readyState === "complete") {
+        hide();
+      } else {
+        show(); // Ensure it's shown immediately while loading
+        window.addEventListener('load', hide);
+      }
+
+      // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) hide();
+      });
+
+      // 5. Event: Link Clicks (Show loader only for actual navigation)
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+
+        // Check if it is a valid link
+        if (link) {
+          const href = link.getAttribute('href');
+          const target = link.getAttribute('target');
+
+          // Logic: Don't load if:
+          // 1. No href
+          // 2. It's an anchor link (#section)
+          // 3. It's a javascript: call
+          // 4. It opens in a new tab (_blank)
+          // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+          if (
+            href &&
+            !href.startsWith('#') &&
+            !href.startsWith('javascript:') &&
+            target !== '_blank' &&
+            !e.ctrlKey && !e.metaKey
+          ) {
+            show();
+          }
         }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
-            }
-        });
+      });
     }
-    
+
     // Call it immediately
     initDynamicLoader();
-    
-    </script>
+
+  </script>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
+
+  {% if messages %}
+  <div id="django-messages-data" style="display: none;">
+    {% for message in messages %}
+    <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const messageData = document.getElementById('django-messages-data');
+      if (messageData) {
+        Array.from(messageData.children).forEach(msgDiv => {
+          showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+        });
+      }
+    });
+
+    function showToast(message, type) {
+      const toastContainer = document.getElementById('toastContainer');
+      if (type === 'error') type = 'danger';
+      const bgClass = { 'success': 'text-bg-success', 'danger': 'text-bg-danger', 'warning': 'text-bg-warning', 'info': 'text-bg-info' }[type] || 'text-bg-primary';
+      const icon = { 'success': 'fas fa-check-circle', 'danger': 'fas fa-exclamation-circle', 'warning': 'fas fa-exclamation-triangle', 'info': 'fas fa-info-circle' }[type] || 'fas fa-bell';
+      const toastHtml = `<div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true"><div class="d-flex"><div class="toast-body"><i class="${icon} me-2"></i> ${message}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>`;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = toastHtml;
+      const toastElement = wrapper.firstElementChild;
+      toastContainer.appendChild(toastElement);
+      const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+      toast.show();
+      toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+    }
+  </script>
 </body>
+
 </html>
