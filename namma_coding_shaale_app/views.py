@@ -1004,8 +1004,8 @@ def my_courses(request):
         })
 
     # 2. Current Score (difficulty-based)
-    # Problems: Easy=5, Medium=10, Hard=20
-    difficulty_points = {'EASY': 5, 'MEDIUM': 10, 'HARD': 20}
+    # Problems: Easy=10, Medium=20, Hard=30
+    difficulty_points = {'EASY': 10, 'MEDIUM': 20, 'HARD': 30}
     solved_by_difficulty = ProblemSubmission.objects.filter(
         user=user, status='SOLVED'
     ).values('problem__difficulty').annotate(
@@ -1020,13 +1020,31 @@ def my_courses(request):
     quizzes_passed = QuizSubmission.objects.filter(user=user, passed=True).count()
     quizzes_score = quizzes_passed * 10
     
-    # Lessons: 5 pts each
+    # Lessons: 5 pts each (Includes TEXT and VIDEO)
     total_completed_modules = UserContentProgress.objects.filter(
-        user=user, is_completed=True
-    ).exclude(content__type='PROBLEM').count()
+        user=user, is_completed=True, content__type__in=['TEXT', 'VIDEO']
+    ).count()
     lessons_score = total_completed_modules * 5
     
-    current_score = problems_score + quizzes_score + lessons_score
+    # Active Days: 5 pts each
+    all_sub_dates = set(
+        ProblemSubmission.objects.filter(user=user).values_list('submitted_at__date', flat=True)
+    )
+    all_comp_dates = set(
+        UserContentProgress.objects.filter(
+            user=user, is_completed=True
+        ).values_list('completed_at__date', flat=True)
+    )
+    all_access_dates = set(
+        UserContentProgress.objects.filter(user=user).values_list('last_accessed__date', flat=True)
+    )
+    
+    all_dates = all_sub_dates | all_comp_dates | all_access_dates
+    sorted_dates = sorted([d for d in all_dates if d is not None])
+    
+    active_days_score = len(sorted_dates) * 5
+
+    current_score = problems_score + quizzes_score + lessons_score + active_days_score
     
     # Weekly growth
     week_start = today - timedelta(days=today.weekday())  # Monday
@@ -1053,25 +1071,7 @@ def my_courses(request):
     else:
         weekly_growth = 0
 
-    # 3. Weekly Leaderboard (Top 10)
-    leaderboard_qs = ProblemSubmission.objects.filter(
-        status='SOLVED',
-        submitted_at__date__gte=week_start
-    ).values('user__id', 'user__first_name', 'user__last_name', 'user__username').annotate(
-        score=Count('problem', distinct=True)
-    ).order_by('-score')[:10]
-    
-    leaderboard = []
-    for idx, entry in enumerate(leaderboard_qs):
-        name = f"{entry['user__first_name']} {entry['user__last_name']}".strip()
-        if not name:
-            name = entry['user__username']
-        leaderboard.append({
-            'rank': idx + 1,
-            'name': name,
-            'score': entry['score'] * 10,
-            'is_current_user': entry['user__id'] == user.id,
-        })
+
 
     # 4. Streak
     all_sub_dates = set(
@@ -1116,8 +1116,13 @@ def my_courses(request):
         'courses': courses_data,
         'activity_dates': activity_dates,
         'current_score': current_score,
+        'score_breakdown': {
+            'problems': problems_score,
+            'quizzes': quizzes_score,
+            'lessons': lessons_score,
+            'active_days': active_days_score
+        },
         'weekly_growth': weekly_growth,
-        'leaderboard': leaderboard,
         'current_streak': current_streak,
         'today_problems': today_problems,
         'today_modules': today_modules,
@@ -2679,6 +2684,8 @@ def calculate_leaderboard_data(timeframe='overall'):
 
     now = timezone.localtime(timezone.now())
     start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    start_of_week = now - timedelta(days=now.weekday())
+    start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
 
     for user in users:
         points = 0
@@ -2699,14 +2706,20 @@ def calculate_leaderboard_data(timeframe='overall'):
             # Ideally we'd have an ActivityLog. 
             # For now, we use what we have: if last_accessed is this month, it contributes a day.
             date_filter_access = Q(last_accessed__gte=start_of_month)
+        elif timeframe == 'weekly':
+            date_filter_submission = Q(submitted_at__gte=start_of_week)
+            date_filter_progress = Q(completed_at__gte=start_of_week)
+            date_filter_quiz = Q(completed_at__gte=start_of_week)
+            date_filter_access = Q(last_accessed__gte=start_of_week)
 
-        # 1. Text Content: 5 points
-        text_count = UserContentProgress.objects.filter(
+        # 1. Text/Video Content: 5 points
+        lesson_count = UserContentProgress.objects.filter(
             user=user, 
             is_completed=True, 
-            content__type='TEXT'
+            content__type__in=['TEXT', 'VIDEO']
         ).filter(date_filter_progress).count()
-        points += text_count * 5
+        lesson_score = lesson_count * 5
+        points += lesson_score
 
         # 2. Quiz Content: 10 points
         # Using QuizSubmission for passed quizzes
@@ -2714,7 +2727,8 @@ def calculate_leaderboard_data(timeframe='overall'):
             user=user, 
             passed=True
         ).filter(date_filter_quiz).count()
-        points += quiz_count * 10
+        quiz_score = quiz_count * 10
+        points += quiz_score
 
         # 3. Problems Content (easy, medium, hard): 10/20/30 points
         # Only count SOLVED problems. Avoid duplicates (same problem solved multiple times).
@@ -2730,14 +2744,17 @@ def calculate_leaderboard_data(timeframe='overall'):
             if sub.problem.id not in unique_solved:
                 unique_solved[sub.problem.id] = sub.problem.difficulty
 
+        problem_score = 0
         for pid, difficulty in unique_solved.items():
             diff_upper = difficulty.upper()
             if diff_upper == 'EASY':
-                points += 10
+                problem_score += 10
             elif diff_upper == 'MEDIUM':
-                points += 20
+                problem_score += 20
             elif diff_upper == 'HARD':
-                points += 30
+                problem_score += 30
+        
+        points += problem_score
 
         # 4. User Streak / Active Days: 5 points per day
         # Collect unique dates from submissions, completions, and last_accessed
@@ -2763,7 +2780,8 @@ def calculate_leaderboard_data(timeframe='overall'):
         valid_dates = {d for d in unique_dates if d is not None}
         
         active_days = len(valid_dates)
-        points += active_days * 5
+        active_days_score = active_days * 5
+        points += active_days_score
 
         # --- Prepare Data ---
         leaderboard_data.append({
@@ -2771,6 +2789,12 @@ def calculate_leaderboard_data(timeframe='overall'):
             'username': user.username,
             'name': user.get_full_name() or user.username,
             'points': points,
+            'breakdown': {
+                'lessons': lesson_score,
+                'quizzes': quiz_score,
+                'problems': problem_score,
+                'active_days': active_days_score
+            },
             'avatar_url': f"https://i.pravatar.cc/150?u={user.id}", # Consistent avatar based on ID
             'rank': 0
         })
@@ -2789,10 +2813,12 @@ def calculate_leaderboard_data(timeframe='overall'):
 def leaderboard(request):
     logger.info(f"Leaderboard accessed by {request.user.username if request.user.is_authenticated else 'Guest'}")
     
+    weekly_leaders = calculate_leaderboard_data('weekly')
     monthly_leaders = calculate_leaderboard_data('monthly')
     overall_leaders = calculate_leaderboard_data('overall')
     
     context = {
+        'weekly_leaders': weekly_leaders,
         'monthly_leaders': monthly_leaders,
         'overall_leaders': overall_leaders
     }
