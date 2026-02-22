@@ -5,6 +5,7 @@ urlpatterns = [
     path("",views.home,name="home"),
 
     path('login', views.login, name='login'),
+    path('password-login', views.password_login, name='password-login'),
     path('verify-otp', views.login, name='verify-otp'),  # Same view handles both
     path('resend-otp', views.resend_otp, name='resend-otp'),
     path('logout', views.logout, name='logout'),
