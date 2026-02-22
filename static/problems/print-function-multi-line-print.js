@@ -1,9 +1,9 @@
 module.exports = {
-    "title": "Multi-Line Introduction",
-    "difficulty": "easy",
-    "acceptance": "99.3%",
-  
-    "description": `
+  "title": "Multi-Line Introduction",
+  "difficulty": "easy",
+  "acceptance": "99.3%",
+
+  "description": `
       <p>Write a program that prints three lines of personal information: your name, your age, and your favorite color. Each piece of information should appear on a separate line.</p>
       <p><b>Requirements:</b></p>
       <ul class="p-0 ">
@@ -14,8 +14,8 @@ module.exports = {
       </ul>
       <p>This problem teaches how to use multiple print statements and understand automatic line breaks in output.</p>
     `,
-  
-    "examples": `
+
+  "examples": `
       <h3>Example</h3>
       <p>The output should look like:</p>
       <pre class="constraints">
@@ -29,8 +29,8 @@ Blue</pre>
         <li>Favorite Color: Blue</li>
       </ul>
     `,
-  
-    "conditions": `
+
+  "conditions": `
       <ul>
         <li>Must use exactly three print statements</li>
         <li>Output must be on three separate lines</li>
@@ -38,38 +38,47 @@ Blue</pre>
         <li>Must use the specific values: "John", "25", "Blue"</li>
       </ul>
     `,
-  
-    "testCases": [
-      { "id": 1, "input": [], "expected": "John\n25\nBlue", "stdinput": "" },
-    ],
-  
-    "templates": {
-      "python": `print("John")\nprint("25")\nprint("Blue")`,
-      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("John");\n        System.out.println("25");\n        System.out.println("Blue");\n    }\n}`,
-      "javascript": `console.log("John");\nconsole.log("25");\nconsole.log("Blue");`,
-      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "John" << std::endl;\n    std::cout << "25" << std::endl;\n    std::cout << "Blue" << std::endl;\n    return 0;\n}`
-    },
 
-  
-    "solutions": {
-      "python": `print("John")\nprint("25")\nprint("Blue")`,
-      "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("John");\n        System.out.println("25");\n        System.out.println("Blue");\n    }\n}`,
-      "javascript": `console.log("John");\nconsole.log("25");\nconsole.log("Blue");`,
-      "c++": `#include <iostream>\n\nint main() {\n    std::cout << "John" << std::endl;\n    std::cout << "25" << std::endl;\n    std::cout << "Blue" << std::endl;\n    return 0;\n}`
-    },
-  
-    "wrapCode": function(lang, userCode, input) {
-      switch(lang) {
-        case 'python':
-          return `${userCode}`;
-        case 'java':
-          return userCode;
-        case 'javascript':
-          return `${userCode}`;
-        case 'c++':
-          return userCode;
-        default:
-          return userCode;
-      }
+  "testCases": [
+    { "id": 1, "input": [], "expected": "John\n25\nBlue", "stdinput": "" },
+  ],
+
+  "templates": {
+    "python": `# Write your code here\n# Make sure to print the values using three print statements`,
+    "java": `public class Main {
+    public static void main(String[] args) {
+        // Write your code here
+    }
+}`,
+    "javascript": `// Write your code here`,
+    "c++": `#include <iostream>
+
+int main() {
+    // Write your code here
+    return 0;
+}`
+  },
+
+
+  "solutions": {
+    "python": `print("John")\nprint("25")\nprint("Blue")`,
+    "java": `public class Main {\n    public static void main(String[] args) {\n        System.out.println("John");\n        System.out.println("25");\n        System.out.println("Blue");\n    }\n}`,
+    "javascript": `console.log("John");\nconsole.log("25");\nconsole.log("Blue");`,
+    "c++": `#include <iostream>\n\nint main() {\n    std::cout << "John" << std::endl;\n    std::cout << "25" << std::endl;\n    std::cout << "Blue" << std::endl;\n    return 0;\n}`
+  },
+
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
+      case 'python':
+        return `${userCode}`;
+      case 'java':
+        return userCode;
+      case 'javascript':
+        return `${userCode}`;
+      case 'c++':
+        return userCode;
+      default:
+        return userCode;
     }
   }
+}
