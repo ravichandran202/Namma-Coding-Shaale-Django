@@ -68,10 +68,10 @@ Output: Isosceles</pre>
   ],
 
   "templates": {
-    "python": "a = int(input())\nb = int(input())\nc = int(input())\n\nif a == b == c:\n    print(\"Equilateral\")\nelif a == b or b == c or a == c:\n    print(\"Isosceles\")\nelse:\n    print(\"Scalene\")",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        \n        if (a == b && b == c) {\n            System.out.println(\"Equilateral\");\n        } else if (a == b || b == c || a == c) {\n            System.out.println(\"Isosceles\");\n        } else {\n            System.out.println(\"Scalene\");\n        }\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 3) {\n        const [a, b, c] = input;\n        if (a === b && b === c) {\n            console.log(\"Equilateral\");\n        } else if (a === b || b === c || a === c) {\n            console.log(\"Isosceles\");\n        } else {\n            console.log(\"Scalene\");\n        }\n        readline.close();\n    }\n});",
-    "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    if (a == b && b == c) {\n        std::cout << \"Equilateral\" << std::endl;\n    } else if (a == b || b == c || a == c) {\n        std::cout << \"Isosceles\" << std::endl;\n    } else {\n        std::cout << \"Scalene\" << std::endl;\n    }\n    return 0;\n}"
+    "python": "a = int(input())\nb = int(input())\nc = int(input())\n\n# TODO: Classify the triangle and print the result\n# Equilateral, Isosceles, or Scalene\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        \n        // TODO: Classify the triangle and print the result\n        // Equilateral, Isosceles, or Scalene\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 3) {\n        const [a, b, c] = input;\n        \n        // TODO: Classify the triangle and print the result\n        // Equilateral, Isosceles, or Scalene\n        \n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    // TODO: Classify the triangle and print the result\n    // Equilateral, Isosceles, or Scalene\n    \n    return 0;\n}"
   },
 
 
@@ -82,8 +82,8 @@ Output: Isosceles</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    if (a == b && b == c) {\n        std::cout << \"Equilateral\" << std::endl;\n    } else if (a == b || b == c || a == c) {\n        std::cout << \"Isosceles\" << std::endl;\n    } else {\n        std::cout << \"Scalene\" << std::endl;\n    }\n    return 0;\n}"
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':

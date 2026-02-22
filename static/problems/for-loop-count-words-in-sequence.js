@@ -36,10 +36,10 @@ Output: 2</pre>
   ],
 
   "templates": {
-    "python": "s = input().strip()\ncount = 1\nfor ch in s:\n    if ch == ' ':\n        count += 1\nprint(count)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine().trim();\n        int count = 1;\n        for (int i = 0; i < s.length(); i++) {\n            if (s.charAt(i) == ' ') {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const s = input.trim();\n    let count = 1;\n    for (let i = 0; i < s.length; i++) {\n        if (s[i] === ' ') {\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
-    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    int count = 1;\n    for (char ch : s) {\n        if (ch == ' ') {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+    "python": "text = input()\n\n# TODO: Count the number of words in the sentence and print the count\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String text = scanner.nextLine();\n        \n        // TODO: Count the number of words in the sentence and print the count\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    \n    // TODO: Count the number of words in the sentence and print the count\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string text;\n    getline(cin, text);\n    \n    // TODO: Count the number of words in the sentence and print the count\n    \n    return 0;\n}"
   },
 
 

@@ -50,10 +50,10 @@ Output: 1</pre>
   ],
 
   "templates": {
-    "python": "n = int(input())\ncount = 0\nif n == 0:\n    count = 1\nelse:\n    n = abs(n)\n    while n > 0:\n        n //= 10\n        count += 1\nprint(count)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int count = 0;\n        \n        if (n == 0) {\n            count = 1;\n        } else {\n            n = Math.abs(n);\n            while (n > 0) {\n                n /= 10;\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    let num = parseInt(n);\n    let count = 0;\n    \n    if (num === 0) {\n        count = 1;\n    } else {\n        num = Math.abs(num);\n        while (num > 0) {\n            num = Math.floor(num / 10);\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
-    "c++": "#include <iostream>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int count = 0;\n    \n    if (n == 0) {\n        count = 1;\n    } else {\n        n = abs(n);\n        while (n > 0) {\n            n /= 10;\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+    "python": "n = int(input())\n\n# TODO: Use a while loop to count the number of digits in n and print the count\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        \n        // TODO: Use a while loop to count the number of digits in n and print the count\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    const num = parseInt(n);\n    \n    // TODO: Use a while loop to count the number of digits in n and print the count\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    // TODO: Use a while loop to count the number of digits in n and print the count\n    \n    return 0;\n}"
   },
 
 

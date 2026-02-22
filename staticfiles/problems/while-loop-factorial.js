@@ -50,10 +50,10 @@ Output: 1</pre>
   ],
 
   "templates": {
-    "python": "n = int(input())\nfact = 1\ni = 1\nwhile i <= n:\n    fact *= i\n    i += 1\nprint(fact)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        long fact = 1;\n        int i = 1;\n        while (i <= n) {\n            fact *= i;\n            i++;\n        }\n        System.out.println(fact);\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    let fact = 1;\n    let i = 1;\n    while (i <= parseInt(n)) {\n        fact *= i;\n        i++;\n    }\n    console.log(fact);\n    readline.close();\n});",
-    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    long long fact = 1;\n    int i = 1;\n    while (i <= n) {\n        fact *= i;\n        i++;\n    }\n    cout << fact << endl;\n    return 0;\n}"
+    "python": "n = int(input())\n\n# TODO: Use a while loop to calculate the factorial of n and print the result\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        \n        // TODO: Use a while loop to calculate the factorial of n and print the result\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (n) => {\n    const num = parseInt(n);\n    \n    // TODO: Use a while loop to calculate the factorial of n and print the result\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    // TODO: Use a while loop to calculate the factorial of n and print the result\n    \n    return 0;\n}"
   },
 
 

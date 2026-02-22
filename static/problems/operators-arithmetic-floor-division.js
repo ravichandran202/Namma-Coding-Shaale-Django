@@ -50,10 +50,10 @@ Output: 3</pre>
   ],
 
   "templates": {
-    "python": `num1 = int(input())\nnum2 = int(input())\nresult = num1 // num2\nprint(result)`,
-    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num1 = scanner.nextInt();\n        int num2 = scanner.nextInt();\n        int result = num1 / num2;\n        System.out.println(result);\n    }\n}`,
-    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        const result = Math.floor(inputs[0] / inputs[1]);\n        console.log(result);\n        readline.close();\n    });\n});`,
-    "c++": `#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    int result = num1 / num2;\n    std::cout << result << std::endl;\n    return 0;\n}`
+    "python": `# TODO: Read first interger number\n\n# TODO: Read second interger number\n\n# TODO: Calculate and print the integer division result\n`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int num1 = scanner.nextInt();\n        int num2 = scanner.nextInt();\n        \n        // TODO: Calculate and print the integer division result\n        \n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet inputs = [];\nreadline.question('', (first) => {\n    inputs.push(parseInt(first));\n    readline.question('', (second) => {\n        inputs.push(parseInt(second));\n        \n        // TODO: Calculate and print the integer division result\n        \n        readline.close();\n    });\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1 >> num2;\n    \n    // TODO: Calculate and print the integer division result\n    \n    return 0;\n}`
   },
 
 

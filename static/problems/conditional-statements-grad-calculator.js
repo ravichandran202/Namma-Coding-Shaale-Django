@@ -57,10 +57,11 @@ Output: Fail</pre>
   ],
 
   "templates": {
-    "python": `marks = int(input())\nif marks >= 90:\n    print(\"A\")\nelif marks >= 80:\n    print(\"B\")\nelif marks >= 70:\n    print(\"C\")\nelse:\n    print(\"Fail\")`,
-    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int marks = scanner.nextInt();\n        if (marks >= 90) {\n            System.out.println(\"A\");\n        } else if (marks >= 80) {\n            System.out.println(\"B\");\n        } else if (marks >= 70) {\n            System.out.println(\"C\");\n        } else {\n            System.out.println(\"Fail\");\n        }\n    }\n}`,
-    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (marks) => {\n    const marksNum = parseInt(marks);\n    if (marksNum >= 90) {\n        console.log(\"A\");\n    } else if (marksNum >= 80) {\n        console.log(\"B\");\n    } else if (marksNum >= 70) {\n        console.log(\"C\");\n    } else {\n        console.log(\"Fail\");\n    }\n    readline.close();\n});`,
-    "c++": `#include <iostream>\n\nint main() {\n    int marks;\n    std::cin >> marks;\n    if (marks >= 90) {\n        std::cout << \"A\" << std::endl;\n    } else if (marks >= 80) {\n        std::cout << \"B\" << std::endl;\n    } else if (marks >= 70) {\n        std::cout << \"C\" << std::endl;\n    } else {\n        std::cout << \"Fail\" << std::endl;\n    }\n    return 0;\n}`
+    "python": `marks = int(input())\n\n# TODO: Assign grades based on marks and print the result\n# A (90+), B (80-89), C (70-79), Fail (below 70)\n`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int marks = scanner.nextInt();\n        \n        // TODO: Assign grades based on marks and print the result\n        // A (90+), B (80-89), C (70-79), Fail (below 70)\n        \n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (marks) => {\n    const marksNum = parseInt(marks);\n    \n    // TODO: Assign grades based on marks and print the result\n    // A (90+), B (80-89), C (70-79), Fail (below 70)\n    \n    readline.close();
+});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int marks;\n    std::cin >> marks;\n    \n    // TODO: Assign grades based on marks and print the result\n    // A (90+), B (80-89), C (70-79), Fail (below 70)\n    \n    return 0;\n}`
   },
 
 
@@ -71,8 +72,8 @@ Output: Fail</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int marks;\n    std::cin >> marks;\n    if (marks >= 90) {\n        std::cout << \"A\" << std::endl;\n    } else if (marks >= 80) {\n        std::cout << \"B\" << std::endl;\n    } else if (marks >= 70) {\n        std::cout << \"C\" << std::endl;\n    } else {\n        std::cout << \"Fail\" << std::endl;\n    }\n    return 0;\n}`
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':

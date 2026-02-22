@@ -54,10 +54,10 @@ Output: 8</pre>
   ],
 
   "templates": {
-    "python": "a = int(input())\nb = int(input())\nc = int(input())\n\nif a >= b and a >= c:\n    print(a)\nelif b >= a and b >= c:\n    print(b)\nelse:\n    print(c)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        \n        if (a >= b && a >= c) {\n            System.out.println(a);\n        } else if (b >= a && b >= c) {\n            System.out.println(b);\n        } else {\n            System.out.println(c);\n        }\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 3) {\n        const [a, b, c] = input;\n        if (a >= b && a >= c) {\n            console.log(a);\n        } else if (b >= a && b >= c) {\n            console.log(b);\n        } else {\n            console.log(c);\n        }\n        readline.close();\n    }\n});",
-    "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    if (a >= b && a >= c) {\n        std::cout << a << std::endl;\n    } else if (b >= a && b >= c) {\n        std::cout << b << std::endl;\n    } else {\n        std::cout << c << std::endl;\n    }\n    return 0;\n}"
+    "python": "a = int(input())\nb = int(input())\nc = int(input())\n\n# TODO: Find and print the largest of the three numbers\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int a = scanner.nextInt();\n        int b = scanner.nextInt();\n        int c = scanner.nextInt();\n        \n        // TODO: Find and print the largest of the three numbers\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nlet input = [];\nreadline.on('line', (line) => {\n    input.push(parseInt(line));\n    if (input.length === 3) {\n        const [a, b, c] = input;\n        \n        // TODO: Find and print the largest of the three numbers\n        \n        readline.close();\n    }\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    // TODO: Find and print the largest of the three numbers\n    \n    return 0;\n}"
   },
 
 
@@ -68,8 +68,8 @@ Output: 8</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    \n    if (a >= b && a >= c) {\n        std::cout << a << std::endl;\n    } else if (b >= a && b >= c) {\n        std::cout << b << std::endl;\n    } else {\n        std::cout << c << std::endl;\n    }\n    return 0;\n}"
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':
