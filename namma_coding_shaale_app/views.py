@@ -53,7 +53,6 @@ REDIRECT_URI = os.environ.get('GOOGLE_OAUTH_REDIRECT_URI')
 from namma_coding_shaale.otel.otel_utils import trace_span
 logger = logging.getLogger(__name__)
 
-memorycache_sidebar = {}
 
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
@@ -1267,11 +1266,7 @@ def view_content(request, course_id, content_file_id):
             progress.is_completed = True
             progress.completed_at = timezone.now()
             progress.save()
-            
-            # Clear sidebar cache
-            cache_key = f"{request.user.id}_{course_id}"
-            memorycache_sidebar[cache_key] = None
-            logger.info(f"CACHE CLEARED: for key {cache_key}")
+
             
             # 2. Handle Navigation to Next
             if next_content_obj:
@@ -1597,11 +1592,6 @@ def bulk_fetch_content_content(user, course, problem_ids):
 @trace_span
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
-    # cache_key = f"{user_id}_{course_id}"
-    # cached_result = memorycache_sidebar.get(cache_key)
-    # if cached_result is not None:
-    #     logger.info(f"CACHE FOUND: for key {cache_key}")
-    #     return cached_result
     
     user_progress = {
         up.content_id: up 
@@ -1668,9 +1658,6 @@ def get_user_roadmap_html(user_id, course_id):
             'contents': data['contents'],
             'has_submenu': len(data['contents']) > 1
         })
-    
-    memorycache_sidebar[cache_key] = result
-    logger.info(f"CACHE SET: for key {cache_key}")
     
     return result
 
