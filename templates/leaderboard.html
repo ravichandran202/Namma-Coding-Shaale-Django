@@ -431,15 +431,89 @@
             <h2 class="section-title">Leader<span class="text-gradient">board</span></h2>
 
             <div class="leaderboard-toggle-container">
-                <div class="leaderboard-toggle">
-                    <div class="toggle-bg-pill" id="lbTogglePill"></div>
-                    <button class="toggle-btn active" onclick="switchLeaderboard('monthly', this)">Monthly</button>
+                <div class="leaderboard-toggle" style="width: 360px;">
+                    <div class="toggle-bg-pill" id="lbTogglePill" style="width: calc(33.333% - 4px);"></div>
+                    <button class="toggle-btn active" onclick="switchLeaderboard('weekly', this)">Weekly</button>
+                    <button class="toggle-btn" onclick="switchLeaderboard('monthly', this)">Monthly</button>
                     <button class="toggle-btn" onclick="switchLeaderboard('overall', this)">Overall</button>
                 </div>
             </div>
         </div>
 
-        <div id="monthly-board" class="lb-content active">
+        <div id="weekly-board" class="lb-content active">
+            {% if weekly_leaders %}
+            <div class="podium-wrapper">
+                {% if weekly_leaders|length > 1 %}
+                {% with weekly_leaders.1 as p2 %}
+                <div class="podium-item rank-2">
+                    <div class="podium-avatar-box">
+                        <div class="podium-avatar">
+                            {{ p2.name|first }}
+                        </div>
+                    </div>
+                    <div class="podium-name">{{ p2.name }}</div>
+                    <div class="podium-points">{{ p2.points }} pts</div>
+                    <div class="podium-block">2</div>
+                </div>
+                {% endwith %}
+                {% endif %}
+
+                {% if weekly_leaders|length > 0 %}
+                {% with weekly_leaders.0 as p1 %}
+                <div class="podium-item rank-1">
+                    <div class="podium-avatar-box">
+                        <i class="fas fa-crown crown-icon"></i>
+                        <div class="podium-avatar">
+                            {{ p1.name|first }}
+                        </div>
+                    </div>
+                    <div class="podium-name">{{ p1.name }}</div>
+                    <div class="podium-points">{{ p1.points }} pts</div>
+                    <div class="podium-block">1</div>
+                </div>
+                {% endwith %}
+                {% endif %}
+
+                {% if weekly_leaders|length > 2 %}
+                {% with weekly_leaders.2 as p3 %}
+                <div class="podium-item rank-3">
+                    <div class="podium-avatar-box">
+                        <div class="podium-avatar">
+                            {{ p3.name|first }}
+                        </div>
+                    </div>
+                    <div class="podium-name">{{ p3.name }}</div>
+                    <div class="podium-points">{{ p3.points }} pts</div>
+                    <div class="podium-block">3</div>
+                </div>
+                {% endwith %}
+                {% endif %}
+            </div>
+
+            <div class="leaderboard-list-card">
+                {% for user in weekly_leaders %}
+                <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                    <div class="list-row">
+                        <div class="list-rank">{{ user.rank }}</div>
+                        <div class="list-avatar">
+                            {{ user.name|first }}
+                        </div>
+                        <div class="list-info">
+                            <h5 class="list-name">{{ user.name }}</h5>
+                        </div>
+                        <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted">No activity recorded yet.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="monthly-board" class="lb-content">
             {% if monthly_leaders %}
             <div class="podium-wrapper">
                 {% if monthly_leaders|length > 1 %}
@@ -611,11 +685,14 @@
 
         boards.forEach(board => board.classList.remove('active'));
 
-        if (type === 'monthly') {
+        if (type === 'weekly') {
             pill.style.transform = 'translateX(0)';
+            document.getElementById('weekly-board').classList.add('active');
+        } else if (type === 'monthly') {
+            pill.style.transform = 'translateX(100%)';
             document.getElementById('monthly-board').classList.add('active');
         } else {
-            pill.style.transform = 'translateX(100%)';
+            pill.style.transform = 'translateX(200%)';
             document.getElementById('overall-board').classList.add('active');
         }
     }

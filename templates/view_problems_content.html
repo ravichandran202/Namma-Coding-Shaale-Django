@@ -6,14 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSA Problem Tracker</title>
+    <title>Problems Content | Namma Coding Shaale</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    
-    <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
+
     <style>
         :root {
             --primary: #3b82f6;
@@ -46,32 +48,211 @@
         }
 
         /* --- SIDEBAR & TOPBAR STYLES (UNCHANGED) --- */
-        .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
-        .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
-        .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
-        .top-bar-menu-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            z-index: 900;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+        }
 
-        .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-width); background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.08); z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; }
-        .sidebar.active { transform: translateX(0); }
-        .sidebar-overlay { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .sidebar-header { padding: 1rem; margin-bottom: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 10; display: flex; align-items: center; justify-content: center; }
-        .sidebar-header h3 { font-weight: 700; margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
-        .sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
-        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
-        .sidebar-menu li { margin-bottom: 0.25rem; }
-        .sidebar-menu a { display: flex; align-items: center; padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
-        .sidebar-menu a:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
-        .sidebar-menu a.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
-        .sidebar-menu a i { margin-right: 0.75rem; width: 20px; text-align: center; }
-        .sidebar-footer { position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); background: rgba(15, 23, 42, 0.98); }
-        .sidebar-title { font-family: 'Playfair Display', serif; margin: 0; font-size: 1rem; }
-        .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
-        .sidebar-section { margin-bottom: 1.5rem; }
-        .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); margin: 1rem 0 0.5rem 1rem; font-weight: 600; }
-        .sidebar-submenu { list-style: none; padding-left: 1.5rem; margin: 0.25rem 0; }
-        .sidebar-submenu li { margin-bottom: 0.1rem; }
-        .sidebar-submenu a { padding: 0.5rem 1rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+        .top-bar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .top-bar-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .top-bar-menu-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.98);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header h3 {
+            font-weight: 700;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-menu a.active {
+            color: white !important;
+            background: rgba(37, 99, 235, 0.15);
+        }
+
+        .sidebar-menu a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            background: rgba(15, 23, 42, 0.98);
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .brand-highlight {
+            color: var(--primary-light);
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 1rem 0 0.5rem 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar-submenu {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin: 0.25rem 0;
+        }
+
+        .sidebar-submenu li {
+            margin-bottom: 0.1rem;
+        }
+
+        .sidebar-submenu a {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
         /* --- PREMIUM MAIN CONTENT STYLES --- */
         .main-content {
@@ -82,13 +263,16 @@
         }
 
         /* Page Header */
-        .page-header { margin-bottom: 2rem; }
-        .page-title { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            font-weight: 700; 
-            color: #111827; 
-            margin-bottom: 0.5rem; 
-            letter-spacing: -0.02em; 
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
         /* Premium Card */
@@ -100,10 +284,19 @@
             overflow: hidden;
             transition: box-shadow 0.2s ease;
         }
-        .card-premium:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+
+        .card-premium:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
 
         /* Modern Table */
-        .table-premium { margin-bottom: 0; width: 100%; white-space: nowrap; /* Prevents wrapping on mobile */ }
+        .table-premium {
+            margin-bottom: 0;
+            width: 100%;
+            white-space: nowrap;
+            /* Prevents wrapping on mobile */
+        }
+
         .table-premium thead th {
             background-color: #f9fafb;
             color: #6b7280;
@@ -114,6 +307,7 @@
             padding: 1rem 1.5rem;
             border-bottom: 1px solid #e5e7eb;
         }
+
         .table-premium tbody td {
             padding: 1.25rem 1.5rem;
             vertical-align: middle;
@@ -122,21 +316,67 @@
             font-size: 0.95rem;
             font-weight: 500;
         }
-        .table-premium tbody tr:last-child td { border-bottom: none; }
-        .table-premium tbody tr { transition: background-color 0.15s ease; }
-        .table-premium tbody tr:hover { background-color: #f9fafb; }
+
+        .table-premium tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-premium tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        .table-premium tbody tr:hover {
+            background-color: #f9fafb;
+        }
 
         /* Status Indicators */
-        .status-indicator { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 500; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .status-dot.solved { background-color: #10b981; box-shadow: 0 0 0 2px #d1fae5; }
-        .status-dot.unsolved { background-color: #9ca3af; box-shadow: 0 0 0 2px #e5e7eb; }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.solved {
+            background-color: #10b981;
+            box-shadow: 0 0 0 2px #d1fae5;
+        }
+
+        .status-dot.unsolved {
+            background-color: #9ca3af;
+            box-shadow: 0 0 0 2px #e5e7eb;
+        }
 
         /* Difficulty Badges */
-        .badge-soft { padding: 0.35em 0.8em; border-radius: 6px; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.02em; }
-        .badge-soft.easy { background-color: #ecfdf5; color: #047857; }
-        .badge-soft.medium { background-color: #fffbeb; color: #b45309; }
-        .badge-soft.hard { background-color: #fef2f2; color: #b91c1c; }
+        .badge-soft {
+            padding: 0.35em 0.8em;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-soft.easy {
+            background-color: #ecfdf5;
+            color: #047857;
+        }
+
+        .badge-soft.medium {
+            background-color: #fffbeb;
+            color: #b45309;
+        }
+
+        .badge-soft.hard {
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
 
         /* Action Links & Buttons */
         .action-link {
@@ -151,7 +391,11 @@
             padding: 6px 10px;
             border-radius: 6px;
         }
-        .action-link:hover { background-color: #f3f4f6; color: var(--primary); }
+
+        .action-link:hover {
+            background-color: #f3f4f6;
+            color: var(--primary);
+        }
 
         .btn-solve-premium {
             background-color: #111827;
@@ -167,6 +411,7 @@
             gap: 8px;
             text-decoration: none;
         }
+
         .btn-solve-premium:hover {
             background-color: var(--primary);
             color: white;
@@ -184,29 +429,50 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .table-responsive { 
-            overflow-x: auto; 
-            -webkit-overflow-scrolling: touch; 
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* --- RESPONSIVE LAYOUT LOGIC --- */
-        
+
         /* Desktop (Large Screens) */
         @media (min-width: 993px) {
-            .top-bar { display: none; }
-            .sidebar { top: 0; height: 100vh; transform: translateX(0); }
-            .sidebar-overlay { display: none; }
-            .main-content { margin-left: var(--sidebar-width); padding-top: .5rem; }
+            .top-bar {
+                display: none;
+            }
+
+            .sidebar {
+                top: 0;
+                height: 100vh;
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-width);
+                padding-top: .5rem;
+            }
         }
 
         /* Mobile & Tablet */
         @media (max-width: 992px) {
-            .sidebar { width: 280px; top: 56px; height: calc(100vh - 56px); }
-            .sidebar-overlay { top: 56px; }
-            
+            .sidebar {
+                width: 280px;
+                top: 56px;
+                height: calc(100vh - 56px);
+            }
+
+            .sidebar-overlay {
+                top: 56px;
+            }
+
             /* Add spacing below fixed top bar */
-            .main-content { 
-                padding-top: 80px; 
+            .main-content {
+                padding-top: 80px;
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
@@ -215,25 +481,28 @@
             .page-header {
                 align-items: flex-start !important;
             }
-            
+
             /* Make Completion Card Stack nicely */
             .card-completion .row {
                 flex-direction: column;
             }
+
             .card-completion .d-flex {
                 flex-wrap: wrap;
             }
+
             /* Full width buttons on mobile */
             #markCompletedBtn {
                 width: 100% !important;
                 display: block;
             }
-            
+
             /* Table Adjustments for Mobile */
-            .table-premium thead th, 
+            .table-premium thead th,
             .table-premium tbody td {
                 padding: 1rem;
             }
+
             /* Ensure the solve button is visible/touchable */
             .btn-solve-premium {
                 padding: 0.6rem 1rem;
@@ -241,141 +510,149 @@
         }
 
         .lesson-completion-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-    margin-bottom: 2rem;
-    flex-wrap: wrap; /* Makes it responsive */
-}
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            /* Makes it responsive */
+        }
 
-.completion-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-    min-width: 280px;
-}
+        .completion-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 280px;
+        }
 
-.icon-box {
-    width: 48px;
-    height: 48px;
-    background-color: #ecfdf5; /* Light Green Bg */
-    color: #10b981; /* Green Icon */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: #ecfdf5;
+            /* Light Green Bg */
+            color: #10b981;
+            /* Green Icon */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
 
-.text-content h5 {
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1e293b;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
+        .text-content h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-.text-content p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #64748b;
-}
+        .text-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
 
-.action-box {
-    flex-shrink: 0;
-}
+        .action-box {
+            flex-shrink: 0;
+        }
 
-/* Button Style */
-.btn-complete {
-    background-color: #10b981;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap;
-}
+        /* Button Style */
+        .btn-complete {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
 
-.btn-complete:hover {
-    background-color: #059669;
-}
+        .btn-complete:hover {
+            background-color: #059669;
+        }
 
-/* Completed Badge Style */
-.completed-badge {
-    background-color: #f1f5f9;
-    color: #0f172a;
-    padding: 0.5rem 1.2rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        /* Completed Badge Style */
+        .completed-badge {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.completed-badge i {
-    color: #10b981;
-}
+        .completed-badge i {
+            color: #10b981;
+        }
 
         .btn-complete:disabled,
         .btn-complete.btn-locked {
-            background-color: #f59e0b; /* Amber/Orange for warning */
+            background-color: #f59e0b;
+            /* Amber/Orange for warning */
             cursor: not-allowed;
             opacity: 0.8;
         }
-        
+
         .btn-complete.btn-locked:hover {
             background-color: #d97706;
         }
-        
+
         .time-remaining {
             font-size: 0.8rem;
             font-weight: 400;
             margin-left: 5px;
             opacity: 0.9;
         }
-        
 
-/* Mobile Tweak */
-@media (max-width: 576px) {
-    .lesson-completion-card {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-    }
-    
-    .action-box, .btn-complete, .completed-badge {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-}
+
+        /* Mobile Tweak */
+        @media (max-width: 576px) {
+            .lesson-completion-card {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .action-box,
+            .btn-complete,
+            .completed-badge {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="top-bar" id="topBar">
         <button class="top-bar-menu-btn" id="topBarMenuBtn"><i class="fas fa-bars"></i></button>
-    
-        <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;"><i class="fas fa-times"></i></button>
+
+        <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;"><i
+                class="fas fa-times"></i></button>
     </div>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h3 class="sidebar-title"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span></h3>
+            <h3 class="sidebar-title"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span>
+                    ಶಾಲೆ</span></h3>
         </div>
 
         <div class="sidebar-content">
@@ -383,9 +660,12 @@
                 <p class="sidebar-section-title">Main Menu</p>
                 <ul class="sidebar-menu">
                     <li><a href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
-                    <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course Content</a></li>
-                    <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
-                    <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
+                    <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course
+                            Content</a></li>
+                    <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a>
+                    </li>
+                    <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a>
+                    </li>
                 </ul>
             </div>
             {% for section in roadmap %}
@@ -395,14 +675,17 @@
                     {% if section.has_submenu %}
                     <li class="has-submenu">
                         <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
-                            <i class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                            <i
+                                class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                             {{ section.title }}
                         </a>
                         <ul class="sidebar-submenu">
                             {% for content in section.contents %}
                             <li>
-                                <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}" class=" {% if content.title == user_course.current_content.title %} active {% endif %}">
-                                    <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                                <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}"
+                                    class=" {% if content.title == user_course.current_content.title %} active {% endif %}">
+                                    <i
+                                        class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                                     {{ content.title }}
                                 </a>
                             </li>
@@ -411,8 +694,10 @@
                     </li>
                     {% else %}
                     <li>
-                        <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
-                            <i class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                        <a
+                            href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
+                            <i
+                                class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                             {{ section.contents.0.title }}
                         </a>
                     </li>
@@ -421,7 +706,9 @@
             </div>
             {% endfor %}
         </div>
-        <div class="sidebar-footer"><p>DSA Tracker v1.0</p></div>
+        <div class="sidebar-footer">
+            <p>{{user_course.course.title}}</p>
+        </div>
     </div>
 
     <div class="main-content" id="mainContent">
@@ -429,7 +716,7 @@
             
             <div class="page-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                 <div>
-                    <h2 class="page-title">{{content.title}}</h2>
+                    <h2 class="page-title" style="text-transform: uppercase; font-size: 1.5rem;">{{content.title}}</h2>
                     <div class="d-flex align-items-center gap-2 flex-wrap">
                         <span class="badge badge-soft {{ content.problem.difficulty|lower }}">{{ content.problem.difficulty|upper }}</span>
                         <span class="text-muted small d-none d-md-inline">•</span>
@@ -454,7 +741,7 @@
                             {% for content in contents %}
                             <tr>
                                 <td class="text-muted fw-bold">{{ forloop.counter }}</td>
-                                
+
                                 <td>
                                     {% if content.is_completed %}
                                     <div class="status-indicator text-success">
@@ -475,17 +762,27 @@
 
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="/solution/1" target="_blank" class="action-link" title="View Solution">
+                                        {% if content.is_completed %}
+                                        <a href="{% url 'problem-solutions' course.id %}?id={{content.content.file_name}}"
+                                            target="_blank" class="action-link text-success" title="View Solution">
                                             <i class="fas fa-code"></i> <span class="d-none d-lg-inline">Solution</span>
                                         </a>
+                                        {% else %}
+                                        <span class="action-link text-muted" title="Solve problem to view solution"
+                                            style="cursor: not-allowed; opacity: 0.5;">
+                                            <i class="fas fa-code"></i> <span class="d-none d-lg-inline">Solution</span>
+                                        </span>
+                                        {% endif %}
                                         <a href="/video/1" target="_blank" class="action-link" title="Watch Video">
-                                            <i class="fas fa-play-circle"></i> <span class="d-none d-lg-inline">Video</span>
+                                            <i class="fas fa-play-circle"></i> <span
+                                                class="d-none d-lg-inline">Video</span>
                                         </a>
                                     </div>
                                 </td>
 
                                 <td class="text-end">
-                                    <a href="{% url 'problem-solver' course.id %}?id={{content.content.file_name}}" class="btn-solve-premium">
+                                    <a href="{% url 'problem-solver' course.id %}?id={{content.content.file_name}}"
+                                        class="btn-solve-premium">
                                         Solve <i class="fas fa-arrow-right fa-xs"></i>
                                     </a>
                                 </td>
@@ -546,16 +843,16 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
 
         {% if messages %}
         <div id="django-messages-data" style="display: none;">
             {% for message in messages %}
-                <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+            <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
             {% endfor %}
         </div>
-       {% endif %}
+        {% endif %}
 
     </div>
 
@@ -612,46 +909,46 @@
         });
     </script>
 
-<script>
+    <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Find the hidden messages from Django
-        const messageData = document.getElementById('django-messages-data');
-        
-        // 2. If messages exist, loop through them and show toasts
-        if (messageData) {
-            Array.from(messageData.children).forEach(msgDiv => {
-                // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
-                // msgDiv.dataset.msg will be "This course doesn't have any content yet."
-                showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
-            });
-        }
-    });
-    
-  // --- The Helper Function ---
-  function showToast(message, type) {
-    const toastContainer = document.getElementById('toastContainer');
-    
-    // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
-    if (type === 'error') type = 'danger';
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Find the hidden messages from Django
+            const messageData = document.getElementById('django-messages-data');
 
-    // Map types to Bootstrap colors
-    const bgClass = {
-        'success': 'text-bg-success',
-        'danger':  'text-bg-danger',
-        'warning': 'text-bg-warning',
-        'info':    'text-bg-info',
-    }[type] || 'text-bg-primary';
+            // 2. If messages exist, loop through them and show toasts
+            if (messageData) {
+                Array.from(messageData.children).forEach(msgDiv => {
+                    // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
+                    // msgDiv.dataset.msg will be "This course doesn't have any content yet."
+                    showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+                });
+            }
+        });
 
-    const icon = {
-        'success': 'fas fa-check-circle',
-        'danger':  'fas fa-exclamation-circle',
-        'warning': 'fas fa-exclamation-triangle',
-        'info':    'fas fa-info-circle',
-    }[type] || 'fas fa-bell';
+        // --- The Helper Function ---
+        function showToast(message, type) {
+            const toastContainer = document.getElementById('toastContainer');
 
-    // Build Toast HTML
-    const toastHtml = `
+            // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
+            if (type === 'error') type = 'danger';
+
+            // Map types to Bootstrap colors
+            const bgClass = {
+                'success': 'text-bg-success',
+                'danger': 'text-bg-danger',
+                'warning': 'text-bg-warning',
+                'info': 'text-bg-info',
+            }[type] || 'text-bg-primary';
+
+            const icon = {
+                'success': 'fas fa-check-circle',
+                'danger': 'fas fa-exclamation-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle',
+            }[type] || 'fas fa-bell';
+
+            // Build Toast HTML
+            const toastHtml = `
         <div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
@@ -662,25 +959,25 @@
         </div>
     `;
 
-    // Append and Show
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = toastHtml;
-    const toastElement = wrapper.firstElementChild;
-    
-    toastContainer.appendChild(toastElement);
-    const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
-    toast.show();
-    
-    // Remove from DOM after it fades out
-    toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
-   }
-  
-    function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
+            // Append and Show
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = toastHtml;
+            const toastElement = wrapper.firstElementChild;
+
+            toastContainer.appendChild(toastElement);
+            const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+            toast.show();
+
+            // Remove from DOM after it fades out
+            toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+        }
+
+        function initDynamicLoader() {
+            const loaderId = 'preloader';
+
+            // 1. Inject Styles & HTML if they don't exist
+            if (!document.getElementById(loaderId)) {
+                const css = `
                 #${loaderId} { 
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
                     display: flex; justify-content: center; align-items: center; 
@@ -696,66 +993,67 @@
                 }
                 @keyframes spin { to { transform: rotate(360deg); } }
             `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
-        }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
+                const style = document.createElement('style');
+                style.innerHTML = css;
+                document.head.appendChild(style);
+
+                const loaderDiv = document.createElement('div');
+                loaderDiv.id = loaderId;
+                loaderDiv.innerHTML = '<div class="spinner"></div>';
+                document.body.prepend(loaderDiv);
             }
-        });
-    }
-    
-    // Call it immediately
-    initDynamicLoader();
-    
+
+            const loader = document.getElementById(loaderId);
+
+            // 2. Define Actions
+            const show = () => loader.classList.add('loading');
+            const hide = () => loader.classList.remove('loading');
+
+            // 3. Event: Page Load (Hide loader when content is ready)
+            if (document.readyState === "complete") {
+                hide();
+            } else {
+                show(); // Ensure it's shown immediately while loading
+                window.addEventListener('load', hide);
+            }
+
+            // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) hide();
+            });
+
+            // 5. Event: Link Clicks (Show loader only for actual navigation)
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+
+                // Check if it is a valid link
+                if (link) {
+                    const href = link.getAttribute('href');
+                    const target = link.getAttribute('target');
+
+                    // Logic: Don't load if:
+                    // 1. No href
+                    // 2. It's an anchor link (#section)
+                    // 3. It's a javascript: call
+                    // 4. It opens in a new tab (_blank)
+                    // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+                    if (
+                        href &&
+                        !href.startsWith('#') &&
+                        !href.startsWith('javascript:') &&
+                        target !== '_blank' &&
+                        !e.ctrlKey && !e.metaKey
+                    ) {
+                        show();
+                    }
+                }
+            });
+        }
+
+        // Call it immediately
+        initDynamicLoader();
+
     </script>
 </body>
+
 </html>
