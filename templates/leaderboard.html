@@ -82,12 +82,11 @@
     .toggle-bg-pill {
         position: absolute;
         top: 4px;
-        left: 4px;
-        width: calc(50% - 4px);
+        left: 0;
         height: calc(100% - 8px);
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         border-radius: 50px;
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         z-index: 0;
     }
 
@@ -412,6 +411,17 @@
         .list-score {
             font-size: 0.95rem;
         }
+
+        .leaderboard-toggle-container .leaderboard-toggle {
+            width: 100% !important;
+            max-width: 320px !important;
+        }
+
+        .toggle-btn {
+            padding: 0.5rem 0.5rem;
+            min-width: 80px;
+            font-size: 0.85rem;
+        }
     }
 
     @media (max-width: 575px) {
@@ -431,8 +441,8 @@
             <h2 class="section-title">Leader<span class="text-gradient">board</span></h2>
 
             <div class="leaderboard-toggle-container">
-                <div class="leaderboard-toggle" style="width: 360px;">
-                    <div class="toggle-bg-pill" id="lbTogglePill" style="width: calc(33.333% - 4px);"></div>
+                <div class="leaderboard-toggle" style="width: 360px; max-width: 100%;">
+                    <div class="toggle-bg-pill" id="lbTogglePill"></div>
                     <button class="toggle-btn active" onclick="switchLeaderboard('weekly', this)">Weekly</button>
                     <button class="toggle-btn" onclick="switchLeaderboard('monthly', this)">Monthly</button>
                     <button class="toggle-btn" onclick="switchLeaderboard('overall', this)">Overall</button>
@@ -675,8 +685,19 @@
 
 {% block extra_js %}
 <script>
-    function switchLeaderboard(type, btn) {
+    function updatePillPosition() {
+        const activeBtn = document.querySelector('.toggle-btn.active');
         const pill = document.getElementById('lbTogglePill');
+        const container = document.querySelector('.leaderboard-toggle');
+        if (activeBtn && pill && container) {
+            // Subtract container padding (4px) to position the pill exactly over the button
+            const offset = activeBtn.offsetLeft - 4;
+            pill.style.transform = `translateX(${offset}px)`;
+            pill.style.width = `${activeBtn.offsetWidth}px`;
+        }
+    }
+
+    function switchLeaderboard(type, btn) {
         const buttons = document.querySelectorAll('.toggle-btn');
         const boards = document.querySelectorAll('.lb-content');
 
@@ -685,19 +706,21 @@
 
         boards.forEach(board => board.classList.remove('active'));
 
+        updatePillPosition();
+
         if (type === 'weekly') {
-            pill.style.transform = 'translateX(0)';
             document.getElementById('weekly-board').classList.add('active');
         } else if (type === 'monthly') {
-            pill.style.transform = 'translateX(100%)';
             document.getElementById('monthly-board').classList.add('active');
         } else {
-            pill.style.transform = 'translateX(200%)';
             document.getElementById('overall-board').classList.add('active');
         }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        updatePillPosition();
+        window.addEventListener('resize', updatePillPosition);
+
         const messageData = document.getElementById('django-messages-data');
         if (messageData) {
             Array.from(messageData.children).forEach(msgDiv => {
