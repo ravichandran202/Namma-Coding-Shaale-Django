@@ -1597,11 +1597,11 @@ def bulk_fetch_content_content(user, course, problem_ids):
 @trace_span
 def get_user_roadmap_html(user_id, course_id):
     # Get all user progress records in one query
-    cache_key = f"{user_id}_{course_id}"
-    cached_result = memorycache_sidebar.get(cache_key)
-    if cached_result is not None:
-        logger.info(f"CACHE FOUND: for key {cache_key}")
-        return cached_result
+    # cache_key = f"{user_id}_{course_id}"
+    # cached_result = memorycache_sidebar.get(cache_key)
+    # if cached_result is not None:
+    #     logger.info(f"CACHE FOUND: for key {cache_key}")
+    #     return cached_result
     
     user_progress = {
         up.content_id: up 
