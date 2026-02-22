@@ -57,10 +57,10 @@ Output: Cold</pre>
   ],
 
   "templates": {
-    "python": `temp = int(input())\nif temp > 35:\n    print("Hot")\nelif temp >= 20:\n    print("Pleasant")\nelse:\n    print("Cold")`,
-    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int temp = scanner.nextInt();\n        if (temp > 35) {\n            System.out.println("Hot");\n        } else if (temp >= 20) {\n            System.out.println("Pleasant");\n        } else {\n            System.out.println("Cold");\n        }\n    }\n}`,
-    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (temp) => {\n    const tempNum = parseInt(temp);\n    if (tempNum > 35) {\n        console.log("Hot");\n    } else if (tempNum >= 20) {\n        console.log("Pleasant");\n    } else {\n        console.log("Cold");\n    }\n    readline.close();\n});`,
-    "c++": `#include <iostream>\n\nint main() {\n    int temp;\n    std::cin >> temp;\n    if (temp > 35) {\n        std::cout << "Hot" << std::endl;\n    } else if (temp >= 20) {\n        std::cout << "Pleasant" << std::endl;\n    } else {\n        std::cout << "Cold" << std::endl;\n    }\n    return 0;\n}`
+    "python": `temp = int(input())\n\n# TODO: Classify the temperature and print the weather alert\n# Hot (>35), Pleasant (20-35), Cold (<20)\n`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int temp = scanner.nextInt();\n        \n        // TODO: Classify the temperature and print the weather alert\n        // Hot (>35), Pleasant (20-35), Cold (<20)\n        \n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (temp) => {\n    const tempNum = parseInt(temp);\n    \n    // TODO: Classify the temperature and print the weather alert\n    // Hot (>35), Pleasant (20-35), Cold (<20)\n    \n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int temp;\n    std::cin >> temp;\n    \n    // TODO: Classify the temperature and print the weather alert\n    // Hot (>35), Pleasant (20-35), Cold (<20)\n    \n    return 0;\n}`
   },
 
 
@@ -71,8 +71,8 @@ Output: Cold</pre>
     "c++": `#include <iostream>\n\nint main() {\n    int temp;\n    std::cin >> temp;\n    if (temp > 35) {\n        std::cout << "Hot" << std::endl;\n    } else if (temp >= 20) {\n        std::cout << "Pleasant" << std::endl;\n    } else {\n        std::cout << "Cold" << std::endl;\n    }\n    return 0;\n}`
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':

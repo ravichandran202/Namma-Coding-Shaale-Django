@@ -45,10 +45,10 @@ Output: 6</pre>
   ],
 
   "templates": {
-    "python": "s = input()\ncount = 0\nfor ch in s:\n    if 'A' <= ch <= 'Z':\n        count += 1\nprint(count)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String s = scanner.nextLine();\n        int count = 0;\n        for (int i = 0; i < s.length(); i++) {\n            char ch = s.charAt(i);\n            if (ch >= 'A' && ch <= 'Z') {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    let count = 0;\n    for (let i = 0; i < input.length; i++) {\n        if (input[i] >= 'A' && input[i] <= 'Z') {\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
-    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    int count = 0;\n    for (char ch : s) {\n        if (ch >= 'A' && ch <= 'Z') {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+    "python": "word = input()\n\n# TODO: Use a for loop to count uppercase letters and print the count\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.next();\n        \n        // TODO: Use a for loop to count uppercase letters and print the count\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    \n    // TODO: Use a for loop to count uppercase letters and print the count\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    \n    // TODO: Use a for loop to count uppercase letters and print the count\n    \n    return 0;\n}"
   },
 
 

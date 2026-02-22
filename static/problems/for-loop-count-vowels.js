@@ -52,10 +52,10 @@ Output: 0</pre>
   ],
 
   "templates": {
-    "python": "word = input().lower()\ncount = 0\nfor ch in word:\n    if ch in 'aeiou':\n        count += 1\nprint(count)",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.next().toLowerCase();\n        int count = 0;\n        for (int i = 0; i < word.length(); i++) {\n            char ch = word.charAt(i);\n            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const word = input.toLowerCase();\n    let count = 0;\n    for (let i = 0; i < word.length; i++) {\n        if ('aeiou'.includes(word[i])) {\n            count++;\n        }\n    }\n    console.log(count);\n    readline.close();\n});",
-    "c++": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    int count = 0;\n    for (char ch : word) {\n        char lowerCh = tolower(ch);\n        if (lowerCh == 'a' || lowerCh == 'e' || lowerCh == 'i' || lowerCh == 'o' || lowerCh == 'u') {\n            count++;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}"
+    "python": "word = input()\n\n# TODO: Use a for loop to count the vowels and print the count\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String word = scanner.next();\n        \n        // TODO: Use a for loop to count the vowels and print the count\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    \n    // TODO: Use a for loop to count the vowels and print the count\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string word;\n    cin >> word;\n    \n    // TODO: Use a for loop to count the vowels and print the count\n    \n    return 0;\n}"
   },
 
 

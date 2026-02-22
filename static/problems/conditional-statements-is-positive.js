@@ -49,11 +49,11 @@ Output: </pre>
     ],
   
     "templates": {
-      "python": `number = int(input())\nif number > 0:\n    print("Positive")`,
-      "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        if (number > 0) {\n            System.out.println("Positive");\n        }\n    }\n}`,
-      "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    const num = parseInt(number);\n    if (num > 0) {\n        console.log("Positive");\n    }\n    readline.close();\n});`,
-      "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    if (number > 0) {\n        std::cout << "Positive" << std::endl;\n    }\n    return 0;\n}`
-    },
+    "python": `number = int(input())\n\n# TODO: Check if the number is positive and print "Positive" if it is\n`,
+    "java": `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        \n        // TODO: Check if the number is positive and print "Positive" if it is\n        \n    }\n}`,
+    "javascript": `const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (number) => {\n    const num = parseInt(number);\n    \n    // TODO: Check if the number is positive and print "Positive" if it is\n    \n    readline.close();\n});`,
+    "c++": `#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    \n    // TODO: Check if the number is positive and print "Positive" if it is\n    \n    return 0;\n}`
+  },
 
   
     "solutions": {

@@ -50,10 +50,10 @@ Output: Not eligible</pre>
   ],
 
   "templates": {
-    "python": "age = int(input())\nif age >= 18:\n    print(\"Eligible\")\nelse:\n    print(\"Not eligible\")",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        if (age >= 18) {\n            System.out.println(\"Eligible\");\n        } else {\n            System.out.println(\"Not eligible\");\n        }\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (age) => {\n    const ageNum = parseInt(age);\n    if (ageNum >= 18) {\n        console.log(\"Eligible\");\n    } else {\n        console.log(\"Not eligible\");\n    }\n    readline.close();\n});",
-    "c++": "#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    if (age >= 18) {\n        std::cout << \"Eligible\" << std::endl;\n    } else {\n        std::cout << \"Not eligible\" << std::endl;\n    }\n    return 0;\n}"
+    "python": "age = int(input())\n\n# TODO: Check if the person is eligible to vote and print the result\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        \n        // TODO: Check if the person is eligible to vote and print the result\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (age) => {\n    const ageNum = parseInt(age);\n    \n    // TODO: Check if the person is eligible to vote and print the result\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    \n    // TODO: Check if the person is eligible to vote and print the result\n    \n    return 0;\n}"
   },
 
 
@@ -64,8 +64,8 @@ Output: Not eligible</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int age;\n    std::cin >> age;\n    if (age >= 18) {\n        std::cout << \"Eligible\" << std::endl;\n    } else {\n        std::cout << \"Not eligible\" << std::endl;\n    }\n    return 0;\n}"
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':

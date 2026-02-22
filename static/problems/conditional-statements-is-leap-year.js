@@ -55,10 +55,10 @@ Output: Not Leap Year</pre>
   ],
 
   "templates": {
-    "python": "year = int(input())\n\nif (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):\n    print(\"Leap Year\")\nelse:\n    print(\"Not Leap Year\")",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int year = scanner.nextInt();\n        \n        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n            System.out.println(\"Leap Year\");\n        } else {\n            System.out.println(\"Not Leap Year\");\n        }\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (year) => {\n    const yearNum = parseInt(year);\n    if ((yearNum % 4 === 0 && yearNum % 100 !== 0) || (yearNum % 400 === 0)) {\n        console.log(\"Leap Year\");\n    } else {\n        console.log(\"Not Leap Year\");\n    }\n    readline.close();\n});",
-    "c++": "#include <iostream>\n\nint main() {\n    int year;\n    std::cin >> year;\n    \n    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n        std::cout << \"Leap Year\" << std::endl;\n    } else {\n        std::cout << \"Not Leap Year\" << std::endl;\n    }\n    return 0;\n}"
+    "python": "year = int(input())\n\n# TODO: Check if the year is a leap year and print the result\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int year = scanner.nextInt();\n        \n        // TODO: Check if the year is a leap year and print the result\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (year) => {\n    const yearNum = parseInt(year);\n    \n    // TODO: Check if the year is a leap year and print the result\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\n\nint main() {\n    int year;\n    std::cin >> year;\n    \n    // TODO: Check if the year is a leap year and print the result\n    \n    return 0;\n}"
   },
 
 
@@ -69,8 +69,8 @@ Output: Not Leap Year</pre>
     "c++": "#include <iostream>\n\nint main() {\n    int year;\n    std::cin >> year;\n    \n    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n        std::cout << \"Leap Year\" << std::endl;\n    } else {\n        std::cout << \"Not Leap Year\" << std::endl;\n    }\n    return 0;\n}"
   },
 
-  "wrapCode": function(lang, userCode, input) {
-    switch(lang) {
+  "wrapCode": function (lang, userCode, input) {
+    switch (lang) {
       case 'python':
         return `${userCode}`;
       case 'java':

@@ -55,10 +55,10 @@ Output: * * * * *</pre>
   ],
 
   "templates": {
-    "python": "rows, cols = map(int, input().split())\nfor i in range(rows):\n    for j in range(cols):\n        print('*', end=' ')\n    print()",
-    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int rows = scanner.nextInt();\n        int cols = scanner.nextInt();\n        for (int i = 0; i < rows; i++) {\n            for (int j = 0; j < cols; j++) {\n                System.out.print(\"* \");\n            }\n            System.out.println();\n        }\n    }\n}",
-    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const [rows, cols] = input.split(' ').map(Number);\n    let output = '';\n    for (let i = 0; i < rows; i++) {\n        let row = '';\n        for (let j = 0; j < cols; j++) {\n            row += '* ';\n        }\n        output += row.trim() + '\\n';\n    }\n    console.log(output.trim());\n    readline.close();\n});",
-    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int rows, cols;\n    cin >> rows >> cols;\n    for (int i = 0; i < rows; i++) {\n        for (int j = 0; j < cols; j++) {\n            cout << \"* \";\n        }\n        cout << endl;\n    }\n    return 0;\n}"
+    "python": "rows, cols = map(int, input().split())\n\n# TODO: Use nested loops to print a rectangle pattern of * with given rows and cols\n",
+    "java": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int rows = scanner.nextInt();\n        int cols = scanner.nextInt();\n        \n        // TODO: Use nested loops to print a rectangle pattern of * with given rows and cols\n        \n    }\n}",
+    "javascript": "const readline = require('readline').createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nreadline.question('', (input) => {\n    const parts = input.split(' ');\n    const rows = parseInt(parts[0]);\n    const cols = parseInt(parts[1]);\n    \n    // TODO: Use nested loops to print a rectangle pattern of * with given rows and cols\n    \n    readline.close();\n});",
+    "c++": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int rows, cols;\n    cin >> rows >> cols;\n    \n    // TODO: Use nested loops to print a rectangle pattern of * with given rows and cols\n    \n    return 0;\n}"
   },
 
 
