@@ -1537,12 +1537,12 @@ def problem_solutions(request, course_id):
                 solutions_block = solutions_match.group(1)
                 # Extract each language's solution
                 lang_pattern = re.compile(
-                    r'"(\w[\w+]*?)"\s*:\s*`(.*?)`',
+                    r'"(\w[\w+]*?)"\s*:\s*(["`\'])((?:\\.|[^\\])*?)\2',
                     re.DOTALL
                 )
                 for lang_match in lang_pattern.finditer(solutions_block):
                     lang = lang_match.group(1)
-                    code = lang_match.group(2)
+                    code = lang_match.group(3)
                     # Unescape the template literal
                     code = code.replace('\\n', '\n').replace('\\t', '\t').replace("\\'", "'").replace('\\"', '"')
                     reference_solutions[lang] = code
