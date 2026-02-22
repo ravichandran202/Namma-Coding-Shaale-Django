@@ -194,8 +194,8 @@ def auth_receiver(request):
             
             # Ensure profile exists
             if not hasattr(user, 'profile'):
-                from .models import Profile
-                Profile.objects.create(user=user)
+                from .models import UserProfile
+                UserProfile.objects.create(user=user)
             
             user.profile.mobile_number = clean_number
             user.profile.save()
