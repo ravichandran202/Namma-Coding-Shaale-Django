@@ -1163,8 +1163,7 @@
                 class="growth-badge {% if weekly_growth > 0 %}positive{% elif weekly_growth < 0 %}negative{% else %}neutral{% endif %}">
                 {% if weekly_growth > 0 %}
                 <i class="fas fa-arrow-up" style="font-size: 0.6rem;"></i> +{{ weekly_growth }}%
-                {% elif weekly_growth < 0 %} <i class="fas fa-arrow-down" style="font-size: 0.6rem;"></i> {{
-                  weekly_growth }}%
+                {% elif weekly_growth < 0 %} <i class="fas fa-arrow-down" style="font-size: 0.6rem;"></i> {{weekly_growth }}%
                   {% else %}
                   <i class="fas fa-minus" style="font-size: 0.6rem;"></i> 0%
                   {% endif %}
