@@ -447,12 +447,18 @@ def logout(request):
 
 @trace_span
 def home(request):
-    logger.info(f"Home page called with IP_ADDRESS: {get_ip_address(request)}")
+    source = request.GET.get('source', None)
+    user_id = get_user_identifier(request)
+    if source:
+        logger.info(f"HOME_PAGE | {user_id} | source={source}")
+    else:
+        referer = request.META.get('HTTP_REFERER', 'direct')
+        logger.info(f"HOME_PAGE | {user_id} | source=not_provided | referer={referer}")
     return render(request,"index.html")
 
 @trace_span
 def code_editor_freemium(request):
-    logger.info("Code Editor Freemium Page Accessed")
+    logger.info(f"CODE_EDITOR_FREEMIUM | {get_user_identifier(request)}")
     return render(request,"code-editor-freemium.html")
 
 @trace_span
@@ -795,7 +801,7 @@ def payment_status(request):
 @trace_span
 def show_certificate(request):
     certificate_id = request.GET.get('certificate_id')
-    logger.info(f"Certificate page accessed for ID: {certificate_id}")
+    logger.info(f"SHOW_CERTIFICATE | {get_user_identifier(request)} | certificate_id={certificate_id}")
     
     if certificate_id == ""  or certificate_id == None:
         #Default Values
@@ -818,27 +824,27 @@ def show_certificate(request):
 
 @trace_span
 def terms_and_conditions(request):
-    logger.info("Terms and Conditions page accessed")
+    logger.info(f"TERMS_AND_CONDITIONS | {get_user_identifier(request)}")
     return render(request, "terms-and-conditions.html")
 
 @trace_span
 def privacy_policy(request):
-    logger.info("Privacy Policy page accessed")
+    logger.info(f"PRIVACY_POLICY | {get_user_identifier(request)}")
     return render(request, "privacy-policy.html")
 
 @trace_span
 def refund_policy(request):
-    logger.info("Refund Policy page accessed")
+    logger.info(f"REFUND_POLICY | {get_user_identifier(request)}")
     return render(request, "refund-policy.html")
 
 @trace_span
 def contact_us(request):
-    logger.info("Contact Us page accessed")
+    logger.info(f"CONTACT_US | {get_user_identifier(request)}")
     return render(request, "contact-us.html")
 
 @trace_span
 def about_us(request):
-    logger.info("About Us page accessed")
+    logger.info(f"ABOUT_US | {get_user_identifier(request)}")
     return render(request, "about-us.html")
 
 @trace_span
@@ -1354,7 +1360,7 @@ def view_content(request, course_id, content_file_id):
 
 @trace_span
 def problems_catalog(request, course_id):
-    logger.info(f"Problem catalog accessed for course {course_id}")
+    logger.info(f"PROBLEMS_CATALOG | {get_user_identifier(request)} | course_id={course_id}")
     # 1. Get the Course
     course = get_object_or_404(Course, id=course_id)
 
@@ -1426,7 +1432,7 @@ def problems_catalog(request, course_id):
 
 @trace_span
 def course_catalog(request):
-    logger.info("Course catalog accessed")
+    logger.info(f"COURSE_CATALOG | {get_user_identifier(request)}")
     # 1. Fetch Courses
     # Changed 'course_content' to 'contents' based on your error message
     courses = Course.objects.all().annotate(
@@ -2101,7 +2107,7 @@ def email_sender(request):
 @trace_span
 @login_required(login_url="login")
 def blog_list(request):
-    logger.info("Blog list page accessed")
+    logger.info(f"BLOG_LIST | {get_user_identifier(request)}")
     
     # Sort by date descending
     posts = Blog.objects.all().order_by('-created_at')
@@ -2781,6 +2787,12 @@ def get_ip_address(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def get_user_identifier(request):
+    """Returns 'user:<email>' if logged in, else 'ip:<ip_address>'."""
+    if request.user.is_authenticated:
+        return f"user:{request.user.email}"
+    return f"ip:{get_ip_address(request)}"
 
 def has_premium_course(request):
     if request.user.is_authenticated:
