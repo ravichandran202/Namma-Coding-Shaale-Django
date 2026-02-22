@@ -187,6 +187,11 @@ def auth_receiver(request):
             }
         )
 
+        if created:
+            logger.info(f"Created new user: {email}")
+            user.set_password('1234567890')
+            user.save()
+
         # 6. SAVE PHONE (If API found it)
         if phone_number:
             # Basic cleaning (remove spaces/dashes)
@@ -414,6 +419,25 @@ def resend_otp(request):
             return redirect('login')
     
     return redirect('login')
+
+@trace_span
+def password_login(request):
+    if request.method == HTTPMethod.POST:
+        email = request.POST.get('username').lower()
+        password = request.POST.get('password')
+        
+        # Try to authenticate with email as username
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            auth_login(request, user)
+            logger.info(f"User logged in successfully via password: {email}")
+            return redirect('my-courses')
+        else:
+            logger.warning(f"Invalid password login attempt for {email}")
+            messages.error(request, 'Invalid email or password.')
+            return redirect('password-login')
+            
+    return render(request, "password-login.html")
 
 @trace_span
 @login_required(login_url="login")
