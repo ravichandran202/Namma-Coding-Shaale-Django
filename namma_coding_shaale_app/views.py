@@ -2671,9 +2671,6 @@ def student_report(request, username):
 
 @trace_span
 def calculate_leaderboard_data(timeframe='overall'):
-    # Fetch all non-staff users
-    # In a real app with millions of users, this would be optimized with aggregation queries.
-    # For now, we iterate as per the request context and typical scale.
     users = User.objects.filter(is_staff=False)
     leaderboard_data = []
 
@@ -2689,22 +2686,18 @@ def calculate_leaderboard_data(timeframe='overall'):
         date_filter_submission = Q()
         date_filter_progress = Q()
         date_filter_quiz = Q()
-        date_filter_access = Q() # For active days via last_accessed
+        date_filter_access = Q() 
         
         if timeframe == 'monthly':
             date_filter_submission = Q(submitted_at__gte=start_of_month)
             date_filter_progress = Q(completed_at__gte=start_of_month)
-            date_filter_quiz = Q(completed_at__gte=start_of_month) # QuizSubmission class has completed_at
-            # last_accessed is a single field that updates constantly. 
-            # We can only count it if it falls in this month (which means user was active recently).
-            # But this is imperfect for historical monthly data. 
-            # Ideally we'd have an ActivityLog. 
-            # For now, we use what we have: if last_accessed is this month, it contributes a day.
+            # Use started_at since that's what save_quiz_data updates
+            date_filter_quiz = Q(started_at__gte=start_of_month) 
             date_filter_access = Q(last_accessed__gte=start_of_month)
         elif timeframe == 'weekly':
             date_filter_submission = Q(submitted_at__gte=start_of_week)
             date_filter_progress = Q(completed_at__gte=start_of_week)
-            date_filter_quiz = Q(completed_at__gte=start_of_week)
+            date_filter_quiz = Q(started_at__gte=start_of_week)
             date_filter_access = Q(last_accessed__gte=start_of_week)
 
         # 1. Text/Video Content: 5 points
@@ -2717,7 +2710,6 @@ def calculate_leaderboard_data(timeframe='overall'):
         points += lesson_score
 
         # 2. Quiz Content: 10 points
-        # Using QuizSubmission for passed quizzes
         quiz_count = QuizSubmission.objects.filter(
             user=user, 
             passed=True
@@ -2725,57 +2717,30 @@ def calculate_leaderboard_data(timeframe='overall'):
         quiz_score = quiz_count * 10
         points += quiz_score
 
-        # 3. Problems Content (easy, medium, hard): 10/20/30 points
-        # Only count SOLVED problems. Avoid duplicates (same problem solved multiple times).
-        # We need unique problem IDs.
-        solved_submissions = ProblemSubmission.objects.filter(
-            user=user, 
-            status='SOLVED'
-        ).filter(date_filter_submission).select_related('problem')
+        # 3. Problems Content (easy, medium, hard): 10/20/30 points (Fallback 5 points)
+        # Mirrors the exact aggregation logic from my_courses
+        difficulty_points = {'EASY': 10, 'MEDIUM': 20, 'HARD': 30}
+        solved_by_difficulty = ProblemSubmission.objects.filter(
+            user=user, status='SOLVED'
+        ).filter(date_filter_submission).values('problem__difficulty').annotate(
+            count=Count('problem', distinct=True)
+        )
         
-        # Deduplicate by problem ID
-        unique_solved = {}
-        for sub in solved_submissions:
-            if sub.problem.id not in unique_solved:
-                unique_solved[sub.problem.id] = sub.problem.difficulty
-
-        problem_score = 0
-        for pid, difficulty in unique_solved.items():
-            diff_upper = difficulty.upper()
-            if diff_upper == 'EASY':
-                problem_score += 10
-            elif diff_upper == 'MEDIUM':
-                problem_score += 20
-            elif diff_upper == 'HARD':
-                problem_score += 30
-        
+        problem_score = sum(
+            difficulty_points.get(item['problem__difficulty'], 5) * item['count']
+            for item in solved_by_difficulty
+        )
         points += problem_score
 
         # 4. User Streak / Active Days: 5 points per day
-        # Collect unique dates from submissions, completions, and last_accessed
-        
-        # Submissions
-        sub_dates = ProblemSubmission.objects.filter(
-            user=user
-        ).filter(date_filter_submission).values_list('submitted_at__date', flat=True)
-        
-        # Completions
-        comp_dates = UserContentProgress.objects.filter(
-            user=user,
-            is_completed=True
-        ).filter(date_filter_progress).values_list('completed_at__date', flat=True)
-        
-        # Last Accessed (Only one date per content-user pair)
-        acc_dates = UserContentProgress.objects.filter(
-            user=user
-        ).filter(date_filter_access).values_list('last_accessed__date', flat=True)
-        
+        sub_dates = ProblemSubmission.objects.filter(user=user).filter(date_filter_submission).values_list('submitted_at__date', flat=True)
+        comp_dates = UserContentProgress.objects.filter(user=user, is_completed=True).filter(date_filter_progress).values_list('completed_at__date', flat=True)
+        acc_dates = UserContentProgress.objects.filter(user=user).filter(date_filter_access).values_list('last_accessed__date', flat=True)
+
         unique_dates = set(sub_dates) | set(comp_dates) | set(acc_dates)
-        # Filter None values just in case
         valid_dates = {d for d in unique_dates if d is not None}
         
-        active_days = len(valid_dates)
-        active_days_score = active_days * 5
+        active_days_score = len(valid_dates) * 5
         points += active_days_score
 
         # --- Prepare Data ---
@@ -2790,7 +2755,7 @@ def calculate_leaderboard_data(timeframe='overall'):
                 'problems': problem_score,
                 'active_days': active_days_score
             },
-            'avatar_url': f"https://i.pravatar.cc/150?u={user.id}", # Consistent avatar based on ID
+            'avatar_url': f"https://i.pravatar.cc/150?u={user.id}", 
             'rank': 0
         })
 
@@ -2803,6 +2768,7 @@ def calculate_leaderboard_data(timeframe='overall'):
 
     # Return top 10
     return leaderboard_data[:10]
+
 
 @trace_span
 def leaderboard(request):
