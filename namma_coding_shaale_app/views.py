@@ -2525,7 +2525,8 @@ def student_dashboard(request, username):
         "cumulative_labels": json.dumps(cumulative_dates),
         "cumulative_data": json.dumps(cumulative_counts),
         # Ensure we pass the profile info if it exists
-        "user_profile": getattr(user, 'profile', None) 
+        "user_profile": getattr(user, 'profile', None),
+        "has_premium_course": has_premium_course(request)
     }
 
     return render(request, "student_dashboard.html", context)
@@ -2781,7 +2782,8 @@ def leaderboard(request):
     context = {
         'weekly_leaders': weekly_leaders,
         'monthly_leaders': monthly_leaders,
-        'overall_leaders': overall_leaders
+        'overall_leaders': overall_leaders,
+        "has_premium_course": has_premium_course(request)
     }
     return render(request, 'leaderboard.html', context)
 
@@ -2792,3 +2794,8 @@ def get_ip_address(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def has_premium_course(request):
+    if request.user.is_authenticated:
+        return UserCourse.objects.filter(user=request.user, course__is_premium=True).exists() 
+    return False

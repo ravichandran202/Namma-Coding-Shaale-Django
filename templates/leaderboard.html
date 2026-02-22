@@ -352,6 +352,62 @@
         display: inline-block;
     }
 
+    .btn-premium {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white !important;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), #6d28d9);
+            color: white;
+        }
+
+     /* Premium Lock Overlay */
+        .premium-lock-overlay {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(1px);
+        }
+
+        .lock-content {
+            /* background: white; */
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            pointer-events: auto;
+        }
+
+        .blurred-content {
+            pointer-events: none;
+            filter: blur(4px);
+            user-select: none;
+            overflow: hidden;
+            /* max-height: 100vh; */
+        }
+
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -433,7 +489,19 @@
 {% endblock %}
 
 {% block content %}
-<section class="section" id="leaderboard-section" style="padding-top: 2rem; background: transparent;">
+{% if not has_premium_course %}
+<div class="premium-lock-overlay" style="border-radius: 20px;">
+    <div class="lock-content text-center">
+        <i class="fas fa-crown fa-4x mb-3 text-warning"></i>
+        <h2 class="fw-bold text-dark">Premium Feature</h2>
+        <p class="text-muted mb-4">You need to enroll in a premium course to access the global Leaderboard.</p>
+        <a href="{% url 'course-catalog' %}" class="btn btn-premium px-5 py-3 rounded-pill"
+            style="width: auto;">View Courses</a>
+    </div>
+</div>
+{% endif %}
+
+<section class="section position-relative" id="leaderboard-section" style="padding-top: 2rem; background: transparent;">
     <div class="container" style="max-width: 900px;">
 
         <div class="text-center mb-5">
@@ -450,224 +518,228 @@
             </div>
         </div>
 
-        <div id="weekly-board" class="lb-content active">
-            {% if weekly_leaders %}
-            <div class="podium-wrapper">
-                {% if weekly_leaders|length > 1 %}
-                {% with weekly_leaders.1 as p2 %}
-                <div class="podium-item rank-2">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p2.name|first }}
-                        </div>
-                    </div>
-                    <div class="podium-name">{{ p2.name }}</div>
-                    <div class="podium-points">{{ p2.points }} pts</div>
-                    <div class="podium-block">2</div>
-                </div>
-                {% endwith %}
-                {% endif %}
+        <div class="leaderboard-boards-wrapper {% if not has_premium_course %}blurred-content{% endif %}">
 
-                {% if weekly_leaders|length > 0 %}
-                {% with weekly_leaders.0 as p1 %}
-                <div class="podium-item rank-1">
-                    <div class="podium-avatar-box">
-                        <i class="fas fa-crown crown-icon"></i>
-                        <div class="podium-avatar">
-                            {{ p1.name|first }}
+            <div id="weekly-board" class="lb-content active">
+                {% if weekly_leaders %}
+                <div class="podium-wrapper">
+                    {% if weekly_leaders|length > 1 %}
+                    {% with weekly_leaders.1 as p2 %}
+                    <div class="podium-item rank-2">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p2.name|first }}
+                            </div>
                         </div>
+                        <div class="podium-name">{{ p2.name }}</div>
+                        <div class="podium-points">{{ p2.points }} pts</div>
+                        <div class="podium-block">2</div>
                     </div>
-                    <div class="podium-name">{{ p1.name }}</div>
-                    <div class="podium-points">{{ p1.points }} pts</div>
-                    <div class="podium-block">1</div>
-                </div>
-                {% endwith %}
-                {% endif %}
+                    {% endwith %}
+                    {% endif %}
 
-                {% if weekly_leaders|length > 2 %}
-                {% with weekly_leaders.2 as p3 %}
-                <div class="podium-item rank-3">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p3.name|first }}
+                    {% if weekly_leaders|length > 0 %}
+                    {% with weekly_leaders.0 as p1 %}
+                    <div class="podium-item rank-1">
+                        <div class="podium-avatar-box">
+                            <i class="fas fa-crown crown-icon"></i>
+                            <div class="podium-avatar">
+                                {{ p1.name|first }}
+                            </div>
                         </div>
+                        <div class="podium-name">{{ p1.name }}</div>
+                        <div class="podium-points">{{ p1.points }} pts</div>
+                        <div class="podium-block">1</div>
                     </div>
-                    <div class="podium-name">{{ p3.name }}</div>
-                    <div class="podium-points">{{ p3.points }} pts</div>
-                    <div class="podium-block">3</div>
-                </div>
-                {% endwith %}
-                {% endif %}
-            </div>
+                    {% endwith %}
+                    {% endif %}
 
-            <div class="leaderboard-list-card">
-                {% for user in weekly_leaders %}
-                <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
-                    <div class="list-row">
-                        <div class="list-rank">{{ user.rank }}</div>
-                        <div class="list-avatar">
-                            {{ user.name|first }}
+                    {% if weekly_leaders|length > 2 %}
+                    {% with weekly_leaders.2 as p3 %}
+                    <div class="podium-item rank-3">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p3.name|first }}
+                            </div>
                         </div>
-                        <div class="list-info">
-                            <h5 class="list-name">{{ user.name }}</h5>
-                        </div>
-                        <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
+                        <div class="podium-name">{{ p3.name }}</div>
+                        <div class="podium-points">{{ p3.points }} pts</div>
+                        <div class="podium-block">3</div>
                     </div>
-                </a>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="text-center py-5">
-                <p class="text-muted">No activity recorded yet.</p>
-            </div>
-            {% endif %}
-        </div>
-
-        <div id="monthly-board" class="lb-content">
-            {% if monthly_leaders %}
-            <div class="podium-wrapper">
-                {% if monthly_leaders|length > 1 %}
-                {% with monthly_leaders.1 as p2 %}
-                <div class="podium-item rank-2">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p2.name|first }}
-                        </div>
-                    </div>
-                    <div class="podium-name">{{ p2.name }}</div>
-                    <div class="podium-points">{{ p2.points }} pts</div>
-                    <div class="podium-block">2</div>
+                    {% endwith %}
+                    {% endif %}
                 </div>
-                {% endwith %}
-                {% endif %}
 
-                {% if monthly_leaders|length > 0 %}
-                {% with monthly_leaders.0 as p1 %}
-                <div class="podium-item rank-1">
-                    <div class="podium-avatar-box">
-                        <i class="fas fa-crown crown-icon"></i>
-                        <div class="podium-avatar">
-                            {{ p1.name|first }}
+                <div class="leaderboard-list-card">
+                    {% for user in weekly_leaders %}
+                    <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                        <div class="list-row">
+                            <div class="list-rank">{{ user.rank }}</div>
+                            <div class="list-avatar">
+                                {{ user.name|first }}
+                            </div>
+                            <div class="list-info">
+                                <h5 class="list-name">{{ user.name }}</h5>
+                            </div>
+                            <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
                         </div>
-                    </div>
-                    <div class="podium-name">{{ p1.name }}</div>
-                    <div class="podium-points">{{ p1.points }} pts</div>
-                    <div class="podium-block">1</div>
+                    </a>
+                    {% endfor %}
                 </div>
-                {% endwith %}
-                {% endif %}
-
-                {% if monthly_leaders|length > 2 %}
-                {% with monthly_leaders.2 as p3 %}
-                <div class="podium-item rank-3">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p3.name|first }}
-                        </div>
-                    </div>
-                    <div class="podium-name">{{ p3.name }}</div>
-                    <div class="podium-points">{{ p3.points }} pts</div>
-                    <div class="podium-block">3</div>
+                {% else %}
+                <div class="text-center py-5">
+                    <p class="text-muted">No activity recorded yet.</p>
                 </div>
-                {% endwith %}
                 {% endif %}
             </div>
 
-            <div class="leaderboard-list-card">
-                {% for user in monthly_leaders %}
-                <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
-                    <div class="list-row">
-                        <div class="list-rank">{{ user.rank }}</div>
-                        <div class="list-avatar">
-                            {{ user.name|first }}
+            <div id="monthly-board" class="lb-content">
+                {% if monthly_leaders %}
+                <div class="podium-wrapper">
+                    {% if monthly_leaders|length > 1 %}
+                    {% with monthly_leaders.1 as p2 %}
+                    <div class="podium-item rank-2">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p2.name|first }}
+                            </div>
                         </div>
-                        <div class="list-info">
-                            <h5 class="list-name">{{ user.name }}</h5>
-                        </div>
-                        <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
+                        <div class="podium-name">{{ p2.name }}</div>
+                        <div class="podium-points">{{ p2.points }} pts</div>
+                        <div class="podium-block">2</div>
                     </div>
-                </a>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="text-center py-5">
-                <p class="text-muted">No activity recorded yet.</p>
-            </div>
-            {% endif %}
-        </div>
+                    {% endwith %}
+                    {% endif %}
 
-        <div id="overall-board" class="lb-content">
-            {% if overall_leaders %}
-            <div class="podium-wrapper">
-                {% if overall_leaders|length > 1 %}
-                {% with overall_leaders.1 as p2 %}
-                <div class="podium-item rank-2">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p2.name|first }}
+                    {% if monthly_leaders|length > 0 %}
+                    {% with monthly_leaders.0 as p1 %}
+                    <div class="podium-item rank-1">
+                        <div class="podium-avatar-box">
+                            <i class="fas fa-crown crown-icon"></i>
+                            <div class="podium-avatar">
+                                {{ p1.name|first }}
+                            </div>
                         </div>
+                        <div class="podium-name">{{ p1.name }}</div>
+                        <div class="podium-points">{{ p1.points }} pts</div>
+                        <div class="podium-block">1</div>
                     </div>
-                    <div class="podium-name">{{ p2.name }}</div>
-                    <div class="podium-points">{{ p2.points }} pts</div>
-                    <div class="podium-block">2</div>
+                    {% endwith %}
+                    {% endif %}
+
+                    {% if monthly_leaders|length > 2 %}
+                    {% with monthly_leaders.2 as p3 %}
+                    <div class="podium-item rank-3">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p3.name|first }}
+                            </div>
+                        </div>
+                        <div class="podium-name">{{ p3.name }}</div>
+                        <div class="podium-points">{{ p3.points }} pts</div>
+                        <div class="podium-block">3</div>
+                    </div>
+                    {% endwith %}
+                    {% endif %}
                 </div>
-                {% endwith %}
-                {% endif %}
 
-                {% if overall_leaders|length > 0 %}
-                {% with overall_leaders.0 as p1 %}
-                <div class="podium-item rank-1">
-                    <div class="podium-avatar-box">
-                        <i class="fas fa-crown crown-icon"></i>
-                        <div class="podium-avatar">
-                            {{ p1.name|first }}
+                <div class="leaderboard-list-card">
+                    {% for user in monthly_leaders %}
+                    <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                        <div class="list-row">
+                            <div class="list-rank">{{ user.rank }}</div>
+                            <div class="list-avatar">
+                                {{ user.name|first }}
+                            </div>
+                            <div class="list-info">
+                                <h5 class="list-name">{{ user.name }}</h5>
+                            </div>
+                            <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
                         </div>
-                    </div>
-                    <div class="podium-name">{{ p1.name }}</div>
-                    <div class="podium-points">{{ p1.points }} pts</div>
-                    <div class="podium-block">1</div>
+                    </a>
+                    {% endfor %}
                 </div>
-                {% endwith %}
-                {% endif %}
-
-                {% if overall_leaders|length > 2 %}
-                {% with overall_leaders.2 as p3 %}
-                <div class="podium-item rank-3">
-                    <div class="podium-avatar-box">
-                        <div class="podium-avatar">
-                            {{ p3.name|first }}
-                        </div>
-                    </div>
-                    <div class="podium-name">{{ p3.name }}</div>
-                    <div class="podium-points">{{ p3.points }} pts</div>
-                    <div class="podium-block">3</div>
+                {% else %}
+                <div class="text-center py-5">
+                    <p class="text-muted">No activity recorded yet.</p>
                 </div>
-                {% endwith %}
                 {% endif %}
             </div>
 
-            <div class="leaderboard-list-card">
-                {% for user in overall_leaders %}
-                <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
-                    <div class="list-row">
-                        <div class="list-rank">{{ user.rank }}</div>
-                        <div class="list-avatar">
-                            {{ user.name|first }}
+            <div id="overall-board" class="lb-content">
+                {% if overall_leaders %}
+                <div class="podium-wrapper">
+                    {% if overall_leaders|length > 1 %}
+                    {% with overall_leaders.1 as p2 %}
+                    <div class="podium-item rank-2">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p2.name|first }}
+                            </div>
                         </div>
-                        <div class="list-info">
-                            <h5 class="list-name">{{ user.name }}</h5>
-                        </div>
-                        <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
+                        <div class="podium-name">{{ p2.name }}</div>
+                        <div class="podium-points">{{ p2.points }} pts</div>
+                        <div class="podium-block">2</div>
                     </div>
-                </a>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="text-center py-5">
-                <p class="text-muted">No activity recorded yet.</p>
-            </div>
-            {% endif %}
-        </div>
+                    {% endwith %}
+                    {% endif %}
+
+                    {% if overall_leaders|length > 0 %}
+                    {% with overall_leaders.0 as p1 %}
+                    <div class="podium-item rank-1">
+                        <div class="podium-avatar-box">
+                            <i class="fas fa-crown crown-icon"></i>
+                            <div class="podium-avatar">
+                                {{ p1.name|first }}
+                            </div>
+                        </div>
+                        <div class="podium-name">{{ p1.name }}</div>
+                        <div class="podium-points">{{ p1.points }} pts</div>
+                        <div class="podium-block">1</div>
+                    </div>
+                    {% endwith %}
+                    {% endif %}
+
+                    {% if overall_leaders|length > 2 %}
+                    {% with overall_leaders.2 as p3 %}
+                    <div class="podium-item rank-3">
+                        <div class="podium-avatar-box">
+                            <div class="podium-avatar">
+                                {{ p3.name|first }}
+                            </div>
+                        </div>
+                        <div class="podium-name">{{ p3.name }}</div>
+                        <div class="podium-points">{{ p3.points }} pts</div>
+                        <div class="podium-block">3</div>
+                    </div>
+                    {% endwith %}
+                    {% endif %}
+                </div>
+
+                <div class="leaderboard-list-card">
+                    {% for user in overall_leaders %}
+                    <a href="{% url 'student_dashboard' user.username %}" style="text-decoration: none;">
+                        <div class="list-row">
+                            <div class="list-rank">{{ user.rank }}</div>
+                            <div class="list-avatar">
+                                {{ user.name|first }}
+                            </div>
+                            <div class="list-info">
+                                <h5 class="list-name">{{ user.name }}</h5>
+                            </div>
+                            <div class="list-score">{{ user.points }} <span class="pts-badge">pts</span></div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <p class="text-muted">No activity recorded yet.</p>
+                </div>
+                {% endif %}
+            </div> <!-- End overall-board -->
+
+        </div> <!-- End leaderboard-boards-wrapper -->
 
     </div>
 </section>
