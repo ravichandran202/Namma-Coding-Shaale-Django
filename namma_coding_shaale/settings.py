@@ -244,3 +244,12 @@ CREDENTIALS = {
     "PHONE_PAY_CLIENT_VERSION": os.environ.get('PHONE_PAY_CLIENT_VERSION', '1'),
     "PHONE_PAY_REDIRECTION_URI": os.environ.get('PHONE_PAY_REDIRECTION_URI', 'http://127.0.0.1:8000')
 }
+
+
+# MessageCentral API Credentials
+import os
+MESSAGE_CENTRAL_CUSTOMER_ID = os.environ.get('MESSAGE_CENTRAL_CUSTOMER_ID')
+MESSAGE_CENTRAL_AUTH_TOKEN = os.environ.get('MESSAGE_CENTRAL_AUTH_TOKEN')
+
+# Feature Flags
+ENABLE_OTP_VERIFICATION = True # Set to False to bypass OTP verification

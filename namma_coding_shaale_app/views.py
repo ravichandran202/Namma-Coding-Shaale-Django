@@ -297,9 +297,12 @@ def complete_profile(request):
                 logger.error(f"Error saving profile for {request.user.username}: {e}", exc_info=True)
                 error_message = "An error occurred while saving your profile. Please try again."
 
+    
+    enable_otp = getattr(settings, 'ENABLE_OTP_VERIFICATION', False)
     return render(request, 'onboarding_form.html', {
         'error_message': error_message,
-        'user': request.user
+        'user': request.user,
+        'enable_otp': enable_otp
     })
 
 @trace_span
@@ -2798,3 +2801,115 @@ def has_premium_course(request):
     if request.user.is_authenticated:
         return UserCourse.objects.filter(user=request.user, course__is_premium=True).exists() 
     return False
+@csrf_exempt
+def send_mobile_otp(request):
+    if request.method == 'OPTIONS':
+        response = JsonResponse({'message': 'CORS Preflight Options'})
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type, Authorization, x-csrftoken"
+        return response
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            mobile_number = data.get('mobile_number')
+            
+            if not mobile_number:
+                resp = JsonResponse({"error": "Mobile number is required"}, status=400)
+                resp["Access-Control-Allow-Origin"] = "*"
+                return resp
+
+            # Important: Replace with your actual credentials or securely fetch from env vars
+            customer_id = settings.MESSAGE_CENTRAL_CUSTOMER_ID
+            auth_token = settings.MESSAGE_CENTRAL_AUTH_TOKEN
+            
+            
+            # Ensure mobile number is 10 digits
+            clean_mobile = ''.join(filter(str.isdigit, mobile_number))[-10:]
+            url = f"https://cpaas.messagecentral.com/verification/v3/send?countryCode=91&customerId={customer_id}&flowType=SMS&mobileNumber={clean_mobile}"
+
+            
+            headers = {
+                'authToken': auth_token
+            }
+            
+            response = requests.post(url, headers=headers)
+            response_data = response.json()
+            
+            if response.status_code == 200:
+                resp = JsonResponse({"message": "OTP sent successfully", "data": response_data})
+            else:
+                resp = JsonResponse({"error": "Failed to send OTP", "details": response_data}, status=response.status_code)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+                
+        except json.JSONDecodeError:
+            resp = JsonResponse({"error": "Invalid JSON"}, status=400)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+        except Exception as e:
+            logger.error(f"Error sending mobile OTP: {str(e)}", exc_info=True)
+            resp = JsonResponse({"error": "An internal error occurred"}, status=500)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+            
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def validate_mobile_otp(request):
+    if request.method == 'OPTIONS':
+        response = JsonResponse({'message': 'CORS Preflight Options'})
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type, Authorization, x-csrftoken"
+        return response
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            mobile_number = data.get('mobile_number')
+            verification_id = data.get('verificationId')
+            code = data.get('code')
+            
+            if not all([mobile_number, verification_id, code]):
+                resp = JsonResponse({"error": "Missing required parameters"}, status=400)
+                resp["Access-Control-Allow-Origin"] = "*"
+                return resp
+
+            customer_id = settings.MESSAGE_CENTRAL_CUSTOMER_ID
+            auth_token = settings.MESSAGE_CENTRAL_AUTH_TOKEN
+
+            
+            # Ensure mobile number is 10 digits
+            clean_mobile = ''.join(filter(str.isdigit, mobile_number))[-10:]
+            url = f"https://cpaas.messagecentral.com/verification/v3/validateOtp?countryCode=91&mobileNumber={clean_mobile}&verificationId={verification_id}&customerId={customer_id}&code={code}"
+
+
+            headers = {
+                'authToken': auth_token
+            }
+            
+            # Using GET as per MessageCentral validateOtp common usage, though cURL is vague. 
+            # Looking at standard for validateOtp it is usually GET. 
+            response = requests.get(url, headers=headers)
+            response_data = response.json()
+
+            if response.status_code == 200:
+                 resp = JsonResponse({"message": "OTP verified successfully", "data": response_data})
+            else:
+                 resp = JsonResponse({"error": "Invalid OTP", "details": response_data}, status=response.status_code)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+
+        except json.JSONDecodeError:
+            resp = JsonResponse({"error": "Invalid JSON"}, status=400)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+        except Exception as e:
+            logger.error(f"Error validating mobile OTP: {str(e)}", exc_info=True)
+            resp = JsonResponse({"error": "An internal error occurred"}, status=500)
+            resp["Access-Control-Allow-Origin"] = "*"
+            return resp
+            
+    return HttpResponseNotFound()
