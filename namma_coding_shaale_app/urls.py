@@ -54,5 +54,9 @@ urlpatterns = [
     # Student Dashboard
     path("dashboard/<str:username>/", views.student_dashboard, name="student_dashboard"),
     path("dashboard/<str:username>/report/", views.student_report, name="student_report"),
-    path("leaderboard/", views.leaderboard, name="leaderboard")
+    path("leaderboard/", views.leaderboard, name="leaderboard"),
+
+    # Mobile OTP verification endpoints
+    path('api/send-mobile-otp/', views.send_mobile_otp, name='send_mobile_otp'),
+    path('api/validate-mobile-otp/', views.validate_mobile_otp, name='validate_mobile_otp'),
 ]

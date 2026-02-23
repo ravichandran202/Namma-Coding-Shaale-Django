@@ -14,7 +14,7 @@
         rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
+    <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
 
     <style>
         /* [Previous CSS remains exactly the same] */
@@ -190,10 +190,15 @@
             gap: 10px;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
             background: #1e293b;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .form-section-title {
@@ -243,6 +248,20 @@
             border: 1px solid #fecaca;
         }
 
+        .success-pill {
+            background: #dcfce7;
+            color: #166534;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #bbf7d0;
+        }
+
         /* --- Validation Specific Styles --- */
         .form-control.is-invalid,
         .was-validated .form-control:invalid {
@@ -260,6 +279,15 @@
             font-size: 0.8rem;
             margin-top: 5px;
             margin-left: 5px;
+        }
+
+        .otp-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px dashed #cbd5e1;
         }
 
         @media (max-width: 767px) {
@@ -302,6 +330,13 @@
                         </div>
                         {% endif %}
 
+                        <div id="jsErrorAlert" class="error-pill" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i> <span id="jsErrorMsg"></span>
+                        </div>
+                        <div id="jsSuccessAlert" class="success-pill" style="display: none;">
+                            <i class="fas fa-check-circle"></i> <span id="jsSuccessMsg"></span>
+                        </div>
+
                         <form method="POST" action="" enctype="multipart/form-data" class="needs-validation" novalidate
                             id="profileForm">
                             {% csrf_token %}
@@ -317,11 +352,36 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                                    <input type="tel" name="mobile_number" class="custom-input form-control"
-                                        placeholder="9876543210" pattern="[0-9]{10,15}" required>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid mobile number (10-15 digits).
+                                    <div class="input-group">
+                                        <input type="tel" id="mobileNumber" name="mobile_number"
+                                            class="custom-input form-control" placeholder="9876543210"
+                                            pattern="(\+91[\-\s]?)?[0]?[6-9]\d{9}" required>
+                                        {% if enable_otp %}
+                                        <button class="btn btn-outline-primary" type="button" id="btnSendOtp"
+                                            style="border-radius: 0 12px 12px 0;">Verify</button>
+                                        <span class="input-group-text d-none" id="mobileVerifiedBadge"
+                                            style="background: #dcfce7; color: #166534; border-radius: 0 12px 12px 0;"><i
+                                                class="fas fa-check-circle"></i></span>
+                                        {% endif %}
                                     </div>
+                                    <div class="invalid-feedback" id="mobileFeedback">
+                                        Please enter a valid mobile number.
+                                    </div>
+
+                                    <!-- OTP Section -->
+                                    {% if enable_otp %}
+                                    <div class="otp-section" id="otpSection">
+                                        <label class="form-label text-primary">Enter OTP</label>
+                                        <div class="input-group">
+                                            <input type="text" id="otpCode" class="custom-input form-control"
+                                                placeholder="1234" maxlength="6">
+                                            <button class="btn btn-primary" type="button" id="btnVerifyOtp"
+                                                style="border-radius: 0 12px 12px 0;">Confirm</button>
+                                        </div>
+                                        <small class="text-muted mt-2 d-block">An OTP has been sent to your
+                                            mobile.</small>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -445,7 +505,7 @@
                             </div>
 
 
-                            <button type="submit" class="btn-submit">
+                            <button type="submit" class="btn-submit" id="mainSubmitBtn">
                                 Save Profile
                                 <i class="fas fa-check-circle"></i>
                             </button>
@@ -505,15 +565,142 @@
             }
         }
 
-        // 3. Bootstrap Form Submission Validation Logic
+        // 3. OTP Verification Flow
+        const enableOtpVerification = {% if enable_otp %}true{% else %}false{% endif %};
+        const mobileInput = document.getElementById('mobileNumber');
+        const btnSendOtp = document.getElementById('btnSendOtp');
+        const otpSection = document.getElementById('otpSection');
+        const otpInput = document.getElementById('otpCode');
+        const btnVerifyOtp = document.getElementById('btnVerifyOtp');
+        const mobileVerifiedBadge = document.getElementById('mobileVerifiedBadge');
+        const mainSubmitBtn = document.getElementById('mainSubmitBtn');
+        const jsErrorAlert = document.getElementById('jsErrorAlert');
+        const jsErrorMsg = document.getElementById('jsErrorMsg');
+        const jsSuccessAlert = document.getElementById('jsSuccessAlert');
+        const jsSuccessMsg = document.getElementById('jsSuccessMsg');
+
+        let currentVerificationId = null;
+        let isMobileVerified = false;
+
+        function showError(msg) {
+            jsSuccessAlert.style.display = 'none';
+            jsErrorMsg.innerText = msg;
+            jsErrorAlert.style.display = 'flex';
+            setTimeout(() => { jsErrorAlert.style.display = 'none'; }, 5000);
+        }
+
+        function showSuccess(msg) {
+            jsErrorAlert.style.display = 'none';
+            jsSuccessMsg.innerText = msg;
+            jsSuccessAlert.style.display = 'flex';
+            setTimeout(() => { jsSuccessAlert.style.display = 'none'; }, 5000);
+        }
+
+        if (btnSendOtp) {
+            btnSendOtp.addEventListener('click', async function () {
+                const mobile = mobileInput.value.trim();
+                // Basic regex for mobile validation (10 digits)
+                const mobileRegex = /^(\+91[\-\s]?)?[0]?[6-9]\d{9}$/;
+
+                if (!mobileRegex.test(mobile)) {
+                    showError("Please enter a valid 10-digit mobile number starting with 6-9.");
+                    return;
+                }
+
+                // Disable button to prevent multiple clicks
+                btnSendOtp.disabled = true;
+                btnSendOtp.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+
+                try {
+                    const response = await fetch('/api/send-mobile-otp/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ mobile_number: mobile.replace(/[^0-9]/g, '').slice(-10) }) // MessageCentral expects exactly 10 digits without +91 here
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.data && data.data.data.verificationId) {
+                        currentVerificationId = data.data.data.verificationId;
+                        showSuccess("OTP sent successfully!");
+                        otpSection.style.display = 'block';
+                        mobileInput.readOnly = true;
+                        btnSendOtp.style.display = 'none';
+                    } else {
+                        showError(data.error || "Failed to send OTP. Please try again.");
+                        btnSendOtp.disabled = false;
+                        btnSendOtp.innerText = 'Verify';
+                    }
+                } catch (error) {
+                    console.error("Error sending OTP:", error);
+                    showError("A network error occurred.");
+                    btnSendOtp.disabled = false;
+                    btnSendOtp.innerText = 'Verify';
+                }
+            });
+        }
+
+        if (btnVerifyOtp) {
+            btnVerifyOtp.addEventListener('click', async function () {
+                const code = otpInput.value.trim();
+                const mobile = mobileInput.value.trim();
+
+                if (!code || code.length < 4) {
+                    showError("Please enter a valid OTP.");
+                    return;
+                }
+
+                btnVerifyOtp.disabled = true;
+                btnVerifyOtp.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verifying...';
+
+                try {
+                    const response = await fetch('/api/validate-mobile-otp/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            mobile_number: mobile.replace(/[^0-9]/g, '').slice(-10),
+                            verificationId: currentVerificationId,
+                            code: code
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.message === "OTP verified successfully") {
+                        showSuccess("Mobile number verified successfully!");
+                        isMobileVerified = true;
+                        otpSection.style.display = 'none';
+                        mobileVerifiedBadge.classList.remove('d-none');
+                    } else {
+                        showError(data.error || "Invalid OTP. Please try again.");
+                        btnVerifyOtp.disabled = false;
+                        btnVerifyOtp.innerText = 'Confirm';
+                    }
+                } catch (error) {
+                    console.error("Error validating OTP:", error);
+                    showError("A network error occurred.");
+                    btnVerifyOtp.disabled = false;
+                    btnVerifyOtp.innerText = 'Confirm';
+                }
+            });
+        }
+
+        // 4. Bootstrap Form Submission Validation Logic
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation')
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
+                    if (!form.checkValidity() || (enableOtpVerification && !isMobileVerified)) {
                         event.preventDefault()
                         event.stopPropagation()
+                        if (enableOtpVerification && !isMobileVerified) {
+                            showError("Please verify your mobile number before saving.");
+                        }
                     }
                     form.classList.add('was-validated')
                 }, false)
