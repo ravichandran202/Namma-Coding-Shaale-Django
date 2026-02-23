@@ -70,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'namma_coding_shaale_app.middleware.RequestLoggingMiddleware',
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -216,6 +217,13 @@ LOGGING = {
         # but the actual OTel logic happens in otel.py or auto-instrumentation
         'otel': {
             'class': 'opentelemetry.sdk._logs.LoggingHandler',
+        },
+    },
+    'loggers': {
+        'request_logger': {
+            'handlers': ['console', 'otel'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
     'root': {
