@@ -298,7 +298,7 @@ def complete_profile(request):
                 error_message = "An error occurred while saving your profile. Please try again."
 
     
-    enable_otp = getattr(settings, 'ENABLE_OTP_VERIFICATION', False)
+    enable_otp = getattr(settings, 'ENABLE_OTP_VERIFICATION', True)
     return render(request, 'onboarding_form.html', {
         'error_message': error_message,
         'user': request.user,
@@ -2895,10 +2895,11 @@ def validate_mobile_otp(request):
             response = requests.get(url, headers=headers)
             response_data = response.json()
 
-            if response.status_code == 200:
+            if response.status_code == 200 and str(response_data.get('responseCode')) == "200":
                  resp = JsonResponse({"message": "OTP verified successfully", "data": response_data})
             else:
-                 resp = JsonResponse({"error": "Invalid OTP", "details": response_data}, status=response.status_code)
+                 error_msg = response_data.get('message', 'Invalid OTP')
+                 resp = JsonResponse({"error": error_msg, "details": response_data}, status=400)
             resp["Access-Control-Allow-Origin"] = "*"
             return resp
 
