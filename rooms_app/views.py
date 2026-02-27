@@ -27,7 +27,7 @@ def manage_rooms(request):
         name = request.POST.get('name')
         description = request.POST.get('description')
         if name and description:
-            room = Room(name=name, description=description, created_by=request.user.full_name)
+            room = Room(name=name, description=description, created_by=request.user.get_full_name)
             room.save()
             messages.success(request, f"Room '{name}' created successfully.")
             return redirect('manage_rooms')
