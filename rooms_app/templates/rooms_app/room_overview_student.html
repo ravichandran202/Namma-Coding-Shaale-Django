@@ -46,12 +46,17 @@
     .breadcrumb-premium {
         font-size: 0.82rem;
         font-weight: 500;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem;
     }
 
     .breadcrumb-premium a {
         color: var(--gray);
         text-decoration: none;
         transition: color 0.2s;
+        white-space: nowrap;
     }
 
     .breadcrumb-premium a:hover { color: var(--primary); }
@@ -70,6 +75,7 @@
         gap: 0.4rem;
         text-decoration: none;
         font-size: 0.82rem;
+        white-space: nowrap;
     }
 
     .btn-ghost:hover {
@@ -87,6 +93,10 @@
         position: relative;
         overflow: hidden;
         margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .room-hero { padding: 1.5rem; }
     }
 
     .room-hero-glow {
@@ -127,6 +137,7 @@
         background: var(--secondary-bg);
         color: var(--secondary);
         border: 1px solid rgba(16, 185, 129, 0.2);
+        white-space: nowrap;
     }
 
     .room-stat {
@@ -146,8 +157,14 @@
         border-radius: var(--radius);
         box-shadow: var(--shadow-sm);
         overflow: hidden;
-        position: sticky;
-        top: 100px;
+    }
+
+    /* Sticky sidebar only on desktop to prevent mobile scrolling issues */
+    @media (min-width: 992px) {
+        .sidebar-card {
+            position: sticky;
+            top: 100px;
+        }
     }
 
     .sidebar-link {
@@ -189,6 +206,12 @@
         transition: var(--transition);
         position: relative;
         overflow: hidden;
+        height: 100%;
+    }
+
+    @media (max-width: 576px) {
+        .stat-card { padding: 1.25rem; }
+        .stat-value { font-size: 1.5rem !important; }
     }
 
     .stat-card:hover {
@@ -246,6 +269,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        gap: 1rem;
     }
 
     .panel-header h5 {
@@ -257,6 +282,7 @@
     .table-premium {
         border-collapse: separate;
         border-spacing: 0;
+        min-width: 600px; /* Ensure table doesn't collapse too far horizontally */
     }
 
     .table-premium th {
@@ -268,6 +294,7 @@
         letter-spacing: 0.05em;
         border-bottom: 1px solid var(--gray-lighter);
         padding: 0.85rem 1.25rem;
+        white-space: nowrap;
     }
 
     .table-premium td {
@@ -318,6 +345,7 @@
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     /* Participants Grid */
@@ -367,6 +395,7 @@
         display: flex;
         align-items: center;
         gap: 0.3rem;
+        white-space: nowrap;
     }
 
     .search-box {
@@ -388,6 +417,11 @@
 
     .search-wrap {
         position: relative;
+    }
+
+    @media (max-width: 575.98px) {
+        .search-wrap { width: 100%; }
+        .search-box { max-width: 100%; }
     }
 
     .search-wrap i {
@@ -434,6 +468,7 @@
         font-size: 0.88rem;
         color: var(--dark);
         font-weight: 500;
+        word-break: break-word; /* Allows long IDs to wrap safely */
     }
 
     .btn-premium-action {
@@ -447,9 +482,11 @@
         transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
         text-decoration: none;
         font-size: 0.85rem;
+        white-space: nowrap;
     }
 
     .btn-premium-action:hover {
@@ -477,27 +514,18 @@
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
-
-    .avatar-colors-0 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
-    .avatar-colors-1 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
-    .avatar-colors-2 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d; }
-    .avatar-colors-3 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; }
-    .avatar-colors-4 { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
-    .avatar-colors-5 { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412; }
-    .avatar-colors-6 { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3; }
-    .avatar-colors-7 { background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75; }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container py-4 mt-3">
     <div class="animate-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
             <nav class="breadcrumb-premium">
                 <a href="{% url 'my-courses' %}"><i class="fas fa-arrow-left me-1"></i> Dashboard</a>
-                <span class="mx-2 text-muted">/</span>
+                <span class="mx-1 mx-md-2 text-muted">/</span>
                 <a href="{% url 'room_detail_student' room.id %}">{{ room.name }}</a>
-                <span class="mx-2 text-muted">/</span>
+                <span class="mx-1 mx-md-2 text-muted">/</span>
                 <span style="color: var(--dark); font-weight: 600;">Overview</span>
             </nav>
             <a href="{% url 'room_detail_student' room.id %}" class="btn-ghost">
@@ -519,8 +547,8 @@
 
     <div class="room-hero animate-in delay-1">
         <div class="room-hero-glow"></div>
-        <div class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-4">
-            <div class="d-flex gap-4">
+        <div class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 gap-md-4">
+            <div class="d-flex flex-column flex-sm-row gap-3 gap-md-4 w-100">
                 <div class="room-icon">
                     <i class="fas fa-code"></i>
                 </div>
@@ -532,7 +560,7 @@
                     <p class="text-muted mb-3" style="max-width: 550px;">
                         {{ room.description|default:"A dedicated space for mastering Data Structures and Algorithms. Join contests to test your skills." }}
                     </p>
-                    <div class="d-flex flex-wrap gap-4">
+                    <div class="d-flex flex-wrap gap-3 gap-md-4">
                         <span class="room-stat"><i class="fas fa-users"></i> {{ total_participants }} Members</span>
                         <span class="room-stat"><i class="fas fa-trophy"></i> {{ total_contests }} Contests</span>
                         <span class="room-stat"><i class="fas fa-shield-alt"></i> {{ room.created_by|default:"Instructor" }}</span>
@@ -543,7 +571,6 @@
     </div>
 
     <div class="row g-4">
-        <!-- Sidebar -->
         <div class="col-lg-3 animate-in delay-2">
             <div class="sidebar-card">
                 <div class="p-2">
@@ -564,7 +591,6 @@
                 </div>
             </div>
 
-            <!-- Room Info -->
             <div class="panel-card mt-4">
                 <div class="panel-header">
                     <h5><i class="fas fa-info-circle me-2" style="color: var(--primary);"></i> Room Info</h5>
@@ -574,25 +600,25 @@
                         <div class="info-icon" style="background: var(--primary-bg); color: var(--primary);">
                             <i class="fas fa-hashtag"></i>
                         </div>
-                        <div>
+                        <div class="min-width-0">
                             <div class="info-label">Room ID</div>
-                            <div class="info-value" style="font-family: monospace; font-size: 0.78rem;">{{ room.id }}</div>
+                            <div class="info-value text-break" style="font-family: monospace; font-size: 0.78rem;">{{ room.id }}</div>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon" style="background: var(--secondary-bg); color: var(--secondary);">
                             <i class="fas fa-user-tie"></i>
                         </div>
-                        <div>
+                        <div class="min-width-0">
                             <div class="info-label">Created By</div>
-                            <div class="info-value">{{ room.created_by|default:"Instructor" }}</div>
+                            <div class="info-value text-break">{{ room.created_by|default:"Instructor" }}</div>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon" style="background: #fef3c7; color: #92400e;">
                             <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <div>
+                        <div class="min-width-0">
                             <div class="info-label">Created On</div>
                             <div class="info-value">{{ room.created_at|date:"M d, Y" }}</div>
                         </div>
@@ -601,9 +627,7 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="col-lg-9">
-            <!-- Stats Row -->
             <div class="row g-3 mb-4 animate-in delay-2">
                 <div class="col-6 col-md-3">
                     <div class="stat-card">
@@ -655,17 +679,16 @@
                 </div>
             </div>
 
-            <!-- Leaderboard -->
             <div id="leaderboard-section" class="mb-4 animate-in delay-3">
                 <div class="panel-card">
                     <div class="panel-header">
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
                             <div class="section-bar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
                             <h5 class="mb-0"><i class="fas fa-medal me-2" style="color: #f59e0b;"></i> Room Leaderboard</h5>
+                            <span class="badge rounded-pill px-3 py-1 mt-1 mt-sm-0" style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">
+                                All Contests Combined
+                            </span>
                         </div>
-                        <span class="badge rounded-pill px-3 py-1" style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">
-                            All Contests Combined
-                        </span>
                     </div>
 
                     {% if leaderboard %}
@@ -701,7 +724,7 @@
                                                 {{ entry.email|make_list|first|upper }}
                                             </div>
                                             <div>
-                                                <div class="fw-bold" style="color: var(--dark); font-size: 0.88rem;">{{ entry.email }}</div>
+                                                <div class="fw-bold" style="color: var(--dark); font-size: 0.88rem; white-space: nowrap;">{{ entry.email }}</div>
                                                 {% if entry.points > 0 %}
                                                 <div class="small text-muted">Active contributor</div>
                                                 {% else %}
@@ -745,11 +768,10 @@
                 </div>
             </div>
 
-            <!-- Participants -->
             <div id="participants-section" class="animate-in delay-4">
                 <div class="panel-card">
                     <div class="panel-header">
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
                             <div class="section-bar" style="background: linear-gradient(135deg, var(--primary), #7c3aed);"></div>
                             <h5 class="mb-0"><i class="fas fa-users me-2" style="color: var(--primary);"></i> Participants</h5>
                             <span class="badge rounded-pill ms-2" style="background: var(--primary-bg); color: var(--primary); font-size: 0.72rem; font-weight: 600;">{{ total_participants }}</span>
@@ -764,15 +786,15 @@
                     <div class="p-4">
                         <div class="row g-3" id="participantGrid">
                             {% for p in participants %}
-                            <div class="col-md-6 col-xl-4 participant-item" data-name="{{ p.display_name|lower }}" data-email="{{ p.email|lower }}">
-                                <div class="participant-card">
+                            <div class="col-12 col-sm-6 col-xl-4 participant-item" data-name="{{ p.display_name|lower }}" data-email="{{ p.email|lower }}">
+                                <div class="participant-card h-100">
                                     <div class="participant-avatar" style="{% cycle 'background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af;' 'background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46;' 'background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d;' 'background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6;' 'background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e;' 'background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412;' 'background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3;' 'background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75;' %}">
                                         {{ p.display_name|make_list|first|upper }}
                                     </div>
                                     <div class="flex-grow-1 min-width-0">
                                         <div class="participant-name text-truncate">{{ p.display_name }}</div>
                                         <div class="participant-email text-truncate">{{ p.email }}</div>
-                                        <div class="d-flex gap-3 mt-1">
+                                        <div class="d-flex flex-wrap gap-2 gap-sm-3 mt-1">
                                             <span class="participant-meta">
                                                 <i class="fas fa-star" style="color: #f59e0b; font-size: 0.6rem;"></i> {{ p.points|floatformat:1 }} pts
                                             </span>
@@ -798,12 +820,11 @@
                 </div>
             </div>
 
-            <!-- Active Contests Quick View -->
             {% if active_contests %}
             <div class="mt-4 animate-in delay-5">
                 <div class="panel-card">
                     <div class="panel-header">
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
                             <div class="section-bar" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
                             <h5 class="mb-0"><i class="fas fa-bolt me-2" style="color: #10b981;"></i> Live Contests</h5>
                             <span class="badge rounded-pill ms-1" style="background: #d1fae5; color: #065f46; font-size: 0.68rem; font-weight: 700;">
@@ -813,9 +834,9 @@
                     </div>
                     <div class="p-4">
                         {% for contest in active_contests %}
-                        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 {% if not forloop.last %}mb-3 pb-3{% endif %}" {% if not forloop.last %}style="border-bottom: 1px solid var(--gray-lighter);"{% endif %}>
+                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 {% if not forloop.last %}mb-3 pb-3{% endif %}" {% if not forloop.last %}style="border-bottom: 1px solid var(--gray-lighter);"{% endif %}>
                             <div>
-                                <div class="d-flex align-items-center gap-2 mb-1">
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
                                     <h6 class="fw-bold mb-0" style="color: var(--dark);">{{ contest.title }}</h6>
                                     <span class="badge rounded-pill" style="background: #dbeafe; color: #1e40af; font-size: 0.65rem; font-weight: 700;">LIVE</span>
                                 </div>
@@ -823,7 +844,7 @@
                                     <i class="far fa-clock me-1"></i> Ends: {{ contest.end_time|date:"M d, Y - h:i A" }}
                                 </div>
                             </div>
-                            <a href="{% url 'contest_detail_student' room.id contest.id %}" class="btn-premium-action">
+                            <a href="{% url 'contest_detail_student' room.id contest.id %}" class="btn-premium-action w-100 w-sm-auto text-center mt-2 mt-sm-0">
                                 Enter <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>

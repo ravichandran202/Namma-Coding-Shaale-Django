@@ -145,8 +145,6 @@
         border-radius: var(--radius);
         box-shadow: var(--shadow-sm);
         overflow: hidden;
-        position: sticky;
-        top: 100px;
     }
 
     .sidebar-link {
@@ -297,13 +295,69 @@
     }
 
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
+    @media (min-width: 992px) {
+        .sidebar-card {
+            position: sticky;
+            top: 100px;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .sidebar-menu-wrapper {
+            flex-direction: row !important;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+        }
+        .sidebar-menu-wrapper::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+        .sidebar-menu-wrapper {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        .sidebar-link {
+            white-space: nowrap;
+            flex: 0 0 auto;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .room-hero {
+            padding: 1.5rem;
+        }
+        .room-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+        }
+        .room-title {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .contest-row {
+            padding: 1.25rem 1rem;
+        }
+        .contest-row .flex-shrink-0 {
+            width: 100%;
+        }
+        .contest-row .btn-premium-action,
+        .contest-row .btn-ghost {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container py-4 mt-3">
     <div class="animate-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
             <nav class="breadcrumb-premium">
                 <a href="{% url 'my-courses' %}"><i class="fas fa-arrow-left me-1"></i> Dashboard</a>
                 <span class="mx-2 text-muted">/</span>
@@ -329,7 +383,7 @@
     <div class="room-hero animate-in delay-1">
         <div class="room-hero-glow"></div>
         <div class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-4">
-            <div class="d-flex gap-4">
+            <div class="d-flex flex-column flex-sm-row gap-3 gap-md-4">
                 <div class="room-icon">
                     <i class="fas fa-code"></i>
                 </div>
@@ -341,7 +395,7 @@
                     <p class="text-muted mb-3" style="max-width: 550px;">
                         {{ room.description|default:"A dedicated space for mastering Data Structures and Algorithms. Join contests to test your skills." }}
                     </p>
-                    <div class="d-flex flex-wrap gap-4">
+                    <div class="d-flex flex-wrap gap-2 gap-sm-3 gap-md-4">
                         <span class="room-stat"><i class="fas fa-users"></i> {{ room.participants|length }} Members</span>
                         <span class="room-stat"><i class="fas fa-trophy"></i> {{ active_contests|length|add:past_contests|length|add:upcoming_contests|length }} Contests</span>
                         <span class="room-stat"><i class="fas fa-shield-alt"></i> {{ room.created_by|default:"Instructor" }}</span>
@@ -355,7 +409,7 @@
         <div class="col-lg-3 animate-in delay-2">
             <div class="sidebar-card">
                 <div class="p-2">
-                    <div class="d-flex flex-column gap-1">
+                    <div class="d-flex flex-column gap-1 sidebar-menu-wrapper">
                         <a href="{% url 'room_overview_student' room.id %}" class="sidebar-link">
                             <i class="fas fa-clipboard-list"></i> Room Overview
                         </a>
@@ -370,7 +424,6 @@
             </div>
         </div>
 
-        <!-- Active & Upcoming Contests -->
         <div class="col-lg-9">
             {% if active_contests or upcoming_contests %}
             <div class="mb-5 animate-in delay-2">
@@ -435,7 +488,7 @@
 
                 <div class="contest-card overflow-hidden">
                     <div class="table-responsive mb-0">
-                        <table class="table table-premium mb-0">
+                        <table class="table table-premium mb-0 text-nowrap">
                             <thead>
                                 <tr>
                                     <th class="ps-4">Contest Name</th>
