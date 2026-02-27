@@ -895,12 +895,13 @@ def problem_solver(request, course_id):
 
     context = {
         "problem": problem,
-        "saved_code": submission.submitted_code,
+        "saved_code": saved_code,
         # "content_id": content_id,
         "course_id": course_id,
         "problem_id": problem.id,
-        "submission_id": submission.id,  # Include submission ID for your API
-        "is_solved": str(submission.status == 'SOLVED')
+        "submission_id": submission_id,  # Include submission ID for your API
+        "is_solved": str(status == 'SOLVED'),
+        "content_id": content_id
     }
     
     return render(request, "problem-solver.html", context)
@@ -1115,6 +1116,13 @@ def my_courses(request):
         completed_at__date=today
     ).exclude(content__type='PROBLEM').count()
 
+    # Get user's Rooms from the rooms_app map
+    from rooms_app.models import Room
+    user_rooms = []
+    for room in Room.all():
+        if user.email in room.participants:
+            user_rooms.append(room)
+
     return render(request, 'my_courses.html', {
         'courses': courses_data,
         'activity_dates': activity_dates,
@@ -1129,6 +1137,7 @@ def my_courses(request):
         'current_streak': current_streak,
         'today_problems': today_problems,
         'today_modules': today_modules,
+        'user_rooms': user_rooms,
     })
 
 @trace_span
