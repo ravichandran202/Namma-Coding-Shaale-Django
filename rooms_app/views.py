@@ -27,7 +27,7 @@ def manage_rooms(request):
         name = request.POST.get('name')
         description = request.POST.get('description')
         if name and description:
-            room = Room(name=name, description=description, created_by=request.user.id)
+            room = Room(name=name, description=description, created_by=request.user.full_name)
             room.save()
             messages.success(request, f"Room '{name}' created successfully.")
             return redirect('manage_rooms')
@@ -322,6 +322,89 @@ def room_detail_student(request, room_id):
         'upcoming_contests': upcoming_contests
     }
     return render(request, 'rooms_app/room_detail_student.html', context)
+
+@login_required
+def room_overview_student(request, room_id):
+    """Room overview page showing leaderboard, participants, and room stats."""
+    room = Room.get(room_id)
+    if not room:
+        messages.error(request, "Room not found.")
+        return redirect('my-courses')
+
+    if request.user.email not in room.participants:
+        messages.error(request, "You do not have access to this room.")
+        return redirect('my-courses')
+
+    contests = Contest.filter(room_id=room.id)
+    active_contests = [c for c in contests if c.is_active]
+    past_contests = [c for c in contests if c.is_past]
+    upcoming_contests = [c for c in contests if not c.is_active and not c.is_past]
+
+    # Aggregate leaderboard across ALL contests in the room
+    leaderboard = {}
+    for email in room.participants:
+        leaderboard[email] = {
+            'email': email,
+            'problems_solved': 0,
+            'quiz_score': 0,
+            'points': 0,
+            'contests_participated': 0,
+        }
+
+    for contest in contests:
+        subs = ContestSubmission.filter(contest_id=contest.id)
+        users_in_contest = set()
+        for sub in subs:
+            email = sub.user_identifier
+            if email not in leaderboard:
+                leaderboard[email] = {
+                    'email': email, 'problems_solved': 0,
+                    'quiz_score': 0, 'points': 0, 'contests_participated': 0,
+                }
+            users_in_contest.add(email)
+
+            if sub.type == 'PROBLEM' and sub.result_data.get('status') == 'SOLVED':
+                leaderboard[email]['problems_solved'] += 1
+                leaderboard[email]['points'] += 10
+            elif sub.type == 'QUIZ':
+                score = float(sub.result_data.get('score', 0))
+                leaderboard[email]['quiz_score'] += score
+                leaderboard[email]['points'] += (score / 10)
+
+        for email in users_in_contest:
+            leaderboard[email]['contests_participated'] += 1
+
+    sorted_leaderboard = sorted(leaderboard.values(), key=lambda x: x['points'], reverse=True)
+
+    # Enrich participants with display names
+    participants_info = []
+    for email in room.participants:
+        user_obj = User.objects.filter(email=email).first()
+        display_name = user_obj.get_full_name() or user_obj.username if user_obj else email.split('@')[0]
+        lb_entry = leaderboard.get(email, {})
+        participants_info.append({
+            'email': email,
+            'display_name': display_name,
+            'points': lb_entry.get('points', 0),
+            'contests_participated': lb_entry.get('contests_participated', 0),
+        })
+    participants_info.sort(key=lambda x: x['display_name'].lower())
+
+    context = {
+        'room': room,
+        'leaderboard': sorted_leaderboard,
+        'participants': participants_info,
+        'total_contests': len(contests),
+        'active_contest_count': len(active_contests),
+        'past_contest_count': len(past_contests),
+        'upcoming_contest_count': len(upcoming_contests),
+        'total_participants': len(room.participants),
+        'active_contests': active_contests,
+        'past_contests': past_contests,
+        'upcoming_contests': upcoming_contests,
+    }
+    return render(request, 'rooms_app/room_overview_student.html', context)
+
 
 @login_required
 def contest_detail_student(request, room_id, contest_id):

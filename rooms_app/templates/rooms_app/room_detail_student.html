@@ -356,16 +356,13 @@
             <div class="sidebar-card">
                 <div class="p-2">
                     <div class="d-flex flex-column gap-1">
-                        <a href="javascript:void(0)" class="sidebar-link">
+                        <a href="{% url 'room_overview_student' room.id %}" class="sidebar-link">
                             <i class="fas fa-clipboard-list"></i> Room Overview
                         </a>
-                        <a href="javascript:void(0)" class="sidebar-link active">
+                        <a href="{% url 'room_detail_student' room.id %}" class="sidebar-link active">
                             <i class="fas fa-trophy"></i> Contests
                         </a>
-                        <a href="javascript:void(0)" class="sidebar-link">
-                            <i class="fas fa-book"></i> Assignments
-                        </a>
-                        <a href="javascript:void(0)" class="sidebar-link">
+                        <a href="{% url 'room_overview_student' room.id %}#participants-section" class="sidebar-link">
                             <i class="fas fa-users"></i> Members
                         </a>
                     </div>
@@ -373,6 +370,7 @@
             </div>
         </div>
 
+        <!-- Active & Upcoming Contests -->
         <div class="col-lg-9">
             {% if active_contests or upcoming_contests %}
             <div class="mb-5 animate-in delay-2">

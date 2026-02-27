@@ -14,6 +14,7 @@ urlpatterns = [
     path('<str:room_id>/contest/<str:contest_id>/manage/', views.manage_contest, name='manage_contest'),
     path('<str:room_id>/contest/<str:contest_id>/results/', views.contest_results_admin, name='contest_results_admin'),
     path('<str:room_id>/student/', views.room_detail_student, name='room_detail_student'),
+    path('<str:room_id>/student/overview/', views.room_overview_student, name='room_overview_student'),
     path('<str:room_id>/contest/<str:contest_id>/', views.contest_detail_student, name='contest_detail_student'),
     
     # Contest Execution Views
