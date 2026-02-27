@@ -225,14 +225,19 @@
         background: white;
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 1.5rem;
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
+        overflow: hidden;
     }
 
     .content-box:hover {
         border-color: rgba(37, 99, 235, 0.2);
         box-shadow: var(--shadow);
+    }
+
+    .content-box-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--gray-lighter);
     }
 
     .content-box-icon {
@@ -244,6 +249,164 @@
         justify-content: center;
         font-size: 1rem;
         flex-shrink: 0;
+    }
+
+    .ms-search-wrap {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--gray-lighter);
+        background: var(--light);
+    }
+
+    .ms-search {
+        width: 100%;
+        border: 1px solid var(--gray-light);
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+        font-size: 0.85rem;
+        background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E") no-repeat 0.75rem center;
+        transition: all 0.2s ease;
+        outline: none;
+    }
+
+    .ms-search:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .ms-search::placeholder { color: #94a3b8; }
+
+    .ms-list {
+        max-height: 240px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gray-light) transparent;
+    }
+
+    .ms-list::-webkit-scrollbar { width: 5px; }
+    .ms-list::-webkit-scrollbar-track { background: transparent; }
+    .ms-list::-webkit-scrollbar-thumb { background: var(--gray-light); border-radius: 4px; }
+
+    .ms-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 1rem;
+        border-bottom: 1px solid var(--gray-lighter);
+        cursor: pointer;
+        transition: background 0.15s ease;
+        user-select: none;
+    }
+
+    .ms-item:last-child { border-bottom: none; }
+    .ms-item:hover { background: var(--light); }
+    .ms-item.selected { background: var(--primary-bg); }
+    .ms-item.hidden { display: none; }
+
+    .ms-check {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--gray-light);
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+        color: transparent;
+        font-size: 0.65rem;
+    }
+
+    .ms-item.selected .ms-check {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+
+    .ms-item-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--dark);
+        flex: 1;
+        line-height: 1.3;
+    }
+
+    .ms-item-meta {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.1rem 0.45rem;
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+
+    .ms-footer {
+        padding: 0.75rem 1rem;
+        border-top: 1px solid var(--gray-lighter);
+        background: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ms-count {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--gray);
+    }
+
+    .ms-count strong { color: var(--primary); }
+
+    .ms-empty {
+        padding: 2rem 1rem;
+        text-align: center;
+        color: var(--gray);
+        font-size: 0.85rem;
+    }
+
+    .btn-assign {
+        border: none;
+        font-weight: 600;
+        padding: 0.45rem 1.1rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-assign:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    .btn-assign-primary {
+        background: linear-gradient(135deg, var(--primary), #7c3aed);
+        color: white;
+        box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-assign-primary:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-assign-success {
+        background: linear-gradient(135deg, var(--secondary), #059669);
+        color: white;
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-assign-success:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-assign .spinner-border {
+        width: 14px;
+        height: 14px;
+        border-width: 2px;
     }
 
     .form-control-premium,
@@ -336,6 +499,7 @@
     </div>
     {% endif %}
 
+    {% csrf_token %}
     <div class="row g-4 d-flex align-items-stretch">
         <div class="col-lg-7 mb-4 animate-in delay-1">
             <div class="panel-card d-flex flex-column h-100">
@@ -378,42 +542,65 @@
 
         <div class="col-lg-5 mb-4 animate-in delay-2">
             <div class="d-flex flex-column gap-3">
-                <div class="content-box">
-                    <h5 class="fw-bold mb-3 d-flex align-items-center gap-2" style="color: var(--dark); font-size: 1rem;">
-                        <div class="content-box-icon" style="background: var(--primary-bg); color: var(--primary);"><i class="fas fa-code"></i></div>
-                        Add Existing Library Problem
-                    </h5>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="d-flex gap-2">
-                            <select class="form-select form-select-premium flex-grow-1" name="problem_id" required>
-                                <option value="" disabled selected>Search problems...</option>
-                                {% for problem in available_problems %}
-                                <option value="{{ problem.id }}">{{ problem.title }} &mdash; {{ problem.problem.get_difficulty_display|default:'' }}</option>
-                                {% endfor %}
-                            </select>
-                            <button class="btn-premium-action flex-shrink-0" type="submit" name="add_problem" style="padding: 0.55rem 1.25rem;">Assign</button>
+                <div class="content-box" id="problemPicker">
+                    <div class="content-box-header d-flex align-items-center justify-content-between">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center gap-2" style="color: var(--dark); font-size: 1rem;">
+                            <div class="content-box-icon" style="background: var(--primary-bg); color: var(--primary);"><i class="fas fa-code"></i></div>
+                            Add Library Problems
+                        </h5>
+                        <span class="ms-count" id="problemCount">Select items</span>
+                    </div>
+                    <div class="ms-search-wrap">
+                        <input type="text" class="ms-search" id="problemSearch" placeholder="Search problems by name..." autocomplete="off">
+                    </div>
+                    <div class="ms-list" id="problemList">
+                        {% for problem in available_problems %}
+                        <div class="ms-item" data-id="{{ problem.id }}" data-title="{{ problem.title|lower }}">
+                            <div class="ms-check"><i class="fas fa-check"></i></div>
+                            <span class="ms-item-title">{{ problem.title }}</span>
+                            {% if problem.problem.get_difficulty_display %}
+                            <span class="ms-item-meta {% if problem.problem.get_difficulty_display == 'Easy' %}diff-easy{% elif problem.problem.get_difficulty_display == 'Medium' %}diff-medium{% elif problem.problem.get_difficulty_display == 'Hard' %}diff-hard{% endif %}" style="{% if problem.problem.get_difficulty_display == 'Easy' %}background:#f0fdf4;color:#16a34a;{% elif problem.problem.get_difficulty_display == 'Medium' %}background:#fefce8;color:#ca8a04;{% elif problem.problem.get_difficulty_display == 'Hard' %}background:#fef2f2;color:#dc2626;{% else %}background:var(--gray-lighter);color:var(--gray);{% endif %}">{{ problem.problem.get_difficulty_display }}</span>
+                            {% endif %}
                         </div>
-                    </form>
+                        {% empty %}
+                        <div class="ms-empty"><i class="fas fa-inbox me-1"></i> No problems available</div>
+                        {% endfor %}
+                    </div>
+                    <div class="ms-footer">
+                        <span class="ms-count"><strong id="problemSelCount">0</strong> selected</span>
+                        <button class="btn-assign btn-assign-primary" id="problemAssignBtn" disabled>
+                            <i class="fas fa-plus"></i> Assign Selected
+                        </button>
+                    </div>
                 </div>
 
-                <div class="content-box">
-                    <h5 class="fw-bold mb-3 d-flex align-items-center gap-2" style="color: var(--dark); font-size: 1rem;">
-                        <div class="content-box-icon" style="background: var(--secondary-bg); color: var(--secondary);"><i class="fas fa-question-circle"></i></div>
-                        Add Existing Saved Quiz
-                    </h5>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="d-flex gap-2">
-                            <select class="form-select form-select-premium flex-grow-1" name="quiz_id" required>
-                                <option value="" disabled selected>Search quizzes...</option>
-                                {% for quiz in available_quizzes %}
-                                <option value="{{ quiz.id }}">{{ quiz.title }}</option>
-                                {% endfor %}
-                            </select>
-                            <button class="btn flex-shrink-0 fw-bold" type="submit" name="add_quiz" style="background: var(--secondary); color: white; border: none; padding: 0.55rem 1.25rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">Assign</button>
+                <div class="content-box" id="quizPicker">
+                    <div class="content-box-header d-flex align-items-center justify-content-between">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center gap-2" style="color: var(--dark); font-size: 1rem;">
+                            <div class="content-box-icon" style="background: var(--secondary-bg); color: var(--secondary);"><i class="fas fa-question-circle"></i></div>
+                            Add Saved Quizzes
+                        </h5>
+                        <span class="ms-count" id="quizCount">Select items</span>
+                    </div>
+                    <div class="ms-search-wrap">
+                        <input type="text" class="ms-search" id="quizSearch" placeholder="Search quizzes by name..." autocomplete="off">
+                    </div>
+                    <div class="ms-list" id="quizList">
+                        {% for quiz in available_quizzes %}
+                        <div class="ms-item" data-id="{{ quiz.id }}" data-title="{{ quiz.title|lower }}">
+                            <div class="ms-check"><i class="fas fa-check"></i></div>
+                            <span class="ms-item-title">{{ quiz.title }}</span>
                         </div>
-                    </form>
+                        {% empty %}
+                        <div class="ms-empty"><i class="fas fa-inbox me-1"></i> No quizzes available</div>
+                        {% endfor %}
+                    </div>
+                    <div class="ms-footer">
+                        <span class="ms-count"><strong id="quizSelCount">0</strong> selected</span>
+                        <button class="btn-assign btn-assign-success" id="quizAssignBtn" disabled>
+                            <i class="fas fa-plus"></i> Assign Selected
+                        </button>
+                    </div>
                 </div>
 
                 <div class="panel-card">
@@ -454,4 +641,87 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value
+        || '{{ csrf_token }}';
+
+    function initPicker(cfg) {
+        const searchEl = document.getElementById(cfg.searchId);
+        const listEl = document.getElementById(cfg.listId);
+        const countEl = document.getElementById(cfg.countId);
+        const btnEl = document.getElementById(cfg.btnId);
+        const items = listEl.querySelectorAll('.ms-item');
+        const selected = new Set();
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const id = item.dataset.id;
+                if (selected.has(id)) {
+                    selected.delete(id);
+                    item.classList.remove('selected');
+                } else {
+                    selected.add(id);
+                    item.classList.add('selected');
+                }
+                updateCount();
+            });
+        });
+
+        searchEl.addEventListener('input', () => {
+            const q = searchEl.value.trim().toLowerCase();
+            items.forEach(item => {
+                const title = item.dataset.title || '';
+                item.classList.toggle('hidden', q !== '' && !title.includes(q));
+            });
+        });
+
+        function updateCount() {
+            const n = selected.size;
+            countEl.textContent = n;
+            btnEl.disabled = n === 0;
+        }
+
+        btnEl.addEventListener('click', async () => {
+            if (selected.size === 0) return;
+            const ids = [...selected];
+            const origHtml = btnEl.innerHTML;
+            btnEl.disabled = true;
+            btnEl.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Assigning...';
+
+            for (const id of ids) {
+                const body = new URLSearchParams();
+                body.append('csrfmiddlewaretoken', csrfToken);
+                body.append(cfg.paramName, id);
+                body.append(cfg.submitName, '1');
+                await fetch(window.location.href, { method: 'POST', body, redirect: 'manual' });
+            }
+
+            window.location.reload();
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initPicker({
+            searchId: 'problemSearch',
+            listId: 'problemList',
+            countId: 'problemSelCount',
+            btnId: 'problemAssignBtn',
+            paramName: 'problem_id',
+            submitName: 'add_problem'
+        });
+        initPicker({
+            searchId: 'quizSearch',
+            listId: 'quizList',
+            countId: 'quizSelCount',
+            btnId: 'quizAssignBtn',
+            paramName: 'quiz_id',
+            submitName: 'add_quiz'
+        });
+    });
+})();
+</script>
 {% endblock %}
