@@ -881,6 +881,10 @@ def problem_solver(request, course_id):
     #         pass
 
     # Get or create the single submission record
+    saved_code = problem.starter_code or ""
+    status = 'UNSOLVED'
+    submission_id = None
+    
     submission, created = ProblemSubmission.objects.get_or_create(
         user=request.user,
         problem=problem,
@@ -892,6 +896,9 @@ def problem_solver(request, course_id):
             'content_id': content_id
         }
     )
+    saved_code = submission.submitted_code
+    status = submission.status
+    submission_id = submission.id
 
     context = {
         "problem": problem,
