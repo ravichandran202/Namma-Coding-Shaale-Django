@@ -1,0 +1,406 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-bg: #eff6ff;
+        --secondary-bg: #ecfdf5;
+        --gray-lighter: #f1f5f9;
+        --border: rgba(0, 0, 0, 0.06);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --radius: 16px;
+        --radius-sm: 10px;
+    }
+
+    h1, h2, h3, h4, h5 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in { opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+
+    .breadcrumb-premium {
+        font-size: 0.82rem;
+        font-weight: 500;
+    }
+
+    .breadcrumb-premium a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumb-premium a:hover { color: var(--primary); }
+
+    .page-title { font-size: 1.75rem; color: var(--dark); }
+
+    .btn-ghost {
+        background: white;
+        color: var(--dark);
+        border: 1px solid var(--gray-light);
+        font-weight: 500;
+        padding: 0.55rem 1.25rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .btn-ghost:hover {
+        box-shadow: var(--shadow);
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .badge-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.3rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: var(--secondary-bg);
+        color: var(--secondary);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-ended {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.3rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: var(--gray-lighter);
+        color: var(--gray);
+    }
+
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--secondary);
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+        animation: pulse-anim 2s infinite;
+    }
+
+    @keyframes pulse-anim {
+        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .stat-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+        height: 100%;
+    }
+
+    .stat-card:hover { box-shadow: var(--shadow); }
+
+    .stat-card-primary { border-left: 4px solid var(--primary); }
+    .stat-card-success { border-left: 4px solid var(--secondary); }
+    .stat-card-info { border-left: 4px solid #0ea5e9; }
+    .stat-card-warning { border-left: 4px solid #f59e0b; }
+
+    .stat-icon-bg {
+        position: absolute;
+        right: -1rem;
+        bottom: -1rem;
+        font-size: 5rem;
+        opacity: 0.04;
+        pointer-events: none;
+    }
+
+    .stat-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--dark);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        line-height: 1;
+    }
+
+    .table-premium {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table-premium th {
+        background: var(--light);
+        color: var(--gray);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--gray-lighter);
+        padding: 0.85rem 1rem;
+    }
+
+    .table-premium td {
+        padding: 1.15rem 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--gray-lighter);
+        background: white;
+    }
+
+    .table-premium tbody tr:last-child td { border-bottom: none; }
+    .table-premium tbody tr { transition: var(--transition); }
+    .table-premium tbody tr:hover td { background: var(--light); }
+
+    .rank-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: white;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); }
+    .rank-3 { background: linear-gradient(135deg, #fcd34d, #d97706); }
+    .rank-other { background: transparent; color: var(--gray); box-shadow: none; font-size: 1rem; }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-bg), #ede9fe);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .leaderboard-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .leaderboard-card:hover { box-shadow: var(--shadow); }
+
+    .leaderboard-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--gray-lighter);
+        background: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4 mt-3">
+    {% if auto_refresh_ms %}
+    <meta http-equiv="refresh" content="{{ auto_refresh_ms|add:'-12000' }}">
+    {% endif %}
+
+    <div class="animate-in">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+            <div>
+                <nav class="breadcrumb-premium mb-2">
+                    <a href="{% url 'manage_rooms' %}">Rooms</a>
+                    <span class="mx-2 text-muted">/</span>
+                    <a href="{% url 'room_detail_admin' room.id %}">{{ room.name }}</a>
+                    <span class="mx-2 text-muted">/</span>
+                    <span style="color: var(--dark);">Live Results</span>
+                </nav>
+                <div class="d-flex align-items-center gap-3 flex-wrap mb-2">
+                    <h1 class="page-title mb-0">{{ contest.title }}</h1>
+                    {% if contest.is_active %}
+                    <span class="badge-live"><span class="pulse-dot"></span> Live</span>
+                    {% elif contest.is_past %}
+                    <span class="badge-ended">Ended</span>
+                    {% endif %}
+                </div>
+                <p class="text-muted small mb-0 d-flex align-items-center gap-2">
+                    <i class="fas fa-sync-alt fa-spin opacity-50"></i> Dashboard auto-refreshes to show real-time student submissions.
+                </p>
+            </div>
+            <a href="{% url 'room_detail_admin' room.id %}" class="btn-ghost">
+                <i class="fas fa-arrow-left"></i> Exit Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5 animate-in delay-1">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card stat-card-primary">
+                <i class="fas fa-users stat-icon-bg"></i>
+                <div class="stat-label">Total Enrolled</div>
+                <div class="stat-value">{{ total_participants }}</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card stat-card-success">
+                <i class="fas fa-laptop-code stat-icon-bg"></i>
+                <div class="stat-label">Active Submissions</div>
+                <div class="stat-value">{{ active_participants }}</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card stat-card-info">
+                <i class="fas fa-check-circle stat-icon-bg"></i>
+                <div class="stat-label">Total Problems Solved</div>
+                <div class="stat-value">{{ total_problems_solved }}</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card stat-card-warning">
+                <i class="far fa-clock stat-icon-bg"></i>
+                <div class="stat-label">Timer</div>
+                <div class="mt-1">
+                    {% if contest.is_active %}
+                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">{{ contest.end_time|timeuntil }}</h4>
+                    <span class="small text-muted">remaining</span>
+                    {% elif contest.is_past %}
+                    <h4 class="mb-0 fw-bold text-muted" style="font-family: 'Plus Jakarta Sans', sans-serif;">00:00</h4>
+                    <span class="small text-muted">contest closed</span>
+                    {% else %}
+                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">Starts in</h4>
+                    <span class="small text-muted">{{ contest.start_time|timeuntil }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="leaderboard-card mb-5 animate-in delay-2">
+        <div class="leaderboard-header d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0 d-flex align-items-center gap-2" style="color: var(--dark); font-size: 1rem;">
+                <i class="fas fa-trophy" style="color: #f59e0b;"></i> Full Leaderboard
+            </h5>
+            <span class="small fw-medium text-muted">Ranked by Total Points</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-premium align-middle mb-0 w-100">
+                <thead>
+                    <tr>
+                        <th class="ps-4 text-center" style="width: 80px;">Rank</th>
+                        <th>Student Profile</th>
+                        <th class="text-center">Coding Record</th>
+                        <th class="text-center">Quiz Intel</th>
+                        <th class="text-end pe-4">Total Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in leaderboard %}
+                    <tr>
+                        <td class="ps-4 text-center">
+                            <div class="d-flex justify-content-center">
+                                {% if forloop.counter == 1 and entry.points > 0 %}
+                                <div class="rank-badge rank-1"><i class="fas fa-crown small"></i></div>
+                                {% elif forloop.counter == 2 and entry.points > 0 %}
+                                <div class="rank-badge rank-2">2</div>
+                                {% elif forloop.counter == 3 and entry.points > 0 %}
+                                <div class="rank-badge rank-3">3</div>
+                                {% else %}
+                                <div class="rank-badge rank-other">{{ forloop.counter }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="user-avatar">{{ entry.email|make_list|first|upper }}</div>
+                                <div class="d-flex flex-column">
+                                    <span class="{% if entry.points > 0 %}fw-bold{% else %}fw-medium{% endif %}" style="color: var(--dark);">{{ entry.email }}</span>
+                                    {% if entry.points == 0 %}
+                                    <span class="badge mt-1" style="width: fit-content; font-size: 0.62rem; background: var(--gray-lighter); color: var(--gray);">Not Started</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 rounded-pill gap-2" style="background: var(--gray-lighter); border: 1px solid var(--gray-light);">
+                                {% if entry.problems_solved > 0 %}
+                                <i class="fas fa-check-circle small" style="color: var(--secondary);"></i>
+                                <span class="fw-bold" style="color: var(--dark);">{{ entry.problems_solved }}</span>
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge px-3 py-2 rounded-pill font-monospace" style="font-size: 0.85rem; {% if entry.quiz_score > 0 %}background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(37,99,235,0.15);{% else %}background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light);{% endif %}">
+                                {{ entry.quiz_score|floatformat:1 }}%
+                            </span>
+                        </td>
+                        <td class="text-end pe-4">
+                            <span class="fw-bold {% if entry.points > 0 %}{% else %}opacity-50{% endif %}" style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: {% if entry.points > 0 %}var(--primary){% else %}var(--gray){% endif %};">
+                                {{ entry.points|floatformat:2 }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px; background: var(--gray-lighter);">
+                                <i class="fas fa-user-times" style="color: var(--gray);"></i>
+                            </div>
+                            <h6 class="fw-bold" style="color: var(--dark);">No Activity Detected</h6>
+                            <p class="text-muted small mb-0">No participants have interacted with this contest yet.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
