@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Room, Contest, ContestContent, ContestSubmission
 from django.contrib.auth.models import User
-from namma_coding_shaale_app.models import Content, Problem
+from namma_coding_shaale_app.models import Content, Problem, UserCourse, CourseContent, ProblemSubmission, UserContentProgress, QuizSubmission, Course
 from django.utils import timezone
 import json
 import logging
@@ -595,6 +595,122 @@ def contest_quiz_view(request, room_id, contest_id, content_id):
     return render(request, "rooms_app/contest_quiz_view.html", context)
 
 
+def sync_problem_to_courses(user, content_id, code, execution_time, test_results):
+    """
+    When a problem is solved in a contest, sync the result to all of the
+    user's enrolled courses that contain the same Content/Problem.
+    This replicates the save_code() logic from namma_coding_shaale_app.
+    """
+    try:
+        content = Content.objects.filter(id=content_id, type='PROBLEM').select_related('problem').first()
+        if not content or not content.problem:
+            logger.info(f"[sync] Content {content_id} is not a PROBLEM or has no linked Problem. Skipping sync.")
+            return
+
+        problem = content.problem
+
+        # Get all courses the user is enrolled in
+        user_courses = UserCourse.objects.filter(user=user).select_related('course')
+
+        for uc in user_courses:
+            course = uc.course
+
+            # Check if this course contains the same Content
+            if not CourseContent.objects.filter(course=course, content=content).exists():
+                continue
+
+            # --- Replicate save_code logic ---
+
+            # 1. Upsert ProblemSubmission
+            ProblemSubmission.objects.update_or_create(
+                problem=problem,
+                course=course,
+                user=user,
+                defaults={
+                    'submitted_code': code,
+                    'status': 'SOLVED',
+                    'execution_time': execution_time,
+                    'test_results': test_results,
+                }
+            )
+
+            # 2. Mark UserContentProgress as completed
+            progress = UserContentProgress.objects.filter(
+                user=user,
+                course=course,
+                content=content,
+            ).first()
+
+            if progress and not progress.is_completed:
+                progress.is_completed = True
+                progress.completed_at = timezone.now()
+                progress.save()
+                logger.info(f"[sync] Marked Content {content_id} as completed for User {user.id} in Course {course.id}")
+
+            logger.info(f"[sync] Synced problem {problem.id} to Course {course.id} for User {user.id}")
+
+    except Exception as e:
+        logger.error(f"[sync] Error syncing problem to courses: {str(e)}", exc_info=True)
+
+
+def sync_quiz_to_courses(user, content_id, quiz_data, score, correct_answers, total_questions, is_passed):
+    """
+    When a quiz is passed in a contest, sync the result to all of the
+    user's enrolled courses that contain the same Content (Quiz).
+    This replicates the save_quiz_data() logic from namma_coding_shaale_app.
+    """
+    try:
+        content = Content.objects.filter(id=content_id, type='QUIZ').first()
+        if not content:
+            logger.info(f"[sync] Content {content_id} is not a QUIZ. Skipping sync.")
+            return
+
+        # Get all courses the user is enrolled in
+        user_courses = UserCourse.objects.filter(user=user).select_related('course')
+
+        for uc in user_courses:
+            course = uc.course
+
+            # Check if this course contains the same Content
+            if not CourseContent.objects.filter(course=course, content=content).exists():
+                continue
+
+            # --- Replicate save_quiz_data logic ---
+
+            # 1. Upsert QuizSubmission
+            existing = QuizSubmission.objects.filter(content=content, course=course, user=user).first()
+            if existing:
+                if existing.score < 100:
+                    existing.total_questions = total_questions
+                    existing.correct_answers = max(existing.correct_answers or 0, correct_answers)
+                    existing.score = max(existing.score, score)
+                    existing.user_answers = json.dumps(quiz_data)
+                    if not existing.passed:
+                        existing.passed = is_passed
+                        existing.attempt_number += 1
+                    existing.started_at = timezone.now()
+                    existing.save()
+            else:
+                QuizSubmission.objects.create(
+                    user=user,
+                    content=content,
+                    course=course,
+                    quiz_data=content.quiz_data or {},
+                    user_answers=json.dumps(quiz_data),
+                    score=score,
+                    passed=is_passed,
+                    correct_answers=correct_answers,
+                    total_questions=total_questions,
+                    started_at=timezone.now(),
+                    attempt_number=1,
+                )
+
+            logger.info(f"[sync] Synced quiz {content_id} to Course {course.id} for User {user.id}")
+
+    except Exception as e:
+        logger.error(f"[sync] Error syncing quiz to courses: {str(e)}", exc_info=True)
+
+
 @csrf_exempt
 @api_view(['POST', 'OPTIONS'])
 @permission_classes([AllowAny])
@@ -643,6 +759,16 @@ def save_contest_code(request):
         
         sub.submitted_at = timezone.now()
         sub.save()
+        
+        # Sync solved problems to the user's enrolled courses
+        if status == 'SOLVED':
+            sync_problem_to_courses(
+                user=request.user,
+                content_id=content_id,
+                code=code,
+                execution_time=data.get('execution_time'),
+                test_results=data.get('test_results'),
+            )
         
         return Response({
             "message": "Data received successfully",
@@ -710,6 +836,17 @@ def save_contest_quiz_data(request):
             
         sub.submitted_at = timezone.now()
         sub.save()
+
+        # Sync quiz results to the user's enrolled courses
+        sync_quiz_to_courses(
+            user=request.user,
+            content_id=content_id,
+            quiz_data=quiz_data,
+            score=score,
+            correct_answers=correct_answers,
+            total_questions=total_questions,
+            is_passed=is_passed,
+        )
             
         return Response({"message": "Contest quiz data saved successfully"}, status=200)
     except Exception as e:
