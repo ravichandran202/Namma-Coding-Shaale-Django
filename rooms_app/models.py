@@ -1,66 +1,54 @@
 import uuid
-from datetime import datetime
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.utils import timezone
 from django.utils.timezone import make_aware, is_aware
 
-class BaseMapModel:
-    """Base class for in-memory map models."""
-    objects = {}
+
+class Room(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, default='')
+    created_by = models.CharField(max_length=255, blank=True, default='')
+    participants = models.JSONField(default=list)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __init__(self, *args, **kwargs):
+        if 'created_by' in kwargs and callable(kwargs['created_by']):
+            kwargs['created_by'] = kwargs['created_by']()
+        super().__init__(*args, **kwargs)
 
     @classmethod
     def get(cls, id):
-        return cls.objects.get(id)
+        try:
+            return cls.objects.get(id=id)
+        except (cls.DoesNotExist, ValueError, ValidationError):
+            return None
 
     @classmethod
     def all(cls):
-        return list(cls.objects.values())
+        return list(cls.objects.all())
 
     @classmethod
     def filter(cls, **kwargs):
-        results = []
-        for obj in cls.objects.values():
-            match = True
-            for k, v in kwargs.items():
-                if getattr(obj, k, None) != v:
-                    match = False
-                    break
-            if match:
-                results.append(obj)
-        return results
+        return list(cls.objects.filter(**kwargs))
 
-    def save(self):
-        if not hasattr(self, 'id') or not self.id:
-            self.id = str(uuid.uuid4())
-        self.__class__.objects[self.id] = self
+    def __str__(self):
+        return self.name
 
-    def delete(self):
-        if hasattr(self, 'id') and self.id in self.__class__.objects:
-            del self.__class__.objects[self.id]
+    class Meta:
+        ordering = ['-created_at']
 
-class Room(BaseMapModel):
-    # Separate objects map to avoid sharing across subclasses unintentionally
-    objects = {}
-    
-    def __init__(self, name, description, created_by, id=None):
-        self.id = id or str(uuid.uuid4())
-        self.name = name
-        self.description = description
-        self.created_by = created_by  # User ID or Email
-        self.participants = []  # List of User emails
-        self.created_at = timezone.now()
 
-class Contest(BaseMapModel):
-    objects = {}
-    
-    def __init__(self, room_id, title, description, start_time, end_time, created_by, id=None):
-        self.id = id or str(uuid.uuid4())
-        self.room_id = room_id
-        self.title = title
-        self.description = description
-        self.start_time = start_time
-        self.end_time = end_time
-        self.created_by = created_by  # User ID or Email
-        self.created_at = timezone.now()
+class Contest(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='contests')
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, default='')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    created_by = models.CharField(max_length=255, blank=True, default='')
+    created_at = models.DateTimeField(default=timezone.now)
 
     @property
     def is_active(self):
@@ -75,27 +63,88 @@ class Contest(BaseMapModel):
         end = self.end_time if is_aware(self.end_time) else make_aware(self.end_time)
         return now > end
 
-class ContestContent(BaseMapModel):
-    objects = {}
-    
-    def __init__(self, contest_id, content_type, reference_id, sequence_number=0, id=None):
-        self.id = id or str(uuid.uuid4())
-        self.contest_id = contest_id
-        self.content_type = content_type  # 'PROBLEM' or 'QUIZ'
-        self.reference_id = reference_id  # ID from main app's Content table
-        self.sequence_number = sequence_number
+    @classmethod
+    def get(cls, id):
+        try:
+            return cls.objects.get(id=id)
+        except (cls.DoesNotExist, ValueError, ValidationError):
+            return None
 
-class ContestSubmission(BaseMapModel):
-    objects = {}
-    
-    def __init__(self, contest_id, user_identifier, content_reference_id, type_str, result_data, id=None):
-        self.id = id or str(uuid.uuid4())
-        self.contest_id = contest_id
-        self.user_identifier = user_identifier
-        self.content_reference_id = content_reference_id
-        self.type = type_str  # 'PROBLEM' or 'QUIZ'
-        # result_data depends on type: 
-        # For 'PROBLEM': {'status': 'SOLVED', 'execution_time': ...}
-        # For 'QUIZ': {'score': 80, 'passed': True}
-        self.result_data = result_data 
-        self.submitted_at = timezone.now()
+    @classmethod
+    def all(cls):
+        return list(cls.objects.all())
+
+    @classmethod
+    def filter(cls, **kwargs):
+        return list(cls.objects.filter(**kwargs))
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created_at']
+
+
+class ContestContent(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=20)
+    reference_id = models.CharField(max_length=255)
+    sequence_number = models.IntegerField(default=0)
+
+    @classmethod
+    def get(cls, id):
+        try:
+            return cls.objects.get(id=id)
+        except (cls.DoesNotExist, ValueError, ValidationError):
+            return None
+
+    @classmethod
+    def all(cls):
+        return list(cls.objects.all())
+
+    @classmethod
+    def filter(cls, **kwargs):
+        return list(cls.objects.filter(**kwargs))
+
+    def __str__(self):
+        return f"{self.content_type}: {self.reference_id}"
+
+    class Meta:
+        ordering = ['sequence_number']
+
+
+class ContestSubmission(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    user_identifier = models.CharField(max_length=255)
+    content_reference_id = models.CharField(max_length=255)
+    type = models.CharField(max_length=20)
+    result_data = models.JSONField(default=dict)
+    submitted_at = models.DateTimeField(default=timezone.now)
+
+    def __init__(self, *args, **kwargs):
+        if 'type_str' in kwargs:
+            kwargs['type'] = kwargs.pop('type_str')
+        super().__init__(*args, **kwargs)
+
+    @classmethod
+    def get(cls, id):
+        try:
+            return cls.objects.get(id=id)
+        except (cls.DoesNotExist, ValueError, ValidationError):
+            return None
+
+    @classmethod
+    def all(cls):
+        return list(cls.objects.all())
+
+    @classmethod
+    def filter(cls, **kwargs):
+        return list(cls.objects.filter(**kwargs))
+
+    def __str__(self):
+        return f"{self.user_identifier} - {self.type}"
+
+    class Meta:
+        ordering = ['-submitted_at']
