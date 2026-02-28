@@ -248,30 +248,51 @@ def contest_results_admin(request, room_id, contest_id):
     # Format: { 'email': {'problems_solved': count, 'quiz_score': total_score, 'points': points} }
     leaderboard = {}
     
+    # Build a map of content_reference_id -> title for problems in this contest
+    contest_contents = ContestContent.filter(contest_id=contest.id)
+    content_title_map = {}
+    for cc in contest_contents:
+        if cc.content_type == 'PROBLEM':
+            try:
+                actual = Content.objects.get(id=cc.reference_id)
+                content_title_map[str(cc.reference_id)] = actual.title
+            except Content.DoesNotExist:
+                content_title_map[str(cc.reference_id)] = str(cc.reference_id)
+
     # Initialize all room participants in leaderboard to show even those with 0
     for email in room.participants:
         leaderboard[email] = {
             'email': email,
             'problems_solved': 0,
             'quiz_score': 0,
-            'points': 0
+            'points': 0,
+            'tests_passed': 0,
+            'tests_total': 0,
+            'problem_results': []
         }
 
     for sub in submissions:
         email = sub.user_identifier
         if email not in leaderboard:
             # Submissions from someone outside the room (shouldn't happen, but just in case)
-            leaderboard[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0}
+            leaderboard[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0, 'problem_results': []}
             
         if sub.type == 'PROBLEM':
-            status = sub.result_data.get('status')
-            if status == 'SOLVED':
+            total = int(sub.result_data.get('total_tests', 0))
+            failed = int(sub.result_data.get('failed_count', 0))
+            passed = total - failed
+            title = content_title_map.get(str(sub.content_reference_id), str(sub.content_reference_id))
+            if total > 0:
+                leaderboard[email]['points'] += (passed / total) * 10
+                leaderboard[email]['tests_passed'] += passed
+                leaderboard[email]['tests_total'] += total
+                leaderboard[email]['problem_results'].append({'title': title, 'tests_passed': passed, 'tests_total': total})
+            if sub.result_data.get('status') == 'SOLVED':
                 leaderboard[email]['problems_solved'] += 1
-                leaderboard[email]['points'] += 10  # 10 pts per problem (example metric)
         elif sub.type == 'QUIZ':
             score = float(sub.result_data.get('score', 0))
             leaderboard[email]['quiz_score'] += score
-            leaderboard[email]['points'] += (score / 10)  # Convert % to points (example)
+            leaderboard[email]['points'] += (score / 10)  # Convert % to points
 
     # Sort leaderboard by points descending
     sorted_leaderboard = sorted(leaderboard.values(), key=lambda x: x['points'], reverse=True)
@@ -349,10 +370,23 @@ def room_overview_student(request, room_id):
             'quiz_score': 0,
             'points': 0,
             'contests_participated': 0,
+            'tests_passed': 0,
+            'tests_total': 0,
+            'problem_results': []
         }
 
     for contest in contests:
         subs = ContestSubmission.filter(contest_id=contest.id)
+        # Build title map for problems in this contest
+        contest_contents_list = ContestContent.filter(contest_id=contest.id)
+        contest_title_map = {}
+        for cc in contest_contents_list:
+            if cc.content_type == 'PROBLEM':
+                try:
+                    actual = Content.objects.get(id=cc.reference_id)
+                    contest_title_map[str(cc.reference_id)] = actual.title
+                except Content.DoesNotExist:
+                    contest_title_map[str(cc.reference_id)] = str(cc.reference_id)
         users_in_contest = set()
         for sub in subs:
             email = sub.user_identifier
@@ -360,12 +394,22 @@ def room_overview_student(request, room_id):
                 leaderboard[email] = {
                     'email': email, 'problems_solved': 0,
                     'quiz_score': 0, 'points': 0, 'contests_participated': 0,
+                    'tests_passed': 0, 'tests_total': 0, 'problem_results': []
                 }
             users_in_contest.add(email)
 
-            if sub.type == 'PROBLEM' and sub.result_data.get('status') == 'SOLVED':
-                leaderboard[email]['problems_solved'] += 1
-                leaderboard[email]['points'] += 10
+            if sub.type == 'PROBLEM':
+                total = int(sub.result_data.get('total_tests', 0))
+                failed = int(sub.result_data.get('failed_count', 0))
+                passed = total - failed
+                title = contest_title_map.get(str(sub.content_reference_id), str(sub.content_reference_id))
+                if total > 0:
+                    leaderboard[email]['points'] += (passed / total) * 10
+                    leaderboard[email]['tests_passed'] += passed
+                    leaderboard[email]['tests_total'] += total
+                    leaderboard[email]['problem_results'].append({'title': title, 'tests_passed': passed, 'tests_total': total})
+                if sub.result_data.get('status') == 'SOLVED':
+                    leaderboard[email]['problems_solved'] += 1
             elif sub.type == 'QUIZ':
                 score = float(sub.result_data.get('score', 0))
                 leaderboard[email]['quiz_score'] += score
@@ -443,11 +487,18 @@ def contest_detail_student(request, room_id, contest_id):
             
             status = 'PENDING'
             score = None
+            tests_passed = None
+            tests_total = None
             
             sub = sub_map.get(cc.reference_id)
             if sub:
                 if cc.content_type == 'PROBLEM':
                     status = sub.result_data.get('status', 'UNSOLVED')
+                    total = int(sub.result_data.get('total_tests', 0))
+                    failed = int(sub.result_data.get('failed_count', 0))
+                    if total > 0:
+                        tests_passed = total - failed
+                        tests_total = total
                 elif cc.content_type == 'QUIZ':
                     status = 'COMPLETED'
                     score = sub.result_data.get('score', 0)
@@ -461,6 +512,8 @@ def contest_detail_student(request, room_id, contest_id):
                 'sequence': cc.sequence_number,
                 'status': status,
                 'score': score,
+                'tests_passed': tests_passed,
+                'tests_total': tests_total,
                 'course_id': course_id
             }
             if cc.content_type == 'PROBLEM' and actual_content.problem:
@@ -476,17 +529,23 @@ def contest_detail_student(request, room_id, contest_id):
         all_submissions = ContestSubmission.filter(contest_id=contest.id)
         lb_dict = {}
         for email in room.participants:
-            lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0}
+            lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0}
             
         for s in all_submissions:
             email = s.user_identifier
             if email not in lb_dict:
-                lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0}
+                lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0}
                 
             if s.type == 'PROBLEM':
+                total = int(s.result_data.get('total_tests', 0))
+                failed = int(s.result_data.get('failed_count', 0))
+                passed = total - failed
+                if total > 0:
+                    lb_dict[email]['points'] += (passed / total) * 10
+                    lb_dict[email]['tests_passed'] += passed
+                    lb_dict[email]['tests_total'] += total
                 if s.result_data.get('status') == 'SOLVED':
                     lb_dict[email]['problems_solved'] += 1
-                    lb_dict[email]['points'] += 10
             elif s.type == 'QUIZ':
                 s_score = float(s.result_data.get('score', 0))
                 lb_dict[email]['quiz_score'] += s_score
@@ -722,6 +781,7 @@ def save_contest_code(request):
         data = request.data
         code = data['code']
         failed_count = int(data.get('failed_count', 0))
+        total_tests = int(data.get('total_tests', 0))
         room_id = data.get('room_id')
         contest_id = data.get('contest_id')
         content_id = data.get('content_id')
@@ -742,6 +802,7 @@ def save_contest_code(request):
                 sub.result_data['code'] = code
                 sub.result_data['status'] = status
                 sub.result_data['failed_count'] = failed_count
+                sub.result_data['total_tests'] = total_tests
                 sub.result_data['execution_time'] = data.get('execution_time')
         else:
             sub = ContestSubmission(
@@ -753,6 +814,7 @@ def save_contest_code(request):
                     'code': code,
                     'status': status,
                     'failed_count': failed_count,
+                    'total_tests': total_tests,
                     'execution_time': data.get('execution_time')
                 }
             )
