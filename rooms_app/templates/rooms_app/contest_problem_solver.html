@@ -997,7 +997,7 @@
                 renderTabbedResults(results, isSubmit ? p.testCases.length : Math.min(results.length, 2));
 
                 if (isSubmit) {
-                    await submitCodeToBackend(code, results.length - passed);
+                    await submitCodeToBackend(code, results.length - passed, results.length);
                     addToHistory(passed, results.length);
                     // Refresh page or update isSolved status dynamically if desired
                     // For now, reload to see unlocked solution is standard, or set flag:
@@ -1147,14 +1147,15 @@
 
         // --- BACKEND ---
         function getCSRFToken() { return document.querySelector('meta[name="csrf-token"]').getAttribute('content'); }
-        async function submitCodeToBackend(code, failed) {
+        async function submitCodeToBackend(code, failed, total) {
             try {
                 const params = new URLSearchParams({
                     problem_id: currentProblemId,
                     course_id: "{{ course_id|escapejs }}",
                     content_id: "{{ content_id|escapejs }}",
                     code: code,
-                    failed_count: failed
+                    failed_count: failed,
+                    total_tests: total
                 });
 
                 const roomId = "{{ room_id|default:'' }}";

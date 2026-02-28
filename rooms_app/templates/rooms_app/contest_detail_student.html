@@ -17,7 +17,11 @@
         --radius-sm: 10px;
     }
 
-    h1, h2, h3, h4, h5 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -32,17 +36,49 @@
     }
 
     @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .animate-in { opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
+    .animate-in {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
 
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
 
     .breadcrumb-premium a {
         color: var(--gray);
@@ -52,9 +88,14 @@
         transition: color 0.2s;
     }
 
-    .breadcrumb-premium a:hover { color: var(--primary); }
+    .breadcrumb-premium a:hover {
+        color: var(--primary);
+    }
 
-    .page-title { font-size: 1.75rem; color: var(--dark); }
+    .page-title {
+        font-size: 1.75rem;
+        color: var(--dark);
+    }
 
     .stats-row {
         background: white;
@@ -89,7 +130,9 @@
         transition: var(--transition);
     }
 
-    .stat-card:hover { box-shadow: var(--shadow-sm); }
+    .stat-card:hover {
+        box-shadow: var(--shadow-sm);
+    }
 
     .stat-icon {
         width: 48px;
@@ -188,9 +231,21 @@
         font-size: 0.75rem;
     }
 
-    .status-dot.solved { background: var(--secondary-bg); color: var(--secondary); }
-    .status-dot.attempted { background: #fffbeb; color: #d97706; }
-    .status-dot.untouched { background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light); }
+    .status-dot.solved {
+        background: var(--secondary-bg);
+        color: var(--secondary);
+    }
+
+    .status-dot.attempted {
+        background: #fffbeb;
+        color: #d97706;
+    }
+
+    .status-dot.untouched {
+        background: var(--gray-lighter);
+        color: var(--gray);
+        border: 1px solid var(--gray-light);
+    }
 
     .diff-badge {
         font-size: 0.72rem;
@@ -199,9 +254,20 @@
         border-radius: 4px;
     }
 
-    .diff-easy { background: #f0fdf4; color: #16a34a; }
-    .diff-medium { background: #fefce8; color: #ca8a04; }
-    .diff-hard { background: #fef2f2; color: #dc2626; }
+    .diff-easy {
+        background: #f0fdf4;
+        color: #16a34a;
+    }
+
+    .diff-medium {
+        background: #fefce8;
+        color: #ca8a04;
+    }
+
+    .diff-hard {
+        background: #fef2f2;
+        color: #dc2626;
+    }
 
     .btn-solve {
         background: linear-gradient(135deg, var(--primary), #7c3aed);
@@ -284,9 +350,17 @@
         background: white;
     }
 
-    .table-premium tbody tr:last-child td { border-bottom: none; }
-    .table-premium tbody tr { transition: var(--transition); }
-    .table-premium tbody tr:hover td { background: var(--light); }
+    .table-premium tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .table-premium tbody tr {
+        transition: var(--transition);
+    }
+
+    .table-premium tbody tr:hover td {
+        background: var(--light);
+    }
 
     .rank-badge {
         width: 36px;
@@ -301,10 +375,24 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     }
 
-    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-    .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); }
-    .rank-3 { background: linear-gradient(135deg, #fcd34d, #d97706); }
-    .rank-other { background: transparent; color: var(--gray); box-shadow: none; font-size: 1rem; }
+    .rank-1 {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+
+    .rank-2 {
+        background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+    }
+
+    .rank-3 {
+        background: linear-gradient(135deg, #fcd34d, #d97706);
+    }
+
+    .rank-other {
+        background: transparent;
+        color: var(--gray);
+        box-shadow: none;
+        font-size: 1rem;
+    }
 
     .user-avatar {
         width: 40px;
@@ -329,11 +417,13 @@
         .stats-row {
             padding: 1.25rem;
         }
+
         .live-banner {
             padding: 1.25rem;
             flex-direction: column;
             text-align: center;
         }
+
         .page-title {
             font-size: 1.5rem;
         }
@@ -343,18 +433,25 @@
         .challenge-card {
             padding: 1rem;
         }
+
         .challenge-action-area {
             max-width: 100% !important;
-            padding-left: 3rem !important; /* Aligns visually under the challenge text */
+            padding-left: 3rem !important;
+            /* Aligns visually under the challenge text */
             justify-content: flex-start !important;
         }
-        .btn-solve, .btn-quiz-action, .btn-closed {
+
+        .btn-solve,
+        .btn-quiz-action,
+        .btn-closed {
             width: 100%;
             justify-content: center;
         }
+
         .stat-card {
             padding: 0.85rem;
         }
+
         .user-avatar {
             width: 32px;
             height: 32px;
@@ -370,10 +467,11 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-5">
             <div>
                 <div class="breadcrumb-premium d-flex align-items-center gap-2 mb-2 flex-wrap">
-                    <a href="{% url 'room_detail_student' room.id %}"><i class="fas fa-arrow-left me-1"></i> {{ room.name }}</a>
+                    <a href="{% url 'room_detail_student' room.id %}"><i class="fas fa-arrow-left me-1"></i> {{room.name }}</a>
                     <span class="text-muted">&#8226;</span>
                     {% if is_active %}
-                    <span class="fw-medium" style="color: var(--secondary);"><i class="fas fa-circle me-1" style="font-size: 0.4rem; animation: pulse 2s infinite;"></i> Live ending on {{ contest.end_time|date:"M d, Y - H:i A" }}</span>
+                    <span class="fw-medium" style="color: var(--secondary);"><i class="fas fa-circle me-1"
+                            style="font-size: 0.4rem; animation: pulse 2s infinite;"></i> Live ending on {{contest.end_time|date:"M d, Y - H:i A" }}</span>
                     {% else %}
                     <span class="text-muted">Finished on {{ contest.end_time|date:"M d, Y - H:i" }}</span>
                     {% endif %}
@@ -399,7 +497,8 @@
     {% if messages %}
     <div class="mb-4 animate-in delay-1">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 shadow-sm border-0" role="alert">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 shadow-sm border-0"
+            role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -434,8 +533,10 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
-                <div class="p-3 border rounded-3 d-flex align-items-center justify-content-center h-100" style="background: var(--light);">
-                    <p class="text-muted mb-0 small"><i class="fas fa-info-circle me-1"></i> Real-time rank and specific scores are published by the admin contextually. This view is read-only.</p>
+                <div class="p-3 border rounded-3 d-flex align-items-center justify-content-center h-100"
+                    style="background: var(--light);">
+                    <p class="text-muted mb-0 small"><i class="fas fa-info-circle me-1"></i> Real-time rank and specific
+                        scores are published by the admin contextually. This view is read-only.</p>
                 </div>
             </div>
         </div>
@@ -445,7 +546,8 @@
         <div class="live-icon"><i class="fas fa-satellite-dish" style="animation: pulse 2s infinite;"></i></div>
         <div>
             <h5 class="fw-bold mb-1" style="color: var(--dark);">Contest is Live</h5>
-            <p class="mb-0 small text-muted">Read carefully and submit your solutions before the timer runs out. Good luck!</p>
+            <p class="mb-0 small text-muted">Read carefully and submit your solutions before the timer runs out. Good
+                luck!</p>
         </div>
     </div>
     {% endif %}
@@ -454,7 +556,8 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div class="d-flex align-items-center">
                 <div class="section-bar" style="background: var(--primary);"></div>
-                <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;">Challenge <span class="text-gradient">List</span></h4>
+                <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;">Challenge <span
+                        class="text-gradient">List</span></h4>
             </div>
         </div>
 
@@ -463,68 +566,70 @@
             <div class="challenge-card">
                 <div class="d-flex gap-3 align-items-start">
                     {% if item.type == 'PROBLEM' %}
-                        {% if item.status == 'SOLVED' %}
-                        <div class="status-dot solved"><i class="fas fa-check"></i></div>
-                        {% elif item.status == 'UNSOLVED_ATTEMPTED' %}
-                        <div class="status-dot attempted"><i class="fas fa-times"></i></div>
-                        {% else %}
-                        <div class="status-dot untouched"><i class="fas fa-minus"></i></div>
-                        {% endif %}
+                    {% if item.status == 'SOLVED' %}
+                    <div class="status-dot solved"><i class="fas fa-check"></i></div>
+                    {% elif item.status == 'UNSOLVED_ATTEMPTED' %}
+                    <div class="status-dot attempted"><i class="fas fa-times"></i></div>
                     {% else %}
-                        {% if item.status == 'COMPLETED' %}
-                        <div class="status-dot solved"><i class="fas fa-check"></i></div>
-                        {% else %}
-                        <div class="status-dot untouched"><i class="fas fa-minus"></i></div>
-                        {% endif %}
+                    <div class="status-dot untouched"><i class="fas fa-minus"></i></div>
+                    {% endif %}
+                    {% else %}
+                    {% if item.status == 'COMPLETED' %}
+                    <div class="status-dot solved"><i class="fas fa-check"></i></div>
+                    {% else %}
+                    <div class="status-dot untouched"><i class="fas fa-minus"></i></div>
+                    {% endif %}
                     {% endif %}
 
                     <div>
-                        <h5 class="fw-bold mb-2" style="color: var(--dark); font-size: 0.95rem;">{{ item.sequence }}. {{ item.title }}</h5>
+                        <h5 class="fw-bold mb-2" style="color: var(--dark); font-size: 0.95rem;">{{ item.sequence }}. {{item.title }}</h5>
                         <div class="d-flex flex-wrap align-items-center gap-2">
                             {% if item.type == 'PROBLEM' %}
-                                {% if item.difficulty == 'Easy' %}
-                                <span class="diff-badge diff-easy">Easy</span>
-                                {% elif item.difficulty == 'Medium' %}
-                                <span class="diff-badge diff-medium">Medium</span>
-                                {% elif item.difficulty == 'Hard' %}
-                                <span class="diff-badge diff-hard">Hard</span>
-                                {% else %}
-                                <span class="diff-badge" style="background: var(--gray-lighter); color: var(--gray);">{{ item.difficulty|default:"General" }}</span>
-                                {% endif %}
-                                <span class="small text-muted border-start ps-2 border-2">Programming Problem</span>
+                            {% if item.difficulty == 'Easy' %}
+                            <span class="diff-badge diff-easy">Easy</span>
+                            {% elif item.difficulty == 'Medium' %}
+                            <span class="diff-badge diff-medium">Medium</span>
+                            {% elif item.difficulty == 'Hard' %}
+                            <span class="diff-badge diff-hard">Hard</span>
                             {% else %}
-                                <span class="diff-badge" style="background: var(--primary-bg); color: var(--primary);">Quiz</span>
-                                <span class="small text-muted border-start ps-2 border-2">Multiple Choice</span>
+                            <span class="diff-badge" style="background: var(--gray-lighter); color: var(--gray);">{{item.difficulty|default:"General" }}</span>
+                            {% endif %}
+                            <span class="small text-muted border-start ps-2 border-2">Programming Problem</span>
+                            {% else %}
+                            <span class="diff-badge"
+                                style="background: var(--primary-bg); color: var(--primary);">Quiz</span>
+                            <span class="small text-muted border-start ps-2 border-2">Multiple Choice</span>
                             {% endif %}
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-between justify-content-sm-end gap-4 ps-5 ps-sm-0 mt-2 mt-sm-0 w-100 challenge-action-area">
+                <div
+                    class="d-flex align-items-center justify-content-between justify-content-sm-end gap-4 ps-5 ps-sm-0 mt-2 mt-sm-0 w-100 challenge-action-area">
                     <div class="text-end d-none d-sm-block w-100">
                         {% if item.type == 'PROBLEM' %}
-                            {% if item.status == 'SOLVED' %}
-                            <span class="d-block fw-bold small" style="color: var(--secondary);">Solved</span>
-                            {% elif item.status == 'UNSOLVED_ATTEMPTED' %}
-                            <span class="d-block fw-bold small" style="color: var(--danger);">Attempted</span>
-                            {% else %}
-                            <span class="d-block fw-medium text-muted small">Not Attempted</span>
-                            {% endif %}
+                        {% if item.tests_passed is not None %}
+                        <span class="d-block fw-bold small" style="color: var(--secondary);">{{item.tests_passed }}/{{item.tests_total }} tests passed</span>
                         {% else %}
-                            {% if item.status == 'COMPLETED' %}
-                            <span class="d-block fw-bold small" style="color: var(--secondary);">Score: {{ item.score|floatformat:1 }}%</span>
-                            {% else %}
-                            <span class="d-block fw-medium text-muted small">Not Started</span>
-                            {% endif %}
+                        <span class="d-block fw-medium text-muted small">Not Attempted</span>
+                        {% endif %}
+                        {% else %}
+                        {% if item.status == 'COMPLETED' %}
+                        <span class="d-block fw-bold small" style="color: var(--secondary);">Score: {{item.score|floatformat:1 }}%</span>
+                        {% else %}
+                        <span class="d-block fw-medium text-muted small">Not Started</span>
+                        {% endif %}
                         {% endif %}
                     </div>
 
                     {% if is_active %}
-                        {% if item.type == 'PROBLEM' %}
-                        <a href="{% url 'contest_problem_solver' room_id=room.id contest_id=contest.id content_id=item.content_id %}" class="btn-solve">Solve Concept</a>
-                        {% else %}
-                        <a href="{% url 'contest_quiz_view' room_id=room.id contest_id=contest.id content_id=item.content_id %}" class="btn-quiz-action">Take Quiz</a>
-                        {% endif %}
+                    {% if item.type == 'PROBLEM' %}
+                    <a href="{% url 'contest_problem_solver' room_id=room.id contest_id=contest.id content_id=item.content_id %}"
+                        class="btn-solve">Solve Concept</a>
+                    {% else %}
+                    <a href="{% url 'contest_quiz_view' room_id=room.id contest_id=contest.id content_id=item.content_id %}"
+                        class="btn-quiz-action">Take Quiz</a>
+                    {% endif %}
                     {% else %}
                     <span class="btn-closed">Closed</span>
                     {% endif %}
@@ -532,7 +637,8 @@
             </div>
             {% empty %}
             <div class="text-center py-5 border rounded-4 shadow-sm" style="background: white;">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle" style="width: 72px; height: 72px; background: var(--gray-lighter);">
+                <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-circle"
+                    style="width: 72px; height: 72px; background: var(--gray-lighter);">
                     <i class="fas fa-folder-open fa-2x" style="color: var(--gray);"></i>
                 </div>
                 <h5 class="fw-bold" style="color: var(--dark);">No challenges yet</h5>
@@ -547,9 +653,12 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div class="d-flex align-items-center">
                 <div class="section-bar" style="background: #f59e0b;"></div>
-                <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;"><i class="fas fa-trophy me-2" style="color: #f59e0b;"></i> Final Leaderboard</h4>
+                <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;"><i class="fas fa-trophy me-2"
+                        style="color: #f59e0b;"></i> Final Leaderboard</h4>
             </div>
-            <span class="badge px-3 py-2 rounded-pill shadow-sm" style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">Ranked by Total Points</span>
+            <span class="badge px-3 py-2 rounded-pill shadow-sm"
+                style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">Ranked
+                by Total Points</span>
         </div>
         <div class="rounded-4 overflow-hidden shadow-sm border" style="background: white;">
             <div class="table-responsive">
@@ -583,32 +692,39 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="user-avatar">{{ entry.email|make_list|first|upper }}</div>
                                     <div class="d-flex flex-column">
-                                        <span class="{% if entry.points > 0 %}fw-bold{% else %}fw-medium{% endif %}" style="color: var(--dark);">
+                                        <span class="{% if entry.points > 0 %}fw-bold{% else %}fw-medium{% endif %}"
+                                            style="color: var(--dark);">
                                             {% if entry.email == request.user.email %}{{ entry.email }} (You){% else %}{{ entry.email }}{% endif %}
                                         </span>
                                         {% if entry.points == 0 %}
-                                        <span class="badge mt-1" style="width: fit-content; font-size: 0.62rem; background: var(--gray-lighter); color: var(--gray);">Not Started</span>
+                                        <span class="badge mt-1"
+                                            style="width: fit-content; font-size: 0.62rem; background: var(--gray-lighter); color: var(--gray);">Not
+                                            Started</span>
                                         {% endif %}
                                     </div>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 rounded-pill gap-2" style="background: var(--gray-lighter); border: 1px solid var(--gray-light);">
-                                    {% if entry.problems_solved > 0 %}
+                                <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 rounded-pill gap-2"
+                                    style="background: var(--gray-lighter); border: 1px solid var(--gray-light);">
+                                    {% if entry.tests_total > 0 %}
                                     <i class="fas fa-check-circle small" style="color: var(--secondary);"></i>
-                                    <span class="fw-bold" style="color: var(--dark);">{{ entry.problems_solved }}</span>
+                                    <span class="fw-bold" style="color: var(--dark);">{{ entry.tests_passed }}/{{entry.tests_total }}</span>
                                     {% else %}
                                     <span class="text-muted">-</span>
                                     {% endif %}
                                 </div>
                             </td>
                             <td class="text-center">
-                                <span class="badge px-3 py-2 rounded-pill font-monospace {% if entry.quiz_score > 0 %}{% else %}{% endif %}" style="font-size: 0.85rem; {% if entry.quiz_score > 0 %}background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(37,99,235,0.15);{% else %}background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light);{% endif %}">
+                                <span
+                                    class="badge px-3 py-2 rounded-pill font-monospace {% if entry.quiz_score > 0 %}{% else %}{% endif %}"
+                                    style="font-size: 0.85rem; {% if entry.quiz_score > 0 %}background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(37,99,235,0.15);{% else %}background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light);{% endif %}">
                                     {{ entry.quiz_score|floatformat:1 }}%
                                 </span>
                             </td>
                             <td class="text-end pe-4">
-                                <span class="fw-bold {% if entry.points > 0 %}{% else %}opacity-50{% endif %}" style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: {% if entry.points > 0 %}var(--primary){% else %}var(--gray){% endif %};">
+                                <span class="fw-bold {% if entry.points > 0 %}{% else %}opacity-50{% endif %}"
+                                    style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: {% if entry.points > 0 %}var(--primary){% else %}var(--gray){% endif %};">
                                     {{ entry.points|floatformat:2 }}
                                 </span>
                             </td>
@@ -616,7 +732,8 @@
                         {% empty %}
                         <tr>
                             <td colspan="5" class="text-center py-5">
-                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px; background: var(--gray-lighter);">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+                                    style="width: 60px; height: 60px; background: var(--gray-lighter);">
                                     <i class="fas fa-user-times" style="color: var(--gray);"></i>
                                 </div>
                                 <h6 class="fw-bold" style="color: var(--dark);">No Activity Detected</h6>

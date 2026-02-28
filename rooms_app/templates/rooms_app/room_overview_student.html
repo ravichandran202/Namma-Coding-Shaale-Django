@@ -17,7 +17,11 @@
         --radius-sm: 10px;
     }
 
-    h1, h2, h3, h4, h5 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -32,16 +36,41 @@
     }
 
     @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .animate-in { opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-    .delay-5 { animation-delay: 0.5s; }
+    .animate-in {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+        animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+        animation-delay: 0.5s;
+    }
 
     .breadcrumb-premium {
         font-size: 0.82rem;
@@ -59,7 +88,9 @@
         white-space: nowrap;
     }
 
-    .breadcrumb-premium a:hover { color: var(--primary); }
+    .breadcrumb-premium a:hover {
+        color: var(--primary);
+    }
 
     .btn-ghost {
         background: white;
@@ -96,7 +127,9 @@
     }
 
     @media (max-width: 768px) {
-        .room-hero { padding: 1.5rem; }
+        .room-hero {
+            padding: 1.5rem;
+        }
     }
 
     .room-hero-glow {
@@ -124,7 +157,10 @@
         flex-shrink: 0;
     }
 
-    .room-title { font-size: 1.5rem; color: var(--dark); }
+    .room-title {
+        font-size: 1.5rem;
+        color: var(--dark);
+    }
 
     .active-badge {
         display: inline-flex;
@@ -149,7 +185,9 @@
         font-weight: 500;
     }
 
-    .room-stat i { font-size: 0.85rem; }
+    .room-stat i {
+        font-size: 0.85rem;
+    }
 
     .sidebar-card {
         background: white;
@@ -180,14 +218,20 @@
         transition: var(--transition);
     }
 
-    .sidebar-link:hover { background: var(--light); color: var(--dark); }
+    .sidebar-link:hover {
+        background: var(--light);
+        color: var(--dark);
+    }
 
     .sidebar-link.active {
         background: var(--primary-bg);
         color: var(--primary);
     }
 
-    .sidebar-link i { width: 20px; text-align: center; }
+    .sidebar-link i {
+        width: 20px;
+        text-align: center;
+    }
 
     .section-bar {
         width: 4px;
@@ -210,8 +254,13 @@
     }
 
     @media (max-width: 576px) {
-        .stat-card { padding: 1.25rem; }
-        .stat-value { font-size: 1.5rem !important; }
+        .stat-card {
+            padding: 1.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem !important;
+        }
     }
 
     .stat-card:hover {
@@ -269,7 +318,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        flex-wrap: wrap;
+        /* Allows wrapping on smaller screens */
         gap: 1rem;
     }
 
@@ -282,7 +332,8 @@
     .table-premium {
         border-collapse: separate;
         border-spacing: 0;
-        min-width: 600px; /* Ensure table doesn't collapse too far horizontally */
+        min-width: 600px;
+        /* Ensure table doesn't collapse too far horizontally */
     }
 
     .table-premium th {
@@ -305,9 +356,17 @@
         font-size: 0.88rem;
     }
 
-    .table-premium tbody tr:last-child td { border-bottom: none; }
-    .table-premium tbody tr { transition: var(--transition); }
-    .table-premium tbody tr:hover td { background: var(--light); }
+    .table-premium tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .table-premium tbody tr {
+        transition: var(--transition);
+    }
+
+    .table-premium tbody tr:hover td {
+        background: var(--light);
+    }
 
     .rank-badge {
         width: 32px;
@@ -320,10 +379,28 @@
         font-size: 0.8rem;
     }
 
-    .rank-1 { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3); }
-    .rank-2 { background: linear-gradient(135deg, #e5e7eb, #d1d5db); color: #374151; box-shadow: 0 2px 8px rgba(107, 114, 128, 0.2); }
-    .rank-3 { background: linear-gradient(135deg, #fed7aa, #fdba74); color: #9a3412; box-shadow: 0 2px 8px rgba(234, 88, 12, 0.2); }
-    .rank-default { background: var(--gray-lighter); color: var(--gray); }
+    .rank-1 {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #92400e;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+
+    .rank-2 {
+        background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+        color: #374151;
+        box-shadow: 0 2px 8px rgba(107, 114, 128, 0.2);
+    }
+
+    .rank-3 {
+        background: linear-gradient(135deg, #fed7aa, #fdba74);
+        color: #9a3412;
+        box-shadow: 0 2px 8px rgba(234, 88, 12, 0.2);
+    }
+
+    .rank-default {
+        background: var(--gray-lighter);
+        color: var(--gray);
+    }
 
     .user-avatar {
         width: 36px;
@@ -420,8 +497,13 @@
     }
 
     @media (max-width: 575.98px) {
-        .search-wrap { width: 100%; }
-        .search-box { max-width: 100%; }
+        .search-wrap {
+            width: 100%;
+        }
+
+        .search-box {
+            max-width: 100%;
+        }
     }
 
     .search-wrap i {
@@ -442,7 +524,9 @@
         border-bottom: 1px solid var(--gray-lighter);
     }
 
-    .info-item:last-child { border-bottom: none; }
+    .info-item:last-child {
+        border-bottom: none;
+    }
 
     .info-icon {
         width: 36px;
@@ -468,7 +552,8 @@
         font-size: 0.88rem;
         color: var(--dark);
         font-weight: 500;
-        word-break: break-word; /* Allows long IDs to wrap safely */
+        word-break: break-word;
+        /* Allows long IDs to wrap safely */
     }
 
     .btn-premium-action {
@@ -495,7 +580,17 @@
         color: white !important;
     }
 
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+    }
 
     .empty-state {
         text-align: center;
@@ -537,7 +632,8 @@
     {% if messages %}
     <div class="mb-4 animate-in delay-1">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 shadow-sm border-0" role="alert">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 shadow-sm border-0"
+            role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -547,7 +643,8 @@
 
     <div class="room-hero animate-in delay-1">
         <div class="room-hero-glow"></div>
-        <div class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 gap-md-4">
+        <div
+            class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 gap-md-4">
             <div class="d-flex flex-column flex-sm-row gap-3 gap-md-4 w-100">
                 <div class="room-icon">
                     <i class="fas fa-code"></i>
@@ -555,15 +652,16 @@
                 <div>
                     <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
                         <h1 class="room-title mb-0">{{ room.name }}</h1>
-                        <span class="active-badge"><i class="fas fa-circle" style="font-size: 0.35rem;"></i> Active</span>
+                        <span class="active-badge"><i class="fas fa-circle" style="font-size: 0.35rem;"></i>
+                            Active</span>
                     </div>
                     <p class="text-muted mb-3" style="max-width: 550px;">
-                        {{ room.description|default:"A dedicated space for mastering Data Structures and Algorithms. Join contests to test your skills." }}
+                        {{ room.description|default:"A dedicated space for mastering Data Structures and Algorithms.Join contests to test your skills." }}
                     </p>
                     <div class="d-flex flex-wrap gap-3 gap-md-4">
                         <span class="room-stat"><i class="fas fa-users"></i> {{ total_participants }} Members</span>
                         <span class="room-stat"><i class="fas fa-trophy"></i> {{ total_contests }} Contests</span>
-                        <span class="room-stat"><i class="fas fa-shield-alt"></i> {{ room.created_by|default:"Instructor" }}</span>
+                        <span class="room-stat"><i class="fas fa-shield-alt"></i> {{room.created_by|default:"Instructor"}}</span>
                     </div>
                 </div>
             </div>
@@ -581,10 +679,12 @@
                         <a href="{% url 'room_detail_student' room.id %}" class="sidebar-link">
                             <i class="fas fa-trophy"></i> Contests
                         </a>
-                        <a href="#participants-section" class="sidebar-link" onclick="document.getElementById('participants-section').scrollIntoView({behavior:'smooth'})">
+                        <a href="#participants-section" class="sidebar-link"
+                            onclick="document.getElementById('participants-section').scrollIntoView({behavior:'smooth'})">
                             <i class="fas fa-users"></i> Members
                         </a>
-                        <a href="#leaderboard-section" class="sidebar-link" onclick="document.getElementById('leaderboard-section').scrollIntoView({behavior:'smooth'})">
+                        <a href="#leaderboard-section" class="sidebar-link"
+                            onclick="document.getElementById('leaderboard-section').scrollIntoView({behavior:'smooth'})">
                             <i class="fas fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -602,7 +702,8 @@
                         </div>
                         <div class="min-width-0">
                             <div class="info-label">Room ID</div>
-                            <div class="info-value text-break" style="font-family: monospace; font-size: 0.78rem;">{{ room.id }}</div>
+                            <div class="info-value text-break" style="font-family: monospace; font-size: 0.78rem;">
+                                {{room.id }}</div>
                         </div>
                     </div>
                     <div class="info-item">
@@ -683,9 +784,12 @@
                 <div class="panel-card">
                     <div class="panel-header">
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="section-bar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
-                            <h5 class="mb-0"><i class="fas fa-medal me-2" style="color: #f59e0b;"></i> Room Leaderboard</h5>
-                            <span class="badge rounded-pill px-3 py-1 mt-1 mt-sm-0" style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">
+                            <div class="section-bar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            </div>
+                            <h5 class="mb-0"><i class="fas fa-medal me-2" style="color: #f59e0b;"></i> Room Leaderboard
+                            </h5>
+                            <span class="badge rounded-pill px-3 py-1 mt-1 mt-sm-0"
+                                style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">
                                 All Contests Combined
                             </span>
                         </div>
@@ -709,22 +813,26 @@
                                 <tr>
                                     <td class="ps-4">
                                         {% if forloop.counter == 1 %}
-                                            <span class="rank-badge rank-1"><i class="fas fa-crown" style="font-size: 0.7rem;"></i></span>
+                                        <span class="rank-badge rank-1"><i class="fas fa-crown"
+                                                style="font-size: 0.7rem;"></i></span>
                                         {% elif forloop.counter == 2 %}
-                                            <span class="rank-badge rank-2">2</span>
+                                        <span class="rank-badge rank-2">2</span>
                                         {% elif forloop.counter == 3 %}
-                                            <span class="rank-badge rank-3">3</span>
+                                        <span class="rank-badge rank-3">3</span>
                                         {% else %}
-                                            <span class="rank-badge rank-default">{{ forloop.counter }}</span>
+                                        <span class="rank-badge rank-default">{{ forloop.counter }}</span>
                                         {% endif %}
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center gap-3">
-                                            <div class="user-avatar" style="{% cycle 'background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af;' 'background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46;' 'background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d;' 'background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6;' 'background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e;' 'background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412;' 'background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3;' 'background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75;' %}">
+                                            <div class="user-avatar"
+                                                style="{% cycle 'background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af;' 'background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46;' 'background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d;' 'background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6;' 'background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e;' 'background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412;' 'background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3;' 'background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75;' %}">
                                                 {{ entry.email|make_list|first|upper }}
                                             </div>
                                             <div>
-                                                <div class="fw-bold" style="color: var(--dark); font-size: 0.88rem; white-space: nowrap;">{{ entry.email }}</div>
+                                                <div class="fw-bold"
+                                                    style="color: var(--dark); font-size: 0.88rem; white-space: nowrap;">
+                                                    {{ entry.email }}</div>
                                                 {% if entry.points > 0 %}
                                                 <div class="small text-muted">Active contributor</div>
                                                 {% else %}
@@ -734,21 +842,33 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <span class="fw-bold" style="color: var(--primary);">{{ entry.problems_solved }}</span>
+                                        {% if entry.problem_results %}
+                                        <span class="fw-bold" style="color: var(--primary);">{{ entry.tests_passed }}/{{entry.tests_total }}</span>
+                                        <span tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            data-bs-html="true"
+                                            data-bs-title="{% for pr in entry.problem_results %}<b>{{ pr.title }}</b>: {{ pr.tests_passed }}/{{ pr.tests_total }}{% if not forloop.last %}<br>{% endif %}{% endfor %}"
+                                            style="cursor: help; color: var(--primary); font-size: 0.75rem; margin-left: 3px;">ⓘ</span>
+                                        {% else %}
+                                        <span class="fw-bold" style="color: var(--primary);">-</span>
+                                        {% endif %}
                                     </td>
                                     <td class="text-center">
-                                        <span class="fw-bold" style="color: var(--secondary);">{{ entry.quiz_score|floatformat:0 }}</span>
+                                        <span class="fw-bold"
+                                            style="color: var(--secondary);">{{entry.quiz_score|floatformat:0 }}</span>
                                     </td>
                                     <td class="text-center">
                                         <span class="fw-medium text-muted">{{ entry.contests_participated }}</span>
                                     </td>
                                     <td class="text-end pe-4">
                                         {% if entry.points > 0 %}
-                                        <span class="points-pill" style="background: var(--primary-bg); color: var(--primary);">
-                                            <i class="fas fa-star" style="font-size: 0.6rem;"></i> {{ entry.points|floatformat:1 }}
+                                        <span class="points-pill"
+                                            style="background: var(--primary-bg); color: var(--primary);">
+                                            <i class="fas fa-star" style="font-size: 0.6rem;"></i>
+                                            {{entry.points|floatformat:1 }}
                                         </span>
                                         {% else %}
-                                        <span class="points-pill" style="background: var(--gray-lighter); color: var(--gray);">0</span>
+                                        <span class="points-pill"
+                                            style="background: var(--gray-lighter); color: var(--gray);">0</span>
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -772,13 +892,17 @@
                 <div class="panel-card">
                     <div class="panel-header">
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="section-bar" style="background: linear-gradient(135deg, var(--primary), #7c3aed);"></div>
-                            <h5 class="mb-0"><i class="fas fa-users me-2" style="color: var(--primary);"></i> Participants</h5>
-                            <span class="badge rounded-pill ms-2" style="background: var(--primary-bg); color: var(--primary); font-size: 0.72rem; font-weight: 600;">{{ total_participants }}</span>
+                            <div class="section-bar"
+                                style="background: linear-gradient(135deg, var(--primary), #7c3aed);"></div>
+                            <h5 class="mb-0"><i class="fas fa-users me-2" style="color: var(--primary);"></i>
+                                Participants</h5>
+                            <span class="badge rounded-pill ms-2"
+                                style="background: var(--primary-bg); color: var(--primary); font-size: 0.72rem; font-weight: 600;">{{total_participants}}</span>
                         </div>
                         <div class="search-wrap">
                             <i class="fas fa-search"></i>
-                            <input type="text" class="search-box" id="participantSearch" placeholder="Search members...">
+                            <input type="text" class="search-box" id="participantSearch"
+                                placeholder="Search members...">
                         </div>
                     </div>
 
@@ -786,9 +910,11 @@
                     <div class="p-4">
                         <div class="row g-3" id="participantGrid">
                             {% for p in participants %}
-                            <div class="col-12 col-sm-6 col-xl-4 participant-item" data-name="{{ p.display_name|lower }}" data-email="{{ p.email|lower }}">
+                            <div class="col-12 col-sm-6 col-xl-4 participant-item"
+                                data-name="{{ p.display_name|lower }}" data-email="{{ p.email|lower }}">
                                 <div class="participant-card h-100">
-                                    <div class="participant-avatar" style="{% cycle 'background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af;' 'background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46;' 'background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d;' 'background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6;' 'background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e;' 'background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412;' 'background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3;' 'background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75;' %}">
+                                    <div class="participant-avatar"
+                                        style="{% cycle 'background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af;' 'background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46;' 'background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #9d174d;' 'background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6;' 'background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e;' 'background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #9a3412;' 'background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3;' 'background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #155e75;' %}">
                                         {{ p.display_name|make_list|first|upper }}
                                     </div>
                                     <div class="flex-grow-1 min-width-0">
@@ -796,10 +922,13 @@
                                         <div class="participant-email text-truncate">{{ p.email }}</div>
                                         <div class="d-flex flex-wrap gap-2 gap-sm-3 mt-1">
                                             <span class="participant-meta">
-                                                <i class="fas fa-star" style="color: #f59e0b; font-size: 0.6rem;"></i> {{ p.points|floatformat:1 }} pts
+                                                <i class="fas fa-star" style="color: #f59e0b; font-size: 0.6rem;"></i>
+                                                {{ p.points|floatformat:1 }} pts
                                             </span>
                                             <span class="participant-meta">
-                                                <i class="fas fa-trophy" style="color: var(--primary); font-size: 0.6rem;"></i> {{ p.contests_participated }} contests
+                                                <i class="fas fa-trophy"
+                                                    style="color: var(--primary); font-size: 0.6rem;"></i>
+                                                {{p.contests_participated }} contests
                                             </span>
                                         </div>
                                     </div>
@@ -825,26 +954,33 @@
                 <div class="panel-card">
                     <div class="panel-header">
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="section-bar" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                            <div class="section-bar" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            </div>
                             <h5 class="mb-0"><i class="fas fa-bolt me-2" style="color: #10b981;"></i> Live Contests</h5>
-                            <span class="badge rounded-pill ms-1" style="background: #d1fae5; color: #065f46; font-size: 0.68rem; font-weight: 700;">
-                                <i class="fas fa-circle me-1" style="font-size: 0.3rem; animation: pulse 2s infinite;"></i> {{ active_contest_count }} LIVE
+                            <span class="badge rounded-pill ms-1"
+                                style="background: #d1fae5; color: #065f46; font-size: 0.68rem; font-weight: 700;">
+                                <i class="fas fa-circle me-1"
+                                    style="font-size: 0.3rem; animation: pulse 2s infinite;"></i>
+                                {{active_contest_count}} LIVE
                             </span>
                         </div>
                     </div>
                     <div class="p-4">
                         {% for contest in active_contests %}
-                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 {% if not forloop.last %}mb-3 pb-3{% endif %}" {% if not forloop.last %}style="border-bottom: 1px solid var(--gray-lighter);"{% endif %}>
+                        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 {% if not forloop.last %}mb-3 pb-3{% endif %}"
+                            {% if not forloop.last %}style="border-bottom: 1px solid var(--gray-lighter);" {% endif %}>
                             <div>
                                 <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
                                     <h6 class="fw-bold mb-0" style="color: var(--dark);">{{ contest.title }}</h6>
-                                    <span class="badge rounded-pill" style="background: #dbeafe; color: #1e40af; font-size: 0.65rem; font-weight: 700;">LIVE</span>
+                                    <span class="badge rounded-pill"
+                                        style="background: #dbeafe; color: #1e40af; font-size: 0.65rem; font-weight: 700;">LIVE</span>
                                 </div>
                                 <div class="small text-muted">
                                     <i class="far fa-clock me-1"></i> Ends: {{ contest.end_time|date:"M d, Y - h:i A" }}
                                 </div>
                             </div>
-                            <a href="{% url 'contest_detail_student' room.id contest.id %}" class="btn-premium-action w-sm-auto text-center mt-2 mt-sm-0">
+                            <a href="{% url 'contest_detail_student' room.id contest.id %}"
+                                class="btn-premium-action text-center mt-2 mt-sm-0">
                                 Enter <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -860,20 +996,27 @@
 
 {% block extra_js %}
 <script>
-(function() {
-    const searchInput = document.getElementById('participantSearch');
-    if (!searchInput) return;
+    (function () {
+        const searchInput = document.getElementById('participantSearch');
+        if (!searchInput) return;
 
-    searchInput.addEventListener('input', function() {
-        const query = this.value.trim().toLowerCase();
-        const items = document.querySelectorAll('.participant-item');
-        items.forEach(item => {
-            const name = item.dataset.name || '';
-            const email = item.dataset.email || '';
-            const match = query === '' || name.includes(query) || email.includes(query);
-            item.style.display = match ? '' : 'none';
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+            const items = document.querySelectorAll('.participant-item');
+            items.forEach(item => {
+                const name = item.dataset.name || '';
+                const email = item.dataset.email || '';
+                const match = query === '' || name.includes(query) || email.includes(query);
+                item.style.display = match ? '' : 'none';
+            });
+        });
+    })();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+            new bootstrap.Tooltip(el);
         });
     });
-})();
 </script>
 {% endblock %}
