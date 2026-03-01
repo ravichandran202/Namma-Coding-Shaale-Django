@@ -44,6 +44,8 @@ urlpatterns = [
     path('privacy-policy', views.privacy_policy, name='privacy_policy'),
     path('refund-policy', views.refund_policy, name='refund_policy'),
     path('contact-us', views.contact_us, name='contact_us'),
+    path('contact-us/submit', views.contact_us_submit, name='contact_us_submit'),
+    path('subscribe/submit', views.subscribe_submit, name='subscribe_submit'),
     path('about-us', views.about_us, name='about_us'),
 
     path("catalog/list-problems/<int:course_id>", views.problems_catalog, name="problems-catalog"),

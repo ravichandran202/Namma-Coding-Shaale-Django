@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OTP, Course, Problem, Content, CourseContent, UserCourse, ProblemSubmission, UserContentProgress, QuizSubmission, Blog
+from .models import OTP, Course, Problem, Content, CourseContent, UserCourse, ProblemSubmission, UserContentProgress, QuizSubmission, Blog, Subscription, ContactMessage
 
 from django.contrib import admin
 from .models import *
@@ -90,3 +90,16 @@ class BlogAdmin(admin.ModelAdmin):
     list_filter = ['created_at', 'author']
     search_fields = ['title', 'content', 'author__username']
     readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ['email', 'subscribed_at']
+    list_filter = ['subscribed_at']
+    search_fields = ['email']
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'course', 'message', 'created_at']
+    list_filter = ['created_at']
+    search_fields = ['name', 'email', 'course']
+    readonly_fields = ['created_at']
