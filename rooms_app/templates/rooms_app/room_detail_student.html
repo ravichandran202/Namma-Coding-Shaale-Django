@@ -1,0 +1,535 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-bg: #eff6ff;
+        --secondary-bg: #ecfdf5;
+        --gray-lighter: #f1f5f9;
+        --border: rgba(0, 0, 0, 0.06);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --radius: 16px;
+        --radius-sm: 10px;
+    }
+
+    h1, h2, h3, h4, h5 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in { opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    .breadcrumb-premium {
+        font-size: 0.82rem;
+        font-weight: 500;
+    }
+
+    .breadcrumb-premium a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumb-premium a:hover { color: var(--primary); }
+
+    .btn-ghost {
+        background: white;
+        color: var(--dark);
+        border: 1px solid var(--gray-light);
+        font-weight: 500;
+        padding: 0.5rem 1.1rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none;
+        font-size: 0.82rem;
+    }
+
+    .btn-ghost:hover {
+        box-shadow: var(--shadow);
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .room-hero {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+
+    .room-hero-glow {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.06));
+        border-radius: 50%;
+        filter: blur(40px);
+        pointer-events: none;
+    }
+
+    .room-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary-bg), #ede9fe);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        flex-shrink: 0;
+    }
+
+    .room-title { font-size: 1.5rem; color: var(--dark); }
+
+    .active-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.2rem 0.65rem;
+        border-radius: 20px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        background: var(--secondary-bg);
+        color: var(--secondary);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .room-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        color: var(--gray);
+        font-weight: 500;
+    }
+
+    .room-stat i { font-size: 0.85rem; }
+
+    .sidebar-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--gray);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .sidebar-link:hover { background: var(--light); color: var(--dark); }
+
+    .sidebar-link.active {
+        background: var(--primary-bg);
+        color: var(--primary);
+    }
+
+    .sidebar-link i { width: 20px; text-align: center; }
+
+    .section-bar {
+        width: 4px;
+        height: 24px;
+        border-radius: 4px;
+        margin-right: 0.75rem;
+    }
+
+    .contest-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .contest-card:hover { box-shadow: var(--shadow); }
+
+    .contest-row {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--gray-lighter);
+        transition: var(--transition);
+    }
+
+    .contest-row:last-child { border-bottom: none; }
+
+    .contest-row.is-live {
+        background: var(--primary-bg);
+        border-left: 4px solid var(--primary);
+    }
+
+    .contest-row:hover { background: var(--light); }
+
+    .badge-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #bfdbfe;
+    }
+
+    .badge-upcoming {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        background: var(--gray-lighter);
+        color: var(--gray);
+        border: 1px solid var(--gray-light);
+    }
+
+    .btn-premium-action {
+        background: linear-gradient(135deg, var(--primary), #7c3aed);
+        color: white !important;
+        border: none;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .btn-premium-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        color: white !important;
+    }
+
+    .table-premium {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table-premium th {
+        background: var(--light);
+        color: var(--gray);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--gray-lighter);
+        padding: 0.85rem 1.25rem;
+    }
+
+    .table-premium td {
+        padding: 1rem 1.25rem;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--gray-lighter);
+        background: white;
+        font-size: 0.88rem;
+    }
+
+    .table-premium tbody tr:last-child td { border-bottom: none; }
+
+    .table-premium tbody tr { transition: var(--transition); }
+
+    .table-premium tbody tr:hover td { background: var(--light); }
+
+    .icon-sm {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
+    @media (min-width: 992px) {
+        .sidebar-card {
+            position: sticky;
+            top: 100px;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .sidebar-menu-wrapper {
+            flex-direction: row !important;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+        }
+        .sidebar-menu-wrapper::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+        .sidebar-menu-wrapper {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        .sidebar-link {
+            white-space: nowrap;
+            flex: 0 0 auto;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .room-hero {
+            padding: 1.5rem;
+        }
+        .room-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.25rem;
+        }
+        .room-title {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .contest-row {
+            padding: 1.25rem 1rem;
+        }
+        .contest-row .flex-shrink-0 {
+            width: 100%;
+        }
+        .contest-row .btn-premium-action,
+        .contest-row .btn-ghost {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4 mt-3">
+    <div class="animate-in">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <nav class="breadcrumb-premium">
+                <a href="{% url 'my-courses' %}"><i class="fas fa-arrow-left me-1"></i> Dashboard</a>
+                <span class="mx-2 text-muted">/</span>
+                <span style="color: var(--dark); font-weight: 600;">{{ room.name }}</span>
+            </nav>
+            <a href="{% url 'my-courses' %}" class="btn-ghost">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="mb-4 animate-in delay-1">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 shadow-sm border-0" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="room-hero animate-in delay-1">
+        <div class="room-hero-glow"></div>
+        <div class="position-relative z-1 d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-4">
+            <div class="d-flex flex-column flex-sm-row gap-3 gap-md-4">
+                <div class="room-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
+                        <h1 class="room-title mb-0">{{ room.name }}</h1>
+                        <span class="active-badge"><i class="fas fa-circle" style="font-size: 0.35rem;"></i> Active</span>
+                    </div>
+                    <p class="text-muted mb-3" style="max-width: 550px;">
+                        {{ room.description|default:"A dedicated space for mastering Data Structures and Algorithms. Join contests to test your skills." }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 gap-sm-3 gap-md-4">
+                        <span class="room-stat"><i class="fas fa-users"></i> {{ room.participants|length }} Members</span>
+                        <span class="room-stat"><i class="fas fa-trophy"></i> {{ active_contests|length|add:past_contests|length|add:upcoming_contests|length }} Contests</span>
+                        <span class="room-stat"><i class="fas fa-shield-alt"></i> {{ room.created_by|default:"Instructor" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-3 animate-in delay-2">
+            <div class="sidebar-card">
+                <div class="p-2">
+                    <div class="d-flex flex-column gap-1 sidebar-menu-wrapper">
+                        <a href="{% url 'room_overview_student' room.id %}" class="sidebar-link">
+                            <i class="fas fa-clipboard-list"></i> Room Overview
+                        </a>
+                        <a href="{% url 'room_detail_student' room.id %}" class="sidebar-link active">
+                            <i class="fas fa-trophy"></i> Contests
+                        </a>
+                        <a href="{% url 'room_overview_student' room.id %}#participants-section" class="sidebar-link">
+                            <i class="fas fa-users"></i> Members
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            {% if active_contests or upcoming_contests %}
+            <div class="mb-5 animate-in delay-2">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="section-bar" style="background: var(--primary);"></div>
+                    <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;">Active & Upcoming <span class="text-gradient">Contests</span></h4>
+                </div>
+
+                <div class="contest-card">
+                    {% for contest in active_contests %}
+                    <div class="contest-row is-live">
+                        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
+                                    <h5 class="fw-bold mb-0" style="color: var(--dark); font-size: 1.05rem;">{{ contest.title }}</h5>
+                                    <span class="badge-live"><i class="fas fa-circle" style="font-size: 0.35rem; animation: pulse 2s infinite;"></i> LIVE NOW</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-4 small fw-medium" style="color: var(--gray);">
+                                    <span class="d-flex align-items-center gap-1"><i class="far fa-calendar-alt"></i> Ends: {{ contest.end_time|date:"M d, Y - h:i A" }}</span>
+                                    <span class="d-flex align-items-center gap-1"><i class="fas fa-tasks"></i> {{ contest.contestcontent_set.count|default:"Multiple" }} Problems</span>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <a href="{% url 'contest_detail_student' room.id contest.id %}" class="btn-premium-action">
+                                    Enter Contest <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% for contest in upcoming_contests %}
+                    <div class="contest-row">
+                        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
+                                    <h5 class="fw-bold mb-0" style="color: var(--dark); font-size: 1.05rem;">{{ contest.title }}</h5>
+                                    <span class="badge-upcoming">UPCOMING</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-4 small fw-medium" style="color: var(--gray);">
+                                    <span class="d-flex align-items-center gap-1"><i class="far fa-calendar-alt"></i> Starts: {{ contest.start_time|date:"M d, Y - h:i A" }}</span>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <button class="btn-ghost" disabled style="opacity: 0.6;">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if past_contests %}
+            <div class="animate-in delay-3">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="section-bar" style="background: var(--gray);"></div>
+                        <h4 class="mb-0" style="color: var(--dark); font-size: 1.1rem;">Past Contests</h4>
+                    </div>
+                </div>
+
+                <div class="contest-card overflow-hidden">
+                    <div class="table-responsive mb-0">
+                        <table class="table table-premium mb-0 text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Contest Name</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contest in past_contests %}
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-sm" style="background: var(--primary-bg); color: var(--primary);">
+                                                <i class="fas fa-flag-checkered small"></i>
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold" style="color: var(--dark);">{{ contest.title }}</div>
+                                                <div class="small text-muted">Finished</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="fw-medium" style="color: var(--dark);">{{ contest.end_time|date:"M d, Y" }}</div>
+                                        <div class="small text-muted">{{ contest.end_time|date:"h:i A" }}</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill px-2 py-1" style="background: var(--gray-lighter); color: var(--gray); font-size: 0.72rem; font-weight: 600;">Ended</span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <a href="{% url 'contest_detail_student' room.id contest.id %}" class="fw-medium text-decoration-none small" style="color: var(--primary);">View Results <i class="fas fa-chevron-right ms-1" style="font-size: 0.6rem;"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
