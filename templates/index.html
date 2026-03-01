@@ -1671,6 +1671,104 @@
       z-index: 1;
     }
 
+    /* --- FAQ SECTION STYLES --- */
+    .custom-faq-tabs {
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .custom-faq-tabs .nav-link {
+      border-radius: 50px !important;
+      color: var(--gray) !important; /* Forces the text to be dark gray instead of white */
+      font-weight: 600;
+      padding: 0.75rem 1.75rem !important;
+      border: 1px solid var(--gray-light);
+      transition: all 0.3s ease;
+      background-color: white !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .custom-faq-tabs .nav-link:hover {
+      background-color: var(--light) !important;
+      color: var(--primary) !important;
+    }
+
+    .custom-faq-tabs .nav-link.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+      color: white !important; /* Turns white only when clicked */
+      border-color: transparent;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Custom Accordion */
+    .custom-accordion .accordion-item {
+      border: 1px solid var(--border) !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+      background-color: white;
+    }
+
+    .custom-accordion .accordion-item:hover {
+      border-color: rgba(37, 99, 235, 0.2) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-accordion .accordion-button {
+      padding: 1.25rem 1.5rem;
+      background-color: white;
+      font-weight: 600;
+      color: var(--dark);
+      box-shadow: none !important;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .custom-accordion .accordion-button:not(.collapsed) {
+      color: var(--primary);
+      background-color: rgba(37, 99, 235, 0.03);
+    }
+
+    .custom-accordion .accordion-button::after {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2364748b'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+
+    .custom-accordion .accordion-button:not(.collapsed):after {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+
+    .custom-accordion .accordion-body {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      color: var(--gray);
+      line-height: 1.7;
+      background-color: rgba(37, 99, 235, 0.03);
+    }
+    
+    @media (max-width: 768px) {
+      .custom-faq-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start !important;
+        padding-bottom: 10px;
+        gap: 0.5rem;
+      }
+      .custom-faq-tabs .nav-link {
+        white-space: nowrap;
+        padding: 0.5rem 1rem !important; 
+        font-size: 0.85rem !important; 
+      }
+      .custom-faq-tabs::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .custom-faq-tabs .nav-link {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
     /* --- PREMIUM FOOTER STYLES --- */
     .footer {
       background-color: #0f172a;
@@ -4360,6 +4458,139 @@
 
   </section>
 
+  <section class="section" id="faq-section">
+    <div class="container">
+      <div class="text-center mb-6">
+        <span class="text-uppercase text-primary fw-bold letter-spacing-3">Have Questions?</span>
+        <h2 class="section-title mt-3 text-dark">Frequently Asked <span class="text-gradient">Questions</span></h2>
+        <p class="section-subtitle">Find answers to the most common questions about our platform, training, and support.</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          
+          <ul class="nav nav-pills custom-faq-tabs justify-content-center" id="faqTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tab-training" data-bs-toggle="pill" data-bs-target="#pane-training" type="button" role="tab" aria-selected="true">Training Details</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-placement" data-bs-toggle="pill" data-bs-target="#pane-placement" type="button" role="tab" aria-selected="false">Placement Support</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-eligibility" data-bs-toggle="pill" data-bs-target="#pane-eligibility" type="button" role="tab" aria-selected="false">Eligibility</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-irc" data-bs-toggle="pill" data-bs-target="#pane-irc" type="button" role="tab" aria-selected="false">IRC</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-fee" data-bs-toggle="pill" data-bs-target="#pane-fee" type="button" role="tab" aria-selected="false">Fee</button>
+            </li>
+          </ul>
+
+          <div class="tab-content mt-4" id="faqTabsContent">
+            
+            <div class="tab-pane fade show active" id="pane-training" role="tabpanel" aria-labelledby="tab-training">
+              <div class="accordion custom-accordion" id="accordionTraining">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTrain1" aria-expanded="false" aria-controls="collapseTrain1">
+                      Are the classes live or pre-recorded?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain1" class="accordion-collapse collapse" aria-labelledby="headingTrain1" data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      We offer a hybrid learning model. Our premium courses include live interactive sessions, while the foundational materials and 500+ coding problems are available on-demand for self-paced learning.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTrain2" aria-expanded="false" aria-controls="collapseTrain2">
+                      Will the teaching be completely in Kannada?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain2" class="accordion-collapse collapse" aria-labelledby="headingTrain2" data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      Yes! The core logical explanations and mentorship sessions are conducted in clear Kannada to make learning easier. However, technical terminology remains in standard English to ensure you are ready for the IT industry.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-placement" role="tabpanel" aria-labelledby="tab-placement">
+              <div class="accordion custom-accordion" id="accordionPlacement">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingPlace1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlace1" aria-expanded="false" aria-controls="collapsePlace1">
+                      Do you guarantee placements?
+                    </button>
+                  </h2>
+                  <div id="collapsePlace1" class="accordion-collapse collapse" aria-labelledby="headingPlace1" data-bs-parent="#accordionPlacement">
+                    <div class="accordion-body">
+                      We provide 100% placement assistance, including resume building, mock interviews, and direct referrals to our hiring partners. While we don't "guarantee" a job (as it depends on your interview performance), our curriculum is specifically designed to make you interview-ready.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-eligibility" role="tabpanel" aria-labelledby="tab-eligibility">
+              <div class="accordion custom-accordion" id="accordionEligibility">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingElig1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseElig1" aria-expanded="false" aria-controls="collapseElig1">
+                      I am from a non-IT background. Can I join?
+                    </button>
+                  </h2>
+                  <div id="collapseElig1" class="accordion-collapse collapse" aria-labelledby="headingElig1" data-bs-parent="#accordionEligibility">
+                    <div class="accordion-body">
+                      Absolutely. Our courses are structured from "Zero to Hero". We start with the absolute basics of programming, meaning no prior coding knowledge or IT degree is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-irc" role="tabpanel" aria-labelledby="tab-irc">
+              <div class="accordion custom-accordion" id="accordionIRC">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingIRC1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIRC1" aria-expanded="false" aria-controls="collapseIRC1">
+                      What is IRC?
+                    </button>
+                  </h2>
+                  <div id="collapseIRC1" class="accordion-collapse collapse" aria-labelledby="headingIRC1" data-bs-parent="#accordionIRC">
+                    <div class="accordion-body">
+                      IRC stands for Interview Readiness Certificate. This is granted after you successfully clear our mock interviews and capstone projects, signaling to employers that you have the practical skills required for the job.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-fee" role="tabpanel" aria-labelledby="tab-fee">
+              <div class="accordion custom-accordion" id="accordionFee">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFee1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFee1" aria-expanded="false" aria-controls="collapseFee1">
+                      Are there any EMI options available?
+                    </button>
+                  </h2>
+                  <div id="collapseFee1" class="accordion-collapse collapse" aria-labelledby="headingFee1" data-bs-parent="#accordionFee">
+                    <div class="accordion-body">
+                      Yes, we offer flexible payment plans and EMI options during checkout for our Premium courses. You can reach out to our support team for more details on installment options.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
