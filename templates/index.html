@@ -1671,6 +1671,108 @@
       z-index: 1;
     }
 
+    /* --- FAQ SECTION STYLES --- */
+    .custom-faq-tabs {
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .custom-faq-tabs .nav-link {
+      border-radius: 50px !important;
+      color: var(--gray) !important;
+      /* Forces the text to be dark gray instead of white */
+      font-weight: 600;
+      padding: 0.75rem 1.75rem !important;
+      border: 1px solid var(--gray-light);
+      transition: all 0.3s ease;
+      background-color: white !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .custom-faq-tabs .nav-link:hover {
+      background-color: var(--light) !important;
+      color: var(--primary) !important;
+    }
+
+    .custom-faq-tabs .nav-link.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+      color: white !important;
+      /* Turns white only when clicked */
+      border-color: transparent;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Custom Accordion */
+    .custom-accordion .accordion-item {
+      border: 1px solid var(--border) !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+      background-color: white;
+    }
+
+    .custom-accordion .accordion-item:hover {
+      border-color: rgba(37, 99, 235, 0.2) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .custom-accordion .accordion-button {
+      padding: 1.25rem 1.5rem;
+      background-color: white;
+      font-weight: 600;
+      color: var(--dark);
+      box-shadow: none !important;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .custom-accordion .accordion-button:not(.collapsed) {
+      color: var(--primary);
+      background-color: rgba(37, 99, 235, 0.03);
+    }
+
+    .custom-accordion .accordion-button::after {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2364748b'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+
+    .custom-accordion .accordion-button:not(.collapsed):after {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+
+    .custom-accordion .accordion-body {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      color: var(--gray);
+      line-height: 1.7;
+      background-color: rgba(37, 99, 235, 0.03);
+    }
+
+    @media (max-width: 768px) {
+      .custom-faq-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start !important;
+        padding-bottom: 10px;
+        gap: 0.5rem;
+      }
+
+      .custom-faq-tabs .nav-link {
+        white-space: nowrap;
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+      }
+
+      .custom-faq-tabs::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .custom-faq-tabs .nav-link {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
     /* --- PREMIUM FOOTER STYLES --- */
     .footer {
       background-color: #0f172a;
@@ -2644,7 +2746,8 @@
         <div class="col-lg-6 animate delay-1">
           <div class="ps-lg-5">
             <h3 class="h2 fw-bold mb-4 text-dark">Visualize Complex Logic</h3>
-            <p class="text-muted mb-5">Programming concepts like Looping statements, Recursion, Pointers, Sorting and other Algorithms are
+            <p class="text-muted mb-5">Programming concepts like Looping statements, Recursion, Pointers, Sorting and
+              other Algorithms are
               hard to
               grasp with just code alone. We use dynamic animations to show you exactly what’s happening as your program
               runs.</p>
@@ -2783,6 +2886,9 @@
               </div>
 
               <div class="text-center">
+                <p class="mt-2 mb-2 text-dark ">
+                  🚀 <strong>Early Bird Offer: ₹999</strong> <br> (Limited to the First 10 Enrollments)
+                </p>
                 <a href="{% url 'checkout' 102 %}" class="btn btn-dark w-100 py-3 shadow-sm">
                   <i class="fas fa-rocket me-2 text-warning"></i> Enroll Now - ₹1999
                 </a>
@@ -4360,6 +4466,281 @@
 
   </section>
 
+  <section class="section" id="faq-section">
+    <div class="container">
+      <div class="text-center mb-6">
+        <span class="text-uppercase text-primary fw-bold letter-spacing-3">Have Questions?</span>
+        <h2 class="section-title mt-3 text-dark">Frequently Asked <span class="text-gradient">Questions</span></h2>
+        <p class="section-subtitle">Find answers to the most common questions about our platform, training, and support.
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+
+          <ul class="nav nav-pills custom-faq-tabs justify-content-center" id="faqTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tab-training" data-bs-toggle="pill" data-bs-target="#pane-training"
+                type="button" role="tab" aria-selected="true">Training Details</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-placement" data-bs-toggle="pill" data-bs-target="#pane-placement"
+                type="button" role="tab" aria-selected="false">Placement Support</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-eligibility" data-bs-toggle="pill" data-bs-target="#pane-eligibility"
+                type="button" role="tab" aria-selected="false">Eligibility</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-irc" data-bs-toggle="pill" data-bs-target="#pane-irc" type="button"
+                role="tab" aria-selected="false">IRC</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-fee" data-bs-toggle="pill" data-bs-target="#pane-fee" type="button"
+                role="tab" aria-selected="false">Fee</button>
+            </li>
+          </ul>
+
+          <div class="tab-content mt-4" id="faqTabsContent">
+
+            <div class="tab-pane fade show active" id="pane-training" role="tabpanel" aria-labelledby="tab-training">
+              <div class="accordion custom-accordion" id="accordionTraining">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain1" aria-expanded="false" aria-controls="collapseTrain1">
+                      Are the classes live or pre-recorded?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain1" class="accordion-collapse collapse" aria-labelledby="headingTrain1"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      For now, we are offering <strong>only live classes</strong>. These classes are very interactive.
+                      You will solve problems during the live session in private rooms with your batchmates.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain2" aria-expanded="false" aria-controls="collapseTrain2">
+                      How long does it take to complete the course?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain2" class="accordion-collapse collapse" aria-labelledby="headingTrain2"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      The course has <strong>40+ hours of live classes</strong>. We have 1 to 1.5 hour sessions every
+                      day. Along with this, there are daily problems, quizzes, and lessons on the platform. You can
+                      easily complete it in <strong>30-40 days</strong>.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain3" aria-expanded="false" aria-controls="collapseTrain3">
+                      What is special about the live classes?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain3" class="accordion-collapse collapse" aria-labelledby="headingTrain3"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      We have active and advanced interactive live classes every day. Premium students can join rooms
+                      with their batchmates to solve problems together. We also provide a dashboard to track your
+                      learning journey and see how you are performing.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain4" aria-expanded="false" aria-controls="collapseTrain4">
+                      Will there be extra activities?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain4" class="accordion-collapse collapse" aria-labelledby="headingTrain4"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      Yes! We include extra-curricular activities like coding challenges and quizzes where you can compete with others by solving problems and improving your skills.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain5">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain5" aria-expanded="false" aria-controls="collapseTrain5">
+                      What type of content is on the platform?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain5" class="accordion-collapse collapse" aria-labelledby="headingTrain5"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      Right now, we provide:
+                      <ul>
+                        <li>Problem-solving exercises</li>
+                        <li>Daily quizzes</li>
+                        <li>Premium notes and lessons</li>
+                      </ul>
+                      All content is designed to help you practise and learn efficiently.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain6">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain6" aria-expanded="false" aria-controls="collapseTrain6">
+                      Are there offline classes too?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain6" class="accordion-collapse collapse" aria-labelledby="headingTrain6"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      There are <strong>only online classes</strong>. This makes it very easy for everyone to attend and
+                      complete the course from anywhere without travel.
+                    </div>
+                  </div>
+                </div>
+                 <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTrain7">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTrain7" aria-expanded="false" aria-controls="collapseTrain7">
+                      How do I practise coding outside class?
+                    </button>
+                  </h2>
+                  <div id="collapseTrain7" class="accordion-collapse collapse" aria-labelledby="headingTrain7"
+                    data-bs-parent="#accordionTraining">
+                    <div class="accordion-body">
+                      You can practise problems anytime on our online code editor — no software installation needed.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-placement" role="tabpanel" aria-labelledby="tab-placement">
+              <div class="accordion custom-accordion" id="accordionPlacement">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingPlace1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapsePlace1" aria-expanded="false" aria-controls="collapsePlace1">
+                      Do you guarantee placements?
+                    </button>
+                  </h2>
+                  <div id="collapsePlace1" class="accordion-collapse collapse" aria-labelledby="headingPlace1"
+                    data-bs-parent="#accordionPlacement">
+                    <div class="accordion-body">
+                      We do not provide a placement guarantee, but we can help you with placements. We focus on giving
+                      very high-quality content. We are 100% committed to teaching you the logic so you can solve 350+
+                      programs and be ready for your career.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-eligibility" role="tabpanel" aria-labelledby="tab-eligibility">
+              <div class="accordion custom-accordion" id="accordionEligibility">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingElig1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseElig1" aria-expanded="false" aria-controls="collapseElig1">
+                      I am not from an IT background. Can I join?
+                    </button>
+                  </h2>
+                  <div id="collapseElig1" class="accordion-collapse collapse" aria-labelledby="headingElig1"
+                    data-bs-parent="#accordionEligibility">
+                    <div class="accordion-body">
+                      Yes! Our courses are built for everyone. We start from the very basics of programming. You don't
+                      need to know coding or have an IT degree to start.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingElig2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseElig2" aria-expanded="false" aria-controls="collapseElig2">
+                      Do I need a laptop for this course?
+                    </button>
+                  </h2>
+                  <div id="collapseElig2" class="accordion-collapse collapse" aria-labelledby="headingElig2"
+                    data-bs-parent="#accordionEligibility">
+                    <div class="accordion-body">
+                      A basic laptop with internet is enough. We recommend having a laptop for hands-on learning during
+                      our live classes. You can also use our Online Code Editor to practice without installing any heavy
+                      tools.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-irc" role="tabpanel" aria-labelledby="tab-irc">
+              <div class="accordion custom-accordion" id="accordionIRC">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingIRC1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseIRC1" aria-expanded="false" aria-controls="collapseIRC1">
+                      Will I get a certificate?
+                    </button>
+                  </h2>
+                  <div id="collapseIRC1" class="accordion-collapse collapse" aria-labelledby="headingIRC1"
+                    data-bs-parent="#accordionIRC">
+                    <div class="accordion-body">
+                      After you complete the course, you will receive a certificate that you can:
+                      <ul>
+                        <li>Share on social media (LinkedIn, etc.)</li>
+                        <li>Add to your resume</li>
+                        <li>Verify online through a link</li>
+                      </ul>
+                      This certificate shows employers your skills and helps increase your credibility.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-fee" role="tabpanel" aria-labelledby="tab-fee">
+              <div class="accordion custom-accordion" id="accordionFee">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFee1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseFee1" aria-expanded="false" aria-controls="collapseFee1">
+                      Are there any EMI options available?
+                    </button>
+                  </h2>
+                  <div id="collapseFee1" class="accordion-collapse collapse" aria-labelledby="headingFee1"
+                    data-bs-parent="#accordionFee">
+                    <div class="accordion-body">
+                      Yes, we offer flexible payment plans and EMI options during checkout for our Premium courses. You
+                      can reach out to our support team for more details on installment options.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFee2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseFee2" aria-expanded="false" aria-controls="collapseFee2">
+                      Can I get a refund if I'm not satisfied?
+                    </button>
+                  </h2>
+                  <div id="collapseFee2" class="accordion-collapse collapse" aria-labelledby="headingFee2"
+                    data-bs-parent="#accordionFee">
+                    <div class="accordion-body">
+                      We are confident in our curriculum, but if you feel it's not the right fit, we have a transparent
+                      refund policy. Please refer to our <a href="/refund-policy" style="text-decoration: none;">refund policy</a> in the footer for detailed terms and
+                      conditions.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">

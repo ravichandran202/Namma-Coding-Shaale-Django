@@ -850,6 +850,40 @@ def about_us(request):
     logger.info(f"ABOUT_US | {get_user_identifier(request)}")
     return render(request, "about-us.html")
 
+from .models import ContactMessage, Subscription
+
+@csrf_exempt
+def contact_us_submit(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        course = request.POST.get('course')
+        message = request.POST.get('message')
+        
+        if name and email and message:
+            ContactMessage.objects.create(
+                name=name, email=email, phone=phone, course=course, message=message
+            )
+            logger.info(f"Contact message saved from {email}")
+            return JsonResponse({'status': 'success', 'message': 'Message received'})
+        
+        return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def subscribe_submit(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        if email:
+            Subscription.objects.get_or_create(email=email)
+            logger.info(f"New subscription: {email}")
+            return JsonResponse({'status': 'success', 'message': 'Subscribed successfully'})
+            
+        return JsonResponse({'status': 'error', 'message': 'Email is required'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
 @trace_span
 @login_required(login_url="login")
 def problem_solver(request, course_id):

@@ -17,7 +17,11 @@
         --radius-sm: 10px;
     }
 
-    h1, h2, h3, h4, h5 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -32,14 +36,33 @@
     }
 
     @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .animate-in { opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
+    .animate-in {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
 
     .breadcrumb-premium {
         font-size: 0.82rem;
@@ -52,9 +75,14 @@
         transition: color 0.2s;
     }
 
-    .breadcrumb-premium a:hover { color: var(--primary); }
+    .breadcrumb-premium a:hover {
+        color: var(--primary);
+    }
 
-    .page-title { font-size: 1.75rem; color: var(--dark); }
+    .page-title {
+        font-size: 1.75rem;
+        color: var(--dark);
+    }
 
     .btn-ghost {
         background: white;
@@ -114,9 +142,17 @@
     }
 
     @keyframes pulse-anim {
-        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
     }
 
     .stat-card {
@@ -134,12 +170,25 @@
         height: 100%;
     }
 
-    .stat-card:hover { box-shadow: var(--shadow); }
+    .stat-card:hover {
+        box-shadow: var(--shadow);
+    }
 
-    .stat-card-primary { border-left: 4px solid var(--primary); }
-    .stat-card-success { border-left: 4px solid var(--secondary); }
-    .stat-card-info { border-left: 4px solid #0ea5e9; }
-    .stat-card-warning { border-left: 4px solid #f59e0b; }
+    .stat-card-primary {
+        border-left: 4px solid var(--primary);
+    }
+
+    .stat-card-success {
+        border-left: 4px solid var(--secondary);
+    }
+
+    .stat-card-info {
+        border-left: 4px solid #0ea5e9;
+    }
+
+    .stat-card-warning {
+        border-left: 4px solid #f59e0b;
+    }
 
     .stat-icon-bg {
         position: absolute;
@@ -190,9 +239,17 @@
         background: white;
     }
 
-    .table-premium tbody tr:last-child td { border-bottom: none; }
-    .table-premium tbody tr { transition: var(--transition); }
-    .table-premium tbody tr:hover td { background: var(--light); }
+    .table-premium tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .table-premium tbody tr {
+        transition: var(--transition);
+    }
+
+    .table-premium tbody tr:hover td {
+        background: var(--light);
+    }
 
     .rank-badge {
         width: 36px;
@@ -207,10 +264,24 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     }
 
-    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-    .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); }
-    .rank-3 { background: linear-gradient(135deg, #fcd34d, #d97706); }
-    .rank-other { background: transparent; color: var(--gray); box-shadow: none; font-size: 1rem; }
+    .rank-1 {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+
+    .rank-2 {
+        background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+    }
+
+    .rank-3 {
+        background: linear-gradient(135deg, #fcd34d, #d97706);
+    }
+
+    .rank-other {
+        background: transparent;
+        color: var(--gray);
+        box-shadow: none;
+        font-size: 1rem;
+    }
 
     .user-avatar {
         width: 40px;
@@ -235,7 +306,9 @@
         transition: var(--transition);
     }
 
-    .leaderboard-card:hover { box-shadow: var(--shadow); }
+    .leaderboard-card:hover {
+        box-shadow: var(--shadow);
+    }
 
     .leaderboard-header {
         padding: 1.25rem 1.5rem;
@@ -270,7 +343,8 @@
                     {% endif %}
                 </div>
                 <p class="text-muted small mb-0 d-flex align-items-center gap-2">
-                    <i class="fas fa-sync-alt fa-spin opacity-50"></i> Dashboard auto-refreshes to show real-time student submissions.
+                    <i class="fas fa-sync-alt fa-spin opacity-50"></i> Dashboard auto-refreshes to show real-time
+                    student submissions.
                 </p>
             </div>
             <a href="{% url 'room_detail_admin' room.id %}" class="btn-ghost">
@@ -307,13 +381,15 @@
                 <div class="stat-label">Timer</div>
                 <div class="mt-1">
                     {% if contest.is_active %}
-                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">{{ contest.end_time|timeuntil }}</h4>
+                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">
+                        {{ contest.end_time|timeuntil }}</h4>
                     <span class="small text-muted">remaining</span>
                     {% elif contest.is_past %}
                     <h4 class="mb-0 fw-bold text-muted" style="font-family: 'Plus Jakarta Sans', sans-serif;">00:00</h4>
                     <span class="small text-muted">contest closed</span>
                     {% else %}
-                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">Starts in</h4>
+                    <h4 class="mb-0 fw-bold" style="color: var(--dark); font-family: 'Plus Jakarta Sans', sans-serif;">
+                        Starts in</h4>
                     <span class="small text-muted">{{ contest.start_time|timeuntil }}</span>
                     {% endif %}
                 </div>
@@ -334,7 +410,7 @@
                     <tr>
                         <th class="ps-4 text-center" style="width: 80px;">Rank</th>
                         <th>Student Profile</th>
-                        <th class="text-center">Coding Record</th>
+                        <th class="text-center">Problems Solved</th>
                         <th class="text-center">Quiz Intel</th>
                         <th class="text-end pe-4">Total Score</th>
                     </tr>
@@ -359,30 +435,35 @@
                             <div class="d-flex align-items-center gap-3">
                                 <div class="user-avatar">{{ entry.email|make_list|first|upper }}</div>
                                 <div class="d-flex flex-column">
-                                    <span class="{% if entry.points > 0 %}fw-bold{% else %}fw-medium{% endif %}" style="color: var(--dark);">{{ entry.email }}</span>
+                                    <span class="{% if entry.points > 0 %}fw-bold{% else %}fw-medium{% endif %}"
+                                        style="color: var(--dark);">{{ entry.email }}</span>
                                     {% if entry.points == 0 %}
-                                    <span class="badge mt-1" style="width: fit-content; font-size: 0.62rem; background: var(--gray-lighter); color: var(--gray);">Not Started</span>
+                                    <span class="badge mt-1"
+                                        style="width: fit-content; font-size: 0.62rem; background: var(--gray-lighter); color: var(--gray);">Not
+                                        Started</span>
                                     {% endif %}
                                 </div>
                             </div>
                         </td>
                         <td class="text-center">
-                            <div class="d-inline-flex align-items-center justify-content-center px-3 py-1 rounded-pill gap-2" style="background: var(--gray-lighter); border: 1px solid var(--gray-light);">
-                                {% if entry.problems_solved > 0 %}
-                                <i class="fas fa-check-circle small" style="color: var(--secondary);"></i>
-                                <span class="fw-bold" style="color: var(--dark);">{{ entry.problems_solved }}</span>
-                                {% else %}
-                                <span class="text-muted">-</span>
-                                {% endif %}
-                            </div>
+                            {% if entry.problem_results %}
+                            <span class="fw-bold" style="color: var(--primary);">{{ entry.tests_passed}}/{{entry.tests_total }}</span>
+                            <span tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
+                                data-bs-title="{% for pr in entry.problem_results %}<b>{{ pr.title }}</b>: {{ pr.tests_passed }}/{{ pr.tests_total }}{% if not forloop.last %}<br>{% endif %}{% endfor %}"
+                                style="cursor: help; color: var(--primary); font-size: 0.75rem; margin-left: 3px;">ⓘ</span>
+                            {% else %}
+                            <span class="fw-bold" style="color: var(--primary);">-</span>
+                            {% endif %}
                         </td>
                         <td class="text-center">
-                            <span class="badge px-3 py-2 rounded-pill font-monospace" style="font-size: 0.85rem; {% if entry.quiz_score > 0 %}background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(37,99,235,0.15);{% else %}background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light);{% endif %}">
+                            <span class="badge px-3 py-2 rounded-pill font-monospace"
+                                style="font-size: 0.85rem; {% if entry.quiz_score > 0 %}background: var(--primary-bg); color: var(--primary); border: 1px solid rgba(37,99,235,0.15);{% else %}background: var(--gray-lighter); color: var(--gray); border: 1px solid var(--gray-light);{% endif %}">
                                 {{ entry.quiz_score|floatformat:1 }}%
                             </span>
                         </td>
                         <td class="text-end pe-4">
-                            <span class="fw-bold {% if entry.points > 0 %}{% else %}opacity-50{% endif %}" style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: {% if entry.points > 0 %}var(--primary){% else %}var(--gray){% endif %};">
+                            <span class="fw-bold {% if entry.points > 0 %}{% else %}opacity-50{% endif %}"
+                                style="font-size: 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; color: {% if entry.points > 0 %}var(--primary){% else %}var(--gray){% endif %};">
                                 {{ entry.points|floatformat:2 }}
                             </span>
                         </td>
@@ -390,7 +471,8 @@
                     {% empty %}
                     <tr>
                         <td colspan="5" class="text-center py-5">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 60px; height: 60px; background: var(--gray-lighter);">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+                                style="width: 60px; height: 60px; background: var(--gray-lighter);">
                                 <i class="fas fa-user-times" style="color: var(--gray);"></i>
                             </div>
                             <h6 class="fw-bold" style="color: var(--dark);">No Activity Detected</h6>
@@ -403,4 +485,14 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+            new bootstrap.Tooltip(el);
+        });
+    });
+</script>
 {% endblock %}
