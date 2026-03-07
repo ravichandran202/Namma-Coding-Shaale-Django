@@ -13,6 +13,7 @@ from django.utils import timezone
 import json
 import logging
 from django.utils.dateparse import parse_datetime
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -268,15 +269,20 @@ def contest_results_admin(request, room_id, contest_id):
             'points': 0,
             'tests_passed': 0,
             'tests_total': 0,
-            'problem_results': []
+            'problem_results': [],
+            'last_submission_at': None,
         }
 
     for sub in submissions:
         email = sub.user_identifier
         if email not in leaderboard:
             # Submissions from someone outside the room (shouldn't happen, but just in case)
-            leaderboard[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0, 'problem_results': []}
-            
+            leaderboard[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0, 'problem_results': [], 'last_submission_at': None}
+
+        # Track latest submission time for tiebreaking
+        if leaderboard[email]['last_submission_at'] is None or sub.submitted_at > leaderboard[email]['last_submission_at']:
+            leaderboard[email]['last_submission_at'] = sub.submitted_at
+
         if sub.type == 'PROBLEM':
             total = int(sub.result_data.get('total_tests', 0))
             failed = int(sub.result_data.get('failed_count', 0))
@@ -294,8 +300,12 @@ def contest_results_admin(request, room_id, contest_id):
             leaderboard[email]['quiz_score'] += score
             leaderboard[email]['points'] += (score / 10)  # Convert % to points
 
-    # Sort leaderboard by points descending
-    sorted_leaderboard = sorted(leaderboard.values(), key=lambda x: x['points'], reverse=True)
+    # Sort by points (desc), then by earliest submission time (asc) as tiebreaker
+    _far_future = datetime.datetime.max.replace(tzinfo=datetime.timezone.utc)
+    sorted_leaderboard = sorted(
+        leaderboard.values(),
+        key=lambda x: (-x['points'], x['last_submission_at'] or _far_future)
+    )
     
     # Calculate contest-wide stats
     total_problems_solved = sum(u['problems_solved'] for u in sorted_leaderboard)
@@ -372,7 +382,8 @@ def room_overview_student(request, room_id):
             'contests_participated': 0,
             'tests_passed': 0,
             'tests_total': 0,
-            'problem_results': []
+            'problem_results': [],
+            'last_submission_at': None,
         }
 
     for contest in contests:
@@ -394,9 +405,14 @@ def room_overview_student(request, room_id):
                 leaderboard[email] = {
                     'email': email, 'problems_solved': 0,
                     'quiz_score': 0, 'points': 0, 'contests_participated': 0,
-                    'tests_passed': 0, 'tests_total': 0, 'problem_results': []
+                    'tests_passed': 0, 'tests_total': 0, 'problem_results': [],
+                    'last_submission_at': None,
                 }
             users_in_contest.add(email)
+
+            # Track latest submission time for tiebreaking
+            if leaderboard[email]['last_submission_at'] is None or sub.submitted_at > leaderboard[email]['last_submission_at']:
+                leaderboard[email]['last_submission_at'] = sub.submitted_at
 
             if sub.type == 'PROBLEM':
                 total = int(sub.result_data.get('total_tests', 0))
@@ -418,7 +434,12 @@ def room_overview_student(request, room_id):
         for email in users_in_contest:
             leaderboard[email]['contests_participated'] += 1
 
-    sorted_leaderboard = sorted(leaderboard.values(), key=lambda x: x['points'], reverse=True)
+    # Sort by points (desc), then by earliest submission time (asc) as tiebreaker
+    _far_future = datetime.datetime.max.replace(tzinfo=datetime.timezone.utc)
+    sorted_leaderboard = sorted(
+        leaderboard.values(),
+        key=lambda x: (-x['points'], x['last_submission_at'] or _far_future)
+    )
 
     # Enrich participants with display names
     participants_info = []
@@ -529,13 +550,17 @@ def contest_detail_student(request, room_id, contest_id):
         all_submissions = ContestSubmission.filter(contest_id=contest.id)
         lb_dict = {}
         for email in room.participants:
-            lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0}
-            
+            lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0, 'last_submission_at': None}
+
         for s in all_submissions:
             email = s.user_identifier
             if email not in lb_dict:
-                lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0}
-                
+                lb_dict[email] = {'email': email, 'problems_solved': 0, 'quiz_score': 0, 'points': 0, 'tests_passed': 0, 'tests_total': 0, 'last_submission_at': None}
+
+            # Track latest submission time for tiebreaking
+            if lb_dict[email]['last_submission_at'] is None or s.submitted_at > lb_dict[email]['last_submission_at']:
+                lb_dict[email]['last_submission_at'] = s.submitted_at
+
             if s.type == 'PROBLEM':
                 total = int(s.result_data.get('total_tests', 0))
                 failed = int(s.result_data.get('failed_count', 0))
@@ -550,8 +575,13 @@ def contest_detail_student(request, room_id, contest_id):
                 s_score = float(s.result_data.get('score', 0))
                 lb_dict[email]['quiz_score'] += s_score
                 lb_dict[email]['points'] += (s_score / 10)
-                
-        leaderboard = sorted(lb_dict.values(), key=lambda x: x['points'], reverse=True)
+
+        # Sort by points (desc), then by earliest submission time (asc) as tiebreaker
+        _far_future = datetime.datetime.max.replace(tzinfo=datetime.timezone.utc)
+        leaderboard = sorted(
+            lb_dict.values(),
+            key=lambda x: (-x['points'], x['last_submission_at'] or _far_future)
+        )
 
     context = {
         'room': room,
