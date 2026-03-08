@@ -110,6 +110,7 @@ DATABASES = {
         'HOST': 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
         'PORT': '4000',
         'CONN_MAX_AGE': 600,
+        'CONN_HEALTH_CHECKS': True,
         'OPTIONS': {
             'ssl': {
                 'ca': BASE_DIR / 'certs/ca.pem',  # Make sure this path is correct
