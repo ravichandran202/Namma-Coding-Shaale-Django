@@ -1,12 +1,24 @@
 import uuid
+import random
+import string
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.timezone import make_aware, is_aware
 
 
+def generate_room_id():
+    """Generate a unique room code in the format XXXX-YYYY (4 letters + 4 digits)."""
+    while True:
+        letters = ''.join(random.choices(string.ascii_uppercase, k=4))
+        digits = ''.join(random.choices(string.digits, k=4))
+        room_id = f"{letters}-{digits}"
+        if not Room.objects.filter(id=room_id).exists():
+            return room_id
+
+
 class Room(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(max_length=9, primary_key=True, default=generate_room_id, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, default='')
     created_by = models.CharField(max_length=255, blank=True, default='')
