@@ -8,17 +8,20 @@
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | Namma Coding Shaale</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
-    <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
-    
+    <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
+
     <style>
         /* --- GLOBAL VARIABLES --- */
         :root {
@@ -53,39 +56,222 @@
 
         /* --- PREVENT SELECTION CLASS --- */
         .no-select {
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
-            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 and IE 11 */
+            user-select: none;
+            /* Standard syntax */
+            -webkit-touch-callout: none;
+            /* iOS Safari */
         }
 
         /* --- SIDEBAR & TOPBAR --- */
-        .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); color: white; display: flex; align-items: center; padding: 0 1rem; z-index: 900; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); justify-content: space-between; }
-        .top-bar-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0; flex-grow: 1; text-align: center; }
-        .top-bar-menu-btn { background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s ease; }
-        .top-bar-menu-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            z-index: 900;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+        }
 
-        .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: var(--sidebar-width); background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.08); z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; }
-        .sidebar.active { transform: translateX(0); }
-        .sidebar-overlay { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .sidebar-header { padding: 1rem; margin-bottom: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 10; display: flex; align-items: center; justify-content: center; }
-        .sidebar-header h3 { font-weight: 700; margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
-        .sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
-        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
-        .sidebar-menu li { margin-bottom: 0.25rem; }
-        .sidebar-menu a { display: flex; align-items: center; padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
-        .sidebar-menu a:hover { color: white !important; background: rgba(255, 255, 255, 0.05); }
-        .sidebar-menu a.active { color: white !important; background: rgba(37, 99, 235, 0.15); }
-        .sidebar-menu a i { margin-right: 0.75rem; width: 20px; text-align: center; }
-        .sidebar-footer { position: sticky; bottom: 0; left: 0; right: 0; padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); background: rgba(15, 23, 42, 0.98); }
-        .sidebar-title { font-family: 'Playfair Display', serif; margin: 0; font-size: 1rem; }
-        .brand-highlight { color: var(--primary-light); font-family: 'Inter', sans-serif; font-weight: 700; }
-        .sidebar-section { margin-bottom: 1.5rem; }
-        .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.5); margin: 1rem 0 0.5rem 1rem; font-weight: 600; }
-        .sidebar-submenu { list-style: none; padding-left: 1.5rem; margin: 0.25rem 0; }
-        .sidebar-submenu li { margin-bottom: 0.1rem; }
-        .sidebar-submenu a { padding: 0.5rem 1rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+        .top-bar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .top-bar-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .top-bar-menu-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.98);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header h3 {
+            font-weight: 700;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-menu a.active {
+            color: white !important;
+            background: rgba(37, 99, 235, 0.15);
+        }
+
+        .sidebar-menu a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            background: rgba(15, 23, 42, 0.98);
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .brand-highlight {
+            color: var(--primary-light);
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 1rem 0 0.5rem 1rem;
+            font-weight: 600;
+        }
+
+        .sidebar-submenu {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin: 0.25rem 0;
+        }
+
+        .sidebar-submenu li {
+            margin-bottom: 0.1rem;
+        }
+
+        .sidebar-submenu a {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
         /* --- PREMIUM MAIN CONTENT STYLES --- */
         .main-content {
@@ -114,8 +300,18 @@
         }
 
         /* Progress Bar */
-        .quiz-progress-bar { height: 4px; background: #f1f5f9; width: 100%; }
-        .quiz-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        .quiz-progress-bar {
+            height: 6px;
+            background: #f1f5f9;
+            width: 100%;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
 
         /* Header */
         .quiz-header {
@@ -126,6 +322,7 @@
             align-items: center;
             background: #ffffff;
         }
+
         .timer-badge {
             background: #eff6ff;
             color: var(--primary);
@@ -137,11 +334,19 @@
             align-items: center;
             gap: 6px;
         }
-        .timer-badge.warning { background: #fef2f2; color: #dc2626; animation: pulse 1s infinite; }
+
+        .timer-badge.warning {
+            background: #fef2f2;
+            color: #dc2626;
+            animation: pulse 1s infinite;
+        }
 
         /* Content Area */
-        .quiz-body { padding: 2rem; animation: fadeIn 0.4s ease; }
-        
+        .quiz-body {
+            padding: 2rem;
+            animation: fadeIn 0.4s ease;
+        }
+
         .question-text {
             font-size: 1.25rem;
             font-weight: 700;
@@ -152,11 +357,16 @@
         }
 
         /* Option Cards */
-        .option-grid { display: flex; flex-direction: column; gap: 0.8rem; }
-        
+        .option-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
         .option-card {
             display: flex;
-            align-items: flex-start; /* Keeps the checkbox at the top */
+            align-items: flex-start;
+            /* Keeps the checkbox at the top */
             padding: 1rem;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
@@ -166,11 +376,21 @@
         }
 
         .option-input {
-            margin-top: 0.25rem; /* Align perfectly with the first line of code */
+            margin-top: 0.25rem;
+            /* Align perfectly with the first line of code */
         }
-        
-        .option-card:hover { border-color: var(--primary); background: #f8fafc; transform: translateX(4px); }
-        .option-card.selected { border-color: var(--primary); background: #eff6ff; box-shadow: 0 0 0 1px var(--primary); }
+
+        .option-card:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+            transform: translateX(4px);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
 
         /* Inputs */
         .option-input {
@@ -184,20 +404,31 @@
             flex-shrink: 0;
             transition: all 0.2s;
         }
-        .option-input[type="checkbox"] { border-radius: 6px; }
-        
-        .option-card.selected .option-input { border-color: var(--primary); background: var(--primary); }
+
+        .option-input[type="checkbox"] {
+            border-radius: 6px;
+        }
+
+        .option-card.selected .option-input {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
         .option-card.selected .option-input::after {
             content: '';
             position: absolute;
-            top: 50%; left: 50%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             background: white;
             border-radius: 50%;
         }
+
         .option-card.selected .option-input[type="checkbox"]::after {
-            width: 5px; height: 9px;
+            width: 5px;
+            height: 9px;
             border: solid white;
             border-width: 0 2px 2px 0;
             transform: translate(-50%, -60%) rotate(45deg);
@@ -205,8 +436,12 @@
             border-radius: 0;
         }
 
-        .option-content { flex: 1; font-size: 0.95rem; color: #334155; }
-        
+        .option-content {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
         /* Inline Code Styling */
         .inline-code {
             background: #1e293b;
@@ -217,7 +452,7 @@
             font-size: 0.85rem;
             display: inline-block;
             white-space: pre-wrap;
-            display: block; 
+            display: block;
             width: 100%;
         }
 
@@ -231,9 +466,76 @@
             background: #ffffff;
         }
 
-        /* Result Styles */
-        .result-summary-card { text-align: center; padding: 3rem 2rem; }
-        
+        /* Result Styles & Speedometer */
+        .result-summary-card {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        /* Speedometer Gauge Styles */
+        .speedometer-wrapper {
+            position: relative;
+            width: 200px;
+            height: 110px;
+            /* Half height to make a semi-circle */
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .speedometer-svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .speedometer-track {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 10;
+            stroke-linecap: round;
+        }
+
+        .speedometer-fill {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 126;
+            /* pi * 40 */
+            stroke-dashoffset: 126;
+            /* Starts empty */
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+        }
+
+        .speedometer-content {
+            position: absolute;
+            bottom: 5px;
+            text-align: center;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .speedometer-score {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .speedometer-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
         .score-ring {
             width: 150px;
             height: 150px;
@@ -245,6 +547,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .score-ring::before {
             content: '';
             position: absolute;
@@ -253,21 +556,83 @@
             background: white;
             border-radius: 50%;
         }
-        .score-content { position: relative; z-index: 1; display: flex; flex-direction: column; }
-        .score-number { font-size: 2.5rem; font-weight: 800; color: #1e293b; line-height: 1; }
-        .score-label { font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; }
+
+        .score-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
         /* Review Section */
-        .review-item { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
-        .review-header { padding: 1rem; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .review-body { padding: 1.5rem; }
-        
-        .ans-block { margin-top: 0.5rem; padding: 0.75rem; border-radius: 8px; font-size: 0.9rem; }
-        .ans-block.user-wrong { background: #fef2f2; border: 1px solid #fee2e2; color: #991b1b; }
-        .ans-block.user-correct { background: #f0fdf4; border: 1px solid #dcfce7; color: #166534; }
-        .ans-block.correct-key { background: #f0fdf4; border: 1px solid #dcfce7; color: #166534; margin-top: 1rem; }
-        
-        .ans-label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem; opacity: 0.7; }
+        .review-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .review-header {
+            padding: 1rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-body {
+            padding: 1.5rem;
+        }
+
+        .ans-block {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .ans-block.user-wrong {
+            background: #fef2f2;
+            border: 1px solid #fee2e2;
+            color: #991b1b;
+        }
+
+        .ans-block.user-correct {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            color: #166534;
+        }
+
+        .ans-block.correct-key {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            color: #166534;
+            margin-top: 1rem;
+        }
+
+        .ans-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            opacity: 0.7;
+        }
 
         /* Code Display in Question */
         .code-display {
@@ -279,9 +644,11 @@
             overflow: hidden;
             border: 1px solid #334155;
         }
+
         .code-language {
             position: absolute;
-            top: 0; right: 0;
+            top: 0;
+            right: 0;
             background: var(--primary);
             color: white;
             padding: 0.2rem 0.6rem;
@@ -303,10 +670,27 @@
             align-items: center;
             gap: 0.5rem;
         }
-        .btn-next { background: var(--primary); color: white; }
-        .btn-next:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        .btn-prev { background: white; border: 1px solid #e2e8f0; color: #64748b; }
-        .btn-prev:hover { background: #f8fafc; color: #1e293b; }
+
+        .btn-next {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-prev {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-prev:hover {
+            background: #f8fafc;
+            color: #1e293b;
+        }
 
         /* Lesson Completion Card */
         .lesson-completion-card {
@@ -322,55 +706,168 @@
             margin-top: 1rem;
             flex-wrap: wrap;
         }
-        .completion-content { display: flex; align-items: center; gap: 1rem; flex: 1; }
-        .icon-box { width: 48px; height: 48px; background: #ecfdf5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-        .text-content h5 { margin: 0 0 0.25rem 0; font-size: 1rem; font-weight: 700; color: #1e293b; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .text-content p { margin: 0; font-size: 0.85rem; color: #64748b; }
-        .btn-complete { background: #10b981; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; font-weight: 600; transition: 0.2s; white-space: nowrap; }
-        .btn-complete:hover { background: #059669; }
-        .completed-badge { background: #f1f5f9; color: #0f172a; padding: 0.5rem 1.2rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .completion-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: #ecfdf5;
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .text-content h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .text-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .btn-complete {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-complete:hover {
+            background: #059669;
+        }
+
+        .completed-badge {
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
         .btn-complete:disabled,
         .btn-complete.btn-locked {
-            background-color: #f59e0b; /* Amber/Orange for warning */
+            background-color: #f59e0b;
+            /* Amber/Orange for warning */
             cursor: not-allowed;
             opacity: 0.8;
         }
-        
+
         .btn-complete.btn-locked:hover {
             background-color: #d97706;
         }
-        
+
         .time-remaining {
             font-size: 0.8rem;
             font-weight: 400;
             margin-left: 5px;
             opacity: 0.9;
         }
-        
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
 
         /* Responsive */
         @media (max-width: 992px) {
-            .sidebar { width: 280px; top: 56px; height: calc(100vh - 56px); }
-            .sidebar-overlay { top: 56px; }
-            .main-content { padding: 1rem; padding-top: 80px; }
-            
-            .quiz-container { border-radius: 12px; padding: 0; }
-            .quiz-body { padding: 1.5rem 1rem; }
-            .quiz-footer { padding: 1rem; }
-            
-            .lesson-completion-card { flex-direction: column; align-items: flex-start; }
-            .action-box, .btn-complete, .completed-badge { width: 100%; justify-content: center; }
-            .btn-complete { width: 100%; }
+            .sidebar {
+                width: 280px;
+                top: 56px;
+                height: calc(100vh - 56px);
+            }
+
+            .sidebar-overlay {
+                top: 56px;
+            }
+
+            .main-content {
+                padding: 1rem;
+                padding-top: 80px;
+            }
+
+            .quiz-container {
+                border-radius: 12px;
+                padding: 0;
+            }
+
+            .quiz-body {
+                padding: 1.5rem 1rem;
+            }
+
+            .quiz-footer {
+                padding: 1rem;
+            }
+
+            .lesson-completion-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .action-box,
+            .btn-complete,
+            .completed-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-complete {
+                width: 100%;
+            }
         }
 
         @media (min-width: 993px) {
-            .top-bar { display: none; }
-            .sidebar { top: 0; height: 100vh; transform: translateX(0); }
-            .sidebar-overlay { display: none; }
-            .main-content { margin-left: var(--sidebar-width); padding-top: .5rem; }
+            .top-bar {
+                display: none;
+            }
+
+            .sidebar {
+                top: 0;
+                height: 100vh;
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-width);
+                padding-top: .5rem;
+            }
         }
     </style>
 </head>
@@ -378,14 +875,16 @@
 <body>
     <div class="top-bar" id="topBar">
         <button class="top-bar-menu-btn" id="topBarMenuBtn"><i class="fas fa-bars"></i></button>
-        <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;"><i class="fas fa-times"></i></button>
+        <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;"><i
+                class="fas fa-times"></i></button>
     </div>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h3 class="sidebar-title"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span></h3>
+            <h3 class="sidebar-title"><span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span>
+                    ಶಾಲೆ</span></h3>
         </div>
 
         <div class="sidebar-content">
@@ -393,9 +892,12 @@
                 <p class="sidebar-section-title">Main Menu</p>
                 <ul class="sidebar-menu">
                     <li><a href="{% url 'my-courses' %}"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
-                    <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course Content</a></li>
-                    <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
-                    <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
+                    <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course
+                            Content</a></li>
+                    <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a>
+                    </li>
+                    <li><a href="{% url 'code-editor' course_id %}"><i class="fas fa-laptop-code"></i> Code Editor</a>
+                    </li>
                 </ul>
             </div>
             {% for section in roadmap %}
@@ -405,14 +907,17 @@
                     {% if section.has_submenu %}
                     <li class="has-submenu">
                         <a href="{% if section.status != 'locked' %}{{ section.url }}{% else %}#{% endif %}">
-                            <i class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                            <i
+                                class="{% if section.status == 'completed' %}fas fa-check-circle text-success{% elif section.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                             {{ section.title }}
                         </a>
                         <ul class="sidebar-submenu">
                             {% for content in section.contents %}
                             <li>
-                                <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}" class=" {% if content.title == user_course.current_content.title %} active {% endif %}">
-                                    <i class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                                <a href="{% if content.status != 'locked' %}{{ content.url }}{% else %}#{% endif %}"
+                                    class=" {% if content.title == user_course.current_content.title %} active {% endif %}">
+                                    <i
+                                        class="{% if content.status == 'completed' %}fas fa-check-circle text-success{% elif content.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                                     {{ content.title }}
                                 </a>
                             </li>
@@ -421,8 +926,10 @@
                     </li>
                     {% else %}
                     <li>
-                        <a href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
-                            <i class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
+                        <a
+                            href="{% if section.contents.0.status != 'locked' %}{{ section.contents.0.url }}{% else %}#{% endif %}">
+                            <i
+                                class="{% if section.contents.0.status == 'completed' %}fas fa-check-circle text-success{% elif section.contents.0.status == 'pending' %}far fa-circle{% else %}fas fa-lock{% endif %} status-icon"></i>
                             {{ section.contents.0.title }}
                         </a>
                     </li>
@@ -438,11 +945,11 @@
 
     <div class="main-content" id="mainContent">
         <div class="container-fluid px-0 px-md-3">
-            
-            <div id="quizContainer" class="quiz-container">
-                </div>
 
-                <div class="lesson-completion-card">
+            <div id="quizContainer" class="quiz-container">
+            </div>
+
+            <div class="lesson-completion-card">
                 <div class="completion-content">
                     <div class="icon-box"
                         style="{% if is_next_drip_locked and not progress.is_completed %}background-color: #fffbeb; color: #f59e0b;{% endif %}">
@@ -474,43 +981,43 @@
 
                 <div class="action-box">
                     {% if not progress.is_completed %}
-                
-                        {% if quiz_passed %}
-                            <form method="post">
-                                {% csrf_token %}
-                
-                                {% if not is_next_drip_locked %}
-                                    <button type="submit" name="mark_completed" class="btn-complete">
-                                        Complete Lesson
-                                    </button>
-                                {% endif %}
-                            </form>
-                        {% else %}
-                            <div class="completed-badge">
-                                <i class="fas fa-check-circle text-danger"></i> Pass the Quiz
-                            </div>
+
+                    {% if quiz_passed %}
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if not is_next_drip_locked %}
+                        <button type="submit" name="mark_completed" class="btn-complete">
+                            Complete Lesson
+                        </button>
                         {% endif %}
-                
+                    </form>
                     {% else %}
-                        <div class="completed-badge">
-                            <i class="fas fa-check-circle"></i> Done
-                        </div>
+                    <div class="completed-badge">
+                        <i class="fas fa-check-circle text-danger"></i> Pass the Quiz
+                    </div>
+                    {% endif %}
+
+                    {% else %}
+                    <div class="completed-badge">
+                        <i class="fas fa-check-circle"></i> Done
+                    </div>
                     {% endif %}
                 </div>
-                
+
             </div>
 
         </div>
-        
+
         <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;"></div>
 
         {% if messages %}
         <div id="django-messages-data" style="display: none;">
             {% for message in messages %}
-                <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
+            <div data-type="{{ message.tags }}" data-msg="{{ message }}"></div>
             {% endfor %}
         </div>
-       {% endif %}
+        {% endif %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -519,7 +1026,7 @@
         // --- QUIZ DATA & STATE ---
         const quizDataString = `{{ quiz_data|escapejs }}`;
         const quizData = JSON.parse(quizDataString);
-        
+
         let quizState = {
             currentIndex: 0,
             answers: {},
@@ -537,16 +1044,55 @@
         function showWelcome() {
             const completedCount = `{{ quiz_correct_answer_count|escapejs }}` || 0;
             const hasHistory = completedCount > 0;
-            
+
+            // Provide a reliable fallback if quiz_score comes through as an empty string or None.
+            const rawScore = '{{quiz_score|default:"0"}}';
+            const lastScore = parseFloat(rawScore) || 0;
+            const passingScore = parseFloat(quizData.passingScore) || 0;
+
+            // Determine Color based on passing score
+            let gaugeColor = 'var(--danger)'; // Red default
+            if (lastScore >= passingScore) {
+                gaugeColor = 'var(--success)'; // Green
+            } else if (lastScore >= passingScore * 0.75) {
+                gaugeColor = 'var(--warning)'; // Orange if close
+            }
+
+            // Circle config for svg
+            const pathLength = 125.66; // Math.PI * 40 radius
+            const progressOffset = pathLength - ((lastScore / 100) * pathLength);
+
+            let lastScoreHtml = '';
+            if (hasHistory) {
+                lastScoreHtml = `
+                    <div class="mb-5 d-flex flex-column align-items-center">
+                        <div class="speedometer-wrapper">
+                            <svg class="speedometer-svg" viewBox="0 0 100 55">
+                                <!-- Background Track -->
+                                <path class="speedometer-track" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+                                <!-- Progress Fill -->
+                                <path class="speedometer-fill" id="speedometerFill" style="stroke: ${gaugeColor};" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" />
+                            </svg>
+                            <div class="speedometer-content">
+                                <div class="speedometer-score">${Math.round(lastScore)}<span style="font-size: 1.2rem;">%</span></div>
+                                <div class="speedometer-label">Last Score</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
             container.innerHTML = `
                 <div class="text-center p-5">
                     <div class="mb-4">
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold ls-1">PREMIUM QUIZ</span>
                     </div>
                     <h1 class="mb-3" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800;">${quizData.title}</h1>
-                    <p class="text-muted mb-5 mx-auto" style="max-width: 600px;">${quizData.description}</p>
+                    <p class="text-muted mb-4 mx-auto" style="max-width: 600px;">${quizData.description}</p>
                     
-                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+                    ${lastScoreHtml}
+                    
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 mt-4">
                         <div class="px-4 py-3 bg-light rounded-4 border">
                             <i class="fas fa-clock text-primary mb-2 fs-4"></i>
                             <div class="fw-bold text-dark">${quizData.timePerQuestion}s / Q</div>
@@ -564,15 +1110,21 @@
                         </div>
                     </div>
 
-                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
-                        <div class="px-4 py-3 bg-light rounded-4 border">Last Score : ${'{{quiz_score|default:0|floatformat:0}}'}%</div>
-                    </div>
-
                     <button class="btn-quiz btn-next px-5 py-3 fs-5 shadow-sm" onclick="startQuiz()">
                         <i class="fas fa-play me-2"></i> ${hasHistory ? 'Retake Quiz' : 'Start Quiz'}
                     </button>
                 </div>
             `;
+
+            // Animate speedometer stroke offset slightly after render
+            if (hasHistory) {
+                setTimeout(() => {
+                    const fill = document.getElementById('speedometerFill');
+                    if (fill) {
+                        fill.style.strokeDashoffset = progressOffset;
+                    }
+                }, 100);
+            }
         }
 
         function startQuiz() {
@@ -589,15 +1141,15 @@
         function startTimer() {
             clearInterval(quizState.timer);
             quizState.timeLeft = quizData.timePerQuestion;
-            
+
             quizState.timer = setInterval(() => {
                 quizState.timeLeft--;
                 const display = document.getElementById('timeDisplay');
                 const badge = document.getElementById('timerBadge');
-                
+
                 if (display) display.textContent = `${quizState.timeLeft}s`;
                 if (badge && quizState.timeLeft <= 10) badge.classList.add('warning');
-                
+
                 if (quizState.timeLeft <= 0) {
                     clearInterval(quizState.timer);
                     nextQuestion();
@@ -617,57 +1169,57 @@
             const progressPercent = ((qIndex + 1) / quizData.questions.length) * 100;
 
             // REMOVED TIMER RESET LOGIC FROM HERE TO FIX BUG
-            
+
             // Generate Options HTML based on type
             let optionsHtml = '';
-            
+
             if (question.type === 'single-choice') {
                 optionsHtml = question.options.map(opt => {
                     const isCode = opt.trim().startsWith('`') && opt.trim().endsWith('`');
-                    const displayContent = isCode 
-                        ? `<span class="inline-code">${opt.replace(/`/g, '')}</span>` 
+                    const displayContent = isCode
+                        ? `<span class="inline-code">${opt.replace(/`/g, '')}</span>`
                         : opt;
-                    
+
                     const isSelected = quizState.answers[question.id] === opt;
-                    
+
                     // FIX 1: Encode value to Base64 for the onclick event
                     const b64 = btoa(unescape(encodeURIComponent(opt)));
-                    
+
                     return `
                     <div class="option-card ${isSelected ? 'selected' : ''}" onclick="handleSelection('${question.id}', '${b64}', 'single')">
                         <div class="option-input"></div>
                         <div class="option-content">${displayContent}</div>
                     </div>`;
                 }).join('');
-            } 
+            }
             else if (question.type === 'multiple-choice') {
                 const currentAns = quizState.answers[question.id] || [];
-                    optionsHtml = question.options.map(opt => {
+                optionsHtml = question.options.map(opt => {
                     // 1. Prepare the content for display in the UI
                     const trimmedOpt = opt.trim();
                     const isCode = trimmedOpt.startsWith('`') && trimmedOpt.endsWith('`');
-                    
+
                     let displayContent;
                     if (isCode) {
                         const codeText = trimmedOpt.substring(1, trimmedOpt.length - 1);
                         displayContent = `<span class="inline-code">${codeText}</span>`;
                     } else {
                         // For your current data: wrap in inline-code if it looks like Python
-                        displayContent = opt.includes('print(') || opt.includes('\n') 
-                            ? `<span class="inline-code">${opt}</span>` 
+                        displayContent = opt.includes('print(') || opt.includes('\n')
+                            ? `<span class="inline-code">${opt}</span>`
                             : opt;
                     }
-                    
+
                     const currentAns = quizState.answers[question.id] || [];
-                    const isSelected = question.type === 'multiple-choice' 
-                        ? currentAns.includes(opt) 
+                    const isSelected = question.type === 'multiple-choice'
+                        ? currentAns.includes(opt)
                         : quizState.answers[question.id] === opt;
-                    
+
                     const clickType = question.type === 'multiple-choice' ? 'multi' : 'single';
-                    
+
                     // FIX 1: Encode value to Base64 for the onclick event
                     const b64 = btoa(unescape(encodeURIComponent(opt)));
-                
+
                     return `
                     <div class="option-card ${isSelected ? 'selected' : ''}" 
                          onclick="handleSelection('${question.id}', '${b64}', '${clickType}')">
@@ -711,17 +1263,15 @@
 
                 <div class="quiz-body">
                      {% if user.is_superuser %}
-                    ${
-                        question.correctAnswer !== undefined
-                            ? `<p>${question.correctAnswer}</p>`
-                            : ""
-                    }
+                    ${question.correctAnswer !== undefined
+                    ? `<p>${question.correctAnswer}</p>`
+                    : ""
+                }
             
-                    ${
-                        question.correctAnswers !== undefined
-                            ? `<p>${question.correctAnswers}</p>`
-                            : ""
-                    }
+                    ${question.correctAnswers !== undefined
+                    ? `<p>${question.correctAnswers}</p>`
+                    : ""
+                }
                     {% endif %}
                     
                     <h3 class="question-text">${question.question}</h3>
@@ -742,7 +1292,7 @@
             `;
 
             hljs.highlightAll();
-            
+
             // REMOVED TIMER INTERVAL SETTING FROM HERE TO FIX BUG
         }
 
@@ -783,13 +1333,13 @@
                 showQuestion();
             }
         }
-        
+
         // FIX 2: Helper to apply code styling in the result view
         function formatResultValue(val) {
             if (!val) return 'No Answer';
             // Handle arrays (recursion)
             if (Array.isArray(val)) return val.map(v => formatResultValue(v)).join(', ');
-            
+
             // Check for backticks OR newlines
             if (val.trim().startsWith('`') || val.includes('\n')) {
                 return `<span class="inline-code">${val.replace(/`/g, '')}</span>`;
@@ -800,7 +1350,7 @@
         function finishQuiz() {
             stopClipboardProtection();
             clearInterval(quizState.timer); // Ensure timer stops
-            
+
             let correctCount = 0;
             const results = [];
 
@@ -811,7 +1361,7 @@
                 // Robust Comparison Logic
                 if (q.type === 'single-choice') {
                     isCorrect = userAns === q.correctAnswer;
-                } 
+                }
                 else if (q.type === 'multiple-choice') {
                     const ua = userAns || [];
                     const ca = q.correctAnswers || [];
@@ -819,11 +1369,11 @@
                     const sortedUa = [...ua].sort();
                     const sortedCa = [...ca].sort();
                     isCorrect = JSON.stringify(sortedUa) === JSON.stringify(sortedCa);
-                } 
+                }
                 else {
                     // Text/Code - Trim & Case Insensitive
                     const validAnswers = Array.isArray(q.correctAnswers) ? q.correctAnswers : [q.correctAnswer];
-                    isCorrect = validAnswers.some(ans => 
+                    isCorrect = validAnswers.some(ans =>
                         userAns && ans && userAns.trim().toLowerCase() === ans.trim().toLowerCase()
                     );
                 }
@@ -911,7 +1461,7 @@
 
         // --- BACKEND & HELPERS ---
         function getCSRFToken() { return document.querySelector('meta[name="csrf-token"]').getAttribute('content'); }
-        
+
         async function submitQuizDataToBackend(results, isPassed) {
             try {
                 await fetch('https://nammacodingshaale.in/api/save-quiz-data', {
@@ -930,7 +1480,7 @@
         // --- SECURITY ---
         function startClipboardProtection() {
             document.body.classList.add('no-select');
-            
+
             document.addEventListener('contextmenu', preventDefault);
             document.addEventListener('keydown', preventKeys);
             document.addEventListener('copy', preventDefault);
@@ -940,7 +1490,7 @@
 
         function stopClipboardProtection() {
             document.body.classList.remove('no-select');
-            
+
             document.removeEventListener('contextmenu', preventDefault);
             document.removeEventListener('keydown', preventKeys);
             document.removeEventListener('copy', preventDefault);
@@ -949,11 +1499,11 @@
         }
 
         function preventDefault(e) { e.preventDefault(); }
-        
+
         function preventKeys(e) {
-            if (e.key === 'F12' || 
-               (e.ctrlKey && ['c','a','x','u','p'].includes(e.key.toLowerCase())) ||
-               (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i')) {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && ['c', 'a', 'x', 'u', 'p'].includes(e.key.toLowerCase())) ||
+                (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i')) {
                 e.preventDefault();
             }
         }
@@ -965,7 +1515,7 @@
         const sidebarOverlay = document.getElementById('sidebarOverlay');
 
         function toggleSidebar(show) {
-            if(show) {
+            if (show) {
                 sidebar.classList.add('active');
                 sidebarOverlay.classList.add('active');
                 topBarMenuBtn.style.display = 'none';
@@ -983,10 +1533,10 @@
         sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
 
         document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
+            toggle.addEventListener('click', function (e) {
                 e.preventDefault();
                 const li = this.closest('li');
-                if(li.classList.contains('has-submenu')) li.classList.toggle('active');
+                if (li.classList.contains('has-submenu')) li.classList.toggle('active');
             });
         });
 
@@ -994,46 +1544,46 @@
         document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 
-<script>
+    <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Find the hidden messages from Django
-        const messageData = document.getElementById('django-messages-data');
-        
-        // 2. If messages exist, loop through them and show toasts
-        if (messageData) {
-            Array.from(messageData.children).forEach(msgDiv => {
-                // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
-                // msgDiv.dataset.msg will be "This course doesn't have any content yet."
-                showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
-            });
-        }
-    });
-    
-  // --- The Helper Function ---
-  function showToast(message, type) {
-    const toastContainer = document.getElementById('toastContainer');
-    
-    // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
-    if (type === 'error') type = 'danger';
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Find the hidden messages from Django
+            const messageData = document.getElementById('django-messages-data');
 
-    // Map types to Bootstrap colors
-    const bgClass = {
-        'success': 'text-bg-success',
-        'danger':  'text-bg-danger',
-        'warning': 'text-bg-warning',
-        'info':    'text-bg-info',
-    }[type] || 'text-bg-primary';
+            // 2. If messages exist, loop through them and show toasts
+            if (messageData) {
+                Array.from(messageData.children).forEach(msgDiv => {
+                    // msgDiv.dataset.type will be 'info', 'success', 'warning', etc.
+                    // msgDiv.dataset.msg will be "This course doesn't have any content yet."
+                    showToast(msgDiv.dataset.msg, msgDiv.dataset.type);
+                });
+            }
+        });
 
-    const icon = {
-        'success': 'fas fa-check-circle',
-        'danger':  'fas fa-exclamation-circle',
-        'warning': 'fas fa-exclamation-triangle',
-        'info':    'fas fa-info-circle',
-    }[type] || 'fas fa-bell';
+        // --- The Helper Function ---
+        function showToast(message, type) {
+            const toastContainer = document.getElementById('toastContainer');
 
-    // Build Toast HTML
-    const toastHtml = `
+            // Clean up Django tags (Django uses 'error', Bootstrap needs 'danger')
+            if (type === 'error') type = 'danger';
+
+            // Map types to Bootstrap colors
+            const bgClass = {
+                'success': 'text-bg-success',
+                'danger': 'text-bg-danger',
+                'warning': 'text-bg-warning',
+                'info': 'text-bg-info',
+            }[type] || 'text-bg-primary';
+
+            const icon = {
+                'success': 'fas fa-check-circle',
+                'danger': 'fas fa-exclamation-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle',
+            }[type] || 'fas fa-bell';
+
+            // Build Toast HTML
+            const toastHtml = `
         <div class="toast align-items-center ${bgClass} border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
@@ -1044,27 +1594,27 @@
         </div>
     `;
 
-    // Append and Show
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = toastHtml;
-    const toastElement = wrapper.firstElementChild;
-    
-    toastContainer.appendChild(toastElement);
-    const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
-    toast.show();
-    
-    // Remove from DOM after it fades out
-    toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
-   }
-  
+            // Append and Show
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = toastHtml;
+            const toastElement = wrapper.firstElementChild;
+
+            toastContainer.appendChild(toastElement);
+            const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+            toast.show();
+
+            // Remove from DOM after it fades out
+            toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+        }
 
 
-    function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
+
+        function initDynamicLoader() {
+            const loaderId = 'preloader';
+
+            // 1. Inject Styles & HTML if they don't exist
+            if (!document.getElementById(loaderId)) {
+                const css = `
                 #${loaderId} { 
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
                     display: flex; justify-content: center; align-items: center; 
@@ -1080,66 +1630,67 @@
                 }
                 @keyframes spin { to { transform: rotate(360deg); } }
             `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
-        }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
+                const style = document.createElement('style');
+                style.innerHTML = css;
+                document.head.appendChild(style);
+
+                const loaderDiv = document.createElement('div');
+                loaderDiv.id = loaderId;
+                loaderDiv.innerHTML = '<div class="spinner"></div>';
+                document.body.prepend(loaderDiv);
             }
-        });
-    }
-    
-    // Call it immediately
-    initDynamicLoader();
-    
+
+            const loader = document.getElementById(loaderId);
+
+            // 2. Define Actions
+            const show = () => loader.classList.add('loading');
+            const hide = () => loader.classList.remove('loading');
+
+            // 3. Event: Page Load (Hide loader when content is ready)
+            if (document.readyState === "complete") {
+                hide();
+            } else {
+                show(); // Ensure it's shown immediately while loading
+                window.addEventListener('load', hide);
+            }
+
+            // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) hide();
+            });
+
+            // 5. Event: Link Clicks (Show loader only for actual navigation)
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+
+                // Check if it is a valid link
+                if (link) {
+                    const href = link.getAttribute('href');
+                    const target = link.getAttribute('target');
+
+                    // Logic: Don't load if:
+                    // 1. No href
+                    // 2. It's an anchor link (#section)
+                    // 3. It's a javascript: call
+                    // 4. It opens in a new tab (_blank)
+                    // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+                    if (
+                        href &&
+                        !href.startsWith('#') &&
+                        !href.startsWith('javascript:') &&
+                        target !== '_blank' &&
+                        !e.ctrlKey && !e.metaKey
+                    ) {
+                        show();
+                    }
+                }
+            });
+        }
+
+        // Call it immediately
+        initDynamicLoader();
+
     </script>
 </body>
+
 </html>
