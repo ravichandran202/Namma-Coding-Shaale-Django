@@ -8,8 +8,8 @@
   <title>Code Editor Freemium | Namma Coding Shaale</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
-  
+  <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -401,6 +401,7 @@
                 <option value="web">Web (HTML/JS)</option>
                 <option value="javascript">Node.js</option>
                 <option value="java">Java</option>
+                <option value="c">C</option>
                 <option value="cpp">C++</option>
               </select>
             </h4>
@@ -590,15 +591,14 @@ public class Main {
         compileCmd: "javac Main.java",
         mode: "java"
       },
+      c: {
+        template: `// C Code\n#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}`,
+        pistonLang: "c",
+        pistonVersion: "12.0.0",
+        mode: "c"
+      },
       cpp: {
-        template: `// C++ Code
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}`,
+        template: `// C++ Code\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}`,
         pistonLang: "cpp",
         pistonVersion: "10.2.0",
         compileCmd: "g++ -o main main.cpp",
