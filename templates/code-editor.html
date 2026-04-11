@@ -6,14 +6,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Editor | Namma Coding Shaale</title>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
-    
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
 
   <style>
@@ -51,11 +53,13 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--editor-bg); /* Changed to Dark for Editor Page */
+      background-color: var(--editor-bg);
+      /* Changed to Dark for Editor Page */
       color: var(--text);
       font-weight: 400;
       line-height: 1.5;
-      overflow: hidden; /* Prevent body scroll for editor layout */
+      overflow: hidden;
+      /* Prevent body scroll for editor layout */
       height: 100vh;
       margin: 0;
     }
@@ -270,7 +274,8 @@
 
     /* Main Content - Structure */
     .main-content {
-      padding: 0; /* OVERRIDE: Remove padding for full-screen editor */
+      padding: 0;
+      /* OVERRIDE: Remove padding for full-screen editor */
       transition: transform 0.3s ease;
       height: 100vh;
       display: flex;
@@ -318,7 +323,10 @@
     }
 
     /* Custom Select */
-    .lang-select-wrapper { position: relative; }
+    .lang-select-wrapper {
+      position: relative;
+    }
+
     .custom-select {
       appearance: none;
       background-color: #333333;
@@ -331,9 +339,24 @@
       font-family: 'Inter', sans-serif;
       outline: none;
     }
-    .custom-select:hover { border-color: #666; }
-    .custom-select:focus { border-color: var(--editor-accent); }
-    .select-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #aaa; font-size: 0.7rem; }
+
+    .custom-select:hover {
+      border-color: #666;
+    }
+
+    .custom-select:focus {
+      border-color: var(--editor-accent);
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #aaa;
+      font-size: 0.7rem;
+    }
 
     /* Editor Area */
     .editor-area {
@@ -361,8 +384,18 @@
       z-index: 100;
       transition: background-color 0.2s;
     }
-    .resizer:hover, .resizer.active { background-color: var(--editor-accent); }
-    .resizer-handle { width: 40px; height: 4px; background-color: #555; border-radius: 2px; }
+
+    .resizer:hover,
+    .resizer.active {
+      background-color: var(--editor-accent);
+    }
+
+    .resizer-handle {
+      width: 40px;
+      height: 4px;
+      background-color: #555;
+      border-radius: 2px;
+    }
 
     /* Console */
     .console-area {
@@ -425,22 +458,75 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .btn-run { background-color: #2ea043; color: white; }
-    .btn-run:hover { background-color: #268e3b; box-shadow: 0 0 8px rgba(46, 160, 67, 0.4); }
-    .btn-reset { background: transparent; color: #aaa; border: 1px solid #444; }
-    .btn-reset:hover { background-color: rgba(255,255,255,0.05); color: white; border-color: #666; }
-    .btn-icon-only { background: none; border: none; color: #aaa; cursor: pointer; }
-    .btn-icon-only:hover { color: white; }
+
+    .btn-run {
+      background-color: #2ea043;
+      color: white;
+    }
+
+    .btn-run:hover {
+      background-color: #268e3b;
+      box-shadow: 0 0 8px rgba(46, 160, 67, 0.4);
+    }
+
+    .btn-reset {
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #444;
+    }
+
+    .btn-reset:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+      border-color: #666;
+    }
+
+    .btn-icon-only {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .btn-icon-only:hover {
+      color: white;
+    }
 
     /* Spinner */
-    .spinner-sm { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-sm {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* Scrollbars */
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-track { background: var(--editor-bg); }
-    ::-webkit-scrollbar-thumb { background: #424242; border-radius: 5px; border: 2px solid var(--editor-bg); }
-    ::-webkit-scrollbar-thumb:hover { background: #4f4f4f; }
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--editor-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #424242;
+      border-radius: 5px;
+      border: 2px solid var(--editor-bg);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4f4f4f;
+    }
 
     /* =========================================
        3. RESPONSIVE LOGIC
@@ -448,22 +534,59 @@
 
     /* Desktop styles */
     @media (min-width: 992px) {
-      .top-bar { display: none; }
-      .sidebar { top: 0; height: 100vh; transform: translateX(0); }
-      .sidebar-overlay { display: none; }
-      .main-content { margin-left: var(--sidebar-width); }
+      .top-bar {
+        display: none;
+      }
+
+      .sidebar {
+        top: 0;
+        height: 100vh;
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay {
+        display: none;
+      }
+
+      .main-content {
+        margin-left: var(--sidebar-width);
+      }
     }
 
     /* Mobile optimizations */
     @media (max-width: 768px) {
-      .main-content { margin-top: 56px; height: calc(100vh - 56px); }
-      .playground-toolbar { padding: 0 0.5rem; }
-      .toolbar-title span { display: none; }
-      .btn-premium span { display: none; }
-      .btn-premium { padding: 8px; }
-      .custom-select { width: 110px; }
-      .console-area { height: 40%; }
-      .resizer { height: 24px; }
+      .main-content {
+        margin-top: 56px;
+        height: calc(100vh - 56px);
+      }
+
+      .playground-toolbar {
+        padding: 0 0.5rem;
+      }
+
+      .toolbar-title span {
+        display: none;
+      }
+
+      .btn-premium span {
+        display: none;
+      }
+
+      .btn-premium {
+        padding: 8px;
+      }
+
+      .custom-select {
+        width: 110px;
+      }
+
+      .console-area {
+        height: 40%;
+      }
+
+      .resizer {
+        height: 24px;
+      }
     }
   </style>
 </head>
@@ -477,7 +600,7 @@
     <button class="top-bar-menu-btn" id="topBarCloseBtn" style="display: none;">
       <i class="fas fa-times"></i>
     </button>
-    </div>
+  </div>
 
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -497,7 +620,7 @@
           <li><a href="{% url 'list-contents' course_id %}"><i class="fas fa-book-open"></i> Course Content</a></li>
           <li><a href="{% url 'list-problems' course_id %}"><i class="fas fa-list-check"></i> Problem List</a></li>
           <li><a href="#" class="active"><i class="fas fa-laptop-code"></i> Code Editor</a></li>
-      </ul>
+        </ul>
       </div>
 
       {% if not is_freemium %}
@@ -546,7 +669,7 @@
 
   <div class="main-content" id="mainContent">
     <div class="playground-wrapper">
-      
+
       <div class="playground-toolbar">
         <div class="toolbar-left">
           <div class="toolbar-title">
@@ -558,19 +681,20 @@
               <option value="python">Python</option>
               <option value="javascript">JavaScript</option>
               <option value="java">Java</option>
+              <option value="c">C</option>
               <option value="cpp">C++</option>
             </select>
             <i class="fas fa-chevron-down select-arrow"></i>
           </div>
         </div>
-        
+
         <div class="d-flex gap-2">
-            <button class="btn-premium btn-reset" id="resetBtn" title="Reset to template">
-                <i class="fas fa-rotate-right"></i> <span>Reset</span>
-            </button>
-            <button class="btn-premium btn-run" id="runBtn" title="Run Code">
-                <i class="fas fa-play"></i> <span>Run Code</span>
-            </button>
+          <button class="btn-premium btn-reset" id="resetBtn" title="Reset to template">
+            <i class="fas fa-rotate-right"></i> <span>Reset</span>
+          </button>
+          <button class="btn-premium btn-run" id="runBtn" title="Run Code">
+            <i class="fas fa-play"></i> <span>Run Code</span>
+          </button>
         </div>
       </div>
 
@@ -671,6 +795,12 @@
         compileCmd: "javac Main.java",
         label: "Java OpenJDK 15"
       },
+      c: {
+        template: `#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}`,
+        pistonLang: "c",
+        pistonVersion: "12.0.0",
+        label: "C (GCC)"
+      },
       cpp: {
         template: `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}`,
         pistonLang: "cpp",
@@ -706,29 +836,29 @@
       const wrapper = document.querySelector('.playground-wrapper');
 
       const startResize = (clientY) => {
-        document.body.style.userSelect = 'none'; 
+        document.body.style.userSelect = 'none';
         resizer.classList.add('active');
 
         const moveHandler = (moveEvent) => {
-            const y = moveEvent.touches ? moveEvent.touches[0].clientY : moveEvent.clientY;
-            const wrapperRect = wrapper.getBoundingClientRect();
-            // Calculate height from bottom (24 is status bar height)
-            const newHeight = wrapperRect.bottom - y - 24; 
-            
-            // Constraints
-            if (newHeight > 40 && newHeight < wrapper.clientHeight * 0.8) {
-                consoleContainer.style.height = `${newHeight}px`;
-                editor.layout(); 
-            }
+          const y = moveEvent.touches ? moveEvent.touches[0].clientY : moveEvent.clientY;
+          const wrapperRect = wrapper.getBoundingClientRect();
+          // Calculate height from bottom (24 is status bar height)
+          const newHeight = wrapperRect.bottom - y - 24;
+
+          // Constraints
+          if (newHeight > 40 && newHeight < wrapper.clientHeight * 0.8) {
+            consoleContainer.style.height = `${newHeight}px`;
+            editor.layout();
+          }
         };
 
         const stopHandler = () => {
-            document.body.style.userSelect = '';
-            resizer.classList.remove('active');
-            document.removeEventListener('mousemove', moveHandler);
-            document.removeEventListener('mouseup', stopHandler);
-            document.removeEventListener('touchmove', moveHandler);
-            document.removeEventListener('touchend', stopHandler);
+          document.body.style.userSelect = '';
+          resizer.classList.remove('active');
+          document.removeEventListener('mousemove', moveHandler);
+          document.removeEventListener('mouseup', stopHandler);
+          document.removeEventListener('touchmove', moveHandler);
+          document.removeEventListener('touchend', stopHandler);
         };
 
         document.addEventListener('mousemove', moveHandler);
@@ -739,8 +869,8 @@
 
       resizer.addEventListener('mousedown', (e) => startResize(e.clientY));
       resizer.addEventListener('touchstart', (e) => {
-          e.preventDefault(); 
-          startResize(e.touches[0].clientY);
+        e.preventDefault();
+        startResize(e.touches[0].clientY);
       }, { passive: false });
 
       // --- RUN LOGIC ---
@@ -761,41 +891,41 @@
         consoleOutput.innerHTML = `<span style="color: #666;">> Executing ${config.label}...</span>\n`;
 
         try {
-            const payload = {
-                language: config.pistonLang,
-                version: config.pistonVersion,
-                files: [{ content: code }]
-            };
-            
-            const response = await fetch('https://online-code-runner-production.up.railway.app/api/v1/ncs/execute', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            
-            const data = await response.json();
-            consoleOutput.innerHTML = ''; 
+          const payload = {
+            language: config.pistonLang,
+            version: config.pistonVersion,
+            files: [{ content: code }]
+          };
 
-            if (data.run) {
-                if (data.run.stdout) consoleOutput.innerHTML += `${data.run.stdout}`;
-                if (data.run.stderr) consoleOutput.innerHTML += `<span style="color: #ef4444;">${data.run.stderr}</span>`;
-            } else {
-                consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: No output.</span>`;
-            }
+          const response = await fetch('https://online-code-runner-production.up.railway.app/api/v1/ncs/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.json();
+          consoleOutput.innerHTML = '';
+
+          if (data.run) {
+            if (data.run.stdout) consoleOutput.innerHTML += `${data.run.stdout}`;
+            if (data.run.stderr) consoleOutput.innerHTML += `<span style="color: #ef4444;">${data.run.stderr}</span>`;
+          } else {
+            consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: No output.</span>`;
+          }
         } catch (err) {
-            consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: ${err.message}</span>`;
+          consoleOutput.innerHTML += `<span style="color: #ef4444;">Error: ${err.message}</span>`;
         } finally {
-            runBtn.innerHTML = '<i class="fas fa-play"></i> <span>Run Code</span>';
-            runBtn.disabled = false;
-            statusState.textContent = "Ready";
-            statusState.style.color = "white";
+          runBtn.innerHTML = '<i class="fas fa-play"></i> <span>Run Code</span>';
+          runBtn.disabled = false;
+          statusState.textContent = "Ready";
+          statusState.style.color = "white";
         }
       }
 
       runBtn.addEventListener('click', executeCode);
-      
+
       resetBtn.addEventListener('click', () => {
-          if(confirm("Reset code?")) editor.setValue(languageConfig[currentLanguage].template);
+        if (confirm("Reset code?")) editor.setValue(languageConfig[currentLanguage].template);
       });
 
       document.getElementById('languageSelector').addEventListener('change', (e) => {
@@ -805,21 +935,21 @@
         editor.setValue(config.template);
         statusLanguage.innerHTML = `<i class="fas fa-code-branch me-1"></i> ${config.label}`;
       });
-      
+
       document.getElementById('clearConsoleBtn').addEventListener('click', () => {
-          consoleOutput.innerHTML = '';
+        consoleOutput.innerHTML = '';
       });
-      
+
       window.addEventListener('resize', () => editor.layout());
     });
 
-  
+
     function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
+      const loaderId = 'preloader';
+
+      // 1. Inject Styles & HTML if they don't exist
+      if (!document.getElementById(loaderId)) {
+        const css = `
                 #${loaderId} { 
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
                     display: flex; justify-content: center; align-items: center; 
@@ -835,66 +965,67 @@
                 }
                 @keyframes spin { to { transform: rotate(360deg); } }
             `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
+        const style = document.createElement('style');
+        style.innerHTML = css;
+        document.head.appendChild(style);
+
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = loaderId;
+        loaderDiv.innerHTML = '<div class="spinner"></div>';
+        document.body.prepend(loaderDiv);
+      }
+
+      const loader = document.getElementById(loaderId);
+
+      // 2. Define Actions
+      const show = () => loader.classList.add('loading');
+      const hide = () => loader.classList.remove('loading');
+
+      // 3. Event: Page Load (Hide loader when content is ready)
+      if (document.readyState === "complete") {
+        hide();
+      } else {
+        show(); // Ensure it's shown immediately while loading
+        window.addEventListener('load', hide);
+      }
+
+      // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) hide();
+      });
+
+      // 5. Event: Link Clicks (Show loader only for actual navigation)
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+
+        // Check if it is a valid link
+        if (link) {
+          const href = link.getAttribute('href');
+          const target = link.getAttribute('target');
+
+          // Logic: Don't load if:
+          // 1. No href
+          // 2. It's an anchor link (#section)
+          // 3. It's a javascript: call
+          // 4. It opens in a new tab (_blank)
+          // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+          if (
+            href &&
+            !href.startsWith('#') &&
+            !href.startsWith('javascript:') &&
+            target !== '_blank' &&
+            !e.ctrlKey && !e.metaKey
+          ) {
+            show();
+          }
         }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
-            }
-        });
+      });
     }
-    
+
     // Call it immediately
     initDynamicLoader();
-    
-    </script>
+
+  </script>
 </body>
+
 </html>
