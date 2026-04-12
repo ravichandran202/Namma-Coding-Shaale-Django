@@ -12,10 +12,12 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+    rel="stylesheet">
 
-  <link rel="icon" href="{% static 'images/logo-compressed.png' %}" >
-  
+  <link rel="icon" href="{% static 'images/logo-compressed.png' %}">
+
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <!-- Custom CSS -->
@@ -452,8 +454,10 @@
     /* Footer */
     /* --- PREMIUM FOOTER STYLES --- */
     .footer {
-      background-color: #0f172a; /* Darker, richer slate color */
-      color: #94a3b8; /* Softer text color for better readability */
+      background-color: #0f172a;
+      /* Darker, richer slate color */
+      color: #94a3b8;
+      /* Softer text color for better readability */
       padding: 5rem 0 0;
       position: relative;
       font-family: 'Inter', sans-serif;
@@ -539,9 +543,9 @@
     }
 
     .footer-links a i {
-        font-size: 0.8rem;
-        margin-right: 8px;
-        opacity: 0.7;
+      font-size: 0.8rem;
+      margin-right: 8px;
+      opacity: 0.7;
     }
 
     /* Contact Info Styles */
@@ -622,16 +626,16 @@
       margin-top: 4rem;
       font-size: 0.9rem;
     }
-    
+
     .copyright-links a {
-        color: #94a3b8;
-        text-decoration: none;
-        margin-left: 1.5rem;
-        transition: color 0.3s;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: color 0.3s;
     }
-    
+
     .copyright-links a:hover {
-        color: white;
+      color: white;
     }
 
     .social-links {
@@ -680,6 +684,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -715,9 +720,10 @@
     }
 
     @media (max-width: 767px) {
-      .section-title{
+      .section-title {
         font-size: 1.75rem;
       }
+
       .course-card {
         width: 280px;
       }
@@ -750,37 +756,41 @@
               <i class="fas fa-graduation-cap me-1"></i> My Courses
             </a>
           </li>
-            {% else %}
-            <li class="nav-item ms-lg-3">
+          {% else %}
+          <li class="nav-item ms-lg-3">
             <a class="btn btn-premium" href="{% url 'login' %}">
               <i class="fas fa-gem me-1"></i> Login Now
             </a>
           </li>
-            {% endif %}
+          {% endif %}
         </ul>
       </div>
     </div>
   </nav>
 
-<!-- Contact Us Section -->
-<section class="section" id="course-section">
+  <!-- Contact Us Section -->
+  <section class="section" id="course-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <div class="text-center mb-6">
             <span class="text-uppercase text-primary fw-bold letter-spacing-3">Get In Touch</span>
             <h2 class="section-title mt-3">Contact <span class="text-gradient">Namma Coding Shaale</span></h2>
-            <p class="section-subtitle">Have questions about our courses? We're here to help you start your coding journey.</p>
+            <p class="section-subtitle">Have questions about our courses? We're here to help you start your coding
+              journey.</p>
           </div>
-  
+
           <div class="row">
             <!-- Contact Information -->
             <div class="col-lg-5 mb-5 mb-lg-0">
-              <div class="contact-info-card p-4 rounded-3" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white;">
+              <div class="contact-info-card p-4 rounded-3"
+                style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white;">
                 <h4 class="mb-4 text-warning">Contact Information</h4>
-                
+
                 <div class="contact-item d-flex align-items-start mb-4">
-                  <div class="contact-icon bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                  <div
+                    class="contact-icon bg-primary rounded-circle d-flex align-items-center justify-content-center me-3"
+                    style="width: 50px; height: 50px;">
                     <i class="fas fa-map-marker-alt text-white"></i>
                   </div>
                   <div>
@@ -788,9 +798,11 @@
                     <p class="mb-0 text-light">Bengalore<br>Karnataka, India</p>
                   </div>
                 </div>
-  
+
                 <div class="contact-item d-flex align-items-start mb-4">
-                  <div class="contact-icon bg-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                  <div
+                    class="contact-icon bg-success rounded-circle d-flex align-items-center justify-content-center me-3"
+                    style="width: 50px; height: 50px;">
                     <i class="fas fa-phone text-white"></i>
                   </div>
                   <div>
@@ -800,21 +812,25 @@
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="contact-item d-flex align-items-start mb-4">
-                  <div class="contact-icon bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                  <div class="contact-icon bg-info rounded-circle d-flex align-items-center justify-content-center me-3"
+                    style="width: 50px; height: 50px;">
                     <i class="fas fa-envelope text-white"></i>
                   </div>
                   <div>
                     <h6 class="mb-1 text-warning">Email Address</h6>
                     <p class="mb-0 text-light">
-                      <a href="mailto:nammacodingshaale@gmail.com" class="text-light text-decoration-none">nammacodingshaale@gmail.com</a>
+                      <a href="mailto:nammacodingshaale@gmail.com"
+                        class="text-light text-decoration-none">nammacodingshaale@gmail.com</a>
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="contact-item d-flex align-items-start">
-                  <div class="contact-icon bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                  <div
+                    class="contact-icon bg-warning rounded-circle d-flex align-items-center justify-content-center me-3"
+                    style="width: 50px; height: 50px;">
                     <i class="fas fa-clock text-dark"></i>
                   </div>
                   <div>
@@ -822,47 +838,58 @@
                     <p class="mb-0 text-light">Monday - Saturday: 9:00 AM - 6:00 PM<br>Sunday: Closed</p>
                   </div>
                 </div>
-  
+
                 <div class="mt-5">
                   <h6 class="text-warning mb-3">Follow Us</h6>
                   <div class="social-links d-flex gap-3">
-                    <a href="#" class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <a href="#"
+                      class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px;">
                       <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <a href="#"
+                      class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px;">
                       <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <a href="#"
+                      class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px;">
                       <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <a href="#"
+                      class="btn btn-outline-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                      style="width: 40px; height: 40px;">
                       <i class="fab fa-linkedin-in"></i>
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-  
+
             <!-- Contact Form -->
             <div class="col-lg-7">
               <div class="contact-form-card p-4 rounded-3 shadow" style="background: white;">
                 <h4 class="mb-4 text-dark">Send Us a Message</h4>
-                <form id="contactForm">
+                <form id="contactForm" onsubmit="submitContact(event)">
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="name" class="form-label text-dark fw-semibold">Full Name *</label>
-                      <input type="text" class="form-control" id="name" name="name" required placeholder="Enter your full name">
+                      <input type="text" class="form-control" id="name" name="name" required
+                        placeholder="Enter your full name">
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="email" class="form-label text-dark fw-semibold">Email Address *</label>
-                      <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email">
+                      <input type="email" class="form-control" id="email" name="email" required
+                        placeholder="Enter your email">
                     </div>
                   </div>
-                  
+
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="phone" class="form-label text-dark fw-semibold">Phone Number</label>
-                      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number">
+                      <input type="tel" class="form-control" id="phone" name="phone"
+                        placeholder="Enter your phone number">
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="course" class="form-label text-dark fw-semibold">Course Interested In</label>
@@ -876,12 +903,13 @@
                       </select>
                     </div>
                   </div>
-  
+
                   <div class="mb-4">
                     <label for="message" class="form-label text-dark fw-semibold">Message *</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Tell us about your requirements or questions..."></textarea>
+                    <textarea class="form-control" id="message" name="message" rows="5" required
+                      placeholder="Tell us about your requirements or questions..."></textarea>
                   </div>
-  
+
                   <button type="submit" class="btn btn-premium w-100 py-3">
                     <i class="fas fa-paper-plane me-2"></i> Send Message
                   </button>
@@ -889,7 +917,7 @@
               </div>
             </div>
           </div>
-  
+
           <!-- Map Section -->
           <!-- <div class="row mt-6">
             <div class="col-12">
@@ -912,163 +940,169 @@
       </div>
     </div>
   </section>
-  
+
   <style>
-  .contact-info-card {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-  }
-  
-  .contact-form-card {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-control, .form-select {
-    border: 1px solid #e2e8f0;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-  
-  .form-control:focus, .form-select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  }
-  
-  .map-card {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .mt-6 {
-    margin-top: 4rem;
-  }
-  
-  .mb-6 {
-    margin-bottom: 4rem;
-  }
+    .contact-info-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-form-card {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control,
+    .form-select {
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .map-card {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .mt-6 {
+      margin-top: 4rem;
+    }
+
+    .mb-6 {
+      margin-bottom: 4rem;
+    }
   </style>
-  
+
   <script>
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(this);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    
-    // Show success message
-    alert(`Thank you ${name}! Your message has been sent successfully. We will get back to you at ${email} soon.`);
-    
-    // Reset form
-    this.reset();
-  });
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Get form data
+      const formData = new FormData(this);
+      const name = formData.get('name');
+      const email = formData.get('email');
+
+      // Show success message
+      alert(`Thank you ${name}! Your message has been sent successfully. We will get back to you at ${email} soon.`);
+
+      // Reset form
+      this.reset();
+    });
   </script>
 
   <!-- Footer -->
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-bg-glow"></div>
-      <div class="container footer-content">
-        <div class="row g-5">
-          
-          <div class="col-lg-4 col-md-12">
-            <a href="#" class="footer-logo text-decoration-none">
-              &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-bg-glow"></div>
+    <div class="container footer-content">
+      <div class="row g-5">
+
+        <div class="col-lg-4 col-md-12">
+          <a href="#" class="footer-logo text-decoration-none">
+            &lt; <span class="brand-text"> ನಮ್ಮ <span class="brand-highlight">CODING</span> ಶಾಲೆ</span> /&gt;
+          </a>
+          <p class="footer-about">
+            Master the logic behind every line of code with 500+ problems and personalized industry mentorship.
+          </p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank"
+              class="social-btn" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
             </a>
-            <p class="footer-about">
-              Master the logic behind every line of code with 500+ problems and personalized industry mentorship.
-            </p>
-            <div class="social-links">
-              <a href="https://www.linkedin.com/company/namma-coding-shaale/?viewAsMember=true" target="_blank" class="social-btn" aria-label="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" class="social-btn" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="mailto:nammacodingshaale@gmail.com" class="social-btn" aria-label="Email">
-                <i class="fas fa-envelope"></i>
-              </a>
-              <a href="#" class="social-btn" aria-label="Youtube">
-                <i class="fab fa-youtube"></i>
-              </a>
-            </div>
-          </div>
-  
-          <div class="col-lg-2 col-md-4 col-6">
-            <h5 class="footer-heading">Top Courses</h5>
-            <ul class="footer-links">
-              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-foundational-modal">Python Fundamentals</a></li>
-              <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-professional-modal">Python Professional</a></li>
-              <li><a href="#">DSA Mastery</a></li>
-              <li><a href="#">Web Development</a></li>
-              <li><a href="{% url 'code-editor-freemium' %}">Online Code Editor</a></li>
-            </ul>
-          </div>
-  
-          <div class="col-lg-2 col-md-4 col-6">
-            <h5 class="footer-heading">Company</h5>
-            <ul class="footer-links">
-              <li><a href="{% url 'about_us' %}">About Us</a></li>
-              <li><a href="{% url 'contact_us' %}">Contact Support</a></li>
-              <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
-              <li><a href="{% url 'terms_and_conditions' %}">Terms of Service</a></li>
-              <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
-            </ul>
-          </div>
-  
-          <div class="col-lg-4 col-md-4">
-            <h5 class="footer-heading">Stay Updated</h5>
-            <p class="small mb-3">Get the latest coding challenges and tips directly to your inbox.</p>
-            <form class="mb-4">
-              <div class="footer-input-group">
-                <input type="email" class="footer-input" placeholder="Enter your email address" required>
-              </div>
-              <button class="btn btn-premium footer-btn" type="submit">
-                Subscribe Now
-              </button>
-            </form>
-            
-            <ul class="contact-list list-unstyled">
-              <li>
-                  <i class="fas fa-map-marker-alt"></i> 
-                  <span>Bengaluru, Karnataka, India</span>
-              </li>
-              <li>
-                  <i class="fas fa-shield-alt"></i>
-                  <span>MSME Registered: UDYAM-KR-22-0128456</span>
-              </li>
-            </ul>
+            <a href="https://www.instagram.com/namma_coding_shaale/" target="_blank" class="social-btn"
+              aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:nammacodingshaale@gmail.com" class="social-btn" aria-label="Email">
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a href="#" class="social-btn" aria-label="Youtube">
+              <i class="fab fa-youtube"></i>
+            </a>
           </div>
         </div>
-  
-        <div class="copyright">
-          <div class="row align-items-center">
-            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-              <p class="mb-0">&copy; {% now "Y" %} ನಮ್ಮ CODING ಶಾಲೆ. All rights reserved.</p>
+
+        <div class="col-lg-2 col-md-4 col-6">
+          <h5 class="footer-heading">Top Courses</h5>
+          <ul class="footer-links">
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-foundational-modal">Python
+                Fundamentals</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#python-syllabus-professional-modal">Python
+                Professional</a></li>
+            <li><a href="#">DSA Mastery</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="{% url 'code-editor-freemium' %}">Online Code Editor</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6">
+          <h5 class="footer-heading">Company</h5>
+          <ul class="footer-links">
+            <li><a href="{% url 'about_us' %}">About Us</a></li>
+            <li><a href="{% url 'contact_us' %}">Contact Support</a></li>
+            <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+            <li><a href="{% url 'terms_and_conditions' %}">Terms of Service</a></li>
+            <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-4">
+          <h5 class="footer-heading">Stay Updated</h5>
+          <p class="small mb-3">Get the latest coding challenges and tips directly to your inbox.</p>
+          <form class="mb-4" onsubmit="submitSubscribe(event, this)">
+            <div class="footer-input-group">
+              <input type="email" name="email" class="footer-input" placeholder="Enter your email address" required>
             </div>
-            <div class="col-md-6 text-center text-md-end">
-              <div class="copyright-links">
-                  <a href="#">Sitemap</a>
-                  <a href="#">Cookies</a>
-              </div>
+            <button class="btn btn-premium footer-btn" type="submit">
+              Subscribe Now
+            </button>
+          </form>
+
+          <ul class="contact-list list-unstyled">
+            <li>
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Bengaluru, Karnataka, India</span>
+            </li>
+            <li>
+              <i class="fas fa-shield-alt"></i>
+              <span>MSME Registered: UDYAM-KR-22-0128456</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <p class="mb-0">&copy; {% now "Y" %} ನಮ್ಮ CODING ಶಾಲೆ. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <div class="copyright-links">
+              <a href="#">Sitemap</a>
+              <a href="#">Cookies</a>
             </div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
   <!-- Bootstrap JS Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Navbar scroll effect
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const navbar = document.querySelector('.navbar');
       navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
     // Initialize animations
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Set initial state for animated elements
       document.querySelectorAll('.animate').forEach(el => {
         el.style.opacity = '0';
@@ -1096,13 +1130,13 @@
 
     // Run on scroll
     window.addEventListener('scroll', animateOnScroll);
-  
+
     function initDynamicLoader() {
-        const loaderId = 'preloader';
-        
-        // 1. Inject Styles & HTML if they don't exist
-        if (!document.getElementById(loaderId)) {
-            const css = `
+      const loaderId = 'preloader';
+
+      // 1. Inject Styles & HTML if they don't exist
+      if (!document.getElementById(loaderId)) {
+        const css = `
                 #${loaderId} { 
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; 
                     display: flex; justify-content: center; align-items: center; 
@@ -1118,66 +1152,113 @@
                 }
                 @keyframes spin { to { transform: rotate(360deg); } }
             `;
-            const style = document.createElement('style');
-            style.innerHTML = css;
-            document.head.appendChild(style);
-    
-            const loaderDiv = document.createElement('div');
-            loaderDiv.id = loaderId;
-            loaderDiv.innerHTML = '<div class="spinner"></div>';
-            document.body.prepend(loaderDiv);
+        const style = document.createElement('style');
+        style.innerHTML = css;
+        document.head.appendChild(style);
+
+        const loaderDiv = document.createElement('div');
+        loaderDiv.id = loaderId;
+        loaderDiv.innerHTML = '<div class="spinner"></div>';
+        document.body.prepend(loaderDiv);
+      }
+
+      const loader = document.getElementById(loaderId);
+
+      // 2. Define Actions
+      const show = () => loader.classList.add('loading');
+      const hide = () => loader.classList.remove('loading');
+
+      // 3. Event: Page Load (Hide loader when content is ready)
+      if (document.readyState === "complete") {
+        hide();
+      } else {
+        show(); // Ensure it's shown immediately while loading
+        window.addEventListener('load', hide);
+      }
+
+      // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) hide();
+      });
+
+      // 5. Event: Link Clicks (Show loader only for actual navigation)
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+
+        // Check if it is a valid link
+        if (link) {
+          const href = link.getAttribute('href');
+          const target = link.getAttribute('target');
+
+          // Logic: Don't load if:
+          // 1. No href
+          // 2. It's an anchor link (#section)
+          // 3. It's a javascript: call
+          // 4. It opens in a new tab (_blank)
+          // 5. User is holding Ctrl/Cmd (opening in new tab manually)
+          if (
+            href &&
+            !href.startsWith('#') &&
+            !href.startsWith('javascript:') &&
+            target !== '_blank' &&
+            !e.ctrlKey && !e.metaKey
+          ) {
+            show();
+          }
         }
-    
-        const loader = document.getElementById(loaderId);
-    
-        // 2. Define Actions
-        const show = () => loader.classList.add('loading');
-        const hide = () => loader.classList.remove('loading');
-    
-        // 3. Event: Page Load (Hide loader when content is ready)
-        if (document.readyState === "complete") {
-            hide();
-        } else {
-            show(); // Ensure it's shown immediately while loading
-            window.addEventListener('load', hide);
-        }
-    
-        // 4. Event: Handle Back Button (Safari/Firefox bfcache fix)
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) hide();
-        });
-    
-        // 5. Event: Link Clicks (Show loader only for actual navigation)
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a');
-            
-            // Check if it is a valid link
-            if (link) {
-                const href = link.getAttribute('href');
-                const target = link.getAttribute('target');
-                
-                // Logic: Don't load if:
-                // 1. No href
-                // 2. It's an anchor link (#section)
-                // 3. It's a javascript: call
-                // 4. It opens in a new tab (_blank)
-                // 5. User is holding Ctrl/Cmd (opening in new tab manually)
-                if (
-                    href && 
-                    !href.startsWith('#') && 
-                    !href.startsWith('javascript:') && 
-                    target !== '_blank' &&
-                    !e.ctrlKey && !e.metaKey
-                ) {
-                    show();
-                }
-            }
-        });
+      });
     }
-    
+
     // Call it immediately
     initDynamicLoader();
-    
-    </script>
+
+    function submitContact(event) {
+      event.preventDefault();
+      const form = document.getElementById('contactForm');
+      const formData = new FormData(form);
+
+      fetch("{% url 'contact_us_submit' %}", {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Message sent successfully!');
+            form.reset();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+    }
+
+    function submitSubscribe(event, form) {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      fetch("{% url 'subscribe_submit' %}", {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Subscribed successfully!');
+            form.reset();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+    }
+  </script>
 </body>
+
 </html>
