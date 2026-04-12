@@ -959,9 +959,9 @@
           <h5 class="footer-heading">Stay Updated</h5>
           <p class="small mb-3" style="color: #94a3b8;">Get the latest coding challenges and tips directly to your
             inbox.</p>
-          <form class="mb-4">
+          <form class="mb-4" onsubmit="submitSubscribe(event, this)">
             <div class="footer-input-group">
-              <input type="email" class="footer-input" placeholder="Enter your email address" required>
+              <input type="email" name="email" class="footer-input" placeholder="Enter your email address" required>
             </div>
             <button class="btn btn-premium footer-btn" type="submit">
               Subscribe Now
@@ -1048,6 +1048,29 @@
 
     // Run on scroll
     window.addEventListener('scroll', animateOnScroll);
+
+    function submitSubscribe(event, form) {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      fetch("{% url 'subscribe_submit' %}", {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Subscribed successfully!');
+            form.reset();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+    }
   </script>
 </body>
 
