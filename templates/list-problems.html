@@ -955,7 +955,7 @@
                         <tr>
                           <th style="width: 50px;">#</th>
                           <th style="width: 60px; text-align:center;">Status</th>
-                          <th>Problem Title</th>
+                          <th class="text-nowrap">Problem Title</th>
                           <th style="width: 120px;">Difficulty</th>
                           <th style="width: 120px; text-align:center;">Resources</th>
                           <th style="width: 120px; text-align:end;">Action</th>
@@ -971,9 +971,9 @@
                                    data-problem-id="${problem.id}"></div>
                             </td>
                             <td>
-                              <div class="fw-semibold text-dark">${problem.title}</div>
-                              <div class="d-flex gap-2 mt-1">
-                                ${problem.tags.map(tag => `<span class="badge bg-light text-secondary border fw-normal">${tag}</span>`).join('')}
+                              <div class="fw-semibold text-dark text-nowrap">${problem.title}</div>
+                              <div class="d-flex gap-2 mt-1 flex-wrap">
+                                ${problem.tags.map(tag => `<span class="badge bg-light text-secondary border fw-normal text-nowrap">${tag}</span>`).join('')}
                               </div>
                             </td>
                             <td>
